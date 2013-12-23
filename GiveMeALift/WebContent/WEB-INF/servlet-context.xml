@@ -13,15 +13,17 @@
     <!-- Scans within the base package of the application for @Components to configure as beans -->
     <!-- @Controller, @Service, @Configuration, etc. -->
     <context:component-scan base-package="it.unical.mat" />
-    
  
     <!-- Enables the Spring MVC @Controller programming model -->
     <mvc:annotation-driven />
+	<mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
+	<mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
+	<mvc:resources mapping="/images/**" location="/WEB-INF/resources/images/" />
     
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="prefix" value="/WEB-INF/jsp/" />
-    <property name="suffix" value=".jsp" />
-</bean>
+   		<property name="prefix" value="/WEB-INF/jsp/" />
+    	<property name="suffix" value=".jsp" />
+	</bean>
     
  
 </beans>

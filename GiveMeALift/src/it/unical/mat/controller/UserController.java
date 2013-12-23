@@ -8,7 +8,18 @@ public class UserController {
 	
 	 @RequestMapping(value = "/")
 	    public String home() {
-	        return "index";//Redirect to home.jsp
+	        return "home";
+	    }
+	 
+	 @RequestMapping(value = "/userRegistration")
+	    public String userRegistration() {
+	        return "userRegistration";
+	    }
+	 
+	 @RequestMapping(value = "/signUp")
+	    public String userSignUp() {
+		 	//TODO
+	        return "userSignUp";
 	    }
 	
 }

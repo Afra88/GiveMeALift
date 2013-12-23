@@ -3,9 +3,6 @@ package it.unical.mat.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
-
 @Entity
 @Table(name="REGISTERED_USER")
 public class RegisteredUser extends User {
