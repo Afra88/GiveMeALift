@@ -2,7 +2,6 @@ package it.unical.mat.util;
 
 import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Administrator;
-import it.unical.mat.domain.DomainObject;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
