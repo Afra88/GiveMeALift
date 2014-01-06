@@ -2,6 +2,7 @@ package it.unical.mat.dao;
 
 import it.unical.mat.domain.Address;
 
+@Deprecated
 public interface UserDao {
 
 	public String saveRegisteredUser(int countAlert, boolean isOnlyPassenger

@@ -2,6 +2,9 @@ package it.unical.mat.util;
 
 import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Administrator;
+import it.unical.mat.domain.DomainObject;
+import it.unical.mat.domain.Lift;
+import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
 
@@ -21,6 +24,9 @@ public class HibernateUtil {
 								.addAnnotatedClass(RegisteredUser.class)
 								.addAnnotatedClass(Administrator.class)
 								.addAnnotatedClass(Address.class)
+								.addAnnotatedClass(DomainObject.class)
+								.addAnnotatedClass(LiftPoint.class)
+								.addAnnotatedClass(Lift.class)
 								.buildSessionFactory();
 
 		} catch (Throwable ex) {
@@ -31,5 +37,9 @@ public class HibernateUtil {
 
 	public static SessionFactory getSessionFactory() {
 		return sessionFactory;
+	}
+	
+	public static void shutdown(){
+		sessionFactory.close();
 	}
 }

@@ -1,29 +1,46 @@
 package it.unical.mat.domain;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Embedded;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-@MappedSuperclass
-public abstract class User {
-	@Id
-	@Column (name="EMAIL")
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+    name = "USER_TYPE",
+    discriminatorType = DiscriminatorType.STRING
+)
+public abstract class User extends DomainObject {
+	
+	//@Id
+	@Column (name="EMAIL",unique=true)
 	private String email;
+	
 	@Column (name="PASSWORD")
 	private String password;
+	
 	@Column (name="NAME", nullable = false, length = 30)
 	private String name;
+	
 	@Column (name="SURNAME", nullable = false, length = 30)
 	private String surname;
+	
 	@Column (name = "GENDER", length = 1)
 	private String gender;
+	
 	@Column (name="BIRTH_YEAR", nullable = false)
 	private int yearOfBirth;
+	
 	@Column (name="PHONE", length = 15)
 	private String phone;
+	
 	@Column (name="MOBILE_PHONE", length = 15)
 	private String mobilePhone;
+	
 	@Embedded
 	@Column (name="ADDRESS")
 	private Address address;
@@ -107,5 +124,18 @@ public abstract class User {
 	public void setAddress(Address address) {
 		this.address = address;
 	}	
-
+	
+	@Override
+	public void copy(DomainObject object2) {
+		User u= (User) object2;
+		this.address=u.address;
+		this.email=u.email;
+		this.gender=u.gender;
+		this.mobilePhone=u.mobilePhone;
+		this.name=u.name;
+		this.password=u.password;
+		this.phone=u.phone;
+		this.surname=u.surname;
+		this.yearOfBirth=u.yearOfBirth;
+	}
 }

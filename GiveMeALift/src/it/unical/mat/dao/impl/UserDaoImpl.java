@@ -10,6 +10,7 @@ import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
 import it.unical.mat.util.HibernateUtil;
 
+@Deprecated
 public class UserDaoImpl implements UserDao {
 
 	@Override

@@ -1,3 +1,44 @@
-/*C2*/SET SCHEMA PUBLIC
-INSERT INTO REGISTERED_USER VALUES('gh',NULL,NULL,NULL,NULL,NULL,'','A',NULL,'','B',0,0,'1')
+/*C5*/SET SCHEMA PUBLIC
+alter table LIFT drop constraint FK23A70B36EF9035
+alter table LIFT drop constraint FK23A70B2E3E878F
+drop table LIFT if exists
+drop table LIFT_POINT if exists
+drop table User if exists
+drop table hibernate_sequences if exists
+create table LIFT (ID bigint not null, COST integer, N_SEAT integer, POSSIBLE_DETOUR bit, DROP_OFF bigint, PICK_UP bigint, primary key (ID))
+create table LIFT_POINT (ID bigint not null, CITY varchar(255), PROVINCE varchar(255), REGION varchar(255), STATE varchar(255), STREET varchar(255), primary key (ID))
+create table User (USER_TYPE varchar(31) not null, ID bigint not null, city varchar(255), state varchar(255), street varchar(255), zip varchar(255), EMAIL varchar(255), GENDER varchar(1), MOBILE_PHONE varchar(15), NAME varchar(30) not null, PASSWORD varchar(255), PHONE varchar(15), SURNAME varchar(30) not null, BIRTH_YEAR integer not null, COUNT_ALERT integer, IS_ONLY_PASSENGER bit, primary key (ID), unique (EMAIL))
+alter table LIFT add constraint FK23A70B36EF9035 foreign key (DROP_OFF) references LIFT_POINT
+alter table LIFT add constraint FK23A70B2E3E878F foreign key (PICK_UP) references LIFT_POINT
+create table hibernate_sequences ( sequence_name varchar(255),  sequence_next_hi_value integer ) 
+/*C6*/SET SCHEMA PUBLIC
+INSERT INTO HIBERNATE_SEQUENCES VALUES('User',0)
+DELETE FROM HIBERNATE_SEQUENCES WHERE SEQUENCE_NAME='User' AND SEQUENCE_NEXT_HI_VALUE=0
+INSERT INTO HIBERNATE_SEQUENCES VALUES('User',1)
 COMMIT
+/*C5*/INSERT INTO USER VALUES('RE',1,NULL,NULL,NULL,NULL,'kds\u00e0c',NULL,'','dsdsd',NULL,'','',0,0,'1')
+COMMIT
+DISCONNECT
+/*C7*/SET SCHEMA PUBLIC
+INSERT INTO HIBERNATE_SEQUENCES VALUES('LIFT_POINT',0)
+DELETE FROM HIBERNATE_SEQUENCES WHERE SEQUENCE_NAME='LIFT_POINT' AND SEQUENCE_NEXT_HI_VALUE=0
+INSERT INTO HIBERNATE_SEQUENCES VALUES('LIFT_POINT',1)
+COMMIT
+/*C6*/INSERT INTO LIFT_POINT VALUES(1,'Roma','','','','')
+COMMIT
+DISCONNECT
+/*C7*/INSERT INTO LIFT_POINT VALUES(2,'Milano','','','','')
+COMMIT
+/*C8*/SET SCHEMA PUBLIC
+INSERT INTO HIBERNATE_SEQUENCES VALUES('LIFT',0)
+DELETE FROM HIBERNATE_SEQUENCES WHERE SEQUENCE_NAME='LIFT' AND SEQUENCE_NEXT_HI_VALUE=0
+INSERT INTO HIBERNATE_SEQUENCES VALUES('LIFT',1)
+COMMIT
+/*C7*/INSERT INTO LIFT VALUES(1,0,0,'0',2,1)
+DELETE FROM LIFT_POINT WHERE ID=2
+INSERT INTO LIFT_POINT VALUES(2,'Milano','','','','')
+DELETE FROM LIFT_POINT WHERE ID=1
+INSERT INTO LIFT_POINT VALUES(1,'Roma','','','','')
+COMMIT
+DISCONNECT
+/*C8*/DISCONNECT
