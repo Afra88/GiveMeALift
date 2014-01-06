@@ -4,6 +4,7 @@ import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Administrator;
 import it.unical.mat.domain.DomainObject;
 import it.unical.mat.domain.Lift;
+import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
@@ -27,6 +28,7 @@ public class HibernateUtil {
 								.addAnnotatedClass(DomainObject.class)
 								.addAnnotatedClass(LiftPoint.class)
 								.addAnnotatedClass(Lift.class)
+								.addAnnotatedClass(LiftDetour.class)
 								.buildSessionFactory();
 
 		} catch (Throwable ex) {

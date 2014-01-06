@@ -2,6 +2,7 @@ import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.LiftPointMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Lift;
+import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
@@ -33,6 +34,9 @@ public class Main {
 		l.setPickUpPoint(lp);
 		l.setDropOffPoint(lp2);
 		LiftMapper lm=new LiftMapper();
+		LiftDetour ld=new LiftDetour();
+		ld.setPickUpPoint(lp);
+		ld.setDropOffPoint(lp2);
 		lm.insert(l);
 		System.out.println(idLp);
 		System.out.println(idLp2);
