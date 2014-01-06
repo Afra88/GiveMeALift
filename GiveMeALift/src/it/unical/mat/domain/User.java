@@ -5,6 +5,9 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
@@ -16,7 +19,6 @@ import javax.persistence.InheritanceType;
 )
 public abstract class User extends DomainObject {
 	
-	//@Id
 	@Column (name="EMAIL",unique=true)
 	private String email;
 	
@@ -55,6 +57,11 @@ public abstract class User extends DomainObject {
 		address = new Address();
 	}
 
+	@Override
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="USER_ID")
+	public long getId() {return super.getId();};
 
 	public String getName() {
 		return name;

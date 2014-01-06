@@ -1,3 +1,4 @@
+import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.LiftPointMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
@@ -34,12 +35,15 @@ public class Main {
 		l.setPickUpPoint(lp);
 		l.setDropOffPoint(lp2);
 		LiftMapper lm=new LiftMapper();
-		LiftDetour ld=new LiftDetour();
-		ld.setPickUpPoint(lp);
-		ld.setDropOffPoint(lp2);
 		lm.insert(l);
 		System.out.println(idLp);
 		System.out.println(idLp2);
+		
+		LiftDetour ld=new LiftDetour();
+		ld.setPickUpPoint(lp);
+		ld.setDropOffPoint(lp);
+		LiftDetourMapper ldm=new LiftDetourMapper();
+		ldm.insert(ld);
 		HibernateUtil.shutdown();
 	}
 

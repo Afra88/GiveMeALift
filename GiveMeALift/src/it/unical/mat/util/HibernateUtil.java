@@ -25,10 +25,10 @@ public class HibernateUtil {
 								.addAnnotatedClass(RegisteredUser.class)
 								.addAnnotatedClass(Administrator.class)
 								.addAnnotatedClass(Address.class)
-								.addAnnotatedClass(DomainObject.class)
+//								.addAnnotatedClass(DomainObject.class)
 								.addAnnotatedClass(LiftPoint.class)
-								.addAnnotatedClass(Lift.class)
 								.addAnnotatedClass(LiftDetour.class)
+								.addAnnotatedClass(Lift.class)
 								.buildSessionFactory();
 
 		} catch (Throwable ex) {

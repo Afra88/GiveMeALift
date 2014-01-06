@@ -1,22 +1,17 @@
 package it.unical.mat.domain;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="LIFT")
-@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
 public class Lift extends DomainObject {
 
 	@Column(name="COST")
@@ -26,12 +21,8 @@ public class Lift extends DomainObject {
 	@Column(name="POSSIBLE_DETOUR")
 	private boolean possibleDetour;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="PICK_UP")
 	private LiftPoint pickUpPoint;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="DROP_OFF")
 	private LiftPoint dropOffPoint;
 
 //	@ManyToMany(cascade = CascadeType.ALL)
@@ -48,7 +39,15 @@ public class Lift extends DomainObject {
 		nSeat=0;
 		possibleDetour=false;
 	}		
-
+	
+	@Override
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="LIFT_ID")
+	public long getId() {return super.getId();};
+	
+	
+	
 //	public List<LiftDetour> getDetours() {
 //		return detours;
 //	}
@@ -105,6 +104,8 @@ public class Lift extends DomainObject {
 
 
 
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="PICK_UP")
 	public LiftPoint getPickUpPoint() {
 		return pickUpPoint;
 	}
@@ -119,6 +120,8 @@ public class Lift extends DomainObject {
 
 
 
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="DROP_OFF")
 	public LiftPoint getDropOffPoint() {
 		return dropOffPoint;
 	}
