@@ -13,17 +13,17 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		RegisteredUserMapper user=new RegisteredUserMapper();
-		RegisteredUser u=new RegisteredUser();
-		u.setEmail("kdsàc");
-		u.setName("dsdsd");;
-		Object e = user.insert(u);
-		user.findAll();
-		System.out.println(e.toString());
-		for (User uu  : user.findAll()) {
-			System.out.println(uu.getEmail());
-		}
-		
+//		RegisteredUserMapper user=new RegisteredUserMapper();
+//		RegisteredUser u=new RegisteredUser();
+//		u.setEmail("kdsàc");
+//		u.setName("dsdsd");;
+//		Object e = user.insert(u);
+//		user.findAll();
+//		System.out.println(e.toString());
+//		for (User uu  : user.findAll()) {
+//			System.out.println(uu.getEmail());
+//		}
+//		
 		Lift l=new Lift();
 		LiftPoint lp=new LiftPoint();
 		lp.setCity("Roma");
@@ -34,17 +34,18 @@ public class Main {
 		long idLp2=lpm.insert(lp2);
 		l.setPickUpPoint(lp);
 		l.setDropOffPoint(lp2);
+		l.setCost(2);
+		l.setnSeat(2);
+		l.setPossibleDetour(true);
 		LiftMapper lm=new LiftMapper();
 		lm.insert(l);
-		System.out.println(idLp);
-		System.out.println(idLp2);
-		
-		LiftDetour ld=new LiftDetour();
-		ld.setPickUpPoint(lp);
-		ld.setDropOffPoint(lp);
-		LiftDetourMapper ldm=new LiftDetourMapper();
-		ldm.insert(ld);
-		HibernateUtil.shutdown();
+
+//		LiftDetour ld=new LiftDetour();
+//		ld.setPickUpPoint(lp);
+//		ld.setDropOffPoint(lp);
+//		LiftDetourMapper ldm=new LiftDetourMapper();
+//		ldm.insert(ld);
+//		HibernateUtil.shutdown();
 	}
 
 }

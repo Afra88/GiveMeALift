@@ -6,12 +6,22 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import it.unical.mat.domain.DomainObject;
+import it.unical.mat.domain.User;
 import it.unical.mat.util.HibernateUtil;
 
 public abstract class AbstractMapper {
+	
+//	private HibernateTemplate hibernateTemplate;
+//
+//	public void setSessionFactory(SessionFactory sessionFactory) 
+//    {
+//		this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+//	}
 	
 	public long insert(DomainObject o){
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -86,3 +96,4 @@ public abstract class AbstractMapper {
 	}
 	
 }
+

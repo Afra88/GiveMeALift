@@ -10,12 +10,13 @@ public class LiftMapper extends AbstractMapper {
 	
 	public List<Lift> findFromTo(String CityFrom, String CityTo){
 		List<Lift> result = new LinkedList<Lift>();
-		Collection<DomainObject> objects = super.find("from Lift l, Lift_Point l1, Lift_Point l2,"
-				+ "where l.pick_up = l1.id and l.drop_off=l2.id");
+		Collection<DomainObject> objects = super.find("from Lift");
 		for (DomainObject object : objects) {
 			result.add((Lift) object);
 		}
 		return result;
 	}
 
+//	"from Lift l, Lift_Point l1, Lift_Point l2,"
+//	+ "where l.pick_up = 1 and l.drop_off=2 and l1.city=cityFrom and l2.city=cityTo"
 }

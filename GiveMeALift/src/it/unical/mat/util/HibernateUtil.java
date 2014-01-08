@@ -18,7 +18,7 @@ public class HibernateUtil {
 	static {
 		try {
 			sessionFactory = new Configuration()
-								.configure(ClassLoader.getSystemResource("resource/hibernate.cfg.xml"))
+								.configure("resource/hibernate.cfg.xml")
 								.addPackage("it.unical.mat.domain") 
 								.addAnnotatedClass(User.class)
 								.addAnnotatedClass(RegisteredUser.class)
