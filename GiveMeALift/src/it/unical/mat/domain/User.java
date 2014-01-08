@@ -1,15 +1,19 @@
 package it.unical.mat.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -19,7 +23,7 @@ import javax.persistence.InheritanceType;
 )
 public abstract class User extends DomainObject {
 	
-	@Column (name="EMAIL",unique=true)
+	@Column (name="EMAIL",unique=true,nullable=false)
 	private String email;
 	
 	@Column (name="PASSWORD")
@@ -43,9 +47,14 @@ public abstract class User extends DomainObject {
 	@Column (name="MOBILE_PHONE", length = 15)
 	private String mobilePhone;
 	
+	@Column(name="PHOTO")
+	private String car_photo;
+
 	@Embedded
 	@Column (name="ADDRESS")
 	private Address address;
+	
+	private PersonalPreference prefences;
 
 	public User() {
 		name = "";
@@ -55,6 +64,14 @@ public abstract class User extends DomainObject {
 		phone = "";
 		mobilePhone = "";
 		address = new Address();
+	}
+	
+	public String getCar_photo() {
+		return car_photo;
+	}
+	
+	public void setCar_photo(String car_photo) {
+		this.car_photo = car_photo;
 	}
 
 	@Override
@@ -130,7 +147,7 @@ public abstract class User extends DomainObject {
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}	
+	}
 	
 	@Override
 	public void copy(DomainObject object2) {
@@ -144,5 +161,15 @@ public abstract class User extends DomainObject {
 		this.phone=u.phone;
 		this.surname=u.surname;
 		this.yearOfBirth=u.yearOfBirth;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public PersonalPreference getPrefences() {
+		return prefences;
+	}
+
+	public void setPrefences(PersonalPreference prefences) {
+		this.prefences = prefences;
 	}
 }

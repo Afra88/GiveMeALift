@@ -1,19 +1,21 @@
 package it.unical.mat.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
+	@Column(name="STREET")
     private String street; 
-    private String city; 
-    private String state;
-    private String zip;
+	@Column(name="CITY")
+	private String city; 
+	@Column(name="STATE")
+	private String state;
     
     public String toString() {
         return "street: " + getStreet() +
                ", city: " + getCity() +
-               ", state: " + getState() +
-               ", zip: " + getZip();
+               ", state: " + getState();
     }
 
     public String getStreet() {
@@ -39,14 +41,5 @@ public class Address {
     public void setState(String state) {
         this.state = state;
     }
-
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
 
 }

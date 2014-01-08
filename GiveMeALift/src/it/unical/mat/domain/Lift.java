@@ -1,5 +1,8 @@
 package it.unical.mat.domain;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -25,11 +31,8 @@ public class Lift extends DomainObject {
 	
 	private LiftPoint dropOffPoint;
 
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(name = "LIFT_DETOURS_JOIN",
-//				joinColumns = { @JoinColumn (name = "ID") },
-//				inverseJoinColumns = { @JoinColumn(name = "LIFT_DETOUR_ID") })
-//	private List<LiftDetour> detours=new LinkedList<LiftDetour>();
+	
+	private List<LiftDetour> detours=new LinkedList<LiftDetour>();
 	
 	
 	public Lift(){
@@ -47,17 +50,20 @@ public class Lift extends DomainObject {
 	public long getId() {return super.getId();};
 	
 	
-	
-//	public List<LiftDetour> getDetours() {
-//		return detours;
-//	}
-//
-//
-//
-//
-//	public void setDetours(List<LiftDetour> detours) {
-//		this.detours = detours;
-//	}
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "LIFT_DETOURS_JOIN",
+				joinColumns = { @JoinColumn (name = "ID") },
+				inverseJoinColumns = { @JoinColumn(name = "LIFT_DETOUR_ID") })
+	public List<LiftDetour> getDetours() {
+		return detours;
+	}
+
+
+
+
+	public void setDetours(List<LiftDetour> detours) {
+		this.detours = detours;
+	}
 
 
 
@@ -104,8 +110,8 @@ public class Lift extends DomainObject {
 
 
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="PICK_UP")
+	@OneToOne(cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	public LiftPoint getPickUpPoint() {
 		return pickUpPoint;
 	}
@@ -120,8 +126,8 @@ public class Lift extends DomainObject {
 
 
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="DROP_OFF")
+	@OneToOne(cascade=CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	public LiftPoint getDropOffPoint() {
 		return dropOffPoint;
 	}
@@ -139,7 +145,8 @@ public class Lift extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		Lift l=(Lift) object2;
-		this.cost=l.cost;
+		if(this.cost!=0)
+			this.cost=l.cost;
 		this.dropOffPoint=l.dropOffPoint;
 		this.pickUpPoint=l.pickUpPoint;
 		this.nSeat=l.nSeat;
