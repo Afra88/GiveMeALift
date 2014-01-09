@@ -57,7 +57,7 @@ public abstract class User extends DomainObject {
 	@Column (name="ADDRESS")
 	private Address address;
 
-	private List<SocialNetworkProfile> listSocialNetworkProfiles=new LinkedList<SocialNetworkProfile>();
+	private List<SocialNetworkProfile> listSocialNetworkProfiles;
 
 	public User() {
 		name = "";
@@ -67,6 +67,11 @@ public abstract class User extends DomainObject {
 		phone = "";
 		mobilePhone = "";
 		address = new Address();
+		car_photo = null;
+		gender = null;
+		password = null;
+		List<SocialNetworkProfile> listSocialNetworkProfiles=new LinkedList<SocialNetworkProfile>();
+
 	}
 	
 	public String getCar_photo() {
@@ -155,15 +160,28 @@ public abstract class User extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		User u= (User) object2;
-		this.address=u.address;
-		this.email=u.email;
-		this.gender=u.gender;
-		this.mobilePhone=u.mobilePhone;
-		this.name=u.name;
-		this.password=u.password;
-		this.phone=u.phone;
-		this.surname=u.surname;
-		this.yearOfBirth=u.yearOfBirth;
+		if(u.address != null )
+			this.address=u.address;
+		if(u.email != null)
+			this.email=u.email;
+		if(u.gender != null)
+			this.gender=u.gender;
+		if(u.mobilePhone != null)
+			this.mobilePhone=u.mobilePhone;
+		if(u.name != null)
+			this.name=u.name;
+		if(u.password != null)
+			this.password=u.password;
+		if(u.phone != null)
+			this.phone=u.phone;
+		if(u.surname != null)
+			this.surname=u.surname;
+		if(u.yearOfBirth != 0)
+			this.yearOfBirth=u.yearOfBirth;
+		if(u.car_photo != null)
+			this.car_photo = u.car_photo;
+		if(u.listSocialNetworkProfiles != null)
+			this.listSocialNetworkProfiles = u.listSocialNetworkProfiles;
 	}
 
 	@OneToMany(fetch=FetchType.LAZY)

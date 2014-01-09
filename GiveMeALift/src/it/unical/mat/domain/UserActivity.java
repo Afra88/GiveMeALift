@@ -79,13 +79,13 @@ public class UserActivity extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		UserActivity m = (UserActivity) object2;
-		if(this.ridesOffered != 0)
+		if(m.ridesOffered != 0)
 			this.ridesOffered = m.ridesOffered;
-		if(this.memberSince != null)
+		if(m.memberSince != null)
 			this.memberSince = m.memberSince;
-		if(this.lastOnline != null)
+		if(m.lastOnline != null)
 			this.lastOnline = m.lastOnline;
-		if(this.answersPercentage != 0)
+		if(m.answersPercentage != 0)
 			this.answersPercentage = m.answersPercentage;
 		}
 }

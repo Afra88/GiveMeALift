@@ -59,9 +59,9 @@ public class Review extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		Review r = (Review) object2;
-		if(this.linkToText != null)
+		if(r.linkToText != null)
 			this.linkToText = r.linkToText;
-		if(this.date != null)
+		if(r.date != null)
 			this.date = r.date;
 	}
 
