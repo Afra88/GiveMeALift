@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,7 +34,7 @@ public class Message extends DomainObject {
 	@Column(name="MESSAGE_ID")
 	public long getId() {return super.getId();};
 	
-	@OneToMany(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY) //cambiato
 	@JoinTable(name = "MESSAGE_SENDER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
@@ -48,7 +49,7 @@ public class Message extends DomainObject {
 	}
 
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY) //cambiato
 	@JoinTable(name = "MESSAGE_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })

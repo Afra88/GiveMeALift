@@ -2,12 +2,8 @@ package it.unical.mat.controller;
 
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.LiftPointMapper;
-import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftPoint;
-import it.unical.mat.domain.RegisteredUser;
-import it.unical.mat.domain.User;
-
 import java.util.List;
 
 import org.springframework.stereotype.Controller;

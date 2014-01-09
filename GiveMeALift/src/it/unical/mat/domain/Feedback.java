@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,7 +34,7 @@ public class Feedback extends DomainObject {
 	@Column(name="FEEDBACK_ID")
 	public long getId() {return super.getId();};
 	
-	@OneToMany(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY) //ok
 	@JoinTable(name = "MESSAGE_FEEDBACK_SENDER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "FEEDBACK_ID") })
@@ -48,7 +49,7 @@ public class Feedback extends DomainObject {
 	}
 
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY) //ok
 	@JoinTable(name = "MESSAGE_FEEDBACK_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "FEEDBACK_ID") })

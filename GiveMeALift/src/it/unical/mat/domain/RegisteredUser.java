@@ -41,7 +41,7 @@ public class RegisteredUser extends User {
 		receivedFeedback=new LinkedList<Feedback>();
 	}
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY) //cambiato
 	@JoinTable(name = "PERSONAL_PREFERENCES_USER_JOIN",
 				joinColumns = { @JoinColumn (name = "PERSONAL_PREFERENCES_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -100,7 +100,7 @@ public class RegisteredUser extends User {
 		this.userActivity = userActivity;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
 	@JoinTable(name = "MESSAGE_SENDER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
@@ -112,7 +112,7 @@ public class RegisteredUser extends User {
 		this.messagesSent = messagesSent;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
 	@JoinTable(name = "MESSAGE_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
@@ -124,7 +124,7 @@ public class RegisteredUser extends User {
 		this.messagesReceived = messagesReceived;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
 	@JoinTable(name = "FEEDBACK_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "FEEDBACK_ID") })

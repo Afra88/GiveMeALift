@@ -166,7 +166,7 @@ public abstract class User extends DomainObject {
 		this.yearOfBirth=u.yearOfBirth;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY) //ok
 	@JoinTable(name = "SOCIAL_NETWORK_USER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "SOCIAL_NETWORK_PROFILE_ID") })

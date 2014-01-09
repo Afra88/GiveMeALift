@@ -2,6 +2,7 @@ package it.unical.mat.domain;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -30,7 +32,7 @@ public class Lift extends DomainObject {
 	private LiftPoint pickUpPoint;
 	private LiftPoint dropOffPoint;
 	private List<LiftDetour> detours;
-	private LiftPreferences liftPreferences;
+	private LiftPreference liftPreferences;
 	private List<User> usersBookingList;
 	private List<User> usersOfferingList;
 	
@@ -48,6 +50,27 @@ public class Lift extends DomainObject {
 	public long getId() {return super.getId();};
 	
 	
+	
+	public Boolean getPossibleDetour() {
+		return possibleDetour;
+	}
+
+	public void setPossibleDetour(Boolean possibleDetour) {
+		this.possibleDetour = possibleDetour;
+	}
+
+	public void setCost(Integer cost) {
+		this.cost = cost;
+	}
+
+	public void setnSeat(Integer nSeat) {
+		this.nSeat = nSeat;
+	}
+
+	public void setUsersOfferingList(List<User> usersOfferingList) {
+		this.usersOfferingList = usersOfferingList;
+	}
+
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "LIFT_DETOURS_JOIN",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
@@ -65,7 +88,7 @@ public class Lift extends DomainObject {
 		return usersBookingList;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY) //ok
 	@JoinTable(name = "LIFT_USER_OFFERING",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -153,17 +176,17 @@ public class Lift extends DomainObject {
 		this.dropOffPoint = dropOffPoint;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinTable(name = "PREFERENCES_FOR_A_LIFT", 
+	@ManyToOne(fetch=FetchType.LAZY) //cambiato
+	@JoinTable(name = "PREFERENCE_LIFT_JOIN", 
 				joinColumns = { @JoinColumn(name = "LIFT_ID") }, 
-				inverseJoinColumns = { @JoinColumn(name = "LIFT_PREFERENCES_ID")}
+				inverseJoinColumns = { @JoinColumn(name = "LIFT_PREFERENCE_ID")}
 			   )
-	public LiftPreferences getLift_Preferences() {
+	public LiftPreference getLiftPreferences() {
 		return liftPreferences;
 	}
 
-	public void setLift_Preferences(LiftPreferences lift_Preferences) {
-		this.liftPreferences = lift_Preferences;
+	public void setLiftPreferences(LiftPreference liftPreferences) {
+		this.liftPreferences = liftPreferences;
 	}
 
 

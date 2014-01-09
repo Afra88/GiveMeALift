@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="LIFT_PREFERENCES")
-public class LiftPreferences extends DomainObject {
+@Table(name="LIFT_PREFERENCE")
+public class LiftPreference extends DomainObject {
 
 	@Column(name = "ROAD_TYPE")
 	private String roadType;
@@ -22,7 +22,7 @@ public class LiftPreferences extends DomainObject {
 	@Column(name = "PINK_TRIP")
 	private Boolean pinkTrip;
 	
-	public LiftPreferences() {
+	public LiftPreference() {
 		this.roadType = null;
 		this.timesForThisRoute = 0;
 		this.luggageSize = 0;
@@ -34,7 +34,7 @@ public class LiftPreferences extends DomainObject {
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "LIFT_PREFERENCES_ID")
+	@Column(name = "LIFT_PREFERENCE_ID")
 	public long getId() {
 		return super.getId();
 	}
@@ -103,7 +103,7 @@ public class LiftPreferences extends DomainObject {
 
 	@Override
 	public void copy(DomainObject object2) {
-		LiftPreferences lp = (LiftPreferences) object2;
+		LiftPreference lp = (LiftPreference) object2;
 		if(lp.roadType != null)
 			this.roadType = lp.roadType;
 		if(lp.timesForThisRoute != null)

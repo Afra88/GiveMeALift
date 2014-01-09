@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,7 +37,7 @@ public class LiftDetour extends DomainObject {
 	public long getId() {return super.getId();};
 	
 	
-	@OneToMany(fetch=FetchType.LAZY) //cascade=CascadeType.ALL
+	@ManyToOne(fetch=FetchType.LAZY) //cascade=CascadeType.ALL //cambiato
 	@JoinColumn(name="PICK_UP")
 	public LiftPoint getPickUpPoint() {
 		return pickUpPoint;
@@ -49,7 +50,7 @@ public class LiftDetour extends DomainObject {
 
 
 
-	@OneToMany(fetch=FetchType.LAZY) //cascade=CascadeType.ALL
+	@ManyToOne(fetch=FetchType.LAZY) //cascade=CascadeType.ALL //cambiato
 	@JoinColumn(name="DROP_OFF")
 	public LiftPoint getDropOffPoint() {
 		return dropOffPoint;

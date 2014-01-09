@@ -22,13 +22,7 @@ public class LiftPoint extends DomainObject {
 	@Column(name="STATE")
 	private String state;
 	
-	public LiftPoint() {
-		this.street="";
-		this.province="";
-		this.city="";
-		this.region="";
-		this.state="";
-	}
+	public LiftPoint() {}
 
 
 	@Override
