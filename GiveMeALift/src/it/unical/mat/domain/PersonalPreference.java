@@ -12,15 +12,15 @@ import javax.persistence.Table;
 public class PersonalPreference extends DomainObject {
 
 	@Column(name="CHILDRENS_ON_BOARD")
-	private boolean childrensOnBoard;
+	private Boolean childrensOnBoard;
 	@Column(name="PETS_ON_BOARD")
-	private boolean petsOnBoard;
+	private Boolean petsOnBoard;
 	@Column(name="smocking")
-	private boolean smoking;
+	private Boolean smoking;
 	@Column(name="MUSIC")
-	private boolean music;
+	private Boolean music;
 	@Column(name="CHATNESS_LEVEL")
-	private int chatnessLevel;
+	private Integer chatnessLevel;
 	
 	public PersonalPreference(){
 		childrensOnBoard=false;
@@ -121,7 +121,20 @@ public class PersonalPreference extends DomainObject {
 
 	@Override
 	public void copy(DomainObject object2) {
-		// TODO Auto-generated method stub
+		PersonalPreference pp=(PersonalPreference)object2;
+		if(pp.childrensOnBoard!=null)
+			this.childrensOnBoard=pp.childrensOnBoard;
+		if(pp.music!=null)
+			this.music=pp.music;
+		if(pp.music!=null)
+			this.music=pp.music;
+		if(pp.petsOnBoard!=null)
+			this.petsOnBoard=pp.petsOnBoard;
+		if(pp.smoking!=null)
+			this.smoking=pp.smoking;
+		if(pp.chatnessLevel!=null)
+			this.chatnessLevel=pp.chatnessLevel;
+		
 
 	}
 

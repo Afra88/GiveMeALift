@@ -58,13 +58,13 @@ public class Car extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		Car c=(Car)object2;
-		if(this.color!=null)
+		if(c.color!=null)
 			this.color=c.color;
-		if(this.brand!=null)
+		if(c.brand!=null)
 			this.brand=c.brand;
-		if(this.confort!=null)
+		if(c.confort!=null)
 			this.confort=c.confort;
-		if(this.model!=null)
+		if(c.model!=null)
 			this.model=c.model;
 	}
 }

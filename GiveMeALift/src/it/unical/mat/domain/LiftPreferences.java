@@ -14,9 +14,9 @@ public class LiftPreferences extends DomainObject {
 	@Column(name = "ROAD_TYPE")
 	private String roadType;
 	@Column(name = "TIMES_FOR_THIS_ROUTE")
-	private int timesForThisRoute;
+	private Integer timesForThisRoute;
 	@Column(name = "LUGGAGE_SIZE")
-	private int luggageSize;
+	private Integer luggageSize;
 	@Column(name = "SCHEDULE_FLEXIBILITY")
 	private Boolean scheduleFlexibility;
 	@Column(name = "PINK_TRIP")
@@ -104,17 +104,16 @@ public class LiftPreferences extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		LiftPreferences lp = (LiftPreferences) object2;
-		if(this.roadType != null)
+		if(lp.roadType != null)
 			this.roadType = lp.roadType;
-		if(this.timesForThisRoute != 0)
+		if(lp.timesForThisRoute != null)
 			this.timesForThisRoute = lp.timesForThisRoute;
-		if(this.luggageSize != 0)
+		if(lp.luggageSize != null)
 			this.luggageSize = lp.luggageSize;
-		if(this.scheduleFlexibility != false)
+		if(lp.scheduleFlexibility != false)
 			this.scheduleFlexibility = lp.scheduleFlexibility;
-		if(this.pinkTrip != false)
+		if(lp.pinkTrip != false)
 			this.pinkTrip = lp.pinkTrip;
-
 	}
 
 }

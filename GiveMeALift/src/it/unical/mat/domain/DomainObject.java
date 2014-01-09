@@ -2,10 +2,9 @@ package it.unical.mat.domain;
 
 public abstract class DomainObject {
 	
-	protected long id;
+	protected Long id;
 	
 	public DomainObject() {
-		this.id=0L;
 	}
 	
 	public long getId() {

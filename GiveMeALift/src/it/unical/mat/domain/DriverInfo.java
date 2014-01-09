@@ -137,21 +137,21 @@ public class DriverInfo extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		DriverInfo d=(DriverInfo) object2;
-		if(this.car_photo!=null)
+		if(d.car_photo!=null)
 			this.car_photo=d.car_photo;
-		if(this.comfort!=null)
+		if(d.comfort!=null)
 			this.comfort=d.comfort;
-		if(this.color!=null)
+		if(d.color!=null)
 			this.color=d.color;
-		if(this.driving_licence!=null)
+		if(d.driving_licence!=null)
 			this.driving_licence=d.driving_licence;
-		if(this.insurance!=null)
+		if(d.insurance!=null)
 			this.insurance=d.insurance;
-		if(this.relisingDate!=null)
+		if(d.relisingDate!=null)
 			this.relisingDate=d.relisingDate;
-		if(this.car!=null)
+		if(d.car!=null)
 			this.car=d.car;
-		if(this.user!=null)
+		if(d.user!=null)
 			this.user=d.user;
 	}
 

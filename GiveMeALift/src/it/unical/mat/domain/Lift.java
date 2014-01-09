@@ -21,26 +21,24 @@ import javax.persistence.Table;
 public class Lift extends DomainObject {
 
 	@Column(name="COST")
-	private int cost;
+	private Integer cost;
 	@Column(name="N_SEAT")
-	private int nSeat;
+	private Integer nSeat;
 	@Column(name="POSSIBLE_DETOUR")
-	private boolean possibleDetour;
+	private Boolean possibleDetour;
 
 	private LiftPoint pickUpPoint;
 	private LiftPoint dropOffPoint;
-	private List<LiftDetour> detours=new LinkedList<LiftDetour>();
-	private LiftPreferences lift_Preferences;
-	private List<User> usersBookingList=new LinkedList<User>();
-	private List<User> usersOfferingList=new LinkedList<User>();
+	private List<LiftDetour> detours;
+	private LiftPreferences liftPreferences;
+	private List<User> usersBookingList;
+	private List<User> usersOfferingList;
 	
 
 	public Lift(){
-		cost=0;
-		pickUpPoint=null;
-		dropOffPoint=null;
-		nSeat=0;
-		possibleDetour=false;
+		detours=new LinkedList<LiftDetour>();
+		usersBookingList=new LinkedList<User>();
+		usersOfferingList=new LinkedList<User>();
 	}		
 	
 	@Override
@@ -161,23 +159,35 @@ public class Lift extends DomainObject {
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_PREFERENCES_ID")}
 			   )
 	public LiftPreferences getLift_Preferences() {
-		return lift_Preferences;
+		return liftPreferences;
 	}
 
 	public void setLift_Preferences(LiftPreferences lift_Preferences) {
-		this.lift_Preferences = lift_Preferences;
+		this.liftPreferences = lift_Preferences;
 	}
 
 
 	@Override
 	public void copy(DomainObject object2) {
 		Lift l=(Lift) object2;
-		if(this.cost!=0)
+		if(l.cost!=null)
 			this.cost=l.cost;
-		this.dropOffPoint=l.dropOffPoint;
-		this.pickUpPoint=l.pickUpPoint;
-		this.nSeat=l.nSeat;
-		this.possibleDetour=l.possibleDetour;
+		if(l.dropOffPoint!=null)
+			this.dropOffPoint=l.dropOffPoint;
+		if(l.pickUpPoint!=null)
+			this.pickUpPoint=l.pickUpPoint;
+		if(l.nSeat!=null)
+			this.nSeat=l.nSeat;
+		if(this.possibleDetour!=null)
+			this.possibleDetour=l.possibleDetour;
+		if(this.detours!=null)
+			this.detours=l.detours;
+		if(this.liftPreferences!=null)
+			this.liftPreferences=l.liftPreferences;
+		if(this.usersBookingList!=null)
+			this.usersBookingList=l.usersBookingList;
+		if(this.usersOfferingList!=null)
+			this.usersOfferingList=l.usersOfferingList;
 	}
 
 }

@@ -19,25 +19,26 @@ import javax.persistence.PrimaryKeyJoinColumn;
 public class RegisteredUser extends User {
 	
 	@Column(name = "COUNT_ALERT", nullable=true)
-	private int countAlert;
+	private Integer countAlert;
 	
 	@Column (name = "IS_ONLY_PASSENGER", nullable=true)
-	private boolean isOnlyPassenger;
+	private Boolean isOnlyPassenger;
 	
-	private PersonalPreference personalPreference;
-	
-	private List<Message> messagesSent=new LinkedList<Message>();
-	
-	private List<Message> messagesReceived=new LinkedList<Message>();
-
 	private UserActivity userActivity;
 	
-	private List<Feedback> receivedFeedback=new LinkedList<Feedback>();
+	private PersonalPreference personalPreference;
+
+	private List<Message> messagesSent;
+	
+	private List<Message> messagesReceived;
+	
+	private List<Feedback> receivedFeedback;
 
 	public RegisteredUser() {
 		super();
-		countAlert = 0;
-		isOnlyPassenger = true;
+		messagesSent=new LinkedList<Message>();
+		messagesReceived=new LinkedList<Message>();
+		receivedFeedback=new LinkedList<Feedback>();
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY)
@@ -70,10 +71,23 @@ public class RegisteredUser extends User {
 
 	@Override
 	public void copy(DomainObject object2) {
-		super.copy(object2);
 		RegisteredUser u=(RegisteredUser)(object2);
-		this.countAlert=u.countAlert;
-		this.isOnlyPassenger=u.isOnlyPassenger;
+		if(u.isOnlyPassenger!=null)
+			this.isOnlyPassenger=u.isOnlyPassenger;
+		if(u.countAlert!=null)
+			this.isOnlyPassenger=u.isOnlyPassenger;
+		if(u.countAlert!=null)
+			this.countAlert=u.countAlert;
+		if(u.messagesReceived!=null)
+			this.messagesReceived=u.messagesReceived;
+		if(u.messagesSent!=null)
+			this.messagesSent=u.messagesSent;
+		if(u.personalPreference!=null)
+			this.personalPreference=u.personalPreference;
+		if(u.receivedFeedback!=null)
+			this.receivedFeedback=u.receivedFeedback;
+		if(u.userActivity!=null)
+			this.userActivity=u.userActivity;		
 	}
 	
 	@OneToOne (fetch = FetchType.LAZY)

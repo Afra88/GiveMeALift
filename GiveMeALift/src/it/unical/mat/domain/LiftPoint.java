@@ -90,11 +90,16 @@ public class LiftPoint extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		LiftPoint lp= (LiftPoint) object2;
-		this.street=lp.street;
-		this.province=lp.province;
-		this.city=lp.city;
-		this.region=lp.region;
-		this.state=lp.state;
+		if(lp.street!=null)
+			this.street=lp.street;
+		if(lp.province!=null)
+			this.province=lp.province;
+		if(lp.city!=null)
+			this.city=lp.city;
+		if(lp.region!=null)
+			this.region=lp.region;
+		if(lp.state!=null)
+			this.state=lp.state;
 	}
 
 }

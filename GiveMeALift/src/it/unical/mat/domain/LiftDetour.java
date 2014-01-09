@@ -1,5 +1,6 @@
 package it.unical.mat.domain;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -25,8 +26,7 @@ public class LiftDetour extends DomainObject {
 	private List<Lift> liftList;
 	
 	public LiftDetour(){
-		pickUpPoint=null;
-		dropOffPoint=null;
+		liftList=new LinkedList<Lift>();
 	}
 
 	@Override
@@ -61,14 +61,15 @@ public class LiftDetour extends DomainObject {
 		this.dropOffPoint = dropOffPoint;
 	}
 
-
-
 	@Override
 	public void copy(DomainObject object2) {
 		LiftDetour ld=(LiftDetour)object2;
-		this.dropOffPoint=ld.dropOffPoint;
-		this.pickUpPoint=ld.pickUpPoint;
-
+		if(ld.dropOffPoint!=null)
+			this.dropOffPoint=ld.dropOffPoint;
+		if(ld.pickUpPoint!=null)
+			this.pickUpPoint=ld.pickUpPoint;
+		if(ld.liftList!=null)
+			this.liftList=ld.liftList;
 	}
 	
 	@ManyToMany(fetch=FetchType.LAZY) //cascade=CascadeType.ALL
