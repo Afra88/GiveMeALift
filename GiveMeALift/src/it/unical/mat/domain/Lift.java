@@ -34,6 +34,8 @@ public class Lift extends DomainObject {
 	private LiftPoint dropOffPoint;
 	private List<LiftDetour> detours=new LinkedList<LiftDetour>();
 	private Set<LiftPreferences> lift_Preferences = new HashSet<LiftPreferences>(0);
+	private List<User> usersBookingList;
+	private List<User> usersOfferingList;
 	
 
 	public Lift(){
@@ -58,8 +60,27 @@ public class Lift extends DomainObject {
 	public List<LiftDetour> getDetours() {
 		return detours;
 	}
+	
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "LIFT_USER_BOOKING",
+				joinColumns = { @JoinColumn (name = "LIFT_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+	public List<User> getUsersBookingList() {
+		return usersBookingList;
+	}
 
-
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "LIFT_USER_OFFERING",
+				joinColumns = { @JoinColumn (name = "LIFT_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+	public List<User> getUsersOfferingList() {
+		return usersOfferingList;
+	}
+	
+	public void setUsersBookingList(List<User> usersBookingList) {
+		this.usersOfferingList = usersBookingList;
+	}
 
 
 	public void setDetours(List<LiftDetour> detours) {
