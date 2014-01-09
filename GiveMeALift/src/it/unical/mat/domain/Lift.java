@@ -1,13 +1,10 @@
 package it.unical.mat.domain;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,9 +30,9 @@ public class Lift extends DomainObject {
 	private LiftPoint pickUpPoint;
 	private LiftPoint dropOffPoint;
 	private List<LiftDetour> detours=new LinkedList<LiftDetour>();
-	private Set<LiftPreferences> lift_Preferences = new HashSet<LiftPreferences>(0);
-	private List<User> usersBookingList;
-	private List<User> usersOfferingList;
+	private LiftPreferences lift_Preferences;
+	private List<User> usersBookingList=new LinkedList<User>();
+	private List<User> usersOfferingList=new LinkedList<User>();
 	
 
 	public Lift(){
@@ -53,16 +50,16 @@ public class Lift extends DomainObject {
 	public long getId() {return super.getId();};
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "LIFT_DETOURS_JOIN",
-				joinColumns = { @JoinColumn (name = "ID") },
-				inverseJoinColumns = { @JoinColumn(name = "LIFT_DETOUR_ID") })
+				joinColumns = { @JoinColumn (name = "LIFT_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "DETOUR_ID") })
 	public List<LiftDetour> getDetours() {
 		return detours;
 	}
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "LIFT_USER_BOOKING",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -70,7 +67,7 @@ public class Lift extends DomainObject {
 		return usersBookingList;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "LIFT_USER_OFFERING",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -132,7 +129,7 @@ public class Lift extends DomainObject {
 
 
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	public LiftPoint getPickUpPoint() {
 		return pickUpPoint;
@@ -148,7 +145,7 @@ public class Lift extends DomainObject {
 
 
 
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	public LiftPoint getDropOffPoint() {
 		return dropOffPoint;
@@ -158,16 +155,16 @@ public class Lift extends DomainObject {
 		this.dropOffPoint = dropOffPoint;
 	}
 
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "PREFERENCES_FOR_A_LIFT", 
 				joinColumns = { @JoinColumn(name = "LIFT_ID") }, 
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_PREFERENCES_ID")}
 			   )
-	public Set<LiftPreferences> getLift_Preferences() {
+	public LiftPreferences getLift_Preferences() {
 		return lift_Preferences;
 	}
 
-	public void setLift_Preferences(Set<LiftPreferences> lift_Preferences) {
+	public void setLift_Preferences(LiftPreferences lift_Preferences) {
 		this.lift_Preferences = lift_Preferences;
 	}
 

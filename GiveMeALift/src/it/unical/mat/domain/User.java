@@ -1,6 +1,8 @@
 package it.unical.mat.domain;
 
-import javax.persistence.CascadeType;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -12,8 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -53,8 +56,8 @@ public abstract class User extends DomainObject {
 	@Embedded
 	@Column (name="ADDRESS")
 	private Address address;
-	
-	private PersonalPreference prefences;
+
+	private List<SocialNetworkProfile> listSocialNetworkProfiles=new LinkedList<SocialNetworkProfile>();
 
 	public User() {
 		name = "";
@@ -163,13 +166,17 @@ public abstract class User extends DomainObject {
 		this.yearOfBirth=u.yearOfBirth;
 	}
 
-	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
-	@PrimaryKeyJoinColumn
-	public PersonalPreference getPrefences() {
-		return prefences;
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "SOCIAL_NETWORK_USER_JOIN",
+				joinColumns = { @JoinColumn (name = "USER_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "SOCIAL_NETWORK_PROFILE_ID") })
+	public List<SocialNetworkProfile> getListSocialNetworkProfiles() {
+		return listSocialNetworkProfiles;
 	}
 
-	public void setPrefences(PersonalPreference prefences) {
-		this.prefences = prefences;
+	public void setListSocialNetworkProfiles(
+			List<SocialNetworkProfile> listSocialNetworkProfiles) {
+		this.listSocialNetworkProfiles = listSocialNetworkProfiles;
 	}
+
 }

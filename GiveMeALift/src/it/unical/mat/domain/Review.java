@@ -4,9 +4,15 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="REVIEUW")
 public class Review extends DomainObject {
 
 	@Column(name = "LINK_TO_TEXT")
@@ -57,6 +63,19 @@ public class Review extends DomainObject {
 			this.linkToText = r.linkToText;
 		if(this.date != null)
 			this.date = r.date;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "REVIEUW_USER_JOIN",
+				joinColumns = { @JoinColumn (name = "REVIEUW_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

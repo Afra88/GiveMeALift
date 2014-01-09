@@ -10,9 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 @Entity
-public class MemberActivity extends DomainObject {
+@Table(name="USER_ACTIVITY")
+public class UserActivity extends DomainObject {
 
 	@Column(name = "RIDES_OFFERED")
 	private int ridesOffered;
@@ -29,7 +31,7 @@ public class MemberActivity extends DomainObject {
 	private User user;
 	
 
-	public MemberActivity() {
+	public UserActivity() {
 		this.ridesOffered = 0;
 		this.memberSince = null;
 		this.lastOnline = null;
@@ -76,7 +78,7 @@ public class MemberActivity extends DomainObject {
 
 	@Override
 	public void copy(DomainObject object2) {
-		MemberActivity m = (MemberActivity) object2;
+		UserActivity m = (UserActivity) object2;
 		if(this.ridesOffered != 0)
 			this.ridesOffered = m.ridesOffered;
 		if(this.memberSince != null)
