@@ -23,6 +23,7 @@ public class MemberActivity extends DomainObject {
 	@Column(name = "ANSWERS_PERCENTAGE") 
 	private int answersPercentage;
 	
+	//relazione 1a1 con User in base alla chiave primaria
 	@OneToOne (fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	private User user;

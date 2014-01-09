@@ -1,7 +1,9 @@
 package it.unical.mat.domain;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -28,13 +31,11 @@ public class Lift extends DomainObject {
 	private boolean possibleDetour;
 
 	private LiftPoint pickUpPoint;
-	
 	private LiftPoint dropOffPoint;
-
-	
 	private List<LiftDetour> detours=new LinkedList<LiftDetour>();
+	private Set<LiftPreferences> lift_Preferences = new HashSet<LiftPreferences>(0);
 	
-	
+
 	public Lift(){
 		cost=0;
 		pickUpPoint=null;
@@ -132,14 +133,22 @@ public class Lift extends DomainObject {
 		return dropOffPoint;
 	}
 
-
-
-
 	public void setDropOffPoint(LiftPoint dropOffPoint) {
 		this.dropOffPoint = dropOffPoint;
 	}
 
+	@OneToMany(cascade = { CascadeType.ALL })
+	@JoinTable(name = "PREFERENCES_FOR_A_LIFT", 
+				joinColumns = { @JoinColumn(name = "LIFT_ID") }, 
+				inverseJoinColumns = { @JoinColumn(name = "LIFT_PREFERENCES_ID")}
+			   )
+	public Set<LiftPreferences> getLift_Preferences() {
+		return lift_Preferences;
+	}
 
+	public void setLift_Preferences(Set<LiftPreferences> lift_Preferences) {
+		this.lift_Preferences = lift_Preferences;
+	}
 
 
 	@Override
