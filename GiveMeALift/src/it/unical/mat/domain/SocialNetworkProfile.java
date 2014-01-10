@@ -47,7 +47,7 @@ public class SocialNetworkProfile extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		SocialNetworkProfile s = (SocialNetworkProfile) object2;
-		if(this.link != null)
+		if(s.link != null)
 			this.link = s.link;
 	}
 }
