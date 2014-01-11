@@ -150,8 +150,10 @@ public class Lift extends DomainObject {
 
 
 
-	@OneToOne(fetch=FetchType.LAZY)
-	@PrimaryKeyJoinColumn
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinTable(name = "LIFT_PICK_UP_POINT_JOIN",
+				joinColumns = { @JoinColumn (name = "LIFT_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "LIFT_POINT_ID") })
 	public LiftPoint getPickUpPoint() {
 		return pickUpPoint;
 	}
@@ -166,8 +168,10 @@ public class Lift extends DomainObject {
 
 
 
-	@OneToOne(fetch=FetchType.LAZY)
-	@PrimaryKeyJoinColumn
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinTable(name = "LIFT_DROP_OFF_POINT_JOIN",
+				joinColumns = { @JoinColumn (name = "LIFT_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "LIFT_POINT_ID") })
 	public LiftPoint getDropOffPoint() {
 		return dropOffPoint;
 	}
