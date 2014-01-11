@@ -90,22 +90,24 @@ public abstract class AbstractMapper {
 			transaction = session.beginTransaction();
 				@SuppressWarnings("unchecked")
 				Query query= session.createQuery(findStatement);
-				for (String key : parameters.keySet()) {
-					String objectType=parameters.get(key).getClass().getSimpleName();
-					String methodeToInvoke="set"+objectType;
-					if(objectType.equals("Integer")){
-						Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), int.class);
-						m.invoke(query, key, parameters.get(key));
+				if(parameters!=null){	
+					for (String key : parameters.keySet()) {
+						String objectType=parameters.get(key).getClass().getSimpleName();
+						String methodeToInvoke="set"+objectType;
+						if(objectType.equals("Integer")){
+							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), int.class);
+							m.invoke(query, key, parameters.get(key));
+						}
+						else if(objectType.equals("Boolean")){
+							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), boolean.class);
+							m.invoke(query, key, parameters.get(key));
+						}
+						else{
+							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), parameters.get(key).getClass());
+							m.invoke(query, key, parameters.get(key));
+						}
+							
 					}
-					else if(objectType.equals("Boolean")){
-						Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), boolean.class);
-						m.invoke(query, key, parameters.get(key));
-					}
-					else{
-						Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), parameters.get(key).getClass());
-						m.invoke(query, key, parameters.get(key));
-					}
-						
 				}
 				@SuppressWarnings("unchecked")
 				Collection<DomainObject> objects=query.list();
