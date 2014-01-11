@@ -1,12 +1,30 @@
 package it.unical.mat.datamapper;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+
+
+
+
+
+
+
+
+
+
+
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import it.unical.mat.domain.DomainObject;
 import it.unical.mat.util.HibernateUtil;
 
@@ -65,16 +83,35 @@ public abstract class AbstractMapper {
 		return false;	
 	}
 
-	protected Collection<DomainObject> find(String findStatement){
+	protected Collection<DomainObject> find(String findStatement,Map<String,Object> parameters){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			@SuppressWarnings("unchecked")
-			List<DomainObject> objects = session.createQuery(findStatement).list();
-			transaction.commit();
-			return objects;
-		} catch (HibernateException e) {
+				@SuppressWarnings("unchecked")
+				Query query= session.createQuery(findStatement);
+				for (String key : parameters.keySet()) {
+					String objectType=parameters.get(key).getClass().getSimpleName();
+					String methodeToInvoke="set"+objectType;
+					if(objectType.equals("Integer")){
+						Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), int.class);
+						m.invoke(query, key, parameters.get(key));
+					}
+					else if(objectType.equals("Boolean")){
+						Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), boolean.class);
+						m.invoke(query, key, parameters.get(key));
+					}
+					else{
+						Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), parameters.get(key).getClass());
+						m.invoke(query, key, parameters.get(key));
+					}
+						
+				}
+				@SuppressWarnings("unchecked")
+				Collection<DomainObject> objects=query.list();
+				transaction.commit();
+				return objects;
+		} catch (HibernateException | NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 			transaction.rollback();
 		} finally {
