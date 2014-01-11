@@ -23,11 +23,6 @@ public class LiftPreference extends DomainObject {
 	private Boolean pinkTrip;
 	
 	public LiftPreference() {
-		this.roadType = null;
-		this.timesForThisRoute = 0;
-		this.luggageSize = 0;
-		this.scheduleFlexibility = false;
-		this.pinkTrip = false;
 	}
 	
 	
@@ -110,10 +105,21 @@ public class LiftPreference extends DomainObject {
 			this.timesForThisRoute = lp.timesForThisRoute;
 		if(lp.luggageSize != null)
 			this.luggageSize = lp.luggageSize;
-		if(lp.scheduleFlexibility != false)
+		if(lp.scheduleFlexibility != null)
 			this.scheduleFlexibility = lp.scheduleFlexibility;
-		if(lp.pinkTrip != false)
+		if(lp.pinkTrip != null)
 			this.pinkTrip = lp.pinkTrip;
 	}
 
+
+	public void setTimesForThisRoute(Integer timesForThisRoute) {
+		this.timesForThisRoute = timesForThisRoute;
+	}
+
+
+	public void setLuggageSize(Integer luggageSize) {
+		this.luggageSize = luggageSize;
+	}
+
+	
 }

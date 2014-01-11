@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,10 +22,7 @@ public class Review extends DomainObject {
 	
 	private User user;
 	
-	public Review() {
-		this.linkToText = null;
-		this.date = null;
-	}	
+	public Review() {}	
 
 	
 	@Override
@@ -79,4 +75,5 @@ public class Review extends DomainObject {
 		this.user = user;
 	}
 
+	
 }

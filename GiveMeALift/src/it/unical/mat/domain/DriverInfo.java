@@ -29,12 +29,8 @@ public class DriverInfo extends DomainObject {
 	@Column(name="CAR_PHOTO")
 	private String car_photo;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@PrimaryKeyJoinColumn
 	private User user;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@PrimaryKeyJoinColumn
 	private Car car;
 	
 	
@@ -155,4 +151,39 @@ public class DriverInfo extends DomainObject {
 			this.user=d.user;
 	}
 
+
+	public Integer getComfort() {
+		return comfort;
+	}
+
+
+	public void setComfort(Integer comfort) {
+		this.comfort = comfort;
+	}
+
+
+	@OneToOne(fetch=FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	@OneToOne(fetch=FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public Car getCar() {
+		return car;
+	}
+
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
+
+	
 }

@@ -9,22 +9,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="FEEDBACK")
 public class Feedback extends DomainObject {
 
-	private User feedbackSender;
-	private User feedbackReceiver;
 	@Column(name="TEXT")
 	private String text;
 	@Column(name="RATING")
-	private int rating;
+	private Integer rating;
 	@Column(name="NUM_ALERT_SEGNALATION")
-	private int numAlertSegnalation;
+	private Integer numAlertSegnalation;
 	
+	private RegisteredUser feedbackReceiver;
+	private RegisteredUser feedbackSender;
+
 	public Feedback() {}
 	
 	
@@ -35,31 +35,31 @@ public class Feedback extends DomainObject {
 	public long getId() {return super.getId();};
 	
 	@ManyToOne(fetch=FetchType.LAZY) //ok
-	@JoinTable(name = "MESSAGE_FEEDBACK_SENDER_JOIN",
-				joinColumns = { @JoinColumn (name = "USER_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "FEEDBACK_ID") })
+	@JoinTable(name = "FEEDBACK_SENDER_JOIN",
+				joinColumns = { @JoinColumn (name = "FEEDBACK_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
 	public User getSender() {
 		return feedbackSender;
 	}
 
 
 
-	public void setSender(User sender) {
+	public void setSender(RegisteredUser sender) {
 		this.feedbackSender = sender;
 	}
 
 
 	@ManyToOne(fetch=FetchType.LAZY) //ok
-	@JoinTable(name = "MESSAGE_FEEDBACK_RECEIVER_JOIN",
-				joinColumns = { @JoinColumn (name = "USER_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "FEEDBACK_ID") })
-	public User getReceiver() {
+	@JoinTable(name = "FEEDBACK_RECEIVER_JOIN",
+				joinColumns = { @JoinColumn (name = "FEEDBACK_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+	public RegisteredUser getReceiver() {
 		return feedbackReceiver;
 	}
 
 
 
-	public void setReceiver(User receiver) {
+	public void setReceiver(RegisteredUser receiver) {
 		this.feedbackReceiver = receiver;
 	}
 
@@ -85,12 +85,34 @@ public class Feedback extends DomainObject {
 			this.feedbackReceiver=f.feedbackReceiver;
 		if(f.text!=null)
 			this.text=f.text;
-		if(f.numAlertSegnalation!=0)
+		if(f.numAlertSegnalation!=null)
 			this.numAlertSegnalation=f.numAlertSegnalation;
-		if(f.rating!=0){
+		if(f.rating!=null){
 			this.rating=f.rating;
 		}
 
 	}
+
+
+	public Integer getRating() {
+		return rating;
+	}
+
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+
+	public int getNumAlertSegnalation() {
+		return numAlertSegnalation;
+	}
+
+
+	public void setNumAlertSegnalation(int numAlertSegnalation) {
+		this.numAlertSegnalation = numAlertSegnalation;
+	}
+	
+	
 
 }

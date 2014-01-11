@@ -17,13 +17,13 @@ import javax.persistence.Table;
 public class UserActivity extends DomainObject {
 
 	@Column(name = "RIDES_OFFERED")
-	private int ridesOffered;
+	private Integer ridesOffered;
 	@Column(name = "MEMBER_SINCE")
 	private Date memberSince;
 	@Column(name = "LAST_ONLINE")
 	private Date lastOnline;
 	@Column(name = "ANSWERS_PERCENTAGE") 
-	private int answersPercentage;
+	private Integer answersPercentage;
 	
 	//relazione 1a1 con User in base alla chiave primaria
 	@OneToOne (fetch = FetchType.LAZY)
@@ -31,12 +31,7 @@ public class UserActivity extends DomainObject {
 	private User user;
 	
 
-	public UserActivity() {
-		this.ridesOffered = 0;
-		this.memberSince = null;
-		this.lastOnline = null;
-		this.answersPercentage = 0;
-	}
+	public UserActivity() {}
 	
 	@Override
 	@Id
@@ -79,13 +74,13 @@ public class UserActivity extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		UserActivity m = (UserActivity) object2;
-		if(m.ridesOffered != 0)
+		if(m.ridesOffered != null)
 			this.ridesOffered = m.ridesOffered;
 		if(m.memberSince != null)
 			this.memberSince = m.memberSince;
 		if(m.lastOnline != null)
 			this.lastOnline = m.lastOnline;
-		if(m.answersPercentage != 0)
+		if(m.answersPercentage != null)
 			this.answersPercentage = m.answersPercentage;
 		}
 }

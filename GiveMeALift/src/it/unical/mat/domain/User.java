@@ -17,9 +17,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Table(name="USER")
 @DiscriminatorColumn(
     name = "USER_TYPE",
     discriminatorType = DiscriminatorType.STRING
@@ -32,26 +34,23 @@ public abstract class User extends DomainObject {
 	@Column (name="PASSWORD")
 	private String password;
 	
-	@Column (name="NAME", nullable = false, length = 30)
+	@Column (name="NAME", length = 30) //, nullable = false,
 	private String name;
 	
-	@Column (name="SURNAME", nullable = false, length = 30)
+	@Column (name="SURNAME", length = 30) //, nullable = false, 
 	private String surname;
 	
 	@Column (name = "GENDER", length = 1)
 	private String gender;
 	
-	@Column (name="BIRTH_YEAR", nullable = false)
-	private int yearOfBirth;
+	@Column (name="BIRTH_YEAR",nullable=true) //nullable = false
+	private Integer birthYear;
 	
 	@Column (name="PHONE", length = 15)
 	private String phone;
 	
 	@Column (name="MOBILE_PHONE", length = 15)
 	private String mobilePhone;
-	
-	@Column(name="PHOTO")
-	private String car_photo;
 
 	@Embedded
 	@Column (name="ADDRESS")
@@ -60,27 +59,9 @@ public abstract class User extends DomainObject {
 	private List<SocialNetworkProfile> listSocialNetworkProfiles;
 
 	public User() {
-		name = "";
-		surname = "";
-		yearOfBirth = 0;
-		email = "";
-		phone = "";
-		mobilePhone = "";
-		address = new Address();
-		car_photo = null;
-		gender = null;
-		password = null;
-		List<SocialNetworkProfile> listSocialNetworkProfiles=new LinkedList<SocialNetworkProfile>();
+		listSocialNetworkProfiles=new LinkedList<SocialNetworkProfile>();
+	}
 
-	}
-	
-	public String getCar_photo() {
-		return car_photo;
-	}
-	
-	public void setCar_photo(String car_photo) {
-		this.car_photo = car_photo;
-	}
 
 	@Override
 	@Id
@@ -106,18 +87,15 @@ public abstract class User extends DomainObject {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-
-
-	public int getYearOfBirth() {
-		return yearOfBirth;
+	
+	public Integer getBirthYear() {
+		return birthYear;
 	}
-
-
-	public void setYearOfBirth(int yearOfBirth) {
-		this.yearOfBirth = yearOfBirth;
+	
+	public void setBirthYear(Integer birthYear) {
+		this.birthYear = birthYear;
 	}
-
-
+	
 	public String getEmail() {
 		return email;
 	}
@@ -157,6 +135,22 @@ public abstract class User extends DomainObject {
 		this.address = address;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
 	@Override
 	public void copy(DomainObject object2) {
 		User u= (User) object2;
@@ -176,10 +170,8 @@ public abstract class User extends DomainObject {
 			this.phone=u.phone;
 		if(u.surname != null)
 			this.surname=u.surname;
-		if(u.yearOfBirth != 0)
-			this.yearOfBirth=u.yearOfBirth;
-		if(u.car_photo != null)
-			this.car_photo = u.car_photo;
+		if(u.birthYear != null)
+			this.birthYear=u.birthYear;
 		if(u.listSocialNetworkProfiles != null)
 			this.listSocialNetworkProfiles = u.listSocialNetworkProfiles;
 	}

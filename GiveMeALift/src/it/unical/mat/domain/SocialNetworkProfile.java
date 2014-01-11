@@ -21,9 +21,7 @@ public class SocialNetworkProfile extends DomainObject {
 	private SocialNetworkUserID key;
 		
 		
-	public SocialNetworkProfile() {
-		this.link = null;
-	}
+	public SocialNetworkProfile() {}
 
 	@Override
 	@Id
@@ -80,4 +78,6 @@ class SocialNetworkUserID implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	
 }

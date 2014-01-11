@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -75,7 +74,7 @@ public class LiftDetour extends DomainObject {
 	
 	@ManyToMany(fetch=FetchType.LAZY) //cascade=CascadeType.ALL
 	@JoinTable(name = "LIFT_DETOURS_JOIN",
-				joinColumns = { @JoinColumn (name = "DETOUR_ID") },
+				joinColumns = { @JoinColumn (name = "LIFT_DETOUR_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_ID") })
 	public List<Lift> getLiftList() {
 		return liftList;
@@ -85,4 +84,6 @@ public class LiftDetour extends DomainObject {
 		this.liftList = liftList;
 	}
 
+	
+	
 }

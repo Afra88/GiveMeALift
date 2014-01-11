@@ -12,6 +12,8 @@ public class Address {
 	@Column(name="STATE")
 	private String state;
     
+	public Address(){}
+	
     public String toString() {
         return "street: " + getStreet() +
                ", city: " + getCity() +

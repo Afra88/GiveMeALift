@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -36,8 +35,8 @@ public class Message extends DomainObject {
 	
 	@ManyToOne(fetch=FetchType.LAZY) //cambiato
 	@JoinTable(name = "MESSAGE_SENDER_JOIN",
-				joinColumns = { @JoinColumn (name = "USER_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
+				joinColumns = { @JoinColumn (name = "MESSAGE_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
 	public User getSender() {
 		return sender;
 	}
@@ -51,8 +50,8 @@ public class Message extends DomainObject {
 
 	@ManyToOne(fetch=FetchType.LAZY) //cambiato
 	@JoinTable(name = "MESSAGE_RECEIVER_JOIN",
-				joinColumns = { @JoinColumn (name = "USER_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
+				joinColumns = { @JoinColumn (name = "MESSAGE_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
 	public User getReceiver() {
 		return receiver;
 	}
@@ -100,8 +99,8 @@ public class Message extends DomainObject {
 			this.text=m.text;
 		if(m.dateSending!=null)
 			this.dateSending=m.dateSending;
-		
-
 	}
+	
+	
 
 }

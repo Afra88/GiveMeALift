@@ -22,13 +22,7 @@ public class PersonalPreference extends DomainObject {
 	@Column(name="CHATNESS_LEVEL")
 	private Integer chatnessLevel;
 	
-	public PersonalPreference(){
-		childrensOnBoard=false;
-		petsOnBoard=false;
-		smoking=false;
-		music=false;
-		chatnessLevel=1;
-	}
+	public PersonalPreference(){}
 	
 	
 	@Override
@@ -138,4 +132,50 @@ public class PersonalPreference extends DomainObject {
 
 	}
 
+
+	public Boolean getChildrensOnBoard() {
+		return childrensOnBoard;
+	}
+
+
+	public void setChildrensOnBoard(Boolean childrensOnBoard) {
+		this.childrensOnBoard = childrensOnBoard;
+	}
+
+
+	public Boolean getPetsOnBoard() {
+		return petsOnBoard;
+	}
+
+
+	public void setPetsOnBoard(Boolean petsOnBoard) {
+		this.petsOnBoard = petsOnBoard;
+	}
+
+
+	public Boolean getSmoking() {
+		return smoking;
+	}
+
+
+	public void setSmoking(Boolean smoking) {
+		this.smoking = smoking;
+	}
+
+
+	public Boolean getMusic() {
+		return music;
+	}
+
+
+	public void setMusic(Boolean music) {
+		this.music = music;
+	}
+
+
+	public void setChatnessLevel(Integer chatnessLevel) {
+		this.chatnessLevel = chatnessLevel;
+	}
+
+	
 }

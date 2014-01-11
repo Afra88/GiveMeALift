@@ -21,9 +21,13 @@ public class RegisteredUser extends User {
 	@Column(name = "COUNT_ALERT", nullable=true)
 	private Integer countAlert;
 	
-	@Column (name = "IS_ONLY_PASSENGER", nullable=true)
-	private Boolean isOnlyPassenger;
+	@Column (name = "ONLY_PASSENGER", nullable=true)
+	private Boolean onlyPassenger;
 	
+	@Column(name="PHOTO", nullable=true)
+	private String carPhoto;
+	
+
 	private UserActivity userActivity;
 	
 	private PersonalPreference personalPreference;
@@ -33,7 +37,7 @@ public class RegisteredUser extends User {
 	private List<Message> messagesReceived;
 	
 	private List<Feedback> receivedFeedback;
-
+	
 	public RegisteredUser() {
 		super();
 		messagesSent=new LinkedList<Message>();
@@ -41,10 +45,18 @@ public class RegisteredUser extends User {
 		receivedFeedback=new LinkedList<Feedback>();
 	}
 	
+	public String getCarPhoto() {
+		return carPhoto;
+	}
+	
+	public void setCarPhoto(String carPhoto) {
+		this.carPhoto = carPhoto;
+	}
+
 	@ManyToOne(fetch = FetchType.LAZY) //cambiato
 	@JoinTable(name = "PERSONAL_PREFERENCES_USER_JOIN",
-				joinColumns = { @JoinColumn (name = "PERSONAL_PREFERENCES_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+				joinColumns = { @JoinColumn (name = "USER_ID") },
+				inverseJoinColumns = { @JoinColumn(name = "PERSONAL_PREFERENCES_ID") })
 	public PersonalPreference getPersonalPreference() {
 		return personalPreference;
 	}
@@ -53,29 +65,29 @@ public class RegisteredUser extends User {
 		this.personalPreference = personalPreference;
 	}
 	
-	public int getCountAlert() {
+	public Integer getCountAlert() {
 		return countAlert;
 	}
 	
-	public void setCountAlert(int countAlert) {
+	public void setCountAlert(Integer countAlert) {
 		this.countAlert = countAlert;
 	}
-	
-	public boolean isOnlyPassenger() {
-		return isOnlyPassenger;
+
+	public Boolean getOnlyPassenger() {
+		return onlyPassenger;
 	}
-	
-	public void setOnlyPassenger(boolean isOnlyPassenger) {
-		this.isOnlyPassenger = isOnlyPassenger;
+
+	public void setOnlyPassenger(Boolean onlyPassenger) {
+		this.onlyPassenger = onlyPassenger;
 	}
 
 	@Override
 	public void copy(DomainObject object2) {
 		RegisteredUser u=(RegisteredUser)(object2);
-		if(u.isOnlyPassenger!=null)
-			this.isOnlyPassenger=u.isOnlyPassenger;
+		if(u.onlyPassenger!=null)
+			this.onlyPassenger=u.onlyPassenger;
 		if(u.countAlert!=null)
-			this.isOnlyPassenger=u.isOnlyPassenger;
+			this.onlyPassenger=u.onlyPassenger;
 		if(u.countAlert!=null)
 			this.countAlert=u.countAlert;
 		if(u.messagesReceived!=null)
@@ -87,7 +99,9 @@ public class RegisteredUser extends User {
 		if(u.receivedFeedback!=null)
 			this.receivedFeedback=u.receivedFeedback;
 		if(u.userActivity!=null)
-			this.userActivity=u.userActivity;		
+			this.userActivity=u.userActivity;	
+		if(u.carPhoto!=null)
+			this.carPhoto=u.carPhoto;
 	}
 	
 	@OneToOne (fetch = FetchType.LAZY)
@@ -135,4 +149,6 @@ public class RegisteredUser extends User {
 	public void setReceivedFeedback(List<Feedback> receivedFeedback) {
 		this.receivedFeedback = receivedFeedback;
 	}
+	
+	
 }
