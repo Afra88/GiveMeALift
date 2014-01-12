@@ -37,7 +37,12 @@
 			</tr>
 		</table>
 	</form>
+	<form method="get" action="OfferALift">
+	<input type="submit" value="Offri un passaggio!" class="button" />
+</form>
 	</div>
+
+
 <form method="get" action="ResultSearch">
 <p id="mapValues">
 	<span class="label">Partenza: </span>

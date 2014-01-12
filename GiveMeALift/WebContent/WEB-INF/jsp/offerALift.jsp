@@ -63,6 +63,8 @@
 			<tr>
 				<td><span class="label"> Tappa intermedia (se prevista):
 				</span>
+				
+			<!-- 	VEDERE COME PRENDERE + ELEMENTI CON LO STESSO ID?? o mettere diversi id .... -->
 					<ol>
 						<li><input type="text" id=detour name=detour /></li>
 					</ol></td>
