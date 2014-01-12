@@ -4,21 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-
-
-
-
-
-
-
-
-
-
-
-
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -88,7 +74,6 @@ public abstract class AbstractMapper {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-				@SuppressWarnings("unchecked")
 				Query query= session.createQuery(findStatement);
 				if(parameters!=null){	
 					for (String key : parameters.keySet()) {
@@ -106,7 +91,6 @@ public abstract class AbstractMapper {
 							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), parameters.get(key).getClass());
 							m.invoke(query, key, parameters.get(key));
 						}
-							
 					}
 				}
 				@SuppressWarnings("unchecked")

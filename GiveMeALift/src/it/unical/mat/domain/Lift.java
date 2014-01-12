@@ -1,5 +1,7 @@
 package it.unical.mat.domain;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,8 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -28,6 +28,10 @@ public class Lift extends DomainObject {
 	private Integer nSeat;
 	@Column(name="POSSIBLE_DETOUR")
 	private Boolean possibleDetour;
+	@Column(name="DEPARTURE_TIME")
+	private Time departureTime;
+	@Column(name="DEPARTURE_DATE")
+	private Date departureDate;
 
 	private LiftPoint pickUpPoint;
 	private LiftPoint dropOffPoint;
@@ -301,4 +305,20 @@ public class Lift extends DomainObject {
 		return true;
 	}
 
+	
+	public Date getDepartureDate() {
+		return departureDate;
+	}
+	
+	public void setDepartureDate(Date departureDate) {
+		this.departureDate = departureDate;
+	}
+	
+	public Time getDepartureTime() {
+		return departureTime;
+	}
+	
+	public void setDepartureTime(Time departureTime) {
+		this.departureTime = departureTime;
+	}
 }
