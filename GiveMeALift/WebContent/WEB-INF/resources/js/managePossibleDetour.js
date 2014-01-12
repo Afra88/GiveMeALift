@@ -1,11 +1,19 @@
+
+ var contId=0;
+
 $(document).ready( function() {
- 
  $("#add_detour").click( function() {
-    $("ol").append("<li><input type=\"text\" id=detour name=detour /></li>");
+	if (contId<5) {		
+		$("ol").append("<li><input type=\"text\" id=detour"+contId+" name=detour"+contId+" /></li>");
+		contId++;		
+	} 
  });
  
   $("#remove_detour").click( function() {
-    $("li:last").remove();
+	if (contId>0) {
+		$("li:last").remove();
+		contId--;		
+	}
  });
  
 });
