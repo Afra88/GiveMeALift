@@ -5,17 +5,27 @@
     pageEncoding="ISO-8859-1"%>
 <html>
 <head>
-<link rel="stylesheet" href="css/mainstyle.css" type="text/css" />
-<script type="text/javascript" src="js/setMapValue.js"></script>
-<script type="text/javascript" src="js/checkingTime.js"></script>
-<script src="js/calendar/tcal.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
-<link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&language=it"></script>
-<script type="text/javascript" src="js/GoogleMap/map.js"></script>
+	<link rel="stylesheet" href="css/mainstyle.css" type="text/css" />
+	<script type="text/javascript" src="js/setMapValue.js"></script>
+	<script type="text/javascript" src="js/checkingTime.js"></script>
+	<script src="js/calendar/tcal.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
+	<link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&language=it"></script>
+	<script type="text/javascript" src="js/GoogleMap/map.js"></script>
+
+	<!-- Google Place Autocomplete -->
+ 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+ 	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    <link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css">
+ 	<script src="js/GooglePlaceAutocomplete/placeAutocomplete.js" type="text/javascript"></script>
+    <!-- end -->
+
 <title>Give me a lift!</title>
 </head>
-<body>
+<body onload="initialize()">
 <div class="container">
 	<div class="header">
 	    <form method="post" action="LoginServlet">
@@ -44,11 +54,11 @@
 
 
 <form method="get" action="ResultSearch">
-<p id="mapValues">
+	<p class="locationField" id="mapValues">
 	<span class="label">Partenza: </span>
-		<input type="text" id=mapFrom name=mapFrom /> 
+		<input class="autocomplete" type="text" id=mapFrom name=mapFrom /> 
 	<span class="label"> Arrivo: </span>
-		<input type="text" id=mapTo name=mapTo />
+		<input class="autocomplete" type="text" id=mapTo name=mapTo />
 	<span id=date><script type="text/javascript" src="js/currentDate.js"></script></span>
 	<input class="button"  id="FromAToB" type="button" value="Percorso" />
 	<input type="submit" value="Cerca" class="button" />
