@@ -9,4 +9,7 @@ calendar.setAttribute("name", "date");
 calendar.setAttribute("class", "tcal");
 calendar.setAttribute("value", currentDate);
 document.getElementById("date").appendChild(calendar);
+document.getElementById("date1").appendChild(calendar);
+
 //('<input type=text name=date class=tcal value='+currentDate+' />');
+
