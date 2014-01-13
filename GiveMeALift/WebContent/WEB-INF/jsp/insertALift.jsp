@@ -85,19 +85,34 @@
 				</td>
 			</tr>
 			<tr>
+				<td colspan="2" align="center"><h2>Riepilogo Dati</h2></td>
+			</tr>
+			<tr>
+				<td rowspan = 3><h3>${inputs.get(0)} <img src="images/freccia1.gif" height="10px"/> ${inputs.get(1)} </h3>
+				<br>
+				<h3>Partenza prevista il: ${inputs.get(2)} - ore: </h3>
+				<br>
+				<h3>Ritorno previsto il: ${inputs.get(2)} - ore: </h3>
+				</td>	
+<%-- 	 		<c:forEach var="i" items="${inputs}">  --%>
+<!-- 	 		<tr>  -->
+<%-- 	 			<td><h3>${i}</h3></td> --%>
+<!-- 	 		<tr>  -->
+<%-- 	 		</c:forEach> --%>
+
+<!-- 				<td rowspan="3"> -->
+<!-- 					<p id="map"></p> -->
+<!-- 				</td> -->
+			</tr>
+			<tr>
 				<td colspan="3" align="right">
 					<input class="button" type="button" id="goBack" value="Indietro"/>
 					<input class="button" type="submit" value="Pubblica annuncio"/>
 				</td>
 			</tr>
-	<%--  		<c:forEach var="i" items="${inputs}">  --%>
-	<!--  		<tr>  -->
-	<%--  			<td><h3>${i}</h3></td> --%>
-	<!--  		<tr>  -->
-	<%--  		</c:forEach> --%>
 		</table>
 	</form>
-	<p id="map"></p>
+<!-- 	<p id="map"></p> -->
 </div>
 
 <%@include file="footer.jsp"%>

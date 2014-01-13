@@ -58,6 +58,8 @@ public class OfferController {
 			System.out.println("---"+string);
 		}
 		
+		String completeGoingDate = dates[0];
+		String completeReturnDate = dates[1];
 //		String[] goingDate = dates[0].split("/");
 //		String[] returnDate = dates[1].split("/");
 		
@@ -86,7 +88,7 @@ public class OfferController {
 		ArrayList<String> inputs = new ArrayList<String> ();
 		inputs.add(mapFrom);
 		inputs.add(mapTo);
-		inputs.add(date);
+		inputs.add(completeGoingDate);
 		inputs.add(goingHour);
 		inputs.add(goingMins);
 		inputs.add(returnHour);
