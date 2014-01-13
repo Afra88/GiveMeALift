@@ -20,19 +20,6 @@
 <%@include file="header.jsp"%>
 
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
-
-
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
-
-<link rel="stylesheet" type="text/css" href="js/geonames/geonames.css">
-<script type="text/javascript" src="js/geonames/geonames.js"></script>
-
-<script type="text/javascript" src="js/managePossibleDetour.js"></script>
-<script type="text/javascript" src="js/checkInsertedFields.js"></script>
-
 
 
 
@@ -41,6 +28,8 @@
 	<a href="/GiveMeALift/">Homepage</a>
 
 </div>
+
+
 
 <div class="content">
 
@@ -63,18 +52,17 @@
 				<td>
 				<span class="label"> Luogo di Partenza: </span> 							
 <!-- 				<input id="city">						 -->
-				<input type="text" id=mapFrom name=mapFrom />
+				<input type="text" id=mapFrom name=mapFrom class="autocomplete" />
 				
 				<span class="label"> Luogo di arrivo: </span>				 
-				<input	type="text" id=mapTo name=mapTo />
-				<br>			
-		Powered by <a href="http://geonames.org">geonames.org</a>	
+				<input	type="text" id=mapTo name=mapTo class="autocomplete" />
 				</td>
 			</tr>
 			<tr>
 				<td><span class="label"> Tappa intermedia (se prevista):
 				</span>				
 					<ol>
+<!-- 						<li><input id="detour0" class="autocomplete" type="text" name="detour0"></input></li> -->
 <!-- 						<li><input type="text" id=detour name=detour /></li> -->
 					</ol></td>
 			</tr>
@@ -94,11 +82,14 @@
 					<span id=date><script type="text/javascript" src="js/currentDate.js"></script></span> 
 					<span class="label"> Ora partenza: </span>
 					<select id="goingTimeH" name="goingTimeH" >
-					  <option>0<option>1<option>2<option>3<option>4<option>5<option>6<option>7<option>8<option>9 <option>10<option>11<option>12<option>13
-					  <option>14<option>15<option>16<option>17<option>18<option>19<option>20<option>21<option>22<option>23 
+					  <c:forEach var="i" step="1" begin="00" end="23" >
+						<option>${i}</option>
+						</c:forEach>
 					</select> 														  						
 					<select id="goingTimeM" name="goingTimeM">
-					  <option>00<option>15<option>30<option>45						
+					 <c:forEach var="i" step="1" begin="00" end="59" >
+						<option>${i}</option>
+					</c:forEach>							
 					</select> 	 
 				</td>
 			</tr>
@@ -108,12 +99,14 @@
 					</script></span>
 					<span class="label"> Ora ritorno: </span>					
 						<select id="returnTimeH" name="returnTimeH">
-						  <option>0<option>1<option>2<option>3<option>4<option>5<option>6<option>7<option>8<option>9
-						  <option>10<option>11<option>12<option>13<option>14<option>15<option>16<option>17
-						  <option>18<option>19<option>20<option>21<option>22<option>23 
+						 <c:forEach var="i" step="1" begin="00" end="23" >
+							<option>${i}</option>
+						</c:forEach> 
 						</select> 														  						
 						<select id="returnTimeM" name="returnTimeM">
-						  <option>00<option>15<option>30<option>45					
+						<c:forEach var="i" step="1" begin="00" end="59" >
+						<option>${i}</option>
+						</c:forEach>
 						</select> 								
 <!-- 					<span id=date1><script type="text/javascript" src="js/currentDate.js"></script></span> -->
 				</td>
