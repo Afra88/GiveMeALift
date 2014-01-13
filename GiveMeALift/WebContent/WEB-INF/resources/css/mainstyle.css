@@ -47,7 +47,8 @@ a:hover, a:active, a:focus { /* Questo gruppo di selettori conferisce alla navig
 .header {
 	background: #FFD700;
 	height:250px;
-	/* background-image: url("images/banner.png"); */
+	background-image: url("../images/banner.png");
+	background-repeat: no-repeat;
 }
 
 /* ~~ Queste sono le colonne del layout. ~~ 
@@ -64,7 +65,7 @@ a:hover, a:active, a:focus { /* Questo gruppo di selettori conferisce alla navig
 .sidebar1 {
 	float: left;
 	height: auto;
-	width: 200px;
+	width: 211px;
 	background: #F5F5F5;
 	padding-bottom: 10px;
 	border: ridge;
@@ -72,7 +73,7 @@ a:hover, a:active, a:focus { /* Questo gruppo di selettori conferisce alla navig
 .content {
 	height: inherit;
 	padding: 10px 0;
-	width: 748px;
+	width: 737px;
 	float: left;
 	border: ridge;
 }
@@ -364,22 +365,6 @@ input[type="button"],input[type="submit"]{
 	width: 100px;
 }
 
-.companyName{
-	text-decoration: underline;
-	color: #42413C;
-	cursor: pointer;
-}
-
-.companyName:visited {
-	color: #6E6C64;
-	text-decoration: underline;
-}
-
-.companyName:hover, .companyName:active, .companyName:focus {
-	text-decoration: none;
-}
-
-
 .sidebar1 h4 {
 	padding-bottom: 0;
 	font-size: 13px;
@@ -399,7 +384,11 @@ input[type="button"],input[type="submit"]{
 
 }
 
- .sidebar1 .contentSlidebar{
+.center{
+	text-align: center;
+}
+ 
+.sidebar1 .sliderBox{
 	/* text-align: center; */
 	padding: 10px;
 	padding-bottom: 20px;
@@ -409,4 +398,11 @@ input[type="button"],input[type="submit"]{
 	border:0; 
 	color:black;
 	font-weight:bold;
+}
+
+#reverse{
+/* 	background-image: url("../images/reverse.png)"); */
+	background: url("../images/reverse.png") no-repeat center ;
+	width: 30px;
+	height: 20px;
 }

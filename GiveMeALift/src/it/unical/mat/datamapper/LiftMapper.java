@@ -135,4 +135,10 @@ public class LiftMapper extends AbstractMapper {
 		return result;
 	}
 
+	public List<Lift> findLiftByFromAndToAndCostAndTimeAndDate(String input1,
+			String input2, String input3, String radio, int timeTo, int timeFrom) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -1,7 +1,10 @@
 package it.unical.mat.controller;
 
+import java.util.List;
+
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.domain.Lift;
+
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +19,7 @@ public class SearchController {
 	public String handleSearch(@RequestParam("mapFrom") String input1, 
     		@RequestParam("mapTo") String input2,
     		@RequestParam("date") String input3,
-    		@RequestParam("page") String p,
+    		@RequestParam(value="page",required=false) String p,
     		Model model){
 		
 			//			Lift l=new Lift();
@@ -35,12 +38,58 @@ public class SearchController {
 //			lm.insert(l);
 			
 			LiftMapper lm=new LiftMapper();
+			
+			if(p==null || p==""){
+				p="1";
+			}
 			PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(lm.findLiftByFromAndTo(input1, input2, input3));		
 			pageHolder.setPage(Integer.parseInt(p));
 			pageHolder.setPageSize(10);
 			
+			model.addAttribute("from",input1);
+			model.addAttribute("to",input2);
+			
+			model.addAttribute("pages", pageHolder.getPageCount());
+			model.addAttribute("page",pageHolder.getPage());
+			
 			model.addAttribute("pageHolder",pageHolder);
 			
 			return "resultSearch";			
+	}
+	
+	@RequestMapping(value="/AdvancedSearchOptions", method = RequestMethod.GET)
+	public String handleAdvancedSearch(@RequestParam("from") String input1, 
+    		@RequestParam("to") String input2,
+    		@RequestParam("date") String input3,
+    		@RequestParam("range") String range,
+    		@RequestParam("radio") String radio,
+    		@RequestParam(value="page",required=false) String p,
+    		Model model){
+		
+		LiftMapper lm=new LiftMapper();
+		
+		if(p==null || p==""){
+			p="1";
+		}
+		String[] rangeValues=range.split(" ");
+		int timeFrom=Integer.parseInt(rangeValues[1]);
+		int timeTo=Integer.parseInt(rangeValues[3]);
+		
+		List<Lift> listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(input1, input2, input3, radio, timeTo, timeFrom);
+		if(listResults!=null){
+			
+			PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>();		
+			pageHolder.setPage(Integer.parseInt(p));
+			pageHolder.setPageSize(10);	
+			model.addAttribute("pages", pageHolder.getPageCount());
+			model.addAttribute("page",pageHolder.getPage());
+			model.addAttribute("pageHolder",pageHolder);
+		
+		}
+		
+		model.addAttribute("from",input1);
+		model.addAttribute("to",input2);
+		
+		return "resultSearch";	
 	}
 }
