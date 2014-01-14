@@ -16,12 +16,69 @@
 <script type="text/javascript" src="js/jQueryElement/jquery.format.1.05.js"></script>
 
 
+    
+
 <div class="sidebar1">
 	<a href="/GiveMeALift/">Homepage</a>
 </div>
 
 <div class="content">
 	<form method="get" action="SubmitALift">
+	
+	
+	<!-- hidden div per visualizzare nel dom i valori di path -->
+	<c:forEach var="i"  begin="0" end="${path.size()-1}" > 
+		<div name="path" hidden=true>${path.get(i)} </div>
+	</c:forEach>
+	
+	<!-- hidden div per visualizzare nel dom i valori di inputs -->
+	<c:forEach var="i"  begin="0" end="${inputs.size()-1}" > 
+		<div name="inputs"  hidden=true>${inputs.get(i)} </div>
+	</c:forEach>
+	
+	
+	<!-- hidden div inserire tag input con name e value caricati con jquery -->	
+	<div id="inputs" hidden=true></div>
+
+
+ 	<script type="text/javascript"> 	 	
+ 	var elements = document.getElementsByName("path") 	// name="path"	
+	for ( var i = 1; i < elements.length-1; i++) {
+		 //id="inputs"
+		$("#inputs").append(                             
+ 			"<input name=\"detour"+(i-1)+"\" value=\"" + elements[i].innerHTML + "\">"
+ 		);
+	} 
+ 	
+ 	 //id="inputs"
+	$("#inputs").append("<input name=\"mapFrom\" value=\"" +elements[0].innerHTML + "\">");
+	$("#inputs").append("<input name=\"mapTo\" value=\"" + elements[elements.length-1].innerHTML + "\">");
+
+  	
+	var elements2 = document.getElementsByName("inputs") 	// name="inputs"	
+
+	var dateG = elements2[0].innerHTML;	
+	var dateR = elements2[1].innerHTML;
+	
+ 	//id="inputs"
+	if (dateR.localeCompare("NULL")) {
+		$("#inputs").append("<input name=\"date\" value=\""+dateG+"\">" );  //DATA A,DATA R				
+	}else {
+		$("#inputs").append("<input name=\"date\" value=\"" + dateG+","+dateR+ "\">" );  //DATA A,DATA R		
+	}	
+	$("#inputs").append("<input name=\"goingTimeH\" value=\"" + elements2[2].innerHTML + "\">" );  // H ANDATA
+ 	$("#inputs").append("<input name=\"goingTimeM\" value=\"" + elements2[3].innerHTML + "\">" );  // M ANDATA
+ 	
+ 	//CONTROLLI TUTTI SULLA DATA DI RITORNO
+ 	if (!dateR.localeCompare("NULL")) { 
+	 	$("#inputs").append("<input name=\"returnTimeH\" value=\"" + elements2[4].innerHTML + "\">" );  // H RITORNO
+	 	$("#inputs").append("<input name=\"returnTimeM\" value=\"" + elements2[5].innerHTML + "\">" );  // M RITORNO 		
+ 	} 		 	
+	</script>
+		        
+  
+	
+	
 		<table id="plusDetails" class=table>
 			<tr>
 				<td colspan="3" align="center"><h2>Quota a passeggero</h2></td>
@@ -84,7 +141,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h2> Partitò: </h2></td>
+				<td><h2> Partirò: </h2></td>
 				<td>
 					<select id="delay">
 	  					<option value="strict">puntuale</option>
@@ -109,16 +166,16 @@
 			<tr>
 				<td><h2> Viaggio rosa: </h2></td>
 				<td>
-					<select id="pinkTrip">
+					<select id="pinkTrip"> 
 	  					<option value="bothPass">viaggio con uomini e donne</option>
 	  					<option value="bothPass">viaggio solo con donne</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td colspan="2"> 
 				<input id="checkLicence" type="checkbox" name="drivingLicence" value="drivingLicence"/> 
-				</i>Dichiaro di essere in possesso di patente di guida valida ed assicurazione RCA </i>
+				<i>Dichiaro di essere in possesso di patente di guida valida ed assicurazione RCA </i>
 				</td>
 			</tr>
 			<tr>
@@ -154,7 +211,7 @@
 </div>
 
 
-<!-- va messo dopo  -->
+<!-- serve per l'input di soli numeri (va messo dopo)  -->
 <script type="text/javascript"> $(".number").format({precision: 0,autofix:true});</script>
 
 <%@include file="footer.jsp"%>

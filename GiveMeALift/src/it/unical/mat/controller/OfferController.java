@@ -53,43 +53,73 @@ public class OfferController {
 //		System.out.println(returnMins);
 		
 		String[] dates = date.split(",");
-		
-		for (String string : dates) {
-			System.out.println("---"+string);
-		}
-		
 		String completeGoingDate = dates[0];
-		String completeReturnDate = dates[1];
-//		String[] goingDate = dates[0].split("/");
-//		String[] returnDate = dates[1].split("/");
-		
-		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-		Date dG = null;
-		Date dR = null;
-		try {
-			dG = f.parse(dates[0]);
-			dR = f.parse(dates[1]);
-		} catch (ParseException e) {		e.printStackTrace();	}
-		long dateGoingMillis = dG.getTime();
-		long dateReturnMillis = dR.getTime();
 		
 		int gmins = Integer.parseInt(goingMins);
-		int rmins = Integer.parseInt(returnMins);
-		
 		long goingTime = gmins + (Integer.parseInt(goingHour)*60);
-		long returnTime = rmins + (Integer.parseInt(returnHour)*60);
+			
+		// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
+		String completeReturnDate = "NULL";
 		
-//		String goingDay = goingDate[0];
-//		String goingMonth = goingDate[1];
-//		String goingYear = goingDate[2];
-//		String returnDay = returnDate[0];
-//		String returnMonth = returnDate[1];
-//		String returnYear = returnDate[2];
+		Date dG = null;
+		long dateGoingMillis = 0;
 		
-//		System.out.println("partenza: "+goingDay + goingMonth + goingYear +"ritorno:" + returnDay + returnMonth + returnYear);
-//		
-
+		Date dR = null;
+		long dateReturnMillis = Integer.MAX_VALUE;;
+		int rmins = Integer.MAX_VALUE;
+		long returnTime = Integer.MAX_VALUE;
+		// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
+		
+		boolean returnIsPresent=false;
+		
+		if(dates.length>1 /*and controllo dell'ora di ritorno*/){                      // SE C'è DATA DI RITORNO	
+			returnIsPresent=true;
+			
+//			for (String string : dates) {
+//				System.out.println("---"+string);
+//			}
+//		String[] goingDate = dates[0].split("/");
+//		String[] returnDate = dates[1].split("/");
+			
+			completeReturnDate = dates[1];		
+			
+			SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+			dG = null;
+			dR = null;
+			try {
+				dG = f.parse(dates[0]);
+				dR = f.parse(dates[1]);
+			} catch (ParseException e) {		e.printStackTrace();	}
+			
+			dateGoingMillis = dG.getTime();
+			dateReturnMillis = dR.getTime();
+			
+//			gmins = Integer.parseInt(goingMins);
+//			goingTime = gmins + (Integer.parseInt(goingHour)*60);
+			
+			rmins = Integer.parseInt(returnMins);
+			returnTime = rmins + (Integer.parseInt(returnHour)*60);
+			
+	//		String goingDay = goingDate[0];
+	//		String goingMonth = goingDate[1];
+	//		String goingYear = goingDate[2];
+	//		String returnDay = returnDate[0];
+	//		String returnMonth = returnDate[1];
+	//		String returnYear = returnDate[2];
+			
+	//		System.out.println("partenza: "+goingDay + goingMonth + goingYear +"ritorno:" + returnDay + returnMonth + returnYear);
+	//		
+	
+			
+		}//if return date is present
+		
+		
+		
 		if(mapFrom == "" || mapTo == ""){
+			/*
+			 *  mettere un attributo al model per far capire all'utente che c'è stato un errore
+			 *  (lanciare un alert)
+			 */
 			System.out.println("Scegli luogo Partenza/Arrivo");			
 			return "offerALift";
 		}
@@ -98,16 +128,28 @@ public class OfferController {
 		ArrayList<String> inputs = new ArrayList<String> ();
 		ArrayList<String> path = new ArrayList<String>();
 		
-//		inputs.add(mapFrom);				//i=0 
-//		inputs.add(mapTo);					//i=1
-		inputs.add(completeGoingDate);	    //i=2
-		inputs.add(completeReturnDate);		//i=3
-		inputs.add(goingHour);				//i=4
-		if(gmins>=10)	inputs.add(goingMins);	//i=5
-		else inputs.add("0"+goingMins);				
-		inputs.add(returnHour);				//i=6
-		if(rmins>=10)	inputs.add(returnMins); //i=7
-		else		inputs.add("0"+returnMins);
+//		inputs.add(mapFrom);				 
+//		inputs.add(mapTo);					
+		
+		
+		inputs.add(completeGoingDate);	        //i=0
+		// se non c'è è gia settata a "NULL"
+		inputs.add(completeReturnDate);		    //i=1 
+		
+		inputs.add(goingHour);				    //i=2		
+		if(gmins>=10)	inputs.add(goingMins);	//i=3
+		else inputs.add("0"+goingMins);
+		
+		if(returnIsPresent){
+			inputs.add(returnHour);				    //i=4		
+			if(rmins>=10)	inputs.add(returnMins); //i=5		
+			else		inputs.add("0"+returnMins);		
+		}
+		else {
+			inputs.add("NULL"); //i=4
+			inputs.add("NULL"); //i=5
+		}		
+		
 //		if(detour0!="")
 //			inputs.add(detour0);			//i=8
 //		if(detour1!="")
@@ -118,6 +160,9 @@ public class OfferController {
 //			inputs.add(detour3);			//i=11
 //		if(detour4!="")
 //			inputs.add(detour4);			//i=12
+		
+		System.out.println(mapFrom);
+		System.out.println(mapTo);
 		
 		System.out.println(detour0);
 		System.out.println(detour1);
@@ -147,38 +192,71 @@ public class OfferController {
 		System.out.println(path.get(path.size()-1));
 		
 		
-		
-		if( dateGoingMillis > dateReturnMillis ){
-			System.out.println("errore Data");			
-			return "offerALift";
-		}
-		else if( dateGoingMillis < dateReturnMillis ){			
-			model.addAttribute("inputs",inputs);
-			return "insertALift";			
-		}else{
-			if (goingTime<returnTime) {
-				model.addAttribute("inputs",inputs);
-				return "insertALift";	
+		if(returnIsPresent){
+			if( dateGoingMillis > dateReturnMillis ){
+				System.out.println("errore Data");			
+				return "offerALift";
 			}
-		}
-		System.out.println("errore Ora/minuti");			
-		return "offerALift";
+			else if( dateGoingMillis < dateReturnMillis ){			
+				model.addAttribute("inputs",inputs);
+				return "insertALift";			
+			}else{
+				if (goingTime<returnTime) {
+					model.addAttribute("inputs",inputs);
+					return "insertALift";	
+				}
+			}
+			System.out.println("errore Ora/minuti");			
+			return "offerALift";
+		
+		}					
+		
+		//se non è presente la data di ritorno
+		model.addAttribute("inputs",inputs);
+		return "insertALift";
+		
+		
 				
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value="/SubmitALift")
-	public String submitOffer(
-			
+	public String submitOffer(			
+			@RequestParam("mapFrom") String mapFrom, 
+    		@RequestParam("mapTo") String mapTo,
+    		@RequestParam(value="detour0",required=false) String detour0,
+    		@RequestParam(value="detour1",required=false) String detour1,
+    		@RequestParam(value="detour2",required=false) String detour2,
+    		@RequestParam(value="detour3",required=false) String detour3,
+    		@RequestParam(value="detour4",required=false) String detour4,
+    		@RequestParam("date") String date,
+    		@RequestParam("goingTimeH") String goingHour,
+    		@RequestParam("goingTimeM") String goingMins,
+    		@RequestParam(value="returnTimeH",required=false) String returnHour,
+    		@RequestParam(value="returnTimeM",required=false) String returnMins,			
+    		
     		@RequestParam("price") String price,
     		@RequestParam(value="drivingLicence",required=false) String checkLicence,
     		
 			Model m){
 		
-//		System.out.println(mapFrom);
-//		System.out.println(mapTo);
+		System.out.println(mapFrom);
+//		System.out.println(detour0);
+		System.out.println(mapTo);
 		
-		System.out.println(price);
-		System.out.println(checkLicence);
+//		if(checkLicence == null)
+//			return "insertALift";
+		
+//		System.out.println(price);
+//		System.out.println(checkLicence);
+		
+		
 //		System.out.println(mapFrom);
 		
 		return "submitALift";
