@@ -24,9 +24,8 @@ public class RegisteredUser extends User {
 	@Column (name = "ONLY_PASSENGER", nullable=true)
 	private Boolean onlyPassenger;
 	
-	@Column(name="PHOTO", nullable=true)
-	private String carPhoto;
-	
+	@Column(name="PROFILE_PHOTO")
+	private String profilePhoto;
 
 	private UserActivity userActivity;
 	
@@ -38,19 +37,13 @@ public class RegisteredUser extends User {
 	
 	private List<Feedback> receivedFeedback;
 	
+	private DriverInfo driverInfo;
+	
 	public RegisteredUser() {
 		super();
 		messagesSent=new LinkedList<Message>();
 		messagesReceived=new LinkedList<Message>();
 		receivedFeedback=new LinkedList<Feedback>();
-	}
-	
-	public String getCarPhoto() {
-		return carPhoto;
-	}
-	
-	public void setCarPhoto(String carPhoto) {
-		this.carPhoto = carPhoto;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY) //cambiato
@@ -100,8 +93,6 @@ public class RegisteredUser extends User {
 			this.receivedFeedback=u.receivedFeedback;
 		if(u.userActivity!=null)
 			this.userActivity=u.userActivity;	
-		if(u.carPhoto!=null)
-			this.carPhoto=u.carPhoto;
 	}
 	
 	@OneToOne (fetch = FetchType.LAZY)
@@ -150,5 +141,22 @@ public class RegisteredUser extends User {
 		this.receivedFeedback = receivedFeedback;
 	}
 	
+	public String getProfilePhoto() {
+		return profilePhoto;
+	}
 	
+	public void setProfilePhoto(String profilePhoto) {
+		this.profilePhoto = profilePhoto;
+	}
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public DriverInfo getDriverInfo() {
+		return driverInfo;
+	}
+	
+	public void setDriverInfo(DriverInfo driverInfo) {
+		this.driverInfo = driverInfo;
+	}
+
 }

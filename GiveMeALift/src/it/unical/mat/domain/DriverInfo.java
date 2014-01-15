@@ -33,7 +33,6 @@ public class DriverInfo extends DomainObject {
 	
 	private Car car;
 	
-	
 	public DriverInfo(){}
 	
 	

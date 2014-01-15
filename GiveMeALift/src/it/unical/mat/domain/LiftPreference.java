@@ -18,7 +18,7 @@ public class LiftPreference extends DomainObject {
 	@Column(name = "LUGGAGE_SIZE")
 	private Integer luggageSize;
 	@Column(name = "SCHEDULE_FLEXIBILITY")
-	private Boolean scheduleFlexibility;
+	private String scheduleFlexibility;
 	@Column(name = "PINK_TRIP")
 	private Boolean pinkTrip;
 	
@@ -72,13 +72,13 @@ public class LiftPreference extends DomainObject {
 
 
 
-	public Boolean getScheduleFlexibility() {
+	public String getScheduleFlexibility() {
 		return scheduleFlexibility;
 	}
 
 
 
-	public void setScheduleFlexibility(Boolean scheduleFlexibility) {
+	public void setScheduleFlexibility(String scheduleFlexibility) {
 		this.scheduleFlexibility = scheduleFlexibility;
 	}
 

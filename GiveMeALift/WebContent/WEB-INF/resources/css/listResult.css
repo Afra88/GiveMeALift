@@ -6,7 +6,7 @@
 
     /* vertical scrollers have typically larger height than width */
     height: 1410px;
-    width: 650px;
+    width: 700px;
     border-top:1px solid #ddd;
 }
 
@@ -29,19 +29,23 @@
     height:110px;
 }
 
+.item:HOVER {
+	background-color: #B0E0E6;
+}
+
 /* elements inside single item */
 .item img {
     float:left;
     margin-right:20px;
     height:90px;
-    width:130px;
+    width:90px;
 }
 
 .imgContainer{
 	float:left;
     margin-right:20px;
-	width:130px;
-	height:110px;
+	width:90px;
+	height:90px;
 }
 
 .item ul{

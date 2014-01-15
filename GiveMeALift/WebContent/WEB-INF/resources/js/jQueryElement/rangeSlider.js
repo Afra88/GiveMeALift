@@ -3,7 +3,7 @@
       range: true,
       min: 0,
       max: 23,
-      values: [ 8, 18 ],
+      values: [ 0, 23 ],
       slide: function( event, ui ) {
         $( "#range" ).val( "Ore " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
       }

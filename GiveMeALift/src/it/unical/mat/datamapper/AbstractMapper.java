@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -95,6 +96,10 @@ public abstract class AbstractMapper {
 				}
 				@SuppressWarnings("unchecked")
 				Collection<DomainObject> objects=query.list();
+//				for (DomainObject domainObject : objects) 
+//					
+//					
+//				}
 				transaction.commit();
 				return objects;
 		} catch (HibernateException | NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {

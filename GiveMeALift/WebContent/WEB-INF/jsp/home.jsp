@@ -47,12 +47,14 @@
 			</tr>
 		</table>
 	</form>
-	<form method="get" action="OfferALift">
-	<input type="submit" value="Offri un passaggio!" class="button" />
-</form>
 	</div>
 
-
+<p>
+	<form method="get" action="OfferALift">
+		<input type="submit" value="Offri un passaggio!" class="button" />
+	</form>
+</p>
+<p>
 <form method="get" action="ResultSearch">
 	<p class="locationField" id="mapValues">
 	<span class="label">Partenza: </span>
@@ -62,8 +64,9 @@
 	<span id=date><script type="text/javascript" src="js/currentDate.js"></script></span>
 	<input class="button"  id="FromAToB" type="button" value="Percorso" />
 	<input type="submit" value="Cerca" class="button" />
-</p>
+	</p>
 </form>
+</p>
 <p id="map"></p>
 </div>
 </body>

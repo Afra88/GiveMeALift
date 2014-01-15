@@ -36,7 +36,8 @@ a:hover, a:active, a:focus { /* Questo gruppo di selettori conferisce alla navig
 /* ~~ Questo contenitore a larghezza fissa circonda tutti gli altri div ~~ */
 .container {
 	width: 960px;
-	background: #FFFFFF;
+	/* background: #FFFFFF; */
+	background: #F5F5F5;
 	margin: 0 auto; /* Il valore automatico sui lati, abbinato alla larghezza, produce un layout centrato. */
 	box-shadow: 0px 5px 5px 5px #000;
 	-webkit-box-shadow: 0px 5px 5px 5px #000;
@@ -62,20 +63,21 @@ a:hover, a:active, a:focus { /* Questo gruppo di selettori conferisce alla navig
 4) Se preferite la barra di navigazione a destra anziché a sinistra, è sufficiente applicare alle colonne un float nella direzione opposta (tutte a destra anziché a sinistra) in modo da eseguirne il rendering in ordine inverso. Non è necessario spostare i div all'interno del codice HTML.
 
 */
+
 .sidebar1 {
 	float: left;
-	height: auto;
-	width: 211px;
+	width: 25%;
 	background: #F5F5F5;
-	padding-bottom: 10px;
-	border: ridge;
+	 padding-bottom: 10px; 
 }
 .content {
 	height: inherit;
 	padding: 10px 0;
-	width: 737px;
+	width: 74.5%;
 	float: left;
-	border: ridge;
+	position:relative;
+	background: white;
+ 	border-left: ridge;
 }
 
 .contentNoSidebar {
@@ -84,7 +86,10 @@ a:hover, a:active, a:focus { /* Questo gruppo di selettori conferisce alla navig
 	padding: 10px;
 	height: 100%; 
 	min-height:500px;
-/* 	border: ridge; */
+	background: white;
+	/* border-right: ridge;
+ 	border-left: ridge;
+ */
 }
 /* ~~ Questo selettore raggruppato fornisce spazio agli elenchi dell'area .content ~~ */
 .content ul, .content ol { 
@@ -398,6 +403,10 @@ input[type="button"],input[type="submit"]{
 	border:0; 
 	color:black;
 	font-weight:bold;
+}
+
+.sidebar1 #slider-range{
+	border:3px; 
 }
 
 #reverse{
