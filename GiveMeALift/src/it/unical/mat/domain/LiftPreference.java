@@ -25,6 +25,15 @@ public class LiftPreference extends DomainObject {
 	public LiftPreference() {
 	}
 	
+	public LiftPreference(String roadType, Integer times, 
+			Integer luggageSize, String scheduleFlexibility,
+			Boolean pinkTrip){
+		this.roadType = roadType;
+		this.timesForThisRoute = times;
+		this.luggageSize = luggageSize;
+		this.scheduleFlexibility = scheduleFlexibility;
+		this.pinkTrip = pinkTrip;
+	}
 	
 	@Override
 	@Id

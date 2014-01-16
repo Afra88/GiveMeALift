@@ -28,12 +28,12 @@
 	
 	<!-- hidden div per visualizzare nel dom i valori di path -->
 	<c:forEach var="i"  begin="0" end="${path.size()-1}" > 
-		<div name="path" hidden=true>${path.get(i)} </div>
+		<div name="path" hidden=true>${path.get(i)}</div>
 	</c:forEach>
 	
 	<!-- hidden div per visualizzare nel dom i valori di inputs -->
 	<c:forEach var="i"  begin="0" end="${inputs.size()-1}" > 
-		<div name="inputs"  hidden=true>${inputs.get(i)} </div>
+		<div name="inputs"  hidden=true>${inputs.get(i)}</div>
 	</c:forEach>
 	
 	
@@ -87,8 +87,9 @@
 			<tr>
 				<td>
 					<h3>  ${path.get(i)} <img src="images/freccia1.gif" height="10px"/> ${path.get(i+1)}</h3>
+				</td>
 				<td> 
-						<input type="number" id="price" name="price" class="number" maxlength="3" size="3">
+					<input type="number" id="price" name="price" class="toSum" maxlength="3" size="3">
 					<i>euro</i>
 				</td>
 			</tr>
@@ -102,7 +103,7 @@
 			<tr>
 <%-- 			${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)} --%>
 			
-				<td><h3><font color="orange"><b>TOTALE</b></font></h3>
+				<td><h3><font color="orange"><b>TOTALE</b></font></h3></td>
 				<td><h2 id="sum">0 Euro</h2></td>
 			</tr>
 			<tr>
@@ -110,7 +111,7 @@
 					<h2> Numero posti disponibili </h2>
 				</td>
 				<td>
-					<input id="seats" class="numeric" type="number" name="seats" maxlength="4" size="3">
+					<input id="seats" class="number" type="number" name="seats" maxlength="4" size="3">
 				</td>
 			</tr>
 			<tr>
@@ -133,7 +134,7 @@
 			<tr>
 				<td><h2> Bagaglio massimo consentito: </h2></td>
 				<td>
-					<select id="luggage">
+					<select id="luggage" name="luggage">
 	 				 	<option value="medium">Medio</option>
 	  					<option value="small">Piccolo</option>
 	  					<option value="large">Grande</option>
@@ -143,7 +144,7 @@
 			<tr>
 				<td><h2> Partirò: </h2></td>
 				<td>
-					<select id="delay">
+					<select id="delay" name="delay">
 	  					<option value="strict">puntuale</option>
 	 				 	<option value="15min">+/- 15 minuti</option>
 	  					<option value="30min">+/- 30 minuti</option>
@@ -155,20 +156,35 @@
 			<tr>
 			<td><h2> Disponibile a deviazioni: </h2></td>
 				<td>
-					<select>
-	  					<option value="15min">15 minuti al massimo</option>
+					<select id="deviation" name="deviation">
 	 				 	<option value="nothing">Nessuna deviazione, mi dispiace... :|</option>
+	  					<option value="15min">15 minuti al massimo</option>
 	  					<option value="30min">30 minuti al massimo</option>
 	  					<option value="any">Qualsiasi deviazione. No Problem! :D</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
+				<td><h2> Tratta percorsa </h2></td>
+				<td>
+					<h2><input type="number" id="timesForThisRoute" name="timesForThisRoute" class="number" maxlength="6" size="6"> volte</h2>
+				</td>
+			</tr>
+			<tr>
+				<td><h2> Preferisco viaggiare su: </h2></td>
+				<td>
+					<select id="roadType" name="roadType">
+						<option value="freeway">Autostrada</option>
+						<option value="country">Strada di paese</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
 				<td><h2> Viaggio rosa: </h2></td>
 				<td>
-					<select id="pinkTrip"> 
+					<select id="pinkTrip" name="pinkTrip"> 
 	  					<option value="bothPass">viaggio con uomini e donne</option>
-	  					<option value="bothPass">viaggio solo con donne</option>
+	  					<option value="onlyWomen">viaggio solo con donne</option>
 					</select>
 				</td>
 			</tr>
@@ -213,5 +229,6 @@
 
 <!-- serve per l'input di soli numeri (va messo dopo)  -->
 <script type="text/javascript"> $(".number").format({precision: 0,autofix:true});</script>
+<script type="text/javascript"> $(".toSum").format({precision: 0,autofix:true});</script>
 
 <%@include file="footer.jsp"%>

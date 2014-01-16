@@ -62,6 +62,19 @@ public abstract class User extends DomainObject {
 		listSocialNetworkProfiles=new LinkedList<SocialNetworkProfile>();
 	}
 
+	public User(String email, String psw, String name, 
+			String surname, String gender, Integer birthYear, 
+			String phone, String mPhone, Address address){
+		this.email = email;
+		this.password = psw;
+		this.name = name;
+		this.surname = surname;
+		this.gender = gender;
+		this.birthYear = birthYear;
+		this.phone = phone;
+		this.mobilePhone = mPhone;
+		this.address = address;
+	}
 
 	@Override
 	@Id

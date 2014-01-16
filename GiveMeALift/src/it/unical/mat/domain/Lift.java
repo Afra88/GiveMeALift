@@ -29,7 +29,7 @@ public class Lift extends DomainObject {
 	@Column(name="N_SEAT")
 	private Integer nSeat;
 	@Column(name="POSSIBLE_DETOUR")
-	private Boolean possibleDetour;
+	private String possibleDetour;
 	@Column(name="DEPARTURE_TIME")
 	private Time departureTime;
 	@Column(name="DEPARTURE_DATE")
@@ -46,7 +46,20 @@ public class Lift extends DomainObject {
 	public Lift(){
 		detours=new LinkedList<LiftDetour>();
 		usersBookingList=new LinkedList<User>();
-	}		
+	}	
+	
+	public Lift(Integer cost, Integer nSeat, String possibleDetour,
+			Time departureTime, Date departureDate, LiftPoint pickUpPoint,
+			LiftPoint dropOffPoint){
+		this.cost = cost;
+		this.nSeat = nSeat;
+		this.possibleDetour = possibleDetour;
+		this.departureTime = departureTime;
+		this.departureDate = departureDate;
+		this.pickUpPoint = pickUpPoint;
+		this.dropOffPoint = dropOffPoint;
+	
+	}
 	
 	@Override
 	@Id
@@ -56,11 +69,11 @@ public class Lift extends DomainObject {
 	
 	
 	
-	public Boolean getPossibleDetour() {
+	public String getPossibleDetour() {
 		return possibleDetour;
 	}
 
-	public void setPossibleDetour(Boolean possibleDetour) {
+	public void setPossibleDetour(String possibleDetour) {
 		this.possibleDetour = possibleDetour;
 	}
 
@@ -138,17 +151,10 @@ public class Lift extends DomainObject {
 
 
 	public boolean isPossibleDetour() {
-		return possibleDetour;
+		if(possibleDetour != null)
+			return true;
+		return false;
 	}
-
-
-
-
-	public void setPossibleDetour(boolean possibleDetour) {
-		this.possibleDetour = possibleDetour;
-	}
-
-
 
 
 	@ManyToOne(fetch=FetchType.EAGER)

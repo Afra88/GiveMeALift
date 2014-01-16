@@ -44,7 +44,16 @@ public class RegisteredUser extends User {
 		messagesSent=new LinkedList<Message>();
 		messagesReceived=new LinkedList<Message>();
 		receivedFeedback=new LinkedList<Feedback>();
+	}			
+
+	public RegisteredUser(String email, String psw, String name,
+			String surname, String gender, Integer birthYear, String phone,
+			String mPhone, Address address) {
+		super(email, psw, name, surname, gender, birthYear, phone, mPhone, address);
 	}
+
+
+
 
 	@ManyToOne(fetch = FetchType.LAZY) //cambiato
 	@JoinTable(name = "PERSONAL_PREFERENCES_USER_JOIN",
