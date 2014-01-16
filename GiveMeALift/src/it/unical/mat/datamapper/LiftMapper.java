@@ -7,6 +7,7 @@ import it.unical.mat.util.HibernateUtil;
 import java.util.Date;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Collection;
@@ -91,10 +92,10 @@ public class LiftMapper extends AbstractMapper {
 //		} catch (ParseException e) {
 //			e.printStackTrace();
 //		}
-		Collection<DomainObject> objects=find(findStatement, parameters);
+		Collection<DomainObject> objects=find(findStatement, parameters,false);
 		for (DomainObject object : objects) {
 			result.add((Lift) object);
-		}
+		}		
 		return result;
 	}
 	
@@ -140,7 +141,7 @@ public class LiftMapper extends AbstractMapper {
 //		} catch (ParseException e) {
 //			e.printStackTrace();
 //		}
-		Collection<DomainObject> objects=find(findStatement, parameters);
+		Collection<DomainObject> objects=find(findStatement, parameters,false);
 		if(!objects.isEmpty()){		
 			result = new LinkedList<Lift>();
 			for (DomainObject object : objects) {
@@ -178,18 +179,22 @@ public class LiftMapper extends AbstractMapper {
 			String cityTo, String date, String cost, Integer timeTo, Integer timeFrom){
 		List<Lift> result=null;
 		Map<String, Object> parameters=new HashMap<String, Object>();
-		String findStatement= "from Lift"
-							+ " where "
-							+ "(detours.pickUpPoint.city like :par1 "
-							+ "or detours.pickUpPoint.street like :par1 "
-							+ "or detours.pickUpPoint.state like :par1 "
-							+ "or detours.pickUpPoint.province like :par1 "
-							+ "or detours.pickUpPoint.region like :par1) "
-							+ "and (detours.dropOffPoint.city like :par2 "
-							+ "or detours.dropOffPoint.street like :par2 "
-							+ "or detours.dropOffPoint.state like :par2 "
-							+ "or detours.dropOffPoint.province like :par2 "
-							+ "or detours.dropOffPoint.region like :par2)"
+		String findStatement= "select d.* from Lift as l, Lift_Detour as d, LIFT_DETOURS_JOIN as j, Lift_point p1, lift_point p2 "
+							+ "where "
+							+ "l.lift_id=j.lift_id "
+							+ "and j.lift_detour_id=d.lift_detour_id "
+							+ "and p1.lift_point_id=d.pick_up and p2.lift_point_id=drop_off "
+							+ "and( "
+							+ "p1.city like :par1 "
+							+ "or p1.street like :par1 "
+							+ "or p1.state like :par1 "
+							+ "or p1.province like :par1 "
+							+ "or p1.region like :par1) "
+							+ "and (p2.city like :par2 "
+							+ "or p2.street like :par2 "
+							+ "or p2.state like :par2 "
+							+ "or p2.province like :par2 "
+							+ "or p2.region like :par2)"
 							;
 //							+ "departureDate=:par3 ";
 		if(cost!=null){		
@@ -216,7 +221,7 @@ public class LiftMapper extends AbstractMapper {
 //		} catch (ParseException e) {
 //			e.printStackTrace();
 //		}
-		Collection<DomainObject> objects=find(findStatement, parameters);
+		Collection<DomainObject> objects=find(findStatement, parameters,true);
 		if(!objects.isEmpty()){		
 			result = new LinkedList<Lift>();
 			for (DomainObject object : objects) {

@@ -1,0 +1,90 @@
+@CHARSET "ISO-8859-1";
+
+#reverse{
+/* 	background-image: url("../images/reverse.png)"); */
+ 	background: url("../images/reverse.png") no-repeat center; 
+	background-color:#F5F5F5;
+	padding: 7px 10px 9px;
+	width: 40px;
+	height: 29px;
+	display: inline-block;
+	border: 1px solid #d4d4d4;
+}
+
+.locationField{
+	margin-top: 30px;
+	
+} 
+
+.center{
+	text-align: center;
+}
+
+.sidebar1 .sliderBox{
+	/* text-align: center; */
+	padding: 10px;
+	padding-bottom: 20px;
+}
+
+.sidebar1 #range{
+	border:0; 
+	color:black;
+	font-weight:bold;
+}
+
+.sidebar1 #slider-range{
+	border:3px; 
+}
+
+.emphatizePrice{
+	font-size: 16px;
+	color: orange;
+	font-weight: bold;
+	margin-top:8px;
+	margin-bottom:8px;
+}
+
+.emphatizeSeat{
+	font-size: 16px;
+	color: #adf268;
+	font-weight: bold;
+	margin-top:8px;
+	margin-bottom:8px;
+}
+
+.emphatizeLift{
+	font-size: 16px;
+	color: blue;
+	font-weight: bold;
+	text-transform: capitalize;
+	margin-top:8px;
+}
+.emphatizeWhen{
+	font-size: 16px;
+	color: #DDA0DD;
+	font-weight: bold;
+	text-transform: capitalize;
+	margin-top:8px;
+	margin-bottom:8px;
+}
+
+.item:HOVER {
+	background-color: #F5F5F5;
+}
+
+input[type="button"]{
+	background-color:#F5F5F5;
+	padding: 7px 10px 9px;
+	min-width: 40px;
+	height: 29px;
+	display: inline-block;
+	border: 1px solid #d4d4d4;
+}
+input[type="button"]:HOVER{
+	background-color:white;
+}
+
+.labelTable{
+	font-weight: bold;
+	font-family: fantasy;
+}

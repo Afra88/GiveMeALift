@@ -18,24 +18,8 @@
 <!-- 	</div> -->
 
 <%@include file="header.jsp"%>
-
-
-
-
-
-<div class="sidebar1">
-
-	<a href="/GiveMeALift/">Homepage</a>
-
-</div>
-
-
-
-<div class="content">
-
-
-
-	<form method="get" action="InsertALift">
+<div class="container_12">
+	<div class="grid_12">
 		
 <!-- 	<div class="ui-widget" style="margin-top: 2em; font-family: Arial"> -->
 <!-- 		Result: -->
@@ -44,22 +28,23 @@
 <!-- 	</div> -->
 	
 
-	
-		<table id="fillOffer" class="table">
-		
-					<tr><td><h2>Itinerario</h2></td></tr>
+	<form method="get" action="InsertALift">
+	<p class="greenTable">
+		<table id="fillOffer">
+					<tr><td colspan="2">Itinerario</td></tr>
 			<tr>
 				<td>
 				<span class="label"> Luogo di Partenza: </span> 							
 <!-- 				<input id="city">						 -->
 				<input type="text" id=mapFrom name=mapFrom class="autocomplete" />
-				
+				</td>
+				<td>
 				<span class="label"> Luogo di arrivo: </span>				 
 				<input	type="text" id=mapTo name=mapTo class="autocomplete" />
 				</td>
 			</tr>
 			<tr>
-				<td><span class="label"> Tappa intermedia (se prevista):
+				<td colspan="2"><span class="label"> Aggiungi Tappe intermedie:
 				</span>				
 					<ol>
 <!-- 						<li><input id="detour0" class="autocomplete" type="text" name="detour0"></input></li> -->
@@ -68,18 +53,22 @@
 			</tr>
 			<tr>
 				<td>
-					<input class="button" type="button"  id="add_detour" value="Aggiungi tappa intermedia"  />
-					<input class="button" type="button"  id="remove_detour" value="Rimuovi tappa intermedia "/>
+					<input class="button" type="button"  id="add_detour" value="Aggiungi"  />
+				</td>
+				<td>
+					<input class="button" type="button"  id="remove_detour" value="Rimuovi"/>
 				</td>
 			</tr>
 		
 		
 			<tr>
-				<td><h2>Data e ora</h2></td>
+				<td colspan="2"><h2>Data e ora</h2></td>
 			<tr>
 			<tr>
-				<td colspan="2"><span class="label"> Data partenza: </span> 
-					<span id=date><script type="text/javascript" src="js/currentDate.js"></script></span> 
+				<td><span class="label"> Data partenza: </span> 
+					<span id=date><script type="text/javascript" src="js/currentDate.js"></script></span>
+				</td>
+				<td>
 					<span class="label"> Ora partenza: </span>
 					<select id="goingTimeH" name="goingTimeH" >
 					  <c:forEach var="i" step="1" begin="00" end="23" >
@@ -97,6 +86,8 @@
 				<td><span class="label"> Data ritorno (se previsto): </span> 			
 					<span id=date1><script type="text/javascript" src="js/currentDate.js">
 					</script></span>
+				</td>
+				<td>
 					<span class="label"> Ora ritorno: </span>					
 						<select id="returnTimeH" name="returnTimeH">
 						 <c:forEach var="i" step="1" begin="00" end="23" >
@@ -114,14 +105,18 @@
 			<tr>
 				<td>
 					<input class="button" type="button"  id="FromAToB"  value="Percorso" />
+				</td>
+				<td>
 					<input type="submit" value="Conferma" class="button" />
 				</td>
 			</tr>
 		</table>
+	</p>
 	</form>
 		
 		
 	<p id="map"></p>
+</div>
 </div>
 
 

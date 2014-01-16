@@ -3,7 +3,9 @@ package it.unical.mat.controller;
 import java.util.List;
 
 import it.unical.mat.datamapper.LiftMapper;
+import it.unical.mat.datamapper.LiftPointMapper;
 import it.unical.mat.domain.Lift;
+import it.unical.mat.domain.LiftPoint;
 
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
@@ -23,20 +25,6 @@ public class SearchController {
 //    		@RequestParam(value="page",required=false) String p,
 //    		Model model){
 //		
-//			//			Lift l=new Lift();
-////			LiftPoint lp=new LiftPoint();
-////			lp.setCity(input1);
-////			LiftPoint lp2=new LiftPoint();
-////			lp2.setCity(input2);
-////			LiftPointMapper lpm=new LiftPointMapper();
-////			long idLp=lpm.insert(lp);
-////			long idLp2=lpm.insert(lp2);
-////			l.setPickUpPoint(lp);
-////			l.setDropOffPoint(lp2);
-////			l.setCost(2);
-////			l.setnSeat(2);
-////			l.setPossibleDetour(true);
-////			lm.insert(l);
 //			
 //			LiftMapper lm=new LiftMapper();
 //			
@@ -69,6 +57,21 @@ public class SearchController {
     		Model model){
 		
 		LiftMapper lm=new LiftMapper();
+
+		Lift l=new Lift();
+		LiftPoint lp=new LiftPoint();
+		lp.setCity(from);
+		LiftPoint lp2=new LiftPoint();
+		lp2.setCity(to);
+		LiftPointMapper lpm=new LiftPointMapper();
+		long idLp=lpm.insert(lp);
+		long idLp2=lpm.insert(lp2);
+		l.setPickUpPoint(lp);
+		l.setDropOffPoint(lp2);
+		l.setCost(2);
+		l.setnSeat(2);
+		l.setPossibleDetour("none");
+		lm.insert(l);
 		
 		if(nPage==null || nPage==""){
 			nPage="1";
@@ -92,31 +95,38 @@ public class SearchController {
 			sort="date";
 		}
 		
-		List<Lift> listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom);
-		List<Lift> listResultDetours=lm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom);
-		listResults.addAll(listResultDetours);
-		int noResult;
-		
-		if(!listResults.isEmpty()){
+		if(from!=null && from!="" && to!=null && to!="" && date!=null && date!=""){		
+			List<Lift> listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom);
+//			List<Lift> listResultDetours=lm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom);
+//			if(listResults!=null)
+//				listResults.addAll(listResultDetours);
 			
-			PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(listResults);		
-			pageHolder.setPage(Integer.parseInt(nPage));
-			pageHolder.setPageSize(10);	
-			model.addAttribute("pages", pageHolder.getPageCount());
-			model.addAttribute("page",pageHolder.getPage());
-			model.addAttribute("pageHolder",pageHolder);
-			noResult=0;
-			model.addAttribute("noResult",noResult);
-			System.out.println("res");
-		
+			int noResult;
+			
+			if(listResults!=null && !listResults.isEmpty()){
+				
+				PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(listResults);		
+				pageHolder.setPage(Integer.parseInt(nPage));
+				pageHolder.setPageSize(10);	
+				model.addAttribute("pages", pageHolder.getPageCount());
+				model.addAttribute("page",pageHolder.getPage());
+				model.addAttribute("pageHolder",pageHolder);
+				noResult=0;
+				model.addAttribute("noResult",noResult);
+				System.out.println("res");
+			
+			}
+			else{
+				noResult=1;
+				System.out.println("noRes");
+				model.addAttribute("noResult",1);
+			}
+			model.addAttribute("from",from);
+			model.addAttribute("to",to);
 		}
 		else{
-			noResult=1;
-			System.out.println("noRes");
 			model.addAttribute("noResult",1);
 		}
-		model.addAttribute("from",from);
-		model.addAttribute("to",to);
 		
 		return "resultSearch";	
 	}

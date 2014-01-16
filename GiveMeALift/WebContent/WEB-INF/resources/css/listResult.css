@@ -52,26 +52,6 @@
 	list-style: none;
 }
 
-.emphatizePrice{
-	font-size: 16px;
-	color: orange;
-	font-weight: bold;
-}
-
-.emphatizeSeat{
-	font-size: 16px;
-	color: green;
-	font-weight: bold;
-}
-
-.emphatizeLift{
-	font-size: 16px;
-	color: blue;
-	font-weight: bold;
-	text-transform: capitalize;
-}
-
-
 /* .item h3 {
     margin:0 0 5px 0;
     font-size:16px;

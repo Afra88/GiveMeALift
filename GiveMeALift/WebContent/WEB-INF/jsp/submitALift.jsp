@@ -1,10 +1,7 @@
 <%@include file="header.jsp"%>
-<div class="sidebar1">
-	<a href="/GiveMeALift/">Homepage</a>
-</div>
-<div class="content">
-
-
+<div class="container_12">
+	<div class="grid_12">
+	</div>
 </div>
 
 <%@include file="footer.jsp"%>

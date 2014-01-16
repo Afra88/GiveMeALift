@@ -15,14 +15,8 @@
 <script type="text/javascript" src="js/dynamicPriceSum.js"></script>
 <script type="text/javascript" src="js/jQueryElement/jquery.format.1.05.js"></script>
 
-
-    
-
-<div class="sidebar1">
-	<a href="/GiveMeALift/">Homepage</a>
-</div>
-
-<div class="content">
+<div class="container_12">
+	<div class="grid_12">
 	<form method="get" action="SubmitALift">
 	
 	
@@ -78,19 +72,23 @@
 		        
   
 	
-	
+	<div class="greenTable">
 		<table id="plusDetails" class=table>
 			<tr>
-				<td colspan="3" align="center"><h2>Quota a passeggero</h2></td>
+				<td colspan="2">
+					Dettagli Aggiuntivi
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">Quota a passeggero</td>
 			</tr>
 			<c:forEach var="i"  begin="0" end="${path.size()-2}" > 
 			<tr>
 				<td>
-					<h3>  ${path.get(i)} <img src="images/freccia1.gif" height="10px"/> ${path.get(i+1)}</h3>
+					${path.get(i)} <img src="images/freccia1.gif" height="10px"/> ${path.get(i+1)}
 				</td>
 				<td> 
-					<input type="number" id="price" name="price" class="toSum" maxlength="3" size="3">
-					<i>euro</i>
+					<input type="number" id="price" name="price" class="toSum" maxlength="3" size="3">&#8364;
 				</td>
 			</tr>
 			</c:forEach>			
@@ -103,20 +101,20 @@
 			<tr>
 <%-- 			${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)} --%>
 			
-				<td><h3><font color="orange"><b>TOTALE</b></font></h3></td>
-				<td><h2 id="sum">0 Euro</h2></td>
+				<td><font color="orange"><b>TOTALE</b></font></td>
+				<td><div id="sum">0 &#8364;</div></td>
 			</tr>
 			<tr>
 				<td>
-					<h2> Numero posti disponibili </h2>
+					Numero posti disponibili
 				</td>
 				<td>
 					<input id="seats" class="number" type="number" name="seats" maxlength="4" size="3">
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4" align="center">
-					<h2> Dettagli del viaggio</h2>
+				<td colspan="2" align="center">
+					<h2>Descrizione del passaggio</h2>
 				</td>
 			</tr>
 			<tr>
@@ -127,7 +125,7 @@
 					</textarea>
 				</td>
 			
-				<td colspan="2">
+				<td>
 					<p><small><i>* Nel rispetto della tua privacy, non indicare mai i tuoi recapiti nella descrizione del viaggio.</i></small></p>
 				</td>
 			</tr>
@@ -190,19 +188,20 @@
 			</tr>
 			<tr>
 				<td colspan="2"> 
-				<input id="checkLicence" type="checkbox" name="drivingLicence" value="drivingLicence"/> 
-				<i>Dichiaro di essere in possesso di patente di guida valida ed assicurazione RCA </i>
+					<input id="checkLicence" type="checkbox" name="drivingLicence" value="drivingLicence"/> 
+					<i>Dichiaro di essere in possesso di patente di guida valida ed assicurazione RCA </i>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center"><h2>Riepilogo Dati</h2></td>
 			</tr>
 			<tr>
-				<td rowspan="2"><h3><b><i>${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)}</b></i></h3>
-				<br>
-				<h3><font color="blue">Andata:</font> ${inputs.get(0)} - ore: ${inputs.get(2)}:${inputs.get(3)} </h3>
-				<br>
-				<h3><font color="blue">Ritorno:</font> ${inputs.get(1)} - ore: ${inputs.get(4)}:${inputs.get(5)}</h3>
+				<td colspan="2" >
+					<b><i>${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)}</b></i>
+					<br>
+					<font color="blue">Andata:</font> ${inputs.get(0)} - ore: ${inputs.get(2)}:${inputs.get(3)}
+					<br>
+					<font color="blue">Ritorno:</font> ${inputs.get(1)} - ore: ${inputs.get(4)}:${inputs.get(5)}
 				</td>	
 <%-- 	 		<c:forEach var="i" items="${inputs}">  --%>
 <!-- 	 		<tr>  -->
@@ -216,16 +215,19 @@
 
 			</tr>
 			<tr>
-				<td colspan="3" align="right">
+				<td>
 					<input class="button" type="button" id="goBack" value="Indietro" onClick="history.back()"/>
+				</td>
+				<td>
 					<input class="button" type="submit" value="Pubblica annuncio"/>
 				</td>
 			</tr>
 		</table>
+		</div>
 	</form>
 <!-- 	<p id="map"></p> -->
 </div>
-
+</div>
 
 <!-- serve per l'input di soli numeri (va messo dopo)  -->
 <script type="text/javascript"> $(".number").format({precision: 0,autofix:true});</script>

@@ -1,0 +1,12 @@
+$(document).ready(function(){
+    $("#mapTo").click(function(){
+	  	if(String($(this).val())=="Arrivo"){
+	  		$(this).val("");
+	  	    }
+	  	});
+    $("#mapFrom").click(function(){
+	  	if(String($(this).val())=="Partenza"){
+	  		$(this).val("");
+	  	    }
+	  	});  
+});

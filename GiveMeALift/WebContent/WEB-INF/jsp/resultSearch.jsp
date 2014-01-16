@@ -3,160 +3,170 @@
 <%@ page contentType="text/html;charset=iso-8859-1" %>
 <html>
     <head>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/ourAdditions.css">
+    <link rel="stylesheet" href="css/greenTable.css">
+    
+    <script type="text/javascript" src="js/hoverMapValue.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    
     <script type="text/javascript" src="js/checkingTime.js"></script>
 	<script src="js/calendar/tcal.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
-	<link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
-	<link rel="stylesheet" href="css/mainstyle.css" type="text/css" />
+	<!-- <link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
+	<link rel="stylesheet" href="css/mainstyle.css" type="text/css" /> -->
 	
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
   	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-  <!-- 	<link rel="stylesheet" href="/resources/demos/style.css"> -->
  	<script src="js/jQueryElement/rangeSlider.js" type="text/javascript"></script>
- 		
- 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-  	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
- 	<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
  	<script src="js/jQueryElement/radio.js" type="text/javascript"></script>
  	
- 	<!-- Google Place Autocomplete -->
- 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <!-- <meta charset="utf-8"> -->
- 	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    <link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css">
- 	<script src="js/GooglePlaceAutocomplete/placeAutocomplete.js" type="text/javascript"></script>
-    <!-- end -->
+<!--  	Google Place Autocomplete -->
+<!--  	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"> -->
+<!--     <meta charset="utf-8"> -->
+<!--  	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"> -->
+<!--     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script> -->
+<!--     <link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css"> -->
+<!--  	<script src="js/GooglePlaceAutocomplete/placeAutocomplete.js" type="text/javascript"></script> -->
+<!--     end -->
 	
-	<link rel="stylesheet" href="css/listResult.css" type="text/css" />
-	<!-- <script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script> -->
+	<!-- <link rel="stylesheet" href="css/listResult.css" type="text/css" />
+	<script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script> -->
     
     <link rel="stylesheet" href="css/pagination.css" type="text/css" />
     <script type="text/javascript" src="js/manageSearchLift.js" >   
     </script>
     
+    <meta charset="utf-8">
+	<link rel="icon" href="images/favicon.ico">
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="css/form.css">
+<!-- 	<script src="js/cssJs/jquery.js"></script> -->
+	<script src="js/cssJs/jquery-migrate-1.1.1.js"></script>
+	<script src="js/cssJs/superfish.js"></script>
+	<script src="js/cssJs/jquery.equalheights.js"></script>
+	<script src="js/cssJs/jquery.easing.1.3.js"></script>
+	<script src="js/cssJs/jquery.ui.totop.js"></script>
+	<script>
+	$(document).ready(function () {
+	    $().UItoTop({
+	        easingType: 'easeOutQuart'
+	    });
+	});
+	</script>
+    
    	<title>Risultati della ricerca</title>
     
     </head>
     <body onload="initialize()">
-    <div class="container">
-	<div class="header">
+	<header>
+  	<div class="container_12">
+		    <div class="grid_12">
 	    <form method="post" action="LoginServlet">
-		<table class="login">
-			<tr>
-				<td>Email:</td>
-				<td><input type="text" size="40" name="email" id="email" /></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-			    <td><input type="password" size="40" name="psw" id="psw" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="submit" value="Accedi" />
-					oppure
-					<a href="userRegistration">Registrati</a>
-				</td>
-			</tr>
-		</table>
-	</form>
+			<table class="login">
+				<tr>
+					<td><label>Email:</label></td>
+					<td><input type="text" size="40" name="email" id="email" /></td>
+				</tr>
+				<tr>
+					<td><label>Password:</label></td>
+				    <td><input type="password" size="40" name="psw" id="psw" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Accedi" />
+						oppure
+						<a href="userRegistration">Registrati</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+		      <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>
+		      <div class="menu_block">
+		        <nav>
+		          <ul class="sf-menu">
+		            <li><a href="/GiveMeALift">Home</a></li>
+		            <li><a href="products.html">Products</a></li>
+		            <li><a href="blog.html">Blog</a></li>
+		            <li class="current"><a href="recipes.html">Recipes</a></li>
+		            <li><a href="contacts.html">Contacts</a></li>
+		          </ul>
+		        </nav>
+		        <div class="clear"></div>
+		      </div>
+		      <div class="clear"></div>
+		    </div>
+		  </div>
+
+	</header>
+	<div class="content">
+  	<div class="container_12">
+     <div class="grid_12">
+        <p class="locationField" id="mapValues" style="text-align: center" >
+			<input class="autocomplete" type="text" id=mapFrom name=mapFrom value="${from}" /> 
+			<input id=reverse value="" title="Inverti partenza e arrivo" type="button" />
+			<input class="autocomplete" type="text" id=mapTo name=mapTo value="${to}"  />
+		</p> 
 	</div>
-	<div class="sidabarContentContainer" >
-	<div class="sidebar1">
-	<form method="get" action="ResultSearch" id=searchForm >
-     	<h4>Data</h4>
-		<p id=date class=center><script type="text/javascript" src="js/currentDate.js"></script></p>
-		<h4>Ora</h4>
-		<div class=contentSlidebar>
-			<p><label for="range">Range orario:</label>
-		  	<input type="text" id="range" name=range></p>
-			<p class=center><p id="slider-range"></p></p>
-		</div>
-		<h4>Prezzo</h4>
-		<div>
-			<p id="radio" class="center">
-		    <input type="radio" id="radio1" name="radio" value="1" ><label for="radio1">Basso</label>
-		    <input type="radio" id="radio2" name="radio" value="2" ><label for="radio2">Medio</label>
-		    <input type="radio" id="radio3" name="radio" value="3" ><label for="radio3">Alto</label>
-		  </p>
-		</div>
-		<h4>Perfeziona Ricerca</h4>
-		<input type="hidden" id=next_page name=page value="1" />
-		<input type="hidden" id=next_from name=mapFrom value="${from}" />
-		<input type="hidden" id=next_to name=mapTo value="${to}" />
-		<p class="center"><input type="submit"  value="Cerca" class="button" /></p>
-    </form>
-    </div>
-    <div class="content">
-    <p class="locationField" id="mapValues" style="text-align: center" >
-		<span class="label">Partenza: </span>
-		<input class="autocomplete" onFocus="geolocate()" type="text" id=mapFrom name=mapFrom value="${from}" /> 
-		<input class="button" id=reverse value="" tabindex="5" title="Inverti partenza e arrivo" type="button" />
-		<span class="label"> Arrivo: </span>
-		<input class="autocomplete" onFocus="geolocate()" type="text" id=mapTo name=mapTo value="${to}" />
-<!-- 		<input type="submit" value="Cerca" class="button" /> -->
-	</p>
-	<c:choose>
-		<c:when test="${noResult==1}" >
-		<p class="center" >Non ci sono risultati per questa ricerca</p>
-			<div id="resultTable" class="scrollable vertical"> </div>
-		</c:when>
-		<c:otherwise>
-	<div id="resultTable" class="scrollable vertical"> 
-      <p class="items">      
+    <c:choose>
+	<c:when test="${noResult==1}" >
+	<div class="grid_12">
+		<div  class="center"><h3>Non ci sono risultati per questa ricerca</h3></div>
+	</div>
+	 <p class="grid_7" ></p>
+	</c:when>
+	<c:otherwise>    
+    <div class="grid_7">
         <c:forEach items="${pageHolder.pageList}" var="lift" >
-        <div class="item">
+        	<div class="item">
         	<input type="hidden" id="liftID" value="${lift.getId()}" />
-        	<p class=imgContainer>
-        	<c:choose>
-        		<c:when test="$user.profilePhoto!=null">
-        			<img src="http://farm1.static.flickr.com/3650/3323058611_d35c894fab_m.jpg" />
-         		</c:when>
-        		<c:otherwise>
-        			<img src="images/default_user.jpg" />
-        		</c:otherwise>
-        	</c:choose> 
-        	</p>
-        	<ul>
-        		<li><p><span class="emphatizeDepature">${lift.departureDate} - ${lift.departureTime}  </span>
-	        	<li><p><span class="emphatizeLift">${lift.getPickUpPoint().city} - ${lift.getDropOffPoint().city}  </span>
-	        		<c:choose>
-	        			<c:when test="${lift.possibleDetour}==true">
-	        				   Deviazioni possibili
-	        			</c:when>
-	        			<c:otherwise>
-	        				Nessuna deviazione
-	        			</c:otherwise>
-	        		</c:choose>
-	        	</p></li>
-	        	<li><p><span class="emphatizePrice">Prezzo ${lift.cost} &#8364; </span>a testa</p></li>
-	        	<li><p class="emphatizeSeat"> ${lift.nSeat} Posti disponibili</p></li>
-        	</ul>
+        	 <div class="rec">
+	        	<c:choose>
+	        		<c:when test="$user.profilePhoto!=null">
+	        			<img height="120px" src="http://farm1.static.flickr.com/3650/3323058611_d35c894fab_m.jpg" class="img_inner fleft " />
+	         		</c:when>
+	        		<c:otherwise>
+	        			<img height="120px" src="images/default_user.jpg" class="img_inner fleft " />
+	        		</c:otherwise>
+	        	</c:choose> 
+        	<div class="extra_wrapper">
+	        	<div class="emphatizeWhen">${lift.departureDate} - ${lift.departureTime}</div>
+		        <div><div class="emphatizeLift">${lift.getPickUpPoint().city} - ${lift.getDropOffPoint().city}  </div>
+	       		<c:choose>
+	       			<c:when test="${lift.possibleDetour}==true">
+	       				   Deviazioni possibili
+	       			</c:when>
+	       			<c:otherwise>
+	       				Nessuna deviazione
+	       			</c:otherwise>
+	       		</c:choose>
+	       		</div>
+	        	<div class="emphatizePrice">${lift.cost} &#8364; a persona</div>
+	        	<div class="emphatizeSeat"> ${lift.nSeat} posti disponibili</div>
+	        	</div>
+        	</div>
         	<form method="get" action="HandleShowLiftDetail" id="detailsForm_${lift.getId()}">
 	        	<input name="lift" type="hidden" value="${lift.getId()}" >
         	</form>
-		</div>
+        	</div>
 		</c:forEach>
-        </p>
-	</div>
-	</c:otherwise>
-	</c:choose>
-	<div id="tnt_pagination">
+		 	<div id="tnt_pagination">
 	<!-- <span class="disabled_tnt_pagination">Prev</span> -->
 	<c:choose>
 		<c:when test="${page == 1}">
-			<button class=page id="page_1" disabled="disabled" > << </button>
+			<button class="disabled_tnt_link" id="page_1" disabled="disabled" > Indietro </button>
 		</c:when>
 		<c:otherwise>
-			<button class=page id="page_1" > << </button>
+			<button class=page id="page_1" > Indietro </button>
 		</c:otherwise>
 	</c:choose>
 	<c:forEach begin="1" step="1" var="i" end="${pages}">
 		<c:choose>
 			<c:when test="${i == page}">
-				<button class=page id="page_${i}" class="active_tnt_link">${i} </button>
+				<button id="page_${i}" class="active_tnt_link ">${i} </button>
 			</c:when>
 			<c:otherwise>
 				<button class=page id="page_${i}" >${i}</button>
@@ -165,20 +175,103 @@
 	</c:forEach>
 	<c:choose>
 		<c:when test="${page == pages}">
-			<button class=page id="page_${page}" disabled="disabled" > >> </button>
+			<button id="page_${page}" disabled="disabled" class="disabled_tnt_link"> Avanti </button>
 		</c:when>
 		<c:otherwise>
-			<button class=page id="page_${page}" > >> </button>
+			<button class=page id="page_${page}" > Avanti </button>
 		</c:otherwise>
 	</c:choose>
+	</div>
+    </div>
+	</c:otherwise>
+	</c:choose>
 	
-	<!-- <a class=page href="#forwaed">Next</a> -->
-	</div>
- <!-- end .content --></div>
-	</div>
-  <div class="footer">
-    <p></p>
-    <!-- end .footer --></div>
-  <!-- end .container --></div> 
+      
+      
+      <div class="grid_4 prefix_1">
+	<form method="get" action="ResultSearch" id=advancedSearchForm >
+      <div class="greenTable" >
+                <table >
+                    <tr>
+                        <td>
+                            Data
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                           <div id=date class=center><script type="text/javascript" src="js/currentDate.js"></script></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+       <div class="greenTable" >
+                <table >
+                    <tr>
+                        <td>
+                            Ora
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                           <div class=contentSlidebar>
+							<p><label for="range">Range orario:</label>
+						  	<input type="text" id="range" name=range></p>
+							<p class=center><p id="slider-range"></p>
+						</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>  
+              <div class="greenTable" >
+                <table >
+                    <tr>
+                        <td>
+                            Prezzo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                          <div>
+							<p id="radio" class="center">
+						    <input type="radio" id="radio1" name="radio" value="1" ><label for="radio1">Basso</label>
+						    <input type="radio" id="radio2" name="radio" value="2" ><label for="radio2">Medio</label>
+						    <input type="radio" id="radio3" name="radio" value="3" ><label for="radio3">Alto</label>
+						  	</p>
+						</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="greenTable" >
+                <table >
+                    <tr>
+                        <td>
+                           	Perfeziona Ricerca
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                           <input type="hidden" id=next_page name=page value="1" />
+							<input type="hidden" id=next_from name=mapFrom value="${from}" />
+							<input type="hidden" id=next_to name=mapTo value="${to}" />
+							<p class="center"><input type="submit"  value="Cerca" class="button" /></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    </form> 
+    </div>
+</div>
+</div>
+<footer>
+  <div class="container_12">
+    <div class="grid_12">
+      <div class="copy"> OrganicFood (C) 2045 | <a href="#">Privacy Policy</a> | Design by: <a href="http://www.templatemonster.com/">TemplateMonster.com</a> </div>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
+
+
+

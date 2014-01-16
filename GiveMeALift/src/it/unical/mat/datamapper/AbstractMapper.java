@@ -70,12 +70,17 @@ public abstract class AbstractMapper {
 		return false;	
 	}
 
-	protected Collection<DomainObject> find(String findStatement,Map<String,Object> parameters){
+	protected Collection<DomainObject> find(String findStatement,Map<String,Object> parameters, boolean isSql){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-				Query query= session.createQuery(findStatement);
+			Query query;
+			if(isSql){
+				query = session.createSQLQuery(findStatement);
+			}
+			else
+				query = session.createQuery(findStatement);
 				if(parameters!=null){	
 					for (String key : parameters.keySet()) {
 						String objectType=parameters.get(key).getClass().getSimpleName();

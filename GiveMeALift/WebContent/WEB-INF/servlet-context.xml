@@ -15,11 +15,20 @@
     <context:component-scan base-package="it.unical.mat" />
  
     <!-- Enables the Spring MVC @Controller programming model -->
-    <mvc:annotation-driven />
-	<mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
+<!--     <mvc:annotation-driven /> -->
+	<!-- <mvc:resources mapping="/resouces/**" location="/WEB-INF/resources/" />
+	<mvc:resources mapping="/newCss/js/**" location="/WEB-INF/resources/newCss/js/" />
+	<mvc:resources mapping="/newCss/images/**" location="/WEB-INF/resources/newCss/images" />
+	<mvc:resources mapping="/newCss/css/**" location="/WEB-INF/resources/newCss/css/" />
 	<mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
-	<mvc:resources mapping="/images/**" location="/WEB-INF/resources/images/" />
-    
+	<mvc:resources mapping="/images/**" location="/WEB-INF/resources/images/" /> -->
+	
+	<mvc:annotation-driven />
+        <mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
+        <mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
+        <mvc:resources mapping="/images/**" location="/WEB-INF/resources/images/" />
+         <mvc:resources mapping="/font/**" location="/WEB-INF/resources/font/" />
+ 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    		<property name="prefix" value="/WEB-INF/jsp/" />
     	<property name="suffix" value=".jsp" />

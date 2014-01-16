@@ -4,51 +4,116 @@
     pageEncoding="ISO-8859-1"%>
 <html>
 <head>
-<link rel="stylesheet" href="css/mainstyle.css" type="text/css" />
-<script type="text/javascript" src="js/setMapValue.js"></script>
-<script type="text/javascript" src="js/checkingTime.js"></script>
-<script src="js/calendar/tcal.js" type="text/javascript"></script>
-<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
-<link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&language=it"></script>
-<script type="text/javascript" src="js/GoogleMap/map.js"></script>
-<title>Give me a lift!</title>
+	<title>Dettagli Passaggio</title>
+
+<!-- <link rel="stylesheet" href="css/mainstyle.css" type="text/css" /> -->
+
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/ourAdditions.css">
+    <link rel="stylesheet" href="css/greenTable.css">
+    <link rel="stylesheet" href="css/orangeTable.css">
+    <link rel="stylesheet" href="css/blueTable.css">
+    
+    <script type="text/javascript" src="js/hoverMapValue.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+    
+	<script type="text/javascript" src="js/setMapValue.js"></script>
+	<script type="text/javascript" src="js/checkingTime.js"></script>
+	<script src="js/calendar/tcal.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
+	<!-- <link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&language=it"></script>
+	<script type="text/javascript" src="js/GoogleMap/map.js"></script> -->
+	
+	<!--  	Google Place Autocomplete -->
+<!--  	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"> -->
+<!--     <meta charset="utf-8"> -->
+<!--  	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"> -->
+<!--     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script> -->
+<!--     <link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css"> -->
+<!--  	<script src="js/GooglePlaceAutocomplete/placeAutocomplete.js" type="text/javascript"></script> -->
+<!--     end -->
+
+
+   <meta charset="utf-8">
+	<link rel="icon" href="images/favicon.ico">
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="css/form.css">
+<!-- 	<script src="js/cssJs/jquery.js"></script> -->
+	<script src="js/cssJs/jquery-migrate-1.1.1.js"></script>
+	<script src="js/cssJs/superfish.js"></script>
+	<script src="js/cssJs/jquery.equalheights.js"></script>
+	<script src="js/cssJs/jquery.easing.1.3.js"></script>
+	<script src="js/cssJs/jquery.ui.totop.js"></script>
+	<script>
+	$(document).ready(function () {
+	    $().UItoTop({
+	        easingType: 'easeOutQuart'
+	    });
+	});
+	</script>
+
 </head>
 <body>
-<div class="container">
-	<div class="header">	
+<header>
+  	<div class="container_12">
+		    <div class="grid_12">
 	    <form method="post" action="LoginServlet">
-		<table class="login">
-			<tr>
-				<td>Email:</td>
-				<td><input type="text" size="40" name="email" id="email" /></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-			    <td><input type="password" size="40" name="psw" id="psw" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="submit" value="Accedi" />
-					oppure
-					<a href="userRegistration">Registrati</a>
-				</td>
-			</tr>
-		</table>
+			<table class="login">
+				<tr>
+					<td><label>Email:</label></td>
+					<td><input type="text" size="40" name="email" id="email" /></td>
+				</tr>
+				<tr>
+					<td><label>Password:</label></td>
+				    <td><input type="password" size="40" name="psw" id="psw" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="Accedi" />
+						oppure
+						<a href="userRegistration">Registrati</a>
+					</td>
+				</tr>
+			</table>
+		</form>
+			      <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>
+		      <div class="menu_block">
+		        <nav>
+		          <ul class="sf-menu">
+		            <li><a href="/GiveMeALift">Home</a></li>
+		            <li><a href="products.html">Products</a></li>
+		            <li><a href="blog.html">Blog</a></li>
+		            <li class="current"><a href="recipes.html">Recipes</a></li>
+		            <li><a href="contacts.html">Contacts</a></li>
+		          </ul>
+		        </nav>
+		        <div class="clear"></div>
+		      </div>
+		      <div class="clear"></div>
+		    </div>
+		  </div>
+
+	</header>
+	<div class="content">
+  	<div class="container_12">
+     <div class="grid_12">
+        <p class="locationField" id="mapValues" style="text-align: center" >
+			<input class="autocomplete" type="text" id=mapFrom name=mapFrom value="${from}" /> 
+			<input id=reverse value="" title="Inverti partenza e arrivo" type="button" />
+			<input class="autocomplete" type="text" id=mapTo name=mapTo value="${to}"  />
+		</p> 
+	<form>
+		<p class="center">
+			<input type="button" value="Indietro" onClick="javascript:history.back()" name="button">
+		</p>
 	</form>
 	</div>
-	 <p class="locationField" id="mapValues" style="text-align: center" >
-		<span class="label">Partenza: </span>
-		<input class="autocomplete" onFocus="geolocate()" type="text" id=mapFrom name=mapFrom value="${from}" /> 
-		<input class="button" id=reverse value="" tabindex="5" title="Inverti partenza e arrivo" type="button" />
-		<span class="label"> Arrivo: </span>
-		<input class="autocomplete" onFocus="geolocate()" type="text" id=mapTo name=mapTo value="${to}" />
-		<input type="submit" value="Cerca" class="button" />
-	</p>
-	TORNA INDIETRO ..
-	
-	<table id="liftDetails" class="table">
-		<thead>
+     <div class="grid_7">
+	<div class="greenTable" >
+	<table id="liftDetails">
 			<tr>
 				<td colspan="2">
 					${lift.pickUpPoint.city}
@@ -59,9 +124,8 @@
 					${lift.dropOffPoint.city}
 				</td>
 			</tr>
-		</thead>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Partenza
 				</td>
 				<td>
@@ -72,7 +136,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Arrivo
 				</td>
 				<td>
@@ -83,7 +147,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Data
 				</td>
 				<td>
@@ -91,7 +155,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Ora
 				</td>
 				<td>
@@ -99,7 +163,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Flessibilità oraria
 				</td>
 				<td>
@@ -107,7 +171,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Deviazioni
 				</td>
 				<td>
@@ -115,7 +179,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Dimensione del bagaglio
 				</td>
 				<td>
@@ -133,7 +197,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Auto
 				</td>
 				<td>
@@ -142,7 +206,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Viaggio Rosa
 				</td>
 				<td>
@@ -157,7 +221,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="labelTable">
 					Tipo di strada
 				</td>
 				<td>
@@ -165,38 +229,59 @@
 				</td>
 			</tr>
 	</table>
-	
-	<table class="table" >
+	</div>
+	</div>
+	<div class="grid_4 prefix_1">
+	<div class="orangeTable" >
+	<table>
 			<tr>
 				<td>
 					Prezzo
 				</td>
+			</tr>
+			<tr>
 				<td>
 					${lift.cost}  &#8364; a persona
 				</td>
-				<td>
+			</tr>
+	</table>
+	</div>
+	 <div class="orangeTable" >
+		<table>
+		<tr>
+			<td>
 					Posti disponibili
 				</td>
+		</tr>
+		<tr>
 				<td>
 					${lift.nSeat}
 				</td>
-				<td>
-					Prenota il viaggio
+		</tr>
+	</table>
+	</div>
+	<div class="orangeTable" >
+		<table >
+		<tr>
+			<td>
+				Prenota il viaggio
 				</td>
+			</tr>
+			<tr>
 				<td>
 					TODO
 				</td>
-			</tr>
+		</tr>
 	</table>
-	
-	<table class="table">
-		<thead>
+	</div>
+
+<div class="blueTable" >
+	<table>
 			<tr>
 				<td>
 					Conducente
 				</td>
 			</tr>
-		</thead>
 			<tr>
 				<td>
 					<%-- <img src="${lift.user.profilePhoto}" /> --%>
@@ -212,9 +297,10 @@
 					<!-- user activity  -->
 				</td>
 			</tr>
-	
-	
 	</table>
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>

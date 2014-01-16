@@ -11,7 +11,7 @@ public class RegisteredUserMapper extends AbstractMapper {
 	
 	public List<RegisteredUser> findAll() {
 		List<RegisteredUser> result = new LinkedList<RegisteredUser>();
-		Collection<DomainObject> objects = super.find("from RegisteredUser", null);
+		Collection<DomainObject> objects = super.find("from RegisteredUser", null,false);
 		for (DomainObject object : objects) {
 			result.add((RegisteredUser) object);
 		}
