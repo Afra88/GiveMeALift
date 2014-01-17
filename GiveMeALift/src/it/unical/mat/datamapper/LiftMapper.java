@@ -25,47 +25,6 @@ import org.hibernate.Transaction;
 
 public class LiftMapper extends AbstractMapper {
 	
-//	public List<Lift> findFromTo(String CityFrom, String CityTo){
-//		List<Lift> result = new LinkedList<Lift>();
-//		Session session = HibernateUtil.getSessionFactory().openSession();
-//		Transaction transaction = null;
-//		try {
-//			transaction = session.beginTransaction();
-//			if(CityFrom!="" && CityFrom!=null && CityTo!="" && CityTo!=null){	
-//				@SuppressWarnings("unchecked")
-//				Query query= session.createQuery("from Lift"
-////						+ " where "
-////						+ "(pickUpPoint.city like :par1 "
-////						+ "or pickUpPoint.street like :par1 "
-////						+ "or pickUpPoint.state like :par1 )"
-////						+ "and (dropOffPoint.city like :par2 "
-////						+ "or dropOffPoint.street like :par2 "
-////						+ "or dropOffPoint.state like :par2 )"
-//						);
-////				query.setString("par1", CityFrom);
-////				query.setString("par2", CityTo);
-//				@SuppressWarnings("unchecked")
-//				Collection<DomainObject> objects=query.list();
-//				transaction.commit();
-//				for (DomainObject object : objects) {
-//					result.add((Lift) object);
-//				}
-//				return result;
-//			}
-//		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
-//			e.printStackTrace();
-//			transaction.rollback();
-//		} finally {
-//			session.close();
-//		}
-//		return null;
-//			
-//		
-//	}
-
-//	"from Lift l, Lift_Point l1, Lift_Point l2,"
-//	+ "where l.pick_up = 1 and l.drop_off=2 and l1.city=cityFrom and l2.city=cityTo"
-	
 	public List<Lift> findLiftByFromAndTo(String cityFrom, String cityTo, String date){
 		List<Lift> result = new LinkedList<Lift>();
 		String findStatement= "from Lift"
@@ -79,19 +38,19 @@ public class LiftMapper extends AbstractMapper {
 							+ "or dropOffPoint.street like :par2 "
 							+ "or dropOffPoint.state like :par2 "
 							+ "or dropOffPoint.province like :par2 "
-							+ "or dropOffPoint.region like :par2)"
+							+ "or dropOffPoint.region like :par2) "
+							+ "and departureDate=:par3";
 							;
-//							+ "departureDate=:par3";
 		
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		parameters.put("par1", cityFrom);
 		parameters.put("par2", cityTo);
-//		try {
-//			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-//			parameters.put("par3", d);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
+			parameters.put("par3", d);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		Collection<DomainObject> objects=find(findStatement, parameters,false);
 		for (DomainObject object : objects) {
 			result.add((Lift) object);
@@ -114,9 +73,9 @@ public class LiftMapper extends AbstractMapper {
 							+ "or dropOffPoint.street like :par2 "
 							+ "or dropOffPoint.state like :par2 "
 							+ "or dropOffPoint.province like :par2 "
-							+ "or dropOffPoint.region like :par2)"
+							+ "or dropOffPoint.region like :par2) "
+							+ "and departureDate=:par3 ";
 							;
-//							+ "departureDate=:par3 ";
 		if(cost!=null){		
 			if(cost.equals("1")){
 				findStatement+= "and cost<avg(cost) ";
@@ -135,12 +94,12 @@ public class LiftMapper extends AbstractMapper {
 		}
 		parameters.put("par1", cityFrom);
 		parameters.put("par2", cityTo);
-//		try {
-//			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-//			parameters.put("par3", d);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
+			parameters.put("par3", d);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		Collection<DomainObject> objects=find(findStatement, parameters,false);
 		if(!objects.isEmpty()){		
 			result = new LinkedList<Lift>();
@@ -194,9 +153,9 @@ public class LiftMapper extends AbstractMapper {
 							+ "or p2.street like :par2 "
 							+ "or p2.state like :par2 "
 							+ "or p2.province like :par2 "
-							+ "or p2.region like :par2)"
+							+ "or p2.region like :par2) "
+							+ "and departureDate=:par3 ";
 							;
-//							+ "departureDate=:par3 ";
 		if(cost!=null){		
 			if(cost.equals("1")){
 				findStatement+= "and cost<avg(cost) ";
@@ -215,12 +174,12 @@ public class LiftMapper extends AbstractMapper {
 		}
 		parameters.put("par1", cityFrom);
 		parameters.put("par2", cityTo);
-//		try {
-//			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-//			parameters.put("par3", d);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
+			parameters.put("par3", d);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		Collection<DomainObject> objects=find(findStatement, parameters,true);
 		if(!objects.isEmpty()){		
 			result = new LinkedList<Lift>();

@@ -24,10 +24,12 @@
 	<mvc:resources mapping="/images/**" location="/WEB-INF/resources/images/" /> -->
 	
 	<mvc:annotation-driven />
-        <mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
-        <mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
-        <mvc:resources mapping="/images/**" location="/WEB-INF/resources/images/" />
-         <mvc:resources mapping="/font/**" location="/WEB-INF/resources/font/" />
+    <mvc:resources mapping="/css/**" location="/WEB-INF/resources/css/" />
+    <mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
+    <mvc:resources mapping="/images/**" location="/WEB-INF/resources/images/" />
+    <mvc:resources mapping="/font/**" location="/WEB-INF/resources/font/" />
+ 
+ 	<bean id="user" class="it.unical.mat.domain.User" scope="session" />
  
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    		<property name="prefix" value="/WEB-INF/jsp/" />

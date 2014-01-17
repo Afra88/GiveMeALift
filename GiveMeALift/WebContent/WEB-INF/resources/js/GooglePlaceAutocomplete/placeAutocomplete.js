@@ -16,15 +16,20 @@ function initialize() {
 			componentRestrictions: {country: 'it'}
 	};
 
-	    var elems = document.getElementsByTagName('*'), i;
-	    for (i in elems) {
-	        if((' ' + elems[i].className + ' ').indexOf(' ' + 'autocomplete' + ' ')
-	                > -1) {
-	            elems[i].innerHTML = content;
-	            var input = elems[i];
-	            autocomplete = new google.maps.places.Autocomplete(input,options);
-	        }
-	    }
+	var from=document.getElementById("mapFrom");
+	var to=document.getElementById("mapTo");
+	autocomplete = new google.maps.places.Autocomplete(from,options);
+	autocomplete = new google.maps.places.Autocomplete(to,options);
+	
+//	    var elems = document.getElementsByTagName('*'), i;
+//	    for (i in elems) {
+//	        if((' ' + elems[i].className + ' ').indexOf(' ' + 'autocomplete' + ' ')
+//	                > -1) {
+//	            elems[i].innerHTML = content;
+//	            var input = elems[i];
+//	            autocomplete = new google.maps.places.Autocomplete(input,options);
+//	        }
+//	    }
 	    
   // When the user selects an address from the dropdown,
   // populate the address fields in the form.

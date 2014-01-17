@@ -1,4 +1,5 @@
 var bool=new Boolean("false");
+var msg="* Campo obbligatorio";
 function checkEqual(){
 	var p=document.getElementById("psw");
 	var p1=document.getElementById("pswConfirm");
@@ -97,32 +98,37 @@ function setAction() {
 	var p1=document.getElementById("pswConfirm").value;	
 	if(n=="" || n==null){
 		document.getElementById("name").style.border="double red";
-		document.getElementById("mandatoryField").style.color="red";
+		document.getElementById("null").innerHTML=msg;
+		document.getElementById("null").style.color="red";
 		bool=true;
 	}
 	if(s=="" || s==null){
 		document.getElementById("surname").style.border="double red";
-		document.getElementById("mandatoryField").style.color="red";
+		document.getElementById("null").innerHTML=msg;
+		document.getElementById("null").style.color="red";
 		bool=true;
 	}
 	if(e=="" || e==null){
 		document.getElementById("email").style.border="double red";
-		document.getElementById("mandatoryField").style.color="red";
+		document.getElementById("null").innerHTML=msg;
+		document.getElementById("null").style.color="red";
 		bool=true;
 	}
 	if(p=="" || p==null){
 		document.getElementById("psw").style.border="double red";
-		document.getElementById("mandatoryField").style.color="red";
+		document.getElementById("null").innerHTML=msg;
+		document.getElementById("null").style.color="red";
 		bool=true;
 	}
 	if(p1=="" || p1==null){
 		document.getElementById("pswConfirm").style.border="double red";
-		document.getElementById("mandatoryField").style.color="red";
+		document.getElementById("null").innerHTML=msg;
+		document.getElementById("null").style.color="red";
 		bool=true;
 	}
 	if(bool==false){
-		document.getElementById("mandatoryField").style.color="black";
-		document.getElementById("form0").action="signUp";
+		document.getElementById("null").innerHTML="";
+		document.getElementById("form0").action="SignUp";
 		document.getElementById("form0").submit();
 	}
 }

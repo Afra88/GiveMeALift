@@ -101,10 +101,6 @@ public abstract class AbstractMapper {
 				}
 				@SuppressWarnings("unchecked")
 				Collection<DomainObject> objects=query.list();
-//				for (DomainObject domainObject : objects) 
-//					
-//					
-//				}
 				transaction.commit();
 				return objects;
 		} catch (HibernateException | NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {

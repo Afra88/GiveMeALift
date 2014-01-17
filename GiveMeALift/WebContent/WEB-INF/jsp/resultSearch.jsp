@@ -3,63 +3,65 @@
 <%@ page contentType="text/html;charset=iso-8859-1" %>
 <html>
     <head>
+    <title>Risultati della ricerca</title>
+   
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/ourAdditions.css">
     <link rel="stylesheet" href="css/greenTable.css">
-    
-    <script type="text/javascript" src="js/hoverMapValue.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-    
-    <script type="text/javascript" src="js/checkingTime.js"></script>
-	<script src="js/calendar/tcal.js" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
-	<!-- <link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
-	<link rel="stylesheet" href="css/mainstyle.css" type="text/css" /> -->
-	
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-  	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
- 	<script src="js/jQueryElement/rangeSlider.js" type="text/javascript"></script>
- 	<script src="js/jQueryElement/radio.js" type="text/javascript"></script>
- 	
-<!--  	Google Place Autocomplete -->
-<!--  	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"> -->
-<!--     <meta charset="utf-8"> -->
-<!--  	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"> -->
-<!--     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script> -->
-<!--     <link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css"> -->
-<!--  	<script src="js/GooglePlaceAutocomplete/placeAutocomplete.js" type="text/javascript"></script> -->
-<!--     end -->
-	
-	<!-- <link rel="stylesheet" href="css/listResult.css" type="text/css" />
-	<script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script> -->
-    
     <link rel="stylesheet" href="css/pagination.css" type="text/css" />
-    <script type="text/javascript" src="js/manageSearchLift.js" >   
-    </script>
     
-    <meta charset="utf-8">
-	<link rel="icon" href="images/favicon.ico">
+    <link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/font-awesome.css">
 	<link rel="stylesheet" href="css/form.css">
-<!-- 	<script src="js/cssJs/jquery.js"></script> -->
+	<link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplite.css">
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
+	
+	<!-- <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css"> -->
+    
+    <!--  	Google Place Autocomplete -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+ 	<script src="js/GooglePlaceAutocomplete/placeAutocomplete.js" type="text/javascript"></script>
+	<!--     end -->
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<!--   	<script src="js/cssJs/jquery.js"></script> -->
 	<script src="js/cssJs/jquery-migrate-1.1.1.js"></script>
 	<script src="js/cssJs/superfish.js"></script>
 	<script src="js/cssJs/jquery.equalheights.js"></script>
 	<script src="js/cssJs/jquery.easing.1.3.js"></script>
 	<script src="js/cssJs/jquery.ui.totop.js"></script>
+    
+    <script type="text/javascript" src="js/hoverMapValue.js"></script>
+    <script type="text/javascript" src="js/checkingTime.js"></script>
+	<script src="js/calendar/tcal.js" type="text/javascript"></script>
+	<script type="text/javascript" src="js/manageSearchLift.js" ></script>
+	  	
+ 	<script src="js/jQueryElement/rangeSlider.js" type="text/javascript"></script>
+ 	<script src="js/jQueryElement/radio.js" type="text/javascript"></script>
+	
+	<!-- <link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
+	<link rel="stylesheet" href="css/mainstyle.css" type="text/css" /> -->
+
+	<!-- <link rel="stylesheet" href="css/listResult.css" type="text/css" />
+	<script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script> -->   
+   
 	<script>
 	$(document).ready(function () {
 	    $().UItoTop({
 	        easingType: 'easeOutQuart'
 	    });
 	});
-	</script>
-    
-   	<title>Risultati della ricerca</title>
-    
+	</script>  
     </head>
     <body onload="initialize()">
 	<header>
@@ -88,11 +90,11 @@
 		      <div class="menu_block">
 		        <nav>
 		          <ul class="sf-menu">
-		            <li><a href="/GiveMeALift">Home</a></li>
-		            <li><a href="products.html">Products</a></li>
-		            <li><a href="blog.html">Blog</a></li>
-		            <li class="current"><a href="recipes.html">Recipes</a></li>
-		            <li><a href="contacts.html">Contacts</a></li>
+		            <li class="current"><a href="">Home</a></li>
+		            <li><a href="OfferALift">Offri un passaggio!</a></li>
+		            <!-- <li><a href="blog.html">Blog</a></li>
+		            <li><a href="recipes.html">Recipes</a></li>
+		            <li><a href="contacts.html">Contacts</a></li> -->
 		          </ul>
 		        </nav>
 		        <div class="clear"></div>

@@ -32,15 +32,26 @@
 	<p class="greenTable">
 		<table id="fillOffer">
 					<tr><td colspan="2">Itinerario</td></tr>
+			<tr id="mapTr">
+			<td colspan="2">
+			<p><input class="button" type="button"  id="FromAToB"  value="Percorso" /></p>
+			<div id="map_canvas" style="float:left;width:100%;height:400px"></div>
+<!-- 				<div style="float:right;width:100px;height:400px;overflow:auto"> -->
+<!-- 			  	<button id="undo" style="display:block;margin:auto" onclick="undo()">Undo -->
+<!-- 			 	 </button> -->
+<!-- 			 	<div id="directions_panel" style="width:200px"></div> -->
+<!-- 			</div> -->
+			</td>
+			</tr>
+			<tr>
 			<tr>
 				<td>
-				<span class="label"> Luogo di Partenza: </span> 							
-<!-- 				<input id="city">						 -->
-				<input type="text" id=mapFrom name=mapFrom class="autocomplete" />
+				Luogo di Partenza:				
+				<input class="autocomplete" type="text" id=mapFrom name=mapFrom value="Partenza" /> 
 				</td>
 				<td>
-				<span class="label"> Luogo di arrivo: </span>				 
-				<input	type="text" id=mapTo name=mapTo class="autocomplete" />
+				Luogo di arrivo:				 
+				<input class="autocomplete" type="text" id=mapTo name=mapTo value="Arrivo"  />
 				</td>
 			</tr>
 			<tr>
@@ -102,20 +113,12 @@
 <!-- 					<span id=date1><script type="text/javascript" src="js/currentDate.js"></script></span> -->
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<input class="button" type="button"  id="FromAToB"  value="Percorso" />
-				</td>
-				<td>
+				<td colspan="2">
 					<input type="submit" value="Conferma" class="button" />
 				</td>
 			</tr>
 		</table>
-	</p>
 	</form>
-		
-		
-	<p id="map"></p>
 </div>
 </div>
 

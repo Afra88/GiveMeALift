@@ -12,8 +12,6 @@
 <!-- </html> -->
 
 <%@include file="header.jsp"%>
-<script type="text/javascript" src="js/dynamicPriceSum.js"></script>
-<script type="text/javascript" src="js/jQueryElement/jquery.format.1.05.js"></script>
 
 <div class="container_12">
 	<div class="grid_12">
@@ -21,9 +19,13 @@
 	
 	
 	<!-- hidden div per visualizzare nel dom i valori di path -->
-	<c:forEach var="i"  begin="0" end="${path.size()-1}" > 
-		<div name="path" hidden=true>${path.get(i)}</div>
-	</c:forEach>
+	<c:choose>
+	<c:when test="${path.size()>0}">
+		<c:forEach var="i"  begin="0" end="${path.size()-1}" > 
+			<div name="path" hidden=true>${path.get(i)}</div>
+		</c:forEach>
+	</c:when>
+	</c:choose>
 	
 	<!-- hidden div per visualizzare nel dom i valori di inputs -->
 	<c:forEach var="i"  begin="0" end="${inputs.size()-1}" > 
@@ -165,7 +167,7 @@
 			<tr>
 				<td><h2> Tratta percorsa </h2></td>
 				<td>
-					<h2><input type="number" id="timesForThisRoute" name="timesForThisRoute" class="number" maxlength="6" size="6"> volte</h2>
+					<h2><input type="number" id="timesForThisRoute" name="timesForThisRoute" class="number" maxlength="6" size="6" value="0" > volte</h2>
 				</td>
 			</tr>
 			<tr>
@@ -216,10 +218,10 @@
 			</tr>
 			<tr>
 				<td>
-					<input class="button" type="button" id="goBack" value="Indietro" onClick="history.back()"/>
+					<input type="button" id="goBack" value="Indietro" onClick="history.back()"/>
 				</td>
 				<td>
-					<input class="button" type="submit" value="Pubblica annuncio"/>
+					<input type="submit" value="Pubblica"  />
 				</td>
 			</tr>
 		</table>

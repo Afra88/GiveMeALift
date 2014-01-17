@@ -76,8 +76,11 @@
 <html lang="it">
 	<head>
 	<title>Give me a Lift!</title>
-	
+
 	<meta charset="utf-8">
+	
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
 	<link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<link rel="stylesheet" href="css/style.css">
@@ -85,7 +88,9 @@
 	<link rel="stylesheet" href="css/slider.css">
 	<link rel="stylesheet" href="css/elastislide.css">
 	<link rel="stylesheet" href="css/form.css">
-<!-- 	<script src="js/cssJs/jquery.js"></script> -->
+	<link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css">
+	
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="js/cssJs/jquery-migrate-1.1.1.js"></script>
 	<script src="js/cssJs/superfish.js"></script>
 	<script src="js/cssJs/jquery.equalheights.js"></script>
@@ -97,6 +102,20 @@
 	<script src="js/cssJs/jquery.elastislide.js"></script>
 	<script src="js/cssJs/jquery.catslider.js"></script>
 	<script src="js/cssJs/jquery.touchSwipe.min.js"></script>
+	
+	 <!--  	Google Place Autocomplete -->
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+ 	<script src="js/GooglePlaceAutocomplete/placeAutocomplete.js" type="text/javascript"></script>
+	<!--     end -->
+
+	<script type="text/javascript" src="js/setMapValue.js"></script>
+	<script type="text/javascript" src="js/checkingTime.js"></script>
+	<script src="js/calendar/tcal.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/hoverMapValue.js"></script>
+    <script type="text/javascript" src="js/hoverMapValue.js"></script>
+    
+	
+<!-- 	<script src="js/cssJs/jquery.js"></script> -->
 	<script>
 	$(window).load(function () {
 	    $('#mi-slider').catslider();
@@ -133,31 +152,6 @@
 	    });
 	});
 	</script>
-<!--[if lt IE 9]>
-<script src="js/html5shiv.js"></script>
-<link rel="stylesheet" media="screen" href="css/ie.css">
-<![endif]-->
-
-	<link rel="stylesheet" href="css/login.css">
-	<script type="text/javascript" src="js/setMapValue.js"></script>
-	<script type="text/javascript" src="js/checkingTime.js"></script>
-	<script src="js/calendar/tcal.js" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
-<!-- 	<link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&language=it"></script>
-	<script type="text/javascript" src="js/GoogleMap/map.js"></script>
- -->
-	<!-- Google Place Autocomplete -->
-<!--  	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"> -->
-<!--     <meta charset="utf-8"> -->
-<!--  	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"> -->
-<!--     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script> -->
-<!--     <link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css"> -->
-<!--  	<script src="js/GooglePlaceAutocomplete/placeAutocomplete.js" type="text/javascript"></script> -->
-    <!--  end -->
-    <script type="text/javascript" src="js/hoverMapValue.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    
 </head>
 <body class="page1" onload="initialize()">
 <header>
@@ -229,30 +223,26 @@
 	</div>
     <div class="grid_8 prefix_2">  
       <div id="mi-slider" class="mi-slider">
-<!--         <ul> -->
-<!--           <li><a href="#"><img src="images/travel/mapcar.jpg" alt=""></a></li> -->
-<!--           <li><a href="#"><img src="images/travel/collage.jpg" alt=""></a></li> -->
-<!--           <li><a href="#"><img src="images/travel/car.jpg" alt=""></a></li> -->
-<!--         </ul> -->
-<!--         <ul> -->
-<!--           <li><a href="#"><img src="images/cities/rome.jpg" alt=""></a></li> -->
-<!--           <li><a href="#"><img src="images/cities/turin.jpg" alt=""></a></li> -->
-<!--           <li><a href="#"><img src="images/cities/florence.jpg" alt=""></a></li> -->
-<!--         </ul> -->
         <ul>
-          <li><a href="#"><img src="images/friends/friends.jpg" alt=""></a></li>
+          <li><a href="#"><img src="images/travel/mapcar.jpg" alt=""></a></li>
+          <li><a href="#"><img src="images/travel/collage.jpg" alt=""></a></li>
+          <li><a href="#"><img src="images/travel/radio.jpg" alt=""></a></li>
+        </ul>
+        <ul>
+          <li><a href="#"><img src="images/cities/rome.jpg" alt=""></a></li>
+          <li><a href="#"><img src="images/cities/turin2.jpg" alt=""></a></li>
+          <li><a href="#"><img src="images/cities/florence.jpg" alt=""></a></li>
+        </ul>
+        <ul>
           <li><a href="#"><img src="images/friends/friends1.jpg" alt=""></a></li>
+          <li><a href="#"><img src="images/friends/friends.jpg" alt=""></a></li>
           <li><a href="#"><img src="images/friends/friends2.jpg" alt=""></a></li>
         </ul>
-<!--         <ul> -->
-<!--           <li><a href="#"><img src="images/dier1.jpg" alt=""></a></li> -->
-<!--           <li><a href="#"><img src="images/dier2.jpg" alt=""></a></li> -->
-<!--           <li><a href="#"><img src="images/dier3.jpg" alt=""></a></li> -->
-<!--         </ul> -->
-        <nav> <a href="#">Dividi le spese!</a> <a href="#">Viaggia!</a> <a href="#">Conosci nuove persone!</a> 
-<!--         <a href="#">dairy</a>  -->
+        <nav> 
+        <a href="#">Dividi le spese!</a> <a href="#">Viaggia!</a> <a href="#">Conosci nuove persone!</a> 
         </nav>
       </div>
+<!--         <a href="#">dairy</a>  -->
     </div>
     <div class="clear"></div>
     <div class="grid_8">

@@ -58,20 +58,20 @@ public class SearchController {
 		
 		LiftMapper lm=new LiftMapper();
 
-		Lift l=new Lift();
-		LiftPoint lp=new LiftPoint();
-		lp.setCity(from);
-		LiftPoint lp2=new LiftPoint();
-		lp2.setCity(to);
-		LiftPointMapper lpm=new LiftPointMapper();
-		long idLp=lpm.insert(lp);
-		long idLp2=lpm.insert(lp2);
-		l.setPickUpPoint(lp);
-		l.setDropOffPoint(lp2);
-		l.setCost(2);
-		l.setnSeat(2);
-		l.setPossibleDetour(false);
-		lm.insert(l);
+//		Lift l=new Lift();
+//		LiftPoint lp=new LiftPoint();
+//		lp.setCity(from);
+//		LiftPoint lp2=new LiftPoint();
+//		lp2.setCity(to);
+//		LiftPointMapper lpm=new LiftPointMapper();
+//		long idLp=lpm.insert(lp);
+//		long idLp2=lpm.insert(lp2);
+//		l.setPickUpPoint(lp);
+//		l.setDropOffPoint(lp2);
+//		l.setCost(2);
+//		l.setnSeat(2);
+//		l.setPossibleDetour(false);
+//		lm.insert(l);
 		
 		if(nPage==null || nPage==""){
 			nPage="1";

@@ -1,8 +1,7 @@
 .login *{
-	width:180;
+/* 	width:180; */
 	opacity:1.0;
-  	filter:alpha(opacity=100); /* For IE8 and earlier */
-  	text-align: center;
+  	filter:alpha(opacity=100);
   	vertical-align: middle;
   	text-align: center;
   	margin: 5px;
