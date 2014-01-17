@@ -184,5 +184,79 @@ public class DriverInfo extends DomainObject {
 		this.car = car;
 	}
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((car == null) ? 0 : car.hashCode());
+		result = prime * result
+				+ ((car_photo == null) ? 0 : car_photo.hashCode());
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + ((comfort == null) ? 0 : comfort.hashCode());
+		result = prime * result
+				+ ((driving_licence == null) ? 0 : driving_licence.hashCode());
+		result = prime * result
+				+ ((insurance == null) ? 0 : insurance.hashCode());
+		result = prime * result
+				+ ((relisingDate == null) ? 0 : relisingDate.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DriverInfo other = (DriverInfo) obj;
+		if (car == null) {
+			if (other.car != null)
+				return false;
+		} else if (!car.equals(other.car))
+			return false;
+		if (car_photo == null) {
+			if (other.car_photo != null)
+				return false;
+		} else if (!car_photo.equals(other.car_photo))
+			return false;
+		if (color == null) {
+			if (other.color != null)
+				return false;
+		} else if (!color.equals(other.color))
+			return false;
+		if (comfort == null) {
+			if (other.comfort != null)
+				return false;
+		} else if (!comfort.equals(other.comfort))
+			return false;
+		if (driving_licence == null) {
+			if (other.driving_licence != null)
+				return false;
+		} else if (!driving_licence.equals(other.driving_licence))
+			return false;
+		if (insurance == null) {
+			if (other.insurance != null)
+				return false;
+		} else if (!insurance.equals(other.insurance))
+			return false;
+		if (relisingDate == null) {
+			if (other.relisingDate != null)
+				return false;
+		} else if (!relisingDate.equals(other.relisingDate))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+
+	
 	
 }

@@ -16,5 +16,10 @@ public abstract class DomainObject {
 	}
 
 	public abstract void copy(DomainObject object2);
+	
+	@Override
+	public boolean equals(Object obj) {
+		return true;
+	}
 
 }

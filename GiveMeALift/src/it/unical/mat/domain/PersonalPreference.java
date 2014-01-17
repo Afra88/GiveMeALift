@@ -177,5 +177,61 @@ public class PersonalPreference extends DomainObject {
 		this.chatnessLevel = chatnessLevel;
 	}
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((chatnessLevel == null) ? 0 : chatnessLevel.hashCode());
+		result = prime
+				* result
+				+ ((childrensOnBoard == null) ? 0 : childrensOnBoard.hashCode());
+		result = prime * result + ((music == null) ? 0 : music.hashCode());
+		result = prime * result
+				+ ((petsOnBoard == null) ? 0 : petsOnBoard.hashCode());
+		result = prime * result + ((smoking == null) ? 0 : smoking.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PersonalPreference other = (PersonalPreference) obj;
+		if (chatnessLevel == null) {
+			if (other.chatnessLevel != null)
+				return false;
+		} else if (!chatnessLevel.equals(other.chatnessLevel))
+			return false;
+		if (childrensOnBoard == null) {
+			if (other.childrensOnBoard != null)
+				return false;
+		} else if (!childrensOnBoard.equals(other.childrensOnBoard))
+			return false;
+		if (music == null) {
+			if (other.music != null)
+				return false;
+		} else if (!music.equals(other.music))
+			return false;
+		if (petsOnBoard == null) {
+			if (other.petsOnBoard != null)
+				return false;
+		} else if (!petsOnBoard.equals(other.petsOnBoard))
+			return false;
+		if (smoking == null) {
+			if (other.smoking != null)
+				return false;
+		} else if (!smoking.equals(other.smoking))
+			return false;
+		return true;
+	}
+
+	
 	
 }

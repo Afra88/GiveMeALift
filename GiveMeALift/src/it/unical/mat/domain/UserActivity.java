@@ -83,4 +83,61 @@ public class UserActivity extends DomainObject {
 		if(m.answersPercentage != null)
 			this.answersPercentage = m.answersPercentage;
 		}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((answersPercentage == null) ? 0 : answersPercentage
+						.hashCode());
+		result = prime * result
+				+ ((lastOnline == null) ? 0 : lastOnline.hashCode());
+		result = prime * result
+				+ ((memberSince == null) ? 0 : memberSince.hashCode());
+		result = prime * result
+				+ ((ridesOffered == null) ? 0 : ridesOffered.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserActivity other = (UserActivity) obj;
+		if (answersPercentage == null) {
+			if (other.answersPercentage != null)
+				return false;
+		} else if (!answersPercentage.equals(other.answersPercentage))
+			return false;
+		if (lastOnline == null) {
+			if (other.lastOnline != null)
+				return false;
+		} else if (!lastOnline.equals(other.lastOnline))
+			return false;
+		if (memberSince == null) {
+			if (other.memberSince != null)
+				return false;
+		} else if (!memberSince.equals(other.memberSince))
+			return false;
+		if (ridesOffered == null) {
+			if (other.ridesOffered != null)
+				return false;
+		} else if (!ridesOffered.equals(other.ridesOffered))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+	
+	
 }

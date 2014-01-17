@@ -90,6 +90,44 @@ public class LiftDetour extends DomainObject {
 		this.liftList = liftList;
 	}
 
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dropOffPoint == null) ? 0 : dropOffPoint.hashCode());
+		result = prime * result
+				+ ((liftList == null) ? 0 : liftList.hashCode());
+		result = prime * result
+				+ ((pickUpPoint == null) ? 0 : pickUpPoint.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LiftDetour other = (LiftDetour) obj;
+		if (dropOffPoint == null) {
+			if (other.dropOffPoint != null)
+				return false;
+		} else if (!dropOffPoint.equals(other.dropOffPoint))
+			return false;
+		if (liftList == null) {
+			if (other.liftList != null)
+				return false;
+		} else if (!liftList.equals(other.liftList))
+			return false;
+		if (pickUpPoint == null) {
+			if (other.pickUpPoint != null)
+				return false;
+		} else if (!pickUpPoint.equals(other.pickUpPoint))
+			return false;
+		return true;
+	}
 	
 }

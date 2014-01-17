@@ -168,4 +168,92 @@ public class RegisteredUser extends User {
 		this.driverInfo = driverInfo;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((countAlert == null) ? 0 : countAlert.hashCode());
+		result = prime * result
+				+ ((driverInfo == null) ? 0 : driverInfo.hashCode());
+		result = prime
+				* result
+				+ ((messagesReceived == null) ? 0 : messagesReceived.hashCode());
+		result = prime * result
+				+ ((messagesSent == null) ? 0 : messagesSent.hashCode());
+		result = prime * result
+				+ ((onlyPassenger == null) ? 0 : onlyPassenger.hashCode());
+		result = prime
+				* result
+				+ ((personalPreference == null) ? 0 : personalPreference
+						.hashCode());
+		result = prime * result
+				+ ((profilePhoto == null) ? 0 : profilePhoto.hashCode());
+		result = prime
+				* result
+				+ ((receivedFeedback == null) ? 0 : receivedFeedback.hashCode());
+		result = prime * result
+				+ ((userActivity == null) ? 0 : userActivity.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RegisteredUser other = (RegisteredUser) obj;
+		if (countAlert == null) {
+			if (other.countAlert != null)
+				return false;
+		} else if (!countAlert.equals(other.countAlert))
+			return false;
+		if (driverInfo == null) {
+			if (other.driverInfo != null)
+				return false;
+		} else if (!driverInfo.equals(other.driverInfo))
+			return false;
+		if (messagesReceived == null) {
+			if (other.messagesReceived != null)
+				return false;
+		} else if (!messagesReceived.equals(other.messagesReceived))
+			return false;
+		if (messagesSent == null) {
+			if (other.messagesSent != null)
+				return false;
+		} else if (!messagesSent.equals(other.messagesSent))
+			return false;
+		if (onlyPassenger == null) {
+			if (other.onlyPassenger != null)
+				return false;
+		} else if (!onlyPassenger.equals(other.onlyPassenger))
+			return false;
+		if (personalPreference == null) {
+			if (other.personalPreference != null)
+				return false;
+		} else if (!personalPreference.equals(other.personalPreference))
+			return false;
+		if (profilePhoto == null) {
+			if (other.profilePhoto != null)
+				return false;
+		} else if (!profilePhoto.equals(other.profilePhoto))
+			return false;
+		if (receivedFeedback == null) {
+			if (other.receivedFeedback != null)
+				return false;
+		} else if (!receivedFeedback.equals(other.receivedFeedback))
+			return false;
+		if (userActivity == null) {
+			if (other.userActivity != null)
+				return false;
+		} else if (!userActivity.equals(other.userActivity))
+			return false;
+		return true;
+	}
+	
+	
+
 }

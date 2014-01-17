@@ -130,5 +130,65 @@ public class LiftPreference extends DomainObject {
 		this.luggageSize = luggageSize;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((luggageSize == null) ? 0 : luggageSize.hashCode());
+		result = prime * result
+				+ ((pinkTrip == null) ? 0 : pinkTrip.hashCode());
+		result = prime * result
+				+ ((roadType == null) ? 0 : roadType.hashCode());
+		result = prime
+				* result
+				+ ((scheduleFlexibility == null) ? 0 : scheduleFlexibility
+						.hashCode());
+		result = prime
+				* result
+				+ ((timesForThisRoute == null) ? 0 : timesForThisRoute
+						.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LiftPreference other = (LiftPreference) obj;
+		if (luggageSize == null) {
+			if (other.luggageSize != null)
+				return false;
+		} else if (!luggageSize.equals(other.luggageSize))
+			return false;
+		if (pinkTrip == null) {
+			if (other.pinkTrip != null)
+				return false;
+		} else if (!pinkTrip.equals(other.pinkTrip))
+			return false;
+		if (roadType == null) {
+			if (other.roadType != null)
+				return false;
+		} else if (!roadType.equals(other.roadType))
+			return false;
+		if (scheduleFlexibility == null) {
+			if (other.scheduleFlexibility != null)
+				return false;
+		} else if (!scheduleFlexibility.equals(other.scheduleFlexibility))
+			return false;
+		if (timesForThisRoute == null) {
+			if (other.timesForThisRoute != null)
+				return false;
+		} else if (!timesForThisRoute.equals(other.timesForThisRoute))
+			return false;
+		return true;
+	}
+
+	
+	
 	
 }

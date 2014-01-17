@@ -112,6 +112,63 @@ public class Feedback extends DomainObject {
 	public void setNumAlertSegnalation(int numAlertSegnalation) {
 		this.numAlertSegnalation = numAlertSegnalation;
 	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((feedbackReceiver == null) ? 0 : feedbackReceiver.hashCode());
+		result = prime * result
+				+ ((feedbackSender == null) ? 0 : feedbackSender.hashCode());
+		result = prime
+				* result
+				+ ((numAlertSegnalation == null) ? 0 : numAlertSegnalation
+						.hashCode());
+		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
+		result = prime * result + ((text == null) ? 0 : text.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Feedback other = (Feedback) obj;
+		if (feedbackReceiver == null) {
+			if (other.feedbackReceiver != null)
+				return false;
+		} else if (!feedbackReceiver.equals(other.feedbackReceiver))
+			return false;
+		if (feedbackSender == null) {
+			if (other.feedbackSender != null)
+				return false;
+		} else if (!feedbackSender.equals(other.feedbackSender))
+			return false;
+		if (numAlertSegnalation == null) {
+			if (other.numAlertSegnalation != null)
+				return false;
+		} else if (!numAlertSegnalation.equals(other.numAlertSegnalation))
+			return false;
+		if (rating == null) {
+			if (other.rating != null)
+				return false;
+		} else if (!rating.equals(other.rating))
+			return false;
+		if (text == null) {
+			if (other.text != null)
+				return false;
+		} else if (!text.equals(other.text))
+			return false;
+		return true;
+	}
 	
 	
 
