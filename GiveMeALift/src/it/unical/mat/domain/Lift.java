@@ -77,22 +77,6 @@ public class Lift extends DomainObject {
 	public void setDetoursCost(String detoursCost) {
 		this.detoursCost = detoursCost;
 	}
-	
-	public String createStringCost(List<Integer> costs){
-		for (Integer integer : costs) {
-			detoursCost+=integer;
-		}
-		return detoursCost;
-	}
-	
-	public List<Integer> getListDetourCosts(){
-		String costs[]=detoursCost.split(";");
-		List<Integer> integerCosts=new LinkedList<Integer>();
-		for (String string : costs) {
-			integerCosts.add(Integer.parseInt(string));
-		}
-		return integerCosts;
-	}
 
 	public Boolean getPossibleDetour() {
 		return possibleDetour;
