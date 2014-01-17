@@ -36,7 +36,7 @@ public class Main {
 		l.setDropOffPoint(lp2);
 		l.setCost(2);
 		l.setnSeat(2);
-		//l.setPossibleDetour(true);
+		l.setPossibleDetour(true);
 		LiftMapper lm=new LiftMapper();
 		
 		lm.insert(l);

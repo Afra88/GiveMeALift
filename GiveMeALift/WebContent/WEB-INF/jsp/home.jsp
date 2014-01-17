@@ -229,27 +229,29 @@
 	</div>
     <div class="grid_8 prefix_2">  
       <div id="mi-slider" class="mi-slider">
+<!--         <ul> -->
+<!--           <li><a href="#"><img src="images/travel/mapcar.jpg" alt=""></a></li> -->
+<!--           <li><a href="#"><img src="images/travel/collage.jpg" alt=""></a></li> -->
+<!--           <li><a href="#"><img src="images/travel/car.jpg" alt=""></a></li> -->
+<!--         </ul> -->
+<!--         <ul> -->
+<!--           <li><a href="#"><img src="images/cities/rome.jpg" alt=""></a></li> -->
+<!--           <li><a href="#"><img src="images/cities/turin.jpg" alt=""></a></li> -->
+<!--           <li><a href="#"><img src="images/cities/florence.jpg" alt=""></a></li> -->
+<!--         </ul> -->
         <ul>
-          <li><a href="#"><img src="images/fruit1.jpg" alt=""></a></li>
-          <li><a href="#"><img src="images/fruit2.jpg" alt=""></a></li>
-          <li><a href="#"><img src="images/fruit3.jpg" alt=""></a></li>
+          <li><a href="#"><img src="images/friends/friends.jpg" alt=""></a></li>
+          <li><a href="#"><img src="images/friends/friends1.jpg" alt=""></a></li>
+          <li><a href="#"><img src="images/friends/friends2.jpg" alt=""></a></li>
         </ul>
-        <ul>
-          <li><a href="#"><img src="images/veg1.jpg" alt=""></a></li>
-          <li><a href="#"><img src="images/veg2.jpg" alt=""></a></li>
-          <li><a href="#"><img src="images/veg3.jpg" alt=""></a></li>
-        </ul>
-        <ul>
-          <li><a href="#"><img src="images/meat1.jpg" alt=""></a></li>
-          <li><a href="#"><img src="images/meat2.jpg" alt=""></a></li>
-          <li><a href="#"><img src="images/meat3.jpg" alt=""></a></li>
-        </ul>
-        <ul>
-          <li><a href="#"><img src="images/dier1.jpg" alt=""></a></li>
-          <li><a href="#"><img src="images/dier2.jpg" alt=""></a></li>
-          <li><a href="#"><img src="images/dier3.jpg" alt=""></a></li>
-        </ul>
-        <nav> <a href="#">fruits</a> <a href="#">vegetables</a> <a href="#">meat</a> <a href="#">dairy</a> </nav>
+<!--         <ul> -->
+<!--           <li><a href="#"><img src="images/dier1.jpg" alt=""></a></li> -->
+<!--           <li><a href="#"><img src="images/dier2.jpg" alt=""></a></li> -->
+<!--           <li><a href="#"><img src="images/dier3.jpg" alt=""></a></li> -->
+<!--         </ul> -->
+        <nav> <a href="#">Dividi le spese!</a> <a href="#">Viaggia!</a> <a href="#">Conosci nuove persone!</a> 
+<!--         <a href="#">dairy</a>  -->
+        </nav>
       </div>
     </div>
     <div class="clear"></div>

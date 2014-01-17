@@ -30,7 +30,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import service.DetoursCostConverterFacade;
+
 import com.sun.org.apache.bcel.internal.generic.DMUL;
+import com.sun.xml.internal.ws.wsdl.writer.document.Service;
 
 @Controller
 public class OfferController {
@@ -273,11 +276,12 @@ public class OfferController {
 		
 		///////////////////////// MAPPER ////////////////////////////////////
 		
+				
 		/* Parametri da inserire in Lift*/	
 		String[] costs = price.split(",");     //COST
-		Integer cost = 0;
+		Integer totcost = 0;
 		for (int i = 0; i < costs.length; i++) {
-			cost += Integer.parseInt(costs[i]);
+			totcost += Integer.parseInt(costs[i]);
 		}
 		
 		Integer nSeats = Integer.parseInt(seats);    //NSEATS
@@ -427,11 +431,21 @@ public class OfferController {
 		java.sql.Date sd = new java.sql.Date(departureDate.getTime()); // cambiare
 						
 		/////////////////////////LIFT  ////////////////////////////////////
-		Lift l = new Lift(cost, nSeats, possibleDetour, departureTime, sd, pickUpPoint, dropOffPoint);				
+		Lift l = new Lift(totcost, nSeats, possibleDetour, departureTime, sd, pickUpPoint, dropOffPoint);				
 		l.setUserOffering(user);		
 		l.setLiftPreferences(lp);
 		/////////////////////////LIFT  ////////////////////////////////////
 
+		DetoursCostConverterFacade df = new DetoursCostConverterFacade();
+		List<Integer> prices = new ArrayList<>();
+		
+		
+		   //ADD SINGLE COST OF EACH DETOUR TO THE LIFT
+		for (int i = 0; i < costs.length; i++) {
+			prices.add(Integer.parseInt(costs[i]));
+		}
+		
+		df.createStringCost(prices, l);
 
 		
 		/////////////////////////Ad ogni LIFT  DETOUR trovato assegno il lift che sto inserendo ////////////////////////////////////
@@ -509,7 +523,7 @@ public class OfferController {
 				ldm.insert(dt);
 			}
 				
-			Lift lr = new Lift(cost, nSeats, possibleDetour, returnTime, srd,  pickUpPoint, dropOffPoint);
+			Lift lr = new Lift(totcost, nSeats, possibleDetour, returnTime, srd,  pickUpPoint, dropOffPoint);
 
 			lr.setUserOffering(user);
 			lr.setLiftPreferences(lp);			
@@ -539,10 +553,7 @@ public class OfferController {
 //				detoursReturn.add(temp);
 //		
 //			}
-			
-			
-			
-					
+						
 			lm.insert(lr);			
 		}
 
