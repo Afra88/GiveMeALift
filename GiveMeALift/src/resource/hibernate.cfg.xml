@@ -6,7 +6,7 @@
    <session-factory>
     <!-- Database connection settings -->
    <property name="connection.driver_class">org.hsqldb.jdbcDriver</property>
-   <property name="connection.url">jdbc:hsqldb:file:./DB/mytestdb</property>
+   <property name="connection.url">jdbc:hsqldb:file:./NEWDB/mytestdb</property>
    <property name="connection.username">sa</property>
    <property name="connection.password"></property>
    

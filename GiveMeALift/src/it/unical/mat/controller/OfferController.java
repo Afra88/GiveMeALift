@@ -10,7 +10,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
+import it.unical.mat.datamapper.LiftPointMapper;
+import it.unical.mat.datamapper.LiftPreferenceMapper;
+import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
@@ -19,11 +23,14 @@ import it.unical.mat.domain.LiftPreference;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
 
+import org.apache.catalina.ant.FindLeaksTask;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.sun.org.apache.bcel.internal.generic.DMUL;
 
 @Controller
 public class OfferController {
@@ -172,14 +179,14 @@ public class OfferController {
 //		if(detour4!="")
 //			inputs.add(detour4);			//i=12
 		
-		System.out.println(mapFrom);
-		System.out.println(mapTo);
+		System.out.println(" FROM: " + mapFrom);
+		System.out.println(" TO: " + mapTo);
 		
-		System.out.println(detour0);
-		System.out.println(detour1);
-		System.out.println(detour2);
-		System.out.println(detour3);
-		System.out.println(detour4);
+		System.out.println(" DET0: " + detour0);
+		System.out.println(" DET1: " + detour1);
+		System.out.println(" DET2: " + detour2);
+		System.out.println(" DET3: " + detour3);
+		System.out.println(" DET4: " + detour4);
 		
 		path.add(mapFrom);
 		if(detour0 != "" && detour0!=(null))
@@ -198,9 +205,9 @@ public class OfferController {
 		model.addAttribute("inputs", inputs);
 		model.addAttribute("path", path);
 		
-		int last = path.size()-1;
-		System.out.println(".."+path.get(last));
-		System.out.println(path.get(path.size()-1));
+//		int last = path.size()-1;
+//		System.out.println(".."+path.get(last));
+//		System.out.println(path.get(path.size()-1));
 		
 		
 		if(returnIsPresent){
@@ -224,10 +231,7 @@ public class OfferController {
 		
 		//se non è presente la data di ritorno
 		model.addAttribute("inputs",inputs);
-		return "insertALift";
-		
-		
-				
+		return "insertALift";			
 	}
 	
 	
@@ -259,6 +263,16 @@ public class OfferController {
 			Model m){
 
 		
+		///////////////////////// MAPPER ////////////////////////////////////
+	
+		LiftPointMapper pm = new LiftPointMapper();
+		LiftDetourMapper ldm = new LiftDetourMapper(); 
+		LiftMapper lm = new LiftMapper();
+//		RegisteredUserMapper rm = new RegisteredUserMapper();
+		LiftPreferenceMapper lpm = new LiftPreferenceMapper();
+		
+		///////////////////////// MAPPER ////////////////////////////////////
+		
 		/* Parametri da inserire in Lift*/	
 		String[] costs = price.split(",");     //COST
 		Integer cost = 0;
@@ -269,8 +283,8 @@ public class OfferController {
 		Integer nSeats = Integer.parseInt(seats);    //NSEATS
 		String possibleDetour = deviation;
 		
-		if(goingMins.length()==2 && goingMins.charAt(0)=='0')
-			goingMins=goingMins.charAt(1)+"";   //eccezione "00"
+//		if(goingMins.length()==2 && goingMins.charAt(0)=='0')
+//			goingMins=goingMins.charAt(1)+"";   //eccezione "00"
 		
 		long mstimeG = (1000*60*Integer.parseInt(goingMins)) + (1000*60*60*Integer.parseInt(goingHour));		
 		Time departureTime = new Time(mstimeG);       //DEPARTURETIME
@@ -293,78 +307,115 @@ public class OfferController {
 		
 		
 		ArrayList <LiftPoint> path = new ArrayList<>();
-		path.add(new LiftPoint(mapFrom));    //		pickUpPoint  0
+	//	path.add(new LiftPoint(mapFrom));    //		pickUpPoint  0
+		LiftPoint from = new LiftPoint(mapFrom);
+		
+//		System.out.println("-----:  "+from.getCity());
+//		
+		pm.insert(from);
+		path.add(from);
 
-		if(detour0 != "" && detour0!=(null))
-			path.add(new LiftPoint(detour0));
-		if(detour1 != "" && detour1!=(null))
-			path.add(new LiftPoint(detour1));
-		if(detour2 != "" && detour2!=(null))
-			path.add(new LiftPoint(detour2));
-		if(detour3 != "" && detour3!=(null))
-			path.add(new LiftPoint(detour3));
-		if(detour4 != "" && detour4!=(null))
-			path.add(new LiftPoint(detour4));
-		path.add(new LiftPoint(mapTo));  		//dropOffPoint path.size()-1
-				LiftPoint pickUpPoint = path.get(0);
+		if(detour0 != "" && detour0!=(null)){
+			LiftPoint det0 = new LiftPoint(detour0);
+			path.add(det0);
+			pm.insert(det0);
+//			path.add(new LiftPoint(detour0));
+		}
+		if(detour1 != "" && detour1!=(null)){
+			LiftPoint det1 = new LiftPoint(detour1);
+			path.add(det1);
+			pm.insert(det1);
+//			path.add(new LiftPoint(detour1));
+		}
+		if(detour2 != "" && detour2!=(null)){
+			LiftPoint det2 = new LiftPoint(detour2);
+			path.add(det2);
+			pm.insert(det2);
+//			path.add(new LiftPoint(detour2));
+		}
+		if(detour3 != "" && detour3!=(null)){
+			LiftPoint det3 = new LiftPoint(detour3);
+			path.add(det3);
+			pm.insert(det3);
+//			path.add(new LiftPoint(detour3));
+		}
+		if(detour4 != "" && detour4!=(null)){
+			LiftPoint det4 = new LiftPoint(detour4);
+			path.add(det4);
+			pm.insert(det4);
+//			path.add(new LiftPoint(detour4));
+		}
+//		path.add(new LiftPoint(mapTo));  		//dropOffPoint path.size()-1
+		LiftPoint to = new LiftPoint(mapTo);
+		path.add(to);
+		pm.insert(to);
+
+		LiftPoint pickUpPoint = path.get(0);
 		LiftPoint dropOffPoint = path.get(path.size()-1);
-		
-		
-		LiftMapper lm = new LiftMapper();
 		
 		/////////////////////////UTENTE TEMPORANEO////////////////////////////////////		
 		Address addr = new Address("via Bucci", "Rende", "Italia");
 		RegisteredUser user = new RegisteredUser("email","psw","name","surname","M",1970,"012345","0123456",addr);				
-		/////////////////////////UTENTE TEMPORANEO////////////////////////////////////
-		user.setBirthYear(2009);
-		lm.insert(user); //da eccezione qua
 		
+		RegisteredUserMapper rm = new RegisteredUserMapper();
+		rm.insert(user);
+		/////////////////////////UTENTE TEMPORANEO////////////////////////////////////
+		
+			
 				
-//		/////////////////////////LIFT PREFERENCES////////////////////////////////////
-//		Integer luggageSize;
-//		Boolean pink;
-//		Integer times = Integer.parseInt(timesForThisRoute);
-//		
-//		if(luggage == "piccolo")
-//			luggageSize = 1;
-//		else if(luggage == "medio")
-//			luggageSize = 2;
-//		else
-//			luggageSize = 3;	
-//		
-//		if(pinkTrip.equals("viaggio con uomini e donne"))
-//			pink = false;
-//		else
-//			pink = true;
-//		LiftPreference lp = new LiftPreference(roadType,times,luggageSize,delay,pink);
-//		/////////////////////////LIFT PREFERENCES////////////////////////////////////
-//		
-//		lm.insert(lp);
-
+		/////////////////////////LIFT PREFERENCES////////////////////////////////////
+		Integer luggageSize;
+		Boolean pink;
+		Integer times = Integer.parseInt(timesForThisRoute);
+		
+		if(luggage == "piccolo")
+			luggageSize = 1;
+		else if(luggage == "medio")
+			luggageSize = 2;
+		else
+			luggageSize = 3;	
+		
+		if(pinkTrip.equals("viaggio con uomini e donne"))
+			pink = false;
+		else
+			pink = true;
+		
+		LiftPreference lp = new LiftPreference(roadType,times,luggageSize,delay,pink);
+		lpm.insert(lp);
+		
+		/////////////////////////LIFT PREFERENCES////////////////////////////////////
+		
 		java.sql.Date sd = new java.sql.Date(departureDate.getTime()); // cambiare
 						
 		/////////////////////////LIFT  ////////////////////////////////////
 		Lift l = new Lift(cost, nSeats, possibleDetour, departureTime, sd, pickUpPoint, dropOffPoint);				
-		
 		l.setUserOffering(user);		
-//		l.setLiftPreferences(lp);
+		l.setLiftPreferences(lp);
 		/////////////////////////LIFT  ////////////////////////////////////
-		lm.insert(l);
+
 
 		
-		/////////////////////////LIFT  DETOURS////////////////////////////////////
-		List<LiftDetour> detours = new ArrayList<>();
+		/////////////////////////Ad ogni LIFT  DETOUR trovato assegno il lift che sto inserendo ////////////////////////////////////
+		List<LiftDetour> detours = new ArrayList<LiftDetour>();
 		for (int i = 0; i < path.size()-1; i++) {
 			for (int j = i+1; j < path.size(); j++) {				
 
-				//TODO fare funzione find dai campi pickuppoint e dropoffpoint ? 				
-				LiftDetour tmpDetour = new LiftDetour(path.get(i),path.get(j));								
+				//funzione find dai campi pickUpPoint e dropOffPoint 				
+				List<LiftDetour> list = ldm.findDetourFromPickUpAndDropOffPoints(path.get(i).getCity(), path.get(j).getCity());
+				
+				LiftDetour tmpDetour;
+				
+				if(list.size() > 0)
+					 tmpDetour = list.get(0);
+				else
+					tmpDetour = new LiftDetour(path.get(i),path.get(j));								
 				//una volta trovato o creato va associato al lift di partenza				
 				tmpDetour.getLiftList().add(l); 				
 				
-				lm.insert(tmpDetour);  // controllare se è giusto
-//				se c'è gia 
-//				lm.update(tmpDetour);
+				if(list.size() > 0)
+					ldm.update(tmpDetour);
+				else
+					ldm.insert(tmpDetour);
 				
 				detours.add(tmpDetour);
 			}			
@@ -373,30 +424,59 @@ public class OfferController {
 		/////////////////////////LIFT  DETOURS////////////////////////////////////
 		
 		l.setDetours(detours); 		
-		lm.update(l); 			// controllare se è giusto
-			
+		lm.insert(l);
+	
+		
+		///////////////////////// RETURN LIFT IF PRESENT ////////////////////////////////////
 		
 		if(returnIsPresent){
-			//TODO fare ritorno
-			//TODO fare ritorno
-			//TODO fare ritorno
-			//TODO fare ritorno
+			long mstimeR = (1000*60*Integer.parseInt(returnMins)) + (1000*60*60*Integer.parseInt(returnHour));		
+			Time returnTime = new Time(mstimeR);       //RETURNTIME
+			java.sql.Date srd = new java.sql.Date(returnDate.getTime()); // cambiare
+			
+			pickUpPoint = path.get(0);
+			dropOffPoint = path.get(path.size()-1);
+			pm.insert(pickUpPoint);
+			pm.insert(dropOffPoint);
+			
+			Lift lr = new Lift(cost, nSeats, possibleDetour, returnTime, srd,  pickUpPoint, dropOffPoint);
+
+			lr.setUserOffering(user);
+			lr.setLiftPreferences(lp);			
+			List<LiftDetour> detoursReturn = new ArrayList<LiftDetour>();
+			
+			for (int i = 0; i < detours.size(); i++) {	
+//				LiftDetour temp = new LiftDetour( detours.get(i).getDropOffPoint() ,detours.get(i).getPickUpPoint() );
+//				temp.getLiftList().add(lr);
+//				ldm.insert(temp);
+//				detoursReturn.add(temp);								
+				
+				List<LiftDetour> list = ldm.findDetourFromPickUpAndDropOffPoints(detours.get(i).getDropOffPoint().getCity(), detours.get(i).getPickUpPoint().getCity());
+				LiftDetour temp;
+				
+				if(list.size() > 0)
+					 temp = list.get(0);
+				else
+					temp = new LiftDetour(detours.get(i).getDropOffPoint() ,detours.get(i).getPickUpPoint());								
+				//una volta trovato o creato va associato al lift di partenza				
+				temp.getLiftList().add(lr); 				
+				
+				if(list.size() > 0)
+					ldm.update(temp);
+				else
+					ldm.insert(temp);
+				
+				detoursReturn.add(temp);
+		
+			}
+					
+			lm.insert(lr);			
 		}
 
 		
-//		System.out.println(mapFrom);
-//		System.out.println(detour0);
-//		System.out.println(mapTo);
-		
-//		if(checkLicence == null)
-//			return "insertALift";
-		
-//		System.out.println(price);
-//		System.out.println(checkLicence);
-		
-		
-//		System.out.println(mapFrom);
-		
+		if(checkLicence == null)
+			return "insertALift";
+	
 		
 		
 		
