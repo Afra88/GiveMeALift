@@ -70,7 +70,7 @@ public class SearchController {
 		l.setDropOffPoint(lp2);
 		l.setCost(2);
 		l.setnSeat(2);
-		l.setPossibleDetour("none");
+		l.setPossibleDetour(false);
 		lm.insert(l);
 		
 		if(nPage==null || nPage==""){
