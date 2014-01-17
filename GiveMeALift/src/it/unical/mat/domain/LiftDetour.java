@@ -29,6 +29,7 @@ public class LiftDetour extends DomainObject {
 		super();
 		this.pickUpPoint = pickUpPoint;
 		this.dropOffPoint = dropOffPoint;
+		liftList=new LinkedList<Lift>();
 	}
 
 	public LiftDetour(){
