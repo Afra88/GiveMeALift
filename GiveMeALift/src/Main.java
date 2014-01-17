@@ -2,6 +2,7 @@ import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.LiftPointMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
+import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
@@ -47,6 +48,32 @@ public class Main {
 //		LiftDetourMapper ldm=new LiftDetourMapper();
 //		ldm.insert(ld);
 //		HibernateUtil.shutdown();
+		
+		RegisteredUser user = new RegisteredUser();
+		RegisteredUserMapper rm = new RegisteredUserMapper();
+		
+		user.setName("John");
+		user.setSurname("Bon Jovi");
+		user.setEmail("user@test.it");
+		user.setGender("M");
+		user.setBirthYear(1975);
+		user.setPhone("0984000001");
+		Address a = new Address("Viale Mancini", "Cosenza", "Italia");
+		user.setAddress(a);
+		user.setCountAlert(1);
+	//	user.setDriverInfo(new DriverInfo().se);
+		long id = rm.insert(user);
+
+		System.out.println(id);
+		
+		
+		System.out.println("----"+rm.getMaleUsers("M").size());
+		
+		HibernateUtil.shutdown();
+		
+		
+		
+		
 	}
 
 }
