@@ -45,16 +45,15 @@ public class RegisteredUserMapper extends AbstractMapper {
 	public List<RegisteredUser> getUserBornInYear(Integer year){
 		List<RegisteredUser> users = new LinkedList<RegisteredUser>();
 		
-		String findStatement = "select "
-				+ "from User"
+		String findStatement = "from RegisteredUser"
 				+ " where " 			
-				+ " birth_Year = :par1"
+				+ " birthYear = :par1"
 				;
 		
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		parameters.put("par1", year);
 		
-		Collection<DomainObject> objects = find(findStatement, parameters,true);
+		Collection<DomainObject> objects = find(findStatement, parameters,false);
 		for (DomainObject object : objects) {
 			users.add((RegisteredUser) object);
 		}		
