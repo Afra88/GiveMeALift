@@ -3,17 +3,13 @@ package it.unical.mat.controller;
 import java.util.List;
 
 import it.unical.mat.datamapper.LiftMapper;
-import it.unical.mat.datamapper.LiftPointMapper;
 import it.unical.mat.domain.Lift;
-import it.unical.mat.domain.LiftPoint;
-
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.portlet.ModelAndView;
 
 @Controller
 public class SearchController {

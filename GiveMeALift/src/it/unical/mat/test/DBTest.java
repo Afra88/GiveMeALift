@@ -2,10 +2,12 @@ package it.unical.mat.test;
 
 import static org.junit.Assert.*;
 
-import java.sql.Time;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
@@ -20,6 +22,7 @@ import it.unical.mat.domain.LiftPreference;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.util.HibernateUtil;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,19 +33,17 @@ public class DBTest {
 	private static RegisteredUserMapper rm = new RegisteredUserMapper();
 	private static Lift l = new Lift();
 	private static LiftMapper lm = new LiftMapper();
+	private static LiftPointMapper lpm = new LiftPointMapper();
+	private static LiftDetourMapper ldm = new LiftDetourMapper();
 	
 	@BeforeClass
 	public static void prepareDB(){
-		
-		insertUser(user, rm);
-		insertLift(l,lm);
-		
-					
+		insertUser(user);
+		insertLift(l);				
 	}
 	
 
-	private static void insertUser(RegisteredUser user,
-			RegisteredUserMapper rm) {
+	private static void insertUser(RegisteredUser user) {
 					
 		user.setName("John");
 		user.setSurname("Bon Jovi");
@@ -53,27 +54,21 @@ public class DBTest {
 		Address a = new Address("Viale Mancini", "Cosenza", "Italia");
 		user.setAddress(a);
 		user.setCountAlert(1);
-	//	user.setDriverInfo(new DriverInfo().se);
-		long id = rm.insert(user);
-		System.out.println(id);
+		rm.insert(user);
 		
 	}
 
-	private static void insertLiftPoint(LiftPoint lp){
-		LiftPointMapper lpm = new LiftPointMapper();
-		lpm.insert(lp);
-	}
 		
-	private static void insertLift(Lift l, LiftMapper lm) {
+	private static void insertLift(Lift l) {
 		LiftPoint pickUpPoint = new LiftPoint("Roma");
 		LiftPoint p0 = new LiftPoint("Firenze");	//detour0
 		LiftPoint p1 = new LiftPoint("Napoli");		//detour1
 		LiftPoint dropOffPoint = new LiftPoint("Cosenza");
 		
-		insertLiftPoint(pickUpPoint);
-		insertLiftPoint(p0);
-		insertLiftPoint(p1);
-		insertLiftPoint(dropOffPoint);
+		lpm.insert(pickUpPoint);
+		lpm.insert(p0);
+		lpm.insert(p1);
+		lpm.insert(dropOffPoint);
 		
 		l.setPickUpPoint(pickUpPoint);
 		l.setDropOffPoint(dropOffPoint);
@@ -83,20 +78,24 @@ public class DBTest {
 		
 		LiftDetour det0 = new LiftDetour();
 		LiftDetour det1 = new LiftDetour();
+		LiftDetour det2 = new LiftDetour();
 		det0.setPickUpPoint(pickUpPoint);
 		det0.setDropOffPoint(p0);
-		det1.setPickUpPoint(p1);
-		det1.setDropOffPoint(dropOffPoint);
+		det1.setPickUpPoint(p0);
+		det1.setDropOffPoint(p1);
+		det2.setPickUpPoint(p1);
+		det2.setDropOffPoint(dropOffPoint);
 		
-		LiftDetourMapper ld = new LiftDetourMapper();
-		ld.insert(det0);
-		ld.insert(det1);
-		
-		
-		List<LiftDetour> detours = new ArrayList<LiftDetour>();
+		List<LiftDetour> detours = new LinkedList<LiftDetour>();
 		detours.add(det0);
 		detours.add(det1);
+		detours.add(det2);
 		l.setDetours(detours);
+		
+		ldm.insert(det0);
+		ldm.insert(det1);
+		ldm.insert(det2);
+		
 		
 		l.setPossibleDetour(true);
 		l.setUserOffering(user);
@@ -111,32 +110,42 @@ public class DBTest {
 		lpref.insert(pref);
 		l.setLiftPreferences(pref);
 		
+		try {
+			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse("20/01/2014");
+			java.sql.Date dd=new java.sql.Date(d.getTime());
+			l.setDepartureDate(dd);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		lm.insert(l);
 	}
 	
+	@AfterClass
+	public static void closeSession(){
+		HibernateUtil.shutdown();
+	}
 	
 	@Test
 	public void UsersBornIn(){
 		assertTrue(rm.getUserBornInYear(1975).size() > 1);
-		HibernateUtil.shutdown();
 	}
 	
 	@Test
 	public void UsersOfGender(){
 		assertTrue(rm.getMaleUsers("M").size() >= 0);
-		assertTrue(rm.getMaleUsers("F").size() >= 0);
-		HibernateUtil.shutdown();
+		assertTrue(rm.getMaleUsers("F").size() == 0);
 	}
-	
-	/* 
-	 * TO CHECK 
-	 * 
-	 */
+		
 	
 	@Test
 	public void searchLiftFromAndTo(){
-		assertTrue(lm.findDetourByFromAndToAndCost("Roma", "Cosenza", "25").size() >= 0);
-		HibernateUtil.shutdown();
+		assertTrue(lm.findLiftByFromAndTo("Roma", "Cosenza", "20/01/2014").size() > 0);
+		assertTrue(lpm.findLiftPointByLocation("Roma").size()> 0);
+		assertTrue(lpm.findLiftPointByLocation("Cosenza").size()> 0);
+		assertTrue(lpm.findLiftPointByLocation("Firenze").size()> 0);
+		assertTrue(lpm.findLiftPointByLocation("Napoli").size()> 0);
+		assertTrue(ldm.findDetourFromPickUpAndDropOffPoints("Cosenza", "Firenze").size()> 0);
 	}
 
 }

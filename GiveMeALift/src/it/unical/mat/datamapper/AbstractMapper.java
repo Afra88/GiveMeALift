@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Map;
 
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;

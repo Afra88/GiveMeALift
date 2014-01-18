@@ -1,15 +1,11 @@
 package it.unical.mat.controller;
 
 import java.sql.Time;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-
 import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.LiftPointMapper;
@@ -21,19 +17,12 @@ import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.LiftPreference;
 import it.unical.mat.domain.RegisteredUser;
-import it.unical.mat.domain.User;
-
-import org.apache.catalina.ant.FindLeaksTask;
-import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import service.DetoursCostConverterFacade;
-
-import com.sun.org.apache.bcel.internal.generic.DMUL;
-import com.sun.xml.internal.ws.wsdl.writer.document.Service;
 
 @Controller
 public class OfferController {
