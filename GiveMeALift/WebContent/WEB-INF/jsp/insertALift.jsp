@@ -6,7 +6,7 @@
 <html>	 
     <head>
     
-	<title>Offri un passaggio</title>
+	<title>Step 2 - Dettagli del viaggio </title>
     
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
