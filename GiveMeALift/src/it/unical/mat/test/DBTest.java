@@ -86,11 +86,11 @@ public class DBTest {
 		det2.setPickUpPoint(p1);
 		det2.setDropOffPoint(dropOffPoint);
 		
-		List<LiftDetour> detours = new LinkedList<LiftDetour>();
-		detours.add(det0);
-		detours.add(det1);
-		detours.add(det2);
-		l.setDetours(detours);
+//		List<LiftDetour> detours = new LinkedList<LiftDetour>();
+//		detours.add(det0);
+//		detours.add(det1);
+//		detours.add(det2);
+//		l.setDetours(detours);
 		
 		ldm.insert(det0);
 		ldm.insert(det1);

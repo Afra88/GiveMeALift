@@ -246,14 +246,15 @@
     </div>
     <div class="clear"></div>
     <div class="grid_8">
-      <h3>Welcome to Organic Company</h3>
-      <img src="images/page1_img1.jpg" alt="" class="img_inner fleft">
+      <h3>Benvenuti in Give Me a Lift!</h3>
+      <img src="images/travel/car.jpg" alt="" class="img_inner fleft">
       <div class="extra_wrapper">
-        <p>Want to learn more about this freebie designed by TemplateMonster.com? Follow the link</p>
-        <p>Find more themes of this kind at the category of premium Agriculture Website Templates.</p>
+        <h4>Registrati, crea il tuo account! Descrivici i tuoi interessi, le tue attivit&agrave;, le lingue che conosci, le tue preseferenze musicali, ecc..
+        Scegli la compagnia che pi&ugrave; si addice al tuo carattere, e sei pronto al viaggio! </h4>
+<!-- <p>Find more themes of this kind at the category of premium Agriculture Website Templates.</p> -->
       </div>
       <div class="clear"></div>
-      Aliquam nibh ante, egestas id dictum a, commodo luctus libero. Praesent faucibus malesuada faucibus. Donecyl laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consectetu orci sed nulla facilisis consequat. Curabitur vel lorem sit amet nulla ullamcorper fermentum.
+<!--       Aliquam nibh ante, egestas id dictum a, commodo luctus libero. Praesent faucibus malesuada faucibus. Donecyl laoreet metus id laoreet malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam consectetu orci sed nulla facilisis consequat. Curabitur vel lorem sit amet nulla ullamcorper fermentum.
       <div class="grid_4 alpha">
         <div class="banner maxheight">
           <h3><a href="#">100% Eco &amp; <br>
@@ -286,9 +287,9 @@
           <li><a href="#">Ontnteger semper in estgue destro.</a></li>
         </ul>
       </div>
-      <div class="clear"></div>
+      <div class="clear"></div> -->
     </div>
-    <div class="grid_3 prefix_1">
+   <!--  <div class="grid_3 prefix_1">
       <ul id="carousel" class="elastislide-list">
         <li><a href="#"><img src="images/page1_img2.jpg" alt=""></a></li>
         <li><a href="#"><img src="images/page1_img3.jpg" alt=""></a></li>
@@ -308,18 +309,18 @@
           <li>"Aliquam nibh ante, egestas id dictum a, commodo luctus libero. Praesent faucibus."</li>
         </ul>
         <a href="#" class="prev1"></a><a href="#" class="next1"></a> </div>
-    </div>
+    </div> -->
   </div>
 </div>
 <div class="bottom_block">
   <div class="container_12">
     <div class="grid_10 prefix_1">
-      <div class="column"><a href="#">Useful Info</a><br>
-        <a href="#">Our Staff</a></div>
-      <div class="column"><a href="#">News &amp; Events </a><br>
-        <a href="#">Our Guarantee</a></div>
+      <div class="column"><a href="#">Informazioni utili</a><br>
+        <a href="#">Il nostro staff</a></div>
+      <div class="column"><a href="#">News &amp; Eventi </a><br>
+        <a href="#">La nostra garanzia</a></div>
       <div class="column"><a href="#">FAQs </a><br>
-        <a href="#">Contacts</a></div>
+        <a href="#">Contattaci</a></div>
       <div class="clear"></div>
       <div class="socials"> <a href="#"><i class=" icon-facebook"></i></a> <a href="#"><i  class="icon-twitter"></i></a> <a href="#"><i class=" icon-google-plus "></i></a> <a href="#"><i class=" icon-pinterest"></i></a> </div>
     </div>
@@ -328,7 +329,7 @@
 <footer>
   <div class="container_12">
     <div class="grid_12">
-      <div class="copy"> OrganicFood (C) 2045 | <a href="#">Privacy Policy</a> | Design by: <a href="http://www.templatemonster.com/">TemplateMonster.com</a> </div>
+      <div class="copy"> Give me a lift(C) 2045 | <a href="#">Politica Privacy</a> | Design by: <a href="http://www.templatemonster.com/">TemplateMonster.com</a> </div>
     </div>
   </div>
 </footer>

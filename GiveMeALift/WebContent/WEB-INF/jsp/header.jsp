@@ -77,7 +77,59 @@
 	    $().UItoTop({
 	        easingType: 'easeOutQuart'
 	    });
+	    $('#submit').click(function(event) {  
+	        alert("fmdd");
+//	         var mapFrom=$('#mapFrom').text();
+	        /* var mapTo=$('#mapTo').val();
+	        var detour0=$('#detour0').val();
+	        var detour1=$('#detour1').val();
+	        var detour2=$('#detour2').val();
+	        var detour3=$('#detour3').val();
+	        var detour4=$('#detour4').val();
+	        var date=$('#date').val();
+	        var goingTimeH=$('#goingTimeH').val();
+	        var goingTimeM=$('#goingTimeM').val();
+	        var returnTimeH=$('#returnTimeH').val();
+	        var returnTimeM=$('#returnTimeM').val(); */
+	       /*  $.get('confirmALift',{mapFrom:mapFrom},{mapTo:mapTo},
+	        		{detour0:detour0},{detour1:detour1},
+	        		{detour3:detour3},{detour2:detour2},
+	        		{detour4:detour4},
+	        		{date:date},
+	        		{goingTimeH:goingTimeH},
+	        		{goingTimeM:goingTimeM},
+	        		{returnTimeM:returnTimeM},
+	        		{returnTimeH:returnTimeH},
+	        		 function(responseText) { 
+	        	 $('#contentOpacity').css({ 'opacity' : 0.2 });
+	              //$('#welcometext').text(responseText); 
+	             $('#messageConfirm').text(responseText);
+		         $('#dialog').dialog( "open" );
+	            });
+	        }); */
 	});
+ 	$( "#dialog" ).dialog({
+		autoOpen: false,
+		show: {
+		effect: "blind",
+		duration: 1000
+		},
+		hide: {
+			effect: "puff",
+			duration: 1000
+		}
+	}); 
+	</script>
+	
+	<script>
+	/* $(function() { */
+	/* $(document).ready(function() {        */                 
+//     });
+/* 	$( "#opener" ).click(function() {
+		$('#contentOpacity').css({ 'opacity' : 0.2 });
+	$( "#dialog" ).dialog( "open" );
+	});
+	}); */
 	</script>
 	
 </head>
