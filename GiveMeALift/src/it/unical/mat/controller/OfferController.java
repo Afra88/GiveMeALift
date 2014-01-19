@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.LiftPointMapper;
@@ -17,9 +20,11 @@ import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.LiftPreference;
 import it.unical.mat.domain.RegisteredUser;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import service.DetoursCostConverterFacade;
@@ -27,15 +32,31 @@ import service.DetoursCostConverterFacade;
 @Controller
 public class OfferController {
 	
-	@RequestMapping(value ="/OfferALift")
-	public String directToOffers(Model model){
-		
+	@RequestMapping(value ="/OfferALift", method= RequestMethod.POST )
+	public String directToOffers(@RequestParam("email") String email, 
+    		@RequestParam("psw")String psw,
+    		Model model, HttpSession session) {
 		/*
 		 * Controlli sull'utente registrato
 		 * 
 		 */
-		
-		return "offerALift";
+		 if(email!="" && email!=null && psw!="" && psw!=null) {
+			 
+			 RegisteredUserMapper rm=new RegisteredUserMapper();
+			 RegisteredUser u = rm.findUserByEmailAndPassword(email, psw);
+			 if(u!= null){
+			 		session.setAttribute("user", u);
+			 		return "offerALift";	
+			 }
+			 else{
+			 		return "home";
+			 	}
+			 }
+			 else{
+			 		return "home";
+			 }
+	
+		//return "offerALift";
 	}
 	
 	@RequestMapping(value ="/InsertALift")
