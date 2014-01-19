@@ -1,6 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!-- <html>
@@ -157,41 +157,24 @@
 <header>
   <div class="container_12">
     <div class="grid_12">
-	    <form method="post" action="LogIn">
-			<table class="login">
-				<tr>
-					<td><label>Email:</label></td>
-					<td><input type="text" size="40" name="email" id="email" /></td>
-				</tr>
-				<tr>
-					<td><label>Password:</label></td>
-				    <td><input type="password" size="40" name="psw" id="psw" /></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="Accedi" />
-						oppure
-						<a href="userRegistration">Registrati</a>
-					</td>
-				</tr>
-			</table>
-		</form>
-          <h1><a href=""><img src="images/logo.png" alt=""></a> </h1>  
-      <div class="menu_block">
-        <nav>
-          <ul class="sf-menu">
-            <li class="current"><a href="">Home</a></li>
-            <li><a href="OfferALift">Offri un passaggio!</a></li>
-            <!-- <li><a href="blog.html">Blog</a></li>
-            <li><a href="recipes.html">Recipes</a></li>
-            <li><a href="contacts.html">Contacts</a></li> -->
-          </ul>
-        </nav>
-        <div class="clear"></div>
-      </div>
-      <div class="clear"></div>
-    </div>
-    
+	    <c:choose>
+    		<c:when test="${user!=null}">
+    			<%@include file="signedUpForm.jsp"%>
+    		</c:when>
+    		<c:otherwise>
+		    	<%@include file="logInForm.jsp"%>
+    		</c:otherwise>
+    	</c:choose>
+          <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>   
+          <c:choose>
+          <c:when test="${user!=null}">
+          	<%@include file="userMenu.jsp" %>
+          </c:when>
+          <c:otherwise>
+         	 <%@include file="classicMenu.jsp" %>
+          </c:otherwise>
+          </c:choose>    
+  </div>
   </div>
 </header>
 <div class="content">
@@ -326,12 +309,4 @@
     </div>
   </div>
 </div>
-<footer>
-  <div class="container_12">
-    <div class="grid_12">
-      <div class="copy"> Give me a lift(C) 2045 | <a href="#">Politica Privacy</a> | Design by: <a href="http://www.templatemonster.com/">TemplateMonster.com</a> </div>
-    </div>
-  </div>
-</footer>
-</body>
-</html>
+<%@include file="footer.jsp" %>

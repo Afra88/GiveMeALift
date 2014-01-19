@@ -36,7 +36,7 @@ public class UserController {
 		 	RegisteredUserMapper rm=new RegisteredUserMapper();
 		 	if(rm.insert(u)!=0){
 		 		session.setAttribute("user", u);
-		 		return "userloggedHome";	
+		 		return "home";	
 		 	}
 		 	else{
 		 		return "errorRegistration";
@@ -55,7 +55,7 @@ public class UserController {
 			RegisteredUser u=rm.findUserByEmailAndPassword(email,psw);
 			if(u!=null){
 				session.setAttribute("user",u);
-				return "userloggedHome";	
+				return "home";	
 			}
 			else{
 		 		return "errorRegistration";
