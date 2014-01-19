@@ -1,85 +1,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
-<%@ page session="false" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!-- <html>
-<head>
-	<link rel="stylesheet" href="css/mainstyle.css" type="text/css" />
-	<script type="text/javascript" src="js/setMapValue.js"></script>
-	<script type="text/javascript" src="js/checkingTime.js"></script>
-	<script src="js/calendar/tcal.js" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
-	<link rel="stylesheet" type="text/css" href="js/GoogleMap/map.css">
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true&language=it"></script>
-	<script type="text/javascript" src="js/GoogleMap/map.js"></script>
-
-	Google Place Autocomplete
- 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
- 	<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    <link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css">
- 	<script src="js/GooglePlaceAutocomplete/placeAutocomplete.js" type="text/javascript"></script>
-    end
-
-<title>Give me a lift!</title>
-</head>
-<body onload="initialize()">
-<div class="container">
-	<div class="header">
-	    <form method="post" action="LoginServlet">
-		<table class="login">
-			<tr>
-				<td>Email:</td>
-				<td><input type="text" size="40" name="email" id="email" /></td>
-			</tr>
-			<tr>
-				<td>Password:</td>
-			    <td><input type="password" size="40" name="psw" id="psw" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="center">
-					<input type="submit" value="Accedi" />
-					oppure
-					<a href="userRegistration">Registrati</a>
-				</td>
-			</tr>
-		</table>
-	</form>
-	</div>
-
-<p>
-	<form method="get" action="OfferALift">
-		<input type="submit" value="Offri un passaggio!" class="button" />
-	</form>
-</p>
-<p>
-<form method="get" action="ResultSearch">
-	<p class="locationField" id="mapValues">
-	<span class="label">Partenza: </span>
-		<input class="autocomplete" type="text" id=mapFrom name=mapFrom /> 
-	<span class="label"> Arrivo: </span>
-		<input class="autocomplete" type="text" id=mapTo name=mapTo />
-	<span id=date><script type="text/javascript" src="js/currentDate.js"></script></span>
-	<input class="button"  id="FromAToB" type="button" value="Percorso" />
-	<input type="submit" value="Cerca" class="button" />
-	</p>
-</form>
-</p>
-<p id="map"></p>
-</div>
-</body>
-</html> -->
-
-<!DOCTYPE html>
-<html lang="it">
-	<head>
-	<title>Give me a Lift!</title>
-
-	<meta charset="utf-8">
-	
-	<link rel="stylesheet" href="css/login.css">
+<%@ page session="true" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<html>	 
+    <head>
+    
+	<title>Benvenuto!</title>
+    
+    <link rel="stylesheet" href="css/login.css">
 	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
 	<link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
@@ -152,43 +79,23 @@
 	    });
 	});
 	</script>
+	
 </head>
-<body class="page1" onload="initialize()">
+<body onload="initialize()" >
 <header>
   <div class="container_12">
     <div class="grid_12">
-	    <form method="post" action="LogIn">
-			<table class="login">
-				<tr>
-					<td><label>Email:</label></td>
-					<td><input type="text" size="40" name="email" id="email" /></td>
-				</tr>
-				<tr>
-					<td><label>Password:</label></td>
-				    <td><input type="password" size="40" name="psw" id="psw" /></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="Accedi" />
-						oppure
-						<a href="userRegistration">Registrati</a>
-					</td>
-				</tr>
-			</table>
-		</form>
-          <h1><a href=""><img src="images/logo.png" alt=""></a> </h1>  
-      <div class="menu_block">
-        <nav>
-          <ul class="sf-menu">
-            <li class="current"><a href="">Home</a></li>
-            <li><a href="OfferALift">Offri un passaggio!</a></li>
-            <!-- <li><a href="blog.html">Blog</a></li>
-            <li><a href="recipes.html">Recipes</a></li>
-            <li><a href="contacts.html">Contacts</a></li> -->
-          </ul>
-        </nav>
-        <div class="clear"></div>
-      </div>
+    <h3></h3>
+    	<c:choose>
+    		<c:when test="${user!=null}">
+    			<%@include file="signedUpForm.jsp"%>
+    		</c:when>
+    		<c:otherwise>
+		    	<%@include file="logInForm.jsp"%>
+    		</c:otherwise>
+    	</c:choose>
+          <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>  
+		<%@include file="userMenu.jsp"%>
       <div class="clear"></div>
     </div>
     
@@ -326,12 +233,4 @@
     </div>
   </div>
 </div>
-<footer>
-  <div class="container_12">
-    <div class="grid_12">
-      <div class="copy"> Give me a lift(C) 2045 | <a href="#">Politica Privacy</a> | Design by: <a href="http://www.templatemonster.com/">TemplateMonster.com</a> </div>
-    </div>
-  </div>
-</footer>
-</body>
-</html>
+<%@include file="footer.jsp"%> 

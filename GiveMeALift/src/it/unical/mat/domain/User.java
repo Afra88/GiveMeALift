@@ -19,6 +19,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name="USER")
@@ -26,6 +30,8 @@ import javax.persistence.Table;
     name = "USER_TYPE",
     discriminatorType = DiscriminatorType.STRING
 )
+@Component
+@Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public abstract class User extends DomainObject {
 	
 	@Column (name="EMAIL",unique=true,nullable=false)
@@ -43,7 +49,7 @@ public abstract class User extends DomainObject {
 	@Column (name = "GENDER", length = 1)
 	private String gender;
 	
-	@Column (name="BIRTH_YEAR",nullable=true) //nullable = false
+	@Column (name="BIRTH_YEAR") //nullable = false
 	private Integer birthYear;
 	
 	@Column (name="PHONE", length = 15)
@@ -74,6 +80,16 @@ public abstract class User extends DomainObject {
 		this.phone = phone;
 		this.mobilePhone = mPhone;
 		this.address = address;
+	}	
+
+	public User(String email, String password, String name, String surname, String gender2, Integer birthYear2) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.gender=gender2;
+		this.birthYear=birthYear2;
 	}
 
 	@Override

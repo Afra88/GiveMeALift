@@ -62,4 +62,27 @@ public class RegisteredUserMapper extends AbstractMapper {
 		
 	}
 
+	public RegisteredUser findUserByEmailAndPassword(String email, String psw) {
+		List<RegisteredUser> users = new LinkedList<RegisteredUser>();
+		
+		String findStatement = "from RegisteredUser"
+				+ " where " 			
+				+ " email = :par1"
+				+ " and password = :par2"
+				;
+		
+		Map<String, Object> parameters=new HashMap<String, Object>();
+		parameters.put("par1", email);
+		parameters.put("par2", psw);
+		
+		Collection<DomainObject> objects = find(findStatement, parameters,false);
+		for (DomainObject object : objects) {
+			users.add((RegisteredUser) object);
+		}		
+
+		if(users.size()==1)
+			return users.get(0);
+		return null;
+	}
+
 }

@@ -51,9 +51,11 @@ public class RegisteredUser extends User {
 			String mPhone, Address address) {
 		super(email, psw, name, surname, gender, birthYear, phone, mPhone, address);
 	}
+	
 
-
-
+	public RegisteredUser(String email, String psw, String name, String surname, String gender, Integer birthYear) {
+		super(email,psw,name,surname,gender,birthYear);
+	}
 
 	@ManyToOne(fetch = FetchType.LAZY) //cambiato
 	@JoinTable(name = "PERSONAL_PREFERENCES_USER_JOIN",

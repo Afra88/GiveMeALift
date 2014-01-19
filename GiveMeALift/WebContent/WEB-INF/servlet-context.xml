@@ -29,8 +29,6 @@
     <mvc:resources mapping="/images/**" location="/WEB-INF/resources/images/" />
     <mvc:resources mapping="/font/**" location="/WEB-INF/resources/font/" />
  
- 	<bean id="user" class="it.unical.mat.domain.User" scope="session" />
- 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    		<property name="prefix" value="/WEB-INF/jsp/" />
     	<property name="suffix" value=".jsp" />
