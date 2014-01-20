@@ -1,5 +1,8 @@
 package it.unical.mat.domain;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -304,6 +307,21 @@ public abstract class User extends DomainObject {
 		return true;
 	}
 	
+	public String computeNickName() {
+		return this.name +" "+this.surname.substring(0, 1) +".";
+	}
+	
+	public String computeAge() {
+		Calendar dob = Calendar.getInstance();  
+		dob.set(Calendar.YEAR, this.birthYear);
+		Calendar today = Calendar.getInstance();  
+		int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);  
+//		if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR))  
+//		age--;  
+		return age+"";  
+		
+		
+	}
 	
 
 }
