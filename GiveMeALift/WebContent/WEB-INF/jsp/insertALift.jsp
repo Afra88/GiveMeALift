@@ -1,12 +1,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <html>	 
     <head>
     
-	<title>Step 2 - Dettagli del viaggio </title>
+	<title>Step 2 - Dettagli del viaggio</title>
     
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -47,6 +47,7 @@
 	<script src="js/cssJs/jquery.easing.1.3.js"></script>
 	<script src="js/cssJs/jquery.ui.totop.js"></script>
 	<script type="text/javascript" src="js/jQueryElement/jquery.format.1.05.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.js"> 
     
 	 <!--  	Google Place Autocomplete -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&language=it&region=IT"></script>
@@ -62,175 +63,192 @@
 	<script type="text/javascript" src="js/GoogleMapNew/map.js" ></script>
 	<script type="text/javascript" src="js/dynamicPriceSum.js"></script>
 	<script type="text/javascript" src="js/checkSigningUp.js"></script>
-	  	
- 	<script src="js/jQueryElement/rangeSlider.js" type="text/javascript"></script>
- 	<script src="js/jQueryElement/radio.js" type="text/javascript"></script>
 	
 	<!-- serve per l'input di soli numeri (va messo dopo)  -->
 	<script type="text/javascript"> $(".number").format({precision: 0,autofix:true});</script>
 	<script type="text/javascript"> $(".toSum").format({precision: 0,autofix:true});</script>
 	
-	 	<script type="text/javascript"> 	 	
- 	var elements = document.getElementsByName("path") 	// name="path"	
-	for ( var i = 1; i < elements.length-1; i++) {
-		 //id="inputs"
-		$("#inputs").append(                             
- 			"<input name=\"detour"+(i-1)+"\" value=\"" + elements[i].innerHTML + "\">"
- 		);
-	} 
- 	
- 	 //id="inputs"
-	$("#inputs").append("<input name=\"mapFrom\" value=\"" +elements[0].innerHTML + "\">");
-	$("#inputs").append("<input name=\"mapTo\" value=\"" + elements[elements.length-1].innerHTML + "\">");
-
-  	
-	var elements2 = document.getElementsByName("inputs") 	// name="inputs"	
-
-	var dateG = elements2[0].innerHTML;	
-	var dateR = elements2[1].innerHTML;
-	
- 	//id="inputs"
-	if (dateR.localeCompare("NULL")) {
-		$("#inputs").append("<input name=\"date\" value=\""+dateG+"\">" );  //DATA A,DATA R				
-	}else {
-		$("#inputs").append("<input name=\"date\" value=\"" + dateG+","+dateR+ "\">" );  //DATA A,DATA R		
-	}	
-	$("#inputs").append("<input name=\"goingTimeH\" value=\"" + elements2[2].innerHTML + "\">" );  // H ANDATA
- 	$("#inputs").append("<input name=\"goingTimeM\" value=\"" + elements2[3].innerHTML + "\">" );  // M ANDATA
- 	
- 	//CONTROLLI TUTTI SULLA DATA DI RITORNO
- 	if (!dateR.localeCompare("NULL")) { 
-	 	$("#inputs").append("<input name=\"returnTimeH\" value=\"" + elements2[4].innerHTML + "\">" );  // H RITORNO
-	 	$("#inputs").append("<input name=\"returnTimeM\" value=\"" + elements2[5].innerHTML + "\">" );  // M RITORNO 		
- 	} 		 	
-	</script>
+<!-- 	<script type="text/javascript">
+	$(document).ready(function () {
+ 	    $("#submit").click(function() {  
+ 		 	var elements = document.getElementsByName("path"); 	// name="path"	
+ 			for ( var i = 1; i < elements.length-1; i++) {
+ 				 //id="inputs"
+ 				$("#inputs").append(                             
+ 		 			"<input name=\"detour"+(i-1)+"\" value=\"" + elements[i].innerHTML + "\">"
+ 		 		);
+ 			} 
+ 		 	
+ 		 	 //id="inputs"
+ 			$("#inputs").append("<input name=\"mapFrom\" value=\"" +elements[0].innerHTML + "\">");
+ 			$("#inputs").append("<input name=\"mapTo\" value=\"" + elements[elements.length-1].innerHTML + "\">");
+ 		
+ 		  	
+ 			var elements2 = document.getElementsByName("inputs"); 	// name="inputs"	
+ 		
+ 			var dateG = elements2[0].innerHTML;	
+ 			var dateR = elements2[1].innerHTML;
+ 			
+ 		 	//id="inputs"
+ 			if (dateR.localeCompare("NULL")) {
+ 				$("#inputs").append("<input name=\"date\" value=\""+dateG+"\">" );  //DATA A,DATA R				
+ 			}else {
+ 				$("#inputs").append("<input name=\"date\" value=\"" + dateG+","+dateR+ "\">" );  //DATA A,DATA R		
+ 			}	
+ 			$("#inputs").append("<input name=\"goingTimeH\" value=\"" + elements2[2].innerHTML + "\">" );  // H ANDATA
+ 		 	$("#inputs").append("<input name=\"goingTimeM\" value=\"" + elements2[3].innerHTML + "\">" );  // M ANDATA
+ 		 	
+ 		 	//CONTROLLI TUTTI SULLA DATA DI RITORNO
+ 		 	if (!dateR.localeCompare("NULL")) { 
+ 			 	$("#inputs").append("<input name=\"returnTimeH\" value=\"" + elements2[4].innerHTML + "\">" );  // H RITORNO
+ 			 	$("#inputs").append("<input name=\"returnTimeM\" value=\"" + elements2[5].innerHTML + "\">" );  // M RITORNO 		
+ 		 	}
+ 	});
+	</script> -->
    
 	<script>
 	$(document).ready(function () {
 	    $().UItoTop({
 	        easingType: 'easeOutQuart'
 	    });
-	    $("#submit").click(function() {  
-	        /* var mapFrom=$('#mapFrom').val();
-	        alert(mapFrom); */
-	        /* var mapTo=$('#mapTo').val();
-	        var detour0=$('#detour0').val();
-	        var detour1=$('#detour1').val();
-	        var detour2=$('#detour2').val();
-	        var detour3=$('#detour3').val();
-	        var detour4=$('#detour4').val();
-	        var date=$('#date').val();
-	        var goingTimeH=$('#goingTimeH').val();
-	        var goingTimeM=$('#goingTimeM').val();
-	        var returnTimeH=$('#returnTimeH').val();
-	        var returnTimeM=$('#returnTimeM').val(); */
-	       /*  $.get('confirmALift',{mapFrom:mapFrom},{mapTo:mapTo},
-	        		{detour0:detour0},{detour1:detour1},
-	        		{detour3:detour3},{detour2:detour2},
-	        		{detour4:detour4},
-	        		{date:date},
-	        		{goingTimeH:goingTimeH},
-	        		{goingTimeM:goingTimeM},
-	        		{returnTimeM:returnTimeM},
-	        		{returnTimeH:returnTimeH},
-	        		 function(responseText) { 
-	        	 $('#contentOpacity').css({ 'opacity' : 0.2 });
-	              //$('#welcometext').text(responseText); 
-	             $('#messageConfirm').text(responseText);
-		         $('#dialog').dialog( "open" );
-	            });
-	        }); */
-	});
- 	$( "#dialog" ).dialog({
-		autoOpen: false,
-		show: {
-		effect: "blind",
-		duration: 1000
-		},
-		hide: {
-			effect: "puff",
-			duration: 1000
-		}
-	});
+//  	    $("#submit").click(function() {  
+ 	    	
+//  	 		alert("dkfdjcxjd");
+//  	 		var mapFrom=$('#mapFrom').val();
+// 	        var mapTo=$('#mapTo').val();
+// 	        var detour0="";
+// 	        if ($('#detour0').length > 0){
+// 	       		detour0=$('#detour0').val();
+// 	        }
+// 	        var detour1="";
+// 	        if ($('#detour1').length > 0){
+// 	       		detour1=$('#detour1').val();
+// 	        }
+// 	        var detour2="";
+// 	        if ($('#detour2').length > 0){
+// 	        	detour2=$('#detour2').val();
+// 	        }
+// 	        var detour3="";
+// 	        if ($('#detour3').length > 0){
+// 	        	detour3=$('#detour3').val();
+// 	        }
+// 	        var detour4="";
+// 	        if ($('#detour4').length > 0){
+// 	        	detour4=$('#detour4').val();
+// 	        }
+// 	        var date="";
+// 	        if($('dateR')!="NULL"){	        	
+// 	        	date=$('#dateG').val()+","+$('#dateR').val();
+// 	        }
+// 	        else{
+// 	        	date=$('#dateG').val();
+// 	        }
+// 	        var goingTimeH=$('#goingTimeH').val();
+// 	        var goingTimeM=$('#goingTimeM').val();
+// 	        var returnTimeH=$('#returnTimeH').val();
+// 	        var returnTimeM=$('#returnTimeM').val(); 
+//  	        alert(mapFrom+mapTo+detour0+detour1+detour2+detour3+detour4+date+goingTimeH+goingTimeM+returnTimeH+returnTimeM);
+//  	       	var price=$('#price').val();
+//  	       	var seats=$('#seats').val();
+// 	        var luggage=$('#luggage').val();
+// 	        var delay=$('#delay').val();
+// 	        var deviation=$('#deviation').val();
+// 	        var timesForThisRoute=$('#timesForThisRoute').val();
+// 	        var roadType=$('#roadType').val();
+// 	        var pinkTrip=$('#pinkTrip').val();
+// 	        var drivingLicence=$('#checkLicence').attr('checked');
+// 	        $.get('submitALift.jsp',{mapFrom:mapFrom},{mapTo:mapTo},
+// // 	        		{detour0:detour0},{detour1:detour1},
+// // 	        		{detour3:detour3},{detour2:detour2},
+// // 	        		{detour4:detour4},
+// // 	        		{date:date},
+// // 	        		{goingTimeH:goingTimeH},
+// // 	        		{goingTimeM:goingTimeM},
+// // 	        		{returnTimeM:returnTimeM},
+// // 	        		{returnTimeH:returnTimeH},
+// // 	        		{price:price},{seats:seats},
+// // 	        		{luggage:luggage},{delay:delay},
+// // 	        		{deviation:deviation},{timesForThisRoute:timesForThisRoute},
+// // 	        		{roadTypes:roadTypes},{pinkTrip:pinkTrip},
+// // 	        		{drivingLicence:drivingLicence}
+// 	        		 function(responseText) { 
+// 	              alert(responseText);
+// 	        	 $('#contentOpacity').css({ 'opacity' : 0.2 });
+// 	              //$('#welcometext').text(responseText);
+// 	             $('#messageConfirm').text(responseText);
+// 		         //$('#dialog').dialog( "open" );
+// 	            });
+// 	        }); 
+ 	 		
+// 		}); 
  	});
-	</script>
-	
-	<script>
-	/* $(function() { */
-	/* $(document).ready(function() {        */                 
-//     });
-/* 	$( "#opener" ).click(function() {
-		$('#contentOpacity').css({ 'opacity' : 0.2 });
-	$( "#dialog" ).dialog( "open" );
-	});
-	}); */
 	</script>
 	
 </head>
 <body onload="initialize()" >
-	<header>
+<header>
   <div class="container_12">
     <div class="grid_12">
-	    <form method="post" action="LoginServlet">
-			<table class="login">
-				<tr>
-					<td><label>Email:</label></td>
-					<td><input type="text" size="40" name="email" id="email" /></td>
-				</tr>
-				<tr>
-					<td><label>Password:</label></td>
-				    <td><input type="password" size="40" name="psw" id="psw" /></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="Accedi" />
-						oppure
-						<a href="userRegistration">Registrati</a>
-					</td>
-				</tr>
-			</table>
-		</form>
-          <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>  
-      <div class="menu_block">
-        <nav>
-          <ul class="sf-menu">
-            <li class="current"><a href="/GiveMeALift">Home</a></li>
-            <li><a href="OfferALift">Offri un passaggio!</a></li>
-            <!-- <li><a href="blog.html">Blog</a></li>
-            <li><a href="recipes.html">Recipes</a></li>
-            <li><a href="contacts.html">Contacts</a></li> -->
-          </ul>
-        </nav>
-        <div class="clear"></div>
-      </div>
-      <div class="clear"></div>
-    </div>
-    
+	    <c:choose>
+    		<c:when test="${user!=null}">
+    			<%@include file="signedUpForm.jsp"%>
+    		</c:when>
+    		<c:otherwise>
+		    	<%@include file="logInForm.jsp"%>
+    		</c:otherwise>
+    	</c:choose>
+          <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>   
+          <c:choose>
+          <c:when test="${user!=null}">
+          	<%@include file="userMenu.jsp" %>
+          </c:when>
+          <c:otherwise>
+         	 <%@include file="classicMenu.jsp" %>
+          </c:otherwise>
+          </c:choose>    
+  </div>
   </div>
 </header>
 
 <div class="container_12" id="contentOpacity" >
 	<div class="grid_12">      
-	  	<div id="dialog" title="Publicazione Offerta">
-			<p id="messageConfirm"> </p>
-		</div>
+<!-- 	  	<div id="dialog" title="Publicazione Offerta"> -->
+			<p id="messageConfirm"></p>
+<!-- 		</div> -->
+ 	<form action="SubmitALift" method="post" id="form" >
 	<!-- hidden div per visualizzare nel dom i valori di path -->
-		<c:choose>
-		<c:when test="${path.size()>0}">
-			<c:forEach var="i"  begin="0" end="${path.size()-1}" > 
-				<input name="path" type="hidden" value="${path.get(i)}" />
+ 		<c:choose>
+		<c:when test="${path.size()>2}">
+			<c:forEach var="i"  begin="1" end="${path.size()-1}" > 
+				<input type="hidden" id="detour_${i}" name="detour_${i}" value="${path.get(i)}" >
 			</c:forEach>
 		</c:when>
-		</c:choose>
+		</c:choose> 
+ 	<input type="hidden" id="mapFrom" name="mapFrom" value="${path.get(0)}" /> 
+	<input type="hidden" id="mapTo" name="mapTo" value="${path.get(path.size()-1)}" /> 
 	
-	<!-- hidden div per visualizzare nel dom i valori di inputs -->
+	<c:choose>
+	<c:when test="${inputs.get(1)!='NULL'}">
+		<input type="hidden" id="date" name="date" value="${inputs.get(0)},${inputs.get(1)}" >
+	</c:when>
+	<c:otherwise>
+		<input type="hidden" id="date" name="date" value="${inputs.get(1)}" >
+	</c:otherwise>
+	</c:choose>
+	<input type="hidden" id="goingTimeH" name="goingTimeH" value="${inputs.get(2)}" >
+	<input type="hidden" id="goingTimeM" name="goingTimeM" value="${inputs.get(3)}" >
+	<input type="hidden" id="returnTimeH" name="returnTimeH" value="${inputs.get(4)}" >
+	<input type="hidden" id="returnTimeM" name="returnTimeM" value="${inputs.get(5)}" >
+	
+	
+<%-- 	<!-- hidden div per visualizzare nel dom i valori di inputs -->
 	<c:forEach var="i"  begin="0" end="${inputs.size()-1}" > 
-		<input name="inputs"  type="hidden" ${inputs.get(i)} />
-	</c:forEach>
-	
+		<div name="inputs" hidden=true>${inputs.get(i)}</div>
+	</c:forEach> --%>
+	 
 	
 	<!-- hidden div inserire tag input con name e value caricati con jquery -->	
-	<input type="hidden" id="inputs" />
+<!-- 	<div hidden=true id="inputs" ></div> -->
 	
 	<div class="greenTable">
 		<table id="plusDetails" class=table>
@@ -357,7 +375,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" >
-					<b><i>${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)}</b></i>
+					<b><i>${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)}</i></b>
 					<br>
 					<font color="blue">Andata:</font> ${inputs.get(0)} - ore: ${inputs.get(2)}:${inputs.get(3)}
 					<br>
@@ -379,22 +397,14 @@
 					<input type="button" id="goBack" value="Indietro" onClick="history.back()"/>
 				</td>
 				<td>
-					<input type="button" value="Pubblica" id="submit"  />
+					<!-- <input type="button" value="Pubblica" id="submit"  /> -->
+						<input type="submit" value="Pubblica" id="submit"  />
 				</td>
 			</tr>
 		</table>
 		</div>
-	<!-- </form> -->
+	 </form> 
 <!-- 	<p id="map"></p> -->
 </div>
 </div>
-
-<footer>
-  <div class="container_12">
-    <div class="grid_12">
-      <div class="copy"> Give me a lift(C) 2045 | <a href="#">Politica Privacy</a> | Design by: <a href="http://www.templatemonster.com/">TemplateMonster.com</a> </div>
-    </div>
-  </div>
-</footer>
-</body>
-</html>
+<%@include file="footer.jsp" %>

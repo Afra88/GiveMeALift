@@ -13,13 +13,12 @@ import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.LiftPointMapper;
 import it.unical.mat.datamapper.LiftPreferenceMapper;
-import it.unical.mat.datamapper.RegisteredUserMapper;
-import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.LiftPreference;
 import it.unical.mat.domain.RegisteredUser;
+import it.unical.mat.domain.User;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,31 +31,15 @@ import service.DetoursCostConverterFacade;
 @Controller
 public class OfferController {
 	
-	@RequestMapping(value ="/OfferALift", method= RequestMethod.POST )
-	public String directToOffers(@RequestParam("email") String email, 
-    		@RequestParam("psw")String psw,
-    		Model model, HttpSession session) {
-		/*
-		 * Controlli sull'utente registrato
-		 * 
-		 */
-		 if(email!="" && email!=null && psw!="" && psw!=null) {
-			 
-			 RegisteredUserMapper rm=new RegisteredUserMapper();
-			 RegisteredUser u = rm.findUserByEmailAndPassword(email, psw);
-			 if(u!= null){
-			 		session.setAttribute("user", u);
-			 		return "offerALift";	
-			 }
-			 else{
-			 		return "home";
-			 	}
-			 }
-			 else{
-			 		return "home";
-			 }
-	
-		//return "offerALift";
+	@RequestMapping(value ="/OfferALift")
+	public String directToOffers(Model model, HttpSession session) {
+		User u=(User) session.getAttribute("user");
+		if(u!= null){
+		 		return "offerALift";	
+		 }
+		 else{
+		 		return "home";
+		 }
 	}
 	
 	@RequestMapping(value ="/InsertALift")
@@ -273,7 +256,7 @@ public class OfferController {
     		@RequestParam("roadType") String roadType,
     		@RequestParam("pinkTrip") String pinkTrip,
     		@RequestParam(value="drivingLicence",required=false) String checkLicence,
-			Model m){
+			Model m, HttpSession session){
 
 		
 		///////////////////////// MAPPER ////////////////////////////////////
@@ -281,7 +264,6 @@ public class OfferController {
 		LiftPointMapper pm = new LiftPointMapper();
 		LiftDetourMapper ldm = new LiftDetourMapper(); 
 		LiftMapper lm = new LiftMapper();
-//		RegisteredUserMapper rm = new RegisteredUserMapper();
 		LiftPreferenceMapper lpm = new LiftPreferenceMapper();
 		
 		///////////////////////// MAPPER ////////////////////////////////////
@@ -406,14 +388,9 @@ public class OfferController {
 		LiftPoint pickUpPoint = path.get(0);
 		LiftPoint dropOffPoint = path.get(path.size()-1);
 		
-		/////////////////////////UTENTE TEMPORANEO////////////////////////////////////		
-		Address addr = new Address("via Bucci", "Rende", "Italia");
-		RegisteredUser user = new RegisteredUser("email","psw","name","surname","M",1970,"012345","0123456",addr);				
-		
-		RegisteredUserMapper rm = new RegisteredUserMapper();
-		rm.insert(user);
-		/////////////////////////UTENTE TEMPORANEO////////////////////////////////////
-		
+		/////////////////////////UTENTE ////////////////////////////////////		
+		RegisteredUser user = 	(RegisteredUser) session.getAttribute("user");	
+		/////////////////////////UTENTE ////////////////////////////////////		
 			
 				
 		/////////////////////////LIFT PREFERENCES////////////////////////////////////

@@ -112,7 +112,6 @@
 	<script type="text/javascript" src="js/checkingTime.js"></script>
 	<script src="js/calendar/tcal.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/hoverMapValue.js"></script>
-    <script type="text/javascript" src="js/hoverMapValue.js"></script>
     
 	
 <!-- 	<script src="js/cssJs/jquery.js"></script> -->

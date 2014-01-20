@@ -1,11 +1,16 @@
 package it.unical.mat.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
+import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
 
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,6 +81,27 @@ public class UserController {
 		else{
 	 		return "errorRegistration";
 	 	}
+	 }
+	 
+	 @RequestMapping(value="/ShowUserOfferedLift")
+	 private String retriveUserOfferedLift(@RequestParam(value="page",required=false) String nPage, Model model, HttpSession session){
+		 User u=(User) session.getAttribute("user");
+			if(u!=null){
+				if(nPage==null || nPage=="")
+					nPage="1";				
+				LiftMapper lm=new LiftMapper();
+				List<Lift> result=lm.findLiftOfferedByUser(u.getId());
+				PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(result);		
+				pageHolder.setPageSize(12);	
+				pageHolder.setPage(Integer.parseInt(nPage));
+				model.addAttribute("pages", pageHolder.getPageCount());
+				model.addAttribute("page",pageHolder.getPage());
+				model.addAttribute("pageHolder",pageHolder);
+				return "userOfferedLift";	
+			}
+			else{
+		 		return "errorRegistration";
+		 	}
 	 }
 	
 }

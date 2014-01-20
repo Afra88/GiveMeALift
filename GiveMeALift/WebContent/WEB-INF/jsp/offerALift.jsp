@@ -113,6 +113,7 @@
 <!-- 					<span id=date1><script type="text/javascript" src="js/currentDate.js"></script></span> -->
 				</td>
 			</tr>
+			<tr>
 				<td colspan="2">
 					<input type="submit" value="Conferma" class="button" />
 				</td>

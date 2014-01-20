@@ -128,7 +128,7 @@ public class SearchController {
 	}
 
 	@RequestMapping(value="/HandleShowLiftDetail", method = RequestMethod.GET)
-	public String handleAdvancedSearch(@RequestParam("lift") String lift, Model model){
+	public String retriveLiftDetails(@RequestParam("lift") String lift, Model model){
 		LiftMapper lm=new LiftMapper();
 		if(lift.matches("[0-9]+")){
 			Lift l=lm.findById(lift);

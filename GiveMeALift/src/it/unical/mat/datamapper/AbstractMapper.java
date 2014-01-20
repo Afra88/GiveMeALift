@@ -92,6 +92,10 @@ public abstract class AbstractMapper {
 							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), boolean.class);
 							m.invoke(query, key, parameters.get(key));
 						}
+						else if(objectType.equals("Long")){
+							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), long.class);
+							m.invoke(query, key, parameters.get(key));
+						}
 						else{
 							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), parameters.get(key).getClass());
 							m.invoke(query, key, parameters.get(key));

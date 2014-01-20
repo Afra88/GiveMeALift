@@ -130,6 +130,18 @@ public class LiftMapper extends AbstractMapper {
 		}
 		return null;
 	}
-	
+
+
+	public List<Lift> findLiftOfferedByUser(long id) {
+		List<Lift> result=new LinkedList<Lift>();
+		String findStatement="from Lift where userOffering.id=:par1 and DATEDIFF(departureDate,CURDATE())>=0 ";
+		Map<String,Object> parameters =new HashMap<String, Object>();
+		parameters.put("par1", id);
+		Collection<DomainObject> objects=find(findStatement, parameters,false);
+		for (DomainObject object : objects) {
+			result.add((Lift) object);
+		}	
+		return result;
+	}
 }
 
