@@ -7,8 +7,10 @@ import java.util.List;
 
 public class DetoursCostConverterFacade {
 	
-	public String createStringCost(List<Integer> costs, Lift l){
+	public static String createStringCost(List<Integer> costs, Lift l){
 		String detoursCost=l.getDetoursCost();
+		if(detoursCost==null)
+			detoursCost="";
 		for (Integer integer : costs) {
 			detoursCost+=integer;
 		}
@@ -16,12 +18,12 @@ public class DetoursCostConverterFacade {
 		return detoursCost;
 	}
 	
-	public List<Integer> getListDetourCosts(Lift l){
+	public static List<Integer> getListDetourCosts(Lift l){
 		String costs[]=l.getDetoursCost().split(";");
 		List<Integer> integerCosts=new LinkedList<Integer>();
-		for (String string : costs) {
-			integerCosts.add(Integer.parseInt(string));
-		}
+		if(costs.length>0)
+			for (String string : costs)
+				integerCosts.add(Integer.parseInt(string));
 		return integerCosts;
 	}
 

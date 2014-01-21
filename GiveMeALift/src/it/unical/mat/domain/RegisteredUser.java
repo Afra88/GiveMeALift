@@ -3,6 +3,7 @@ package it.unical.mat.domain;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -116,7 +117,7 @@ public class RegisteredUser extends User {
 		this.userActivity = userActivity;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //cambiato aa
 	@JoinTable(name = "MESSAGE_SENDER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
@@ -128,7 +129,7 @@ public class RegisteredUser extends User {
 		this.messagesSent = messagesSent;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //cambiato aa
 	@JoinTable(name = "MESSAGE_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
@@ -173,7 +174,7 @@ public class RegisteredUser extends User {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result
 				+ ((countAlert == null) ? 0 : countAlert.hashCode());
 		result = prime * result
@@ -254,6 +255,8 @@ public class RegisteredUser extends User {
 		} else if (!userActivity.equals(other.userActivity))
 			return false;
 		return true;
-	}	
-
+	}
+	
+	
+	
 }

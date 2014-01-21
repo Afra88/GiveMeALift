@@ -237,7 +237,7 @@
 			<h4 class="center" >${error}</h4>
 		</c:when>
 	</c:choose>
- 	<form action="SubmitALift" method="post" id="form" >
+ 	<form action="Step3UpdateLiftSubmitALift" method="post" id="form" >
 	<!-- hidden div per visualizzare nel dom i valori di path -->
  		<c:choose>
 		<c:when test="${path.size()>2}">
@@ -250,7 +250,7 @@
 	<input type="hidden" id="mapTo" name="mapTo" value="${path.get(path.size()-1)}" /> 
 	
 	<c:choose>
-	<c:when test="${inputs.get(1)!='NULL'}">
+	<c:when test="${inputs.get(1)!=null}">
 		<input type="hidden" id="date" name="date" value="${inputs.get(0)},${inputs.get(1)}" >
 	</c:when>
 	<c:otherwise>
@@ -261,17 +261,7 @@
 	<input type="hidden" id="goingTimeM" name="goingTimeM" value="${inputs.get(3)}" >
 	<input type="hidden" id="returnTimeH" name="returnTimeH" value="${inputs.get(4)}" >
 	<input type="hidden" id="returnTimeM" name="returnTimeM" value="${inputs.get(5)}" >
-	
-	
-<%-- 	<!-- hidden div per visualizzare nel dom i valori di inputs -->
-	<c:forEach var="i"  begin="0" end="${inputs.size()-1}" > 
-		<div name="inputs" hidden=true>${inputs.get(i)}</div>
-	</c:forEach> --%>
-	 
-	
-	<!-- hidden div inserire tag input con name e value caricati con jquery -->	
-<!-- 	<div hidden=true id="inputs" ></div> -->
-	
+		
 	<div class="greenTable">
 		<table id="plusDetails" class=table>
 			<tr>
@@ -282,34 +272,53 @@
 			<tr>
 				<td colspan="2">Quota a passeggero</td>
 			</tr>
-			<c:forEach var="i"  begin="0" end="${path.size()-2}" step="1" > 
-			<tr>
-				<td>
-					${path.get(i)} <img src="images/freccia1.gif" height="10px"/> ${path.get(i+1)}
-				</td>
-				<td> 
-					<input type="number" id="price" name="price" class="toSum" maxlength="3" size="3">&#8364;
-				</td>
-			</tr>
-			</c:forEach>			
-<!-- 				<td> -->
-<%-- 					<h3>${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${inputs.get(1)} </h3> --%>
-<!-- 				<td>  -->
-<!-- 						<input type="text" id="price" name="price"> -->
-<!-- 					<i>euro</i> -->
-<!-- 				</td> -->
-			<tr>
-<%-- 			${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)} --%>
-			
-				<td><font color="orange"><b>TOTALE</b></font></td>
-				<td><div id="sum">0 &#8364;</div></td>
-			</tr>
+			<c:choose>
+				<c:when test="${lift!=null}">
+					<c:forEach var="i"  begin="0" end="${path.size()-2}" step="1" > 
+						<tr>
+							<td>
+								${path.get(i)} <img src="images/freccia1.gif" height="10px"/> ${path.get(i+1)}
+							</td>
+							<td> 
+								<input type="number" id="price" name="price" class="toSum" maxlength="3" size="3" value="${costs.get(i)}" >&#8364;
+							</td>
+						</tr>
+					</c:forEach>	
+					<tr>			
+						<td><font color="orange"><b>TOTALE</b></font></td>
+						<td><div id="sum">${lift.cost} &#8364;</div></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="i"  begin="0" end="${path.size()-2}" step="1" > 
+						<tr>
+							<td>
+								${path.get(i)} <img src="images/freccia1.gif" height="10px"/> ${path.get(i+1)}
+							</td>
+							<td> 
+								<input type="number" id="price" name="price" class="toSum" maxlength="3" size="3">&#8364;
+							</td>
+						</tr>
+					</c:forEach>			
+					<tr>			
+						<td><font color="orange"><b>TOTALE</b></font></td>
+						<td><div id="sum">0 &#8364;</div></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 			<tr>
 				<td>
 					Numero posti disponibili
 				</td>
 				<td>
-					<input id="seats" class="number" type="number" name="seats" maxlength="4" size="3">
+					<c:choose>
+					<c:when test="${lift!=null}">
+						<input id="seats" class="number" type="number" name="seats" maxlength="4" size="3" value="${lift.nSeat}">
+					</c:when>
+					<c:otherwise>
+						<input id="seats" class="number" type="number" name="seats" maxlength="4" size="3">
+					</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			<tr>
@@ -318,8 +327,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td> <%//TODO %>
 					<textarea  cols="40" rows="6" maxlength="700" >
+					TODO
 					Fornisci informazioni aggiuntive sul tuo viaggio. 
 					Cerca di invogliare più passeggeri a contattarti!
 					</textarea>
@@ -332,58 +342,154 @@
 			<tr>
 				<td><h2> Bagaglio massimo consentito: </h2></td>
 				<td>
-					<select id="luggage" name="luggage">
-	 				 	<option value="medium">Medio</option>
-	  					<option value="small">Piccolo</option>
-	  					<option value="large">Grande</option>
-					</select>
+					<c:choose>
+					<c:when test="${lift!=null}">
+						<select id="luggage" name="luggage">
+							<c:if test="${lift.liftPreferences.luggageSize==1}">
+		  						<option value="small" selected="selected" >Piccolo</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.luggageSize==2}">
+		 				 		<option selected="selected" value="medium">Medio</option>
+		 				 	</c:if>
+		 				 	<c:if test="${lift.liftPreferences.luggageSize==3}">
+			  					<option value="large" selected="selected">Grande</option>
+		 				 	</c:if>
+						</select>
+					</c:when>
+					<c:otherwise>
+						<select id="luggage" name="luggage">
+		 				 	<option value="medium">Medio</option>
+		  					<option value="small">Piccolo</option>
+		  					<option value="large">Grande</option>
+						</select>
+					</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			<tr>
 				<td><h2> Partirò: </h2></td>
 				<td>
-					<select id="delay" name="delay">
-	  					<option value="strict">puntuale</option>
-	 				 	<option value="15min">+/- 15 minuti</option>
-	  					<option value="30min">+/- 30 minuti</option>
-	  					<option value="1h">+/- un'ora</option>
-	  					<option value="2h">+/- due ore</option>
-					</select>
+					<c:choose>
+					<c:when test="${lift!=null}">
+						<select id="delay" name="delay">
+							<c:if test="${lift.liftPreferences.scheduleFlexibility=='strict'}">
+			  					<option value="strict">puntuale</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.scheduleFlexibility=='15min'}">
+			 				 	<option value="15min">+/- 15 minuti</option>
+							</c:if>
+		 				 	<c:if test="${lift.liftPreferences.scheduleFlexibility=='30min'}">
+		  						<option value="30min">+/- 30 minuti</option>
+		 				 	</c:if>
+		  					<c:if test="${lift.liftPreferences.scheduleFlexibility=='1h'}">
+		  						<option value="1h">+/- un'ora</option>
+		  					</c:if>
+		  					<c:if test="${lift.liftPreferences.scheduleFlexibility=='2h'}">
+			  					<option value="2h">+/- due ore</option>
+		  					</c:if>
+						</select>
+					</c:when>
+					<c:otherwise>
+						<select id="delay" name="delay">
+		  					<option value="strict">puntuale</option>
+		 				 	<option value="15min">+/- 15 minuti</option>
+		  					<option value="30min">+/- 30 minuti</option>
+		  					<option value="1h">+/- un'ora</option>
+		  					<option value="2h">+/- due ore</option>
+						</select>
+					</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			<tr>
 			<td><h2> Disponibile a deviazioni: </h2></td>
 				<td>
-					<select id="deviation" name="deviation">
-	 				 	<option value="nothing">Nessuna deviazione, mi dispiace... :|</option>
-	  					<option value="15min">15 minuti al massimo</option>
-	  					<option value="30min">30 minuti al massimo</option>
-	  					<option value="any">Qualsiasi deviazione. No Problem! :D</option>
-					</select>
+					<c:choose>
+					<c:when test="${lift!=null}"></c:when>
+						<%-- <select id="deviation" name="deviation">
+							<c:if test="${lift.liftPreferences.deviation==nothing}">
+			 				 	<option value="nothing">Nessuna deviazione, mi dispiace... :|</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.deviation==15min}">
+			  					<option value="15min">15 minuti al massimo</option>
+						  	</c:if>
+							<c:if test="${lift.liftPreferences.deviation==30min}">
+			  					<option value="30min">30 minuti al massimo</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.deviation==any}">
+			  					<option value="any">Qualsiasi deviazione. No Problem! :D</option>
+							</c:if>		  					
+						</select> --%>
+					<c:otherwise>
+						<select id="deviation" name="deviation">
+		 				 	<option value="nothing">Nessuna deviazione, mi dispiace... :|</option>
+		  					<option value="15min">15 minuti al massimo</option>
+		  					<option value="30min">30 minuti al massimo</option>
+		  					<option value="any">Qualsiasi deviazione. No Problem! :D</option>
+						</select>
+					</c:otherwise>
+					</c:choose>
+					
 				</td>
 			</tr>
 			<tr>
 				<td><h2> Preferisco viaggiare su: </h2></td>
 				<td>
-					<select id="roadType" name="roadType">
-						<option value="freeway">Autostrada</option>
-						<option value="noFreeway">Evito l'autostrada</option>
-					</select>
+					<c:choose>
+					<c:when test="${lift!=null}">
+						<select id="roadType" name="roadType">
+							<c:if test="${lift.liftPreferences.roadType==freeway}">
+								<option value="freeway">Autostrada</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.roadType==noFreeway}">
+								<option value="noFreeway">Strada di paese</option>
+							</c:if>
+						</select>
+					</c:when>
+					<c:otherwise>
+						<select id="roadType" name="roadType">
+							<option value="freeway">Autostrada</option>
+							<option value="noFreeway">Strada di paese</option>
+						</select>
+					</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			<tr>
 				<td><h2> Viaggio rosa: </h2></td>
 				<td>
-					<select id="pinkTrip" name="pinkTrip"> 
-	  					<option value="bothPass">viaggio con uomini e donne</option>
-	  					<option value="onlyWomen">viaggio solo con donne</option>
-					</select>
+					<c:choose>
+					<c:when test="${lift!=null}">
+						<select id="pinkTrip" name="pinkTrip"> 
+							<c:if test="${lift.liftPreferences.pinkTrip==false}">
+			  					<option value="bothPass">Viaggio con uomini e donne</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.pinkTrip==true}">
+		  						<option value="onlyWomen">Viaggio solo con donne</option>
+		  					</c:if>
+						</select>
+					</c:when>
+					<c:otherwise>
+						<select id="pinkTrip" name="pinkTrip"> 
+		  					<option value="bothPass">Viaggio con uomini e donne</option>
+		  					<option value="onlyWomen">Viaggio solo con donne</option>
+						</select>
+					</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2"> 
-					<input id="checkLicence" type="checkbox" name="drivingLicence" value="false" /> 
-					<i>Dichiaro di essere in possesso di patente di guida valida ed assicurazione RCA </i>
+					<c:choose>
+					<c:when test="${lift!=null}">
+						<input id="checkLicence" type="checkbox" name="drivingLicence" value="true" checked="checked" /> 
+						<i>Dichiaro di essere in possesso di patente di guida valida ed assicurazione RCA </i>
+					</c:when>
+					<c:otherwise>
+						<input id="checkLicence" type="checkbox" name="drivingLicence" value="false" /> 
+						<i>Dichiaro di essere in possesso di patente di guida valida ed assicurazione RCA </i>
+					</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			<tr>
@@ -397,16 +503,6 @@
 					<br>
 					<font color="blue">Ritorno:</font> ${inputs.get(1)} - ore: ${inputs.get(4)}:${inputs.get(5)}
 				</td>	
-<%-- 	 		<c:forEach var="i" items="${inputs}">  --%>
-<!-- 	 		<tr>  -->
-<%-- 	 			<td><h3>${i}</h3></td> --%>
-<!-- 	 		<tr>  -->
-<%-- 	 		</c:forEach> --%>
-
-<!-- 				<td rowspan="3"> -->
-<!-- 					<p id="map"></p> -->
-<!-- 				</td> -->
-
 			</tr>
 			<tr>
 				<td>

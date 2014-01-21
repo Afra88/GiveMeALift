@@ -91,7 +91,7 @@
 			          	<td>
 					        <div class="emphatizeLift">${lift.getPickUpPoint().city} - ${lift.getDropOffPoint().city}</div>
 				       		<c:choose>
-				       			<c:when test="${lift.possibleDetour}==true">
+				       			<c:when test="${lift.possibleDetour==true}">
 				       				   Deviazioni possibili
 				       			</c:when>
 				       			<c:otherwise>
@@ -100,13 +100,13 @@
 				       		</c:choose>
 				        </td>
 				        <td style="text-align: right;">
-				        	<div class="emphatizeSeat"><input id="seats" class="number" type="number" name="seats" maxlength="4" size="3" step="1" > posti disponibili</div>
+				        	<div class="emphatizeSeat"><input id="seats" class="number" type="number" name="seats" maxlength="4" size="3" step="1" value="${lift.nSeat}" > posti disponibili</div>
 				        </td>
 			        </tr>
 			        <tr style="text-align: right;">
 			        	<td colspan="2" >
 			        		<a href="DeleteOfferedLift?lift=${lift.getId()}" class="button red"> <span class="trash"></span> Elimina </a>
-			        		<a href="UpdateOfferedLift?lift=${lift.getId()}" class="button green"> <span class="edit"></span> Modifica </a>
+			        		<a href="Step1UpdateLiftOfferALift?lift=${lift.getId()}" class="button green"> <span class="edit"></span> Modifica </a>
 			        		<a href="HandleShowLiftDetail?lift=${lift.getId()}" class="button cyan"> <span class="preview"></span> Visualizza Annuncio</a>
 				        </td>	        
 			        </tr>

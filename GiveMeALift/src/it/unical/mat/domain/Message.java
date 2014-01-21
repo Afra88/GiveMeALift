@@ -2,6 +2,7 @@ package it.unical.mat.domain;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +34,7 @@ public class Message extends DomainObject {
 	@Column(name="MESSAGE_ID")
 	public long getId() {return super.getId();};
 	
-	@ManyToOne(fetch=FetchType.LAZY) //cambiato
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL) //cambiato
 	@JoinTable(name = "MESSAGE_SENDER_JOIN",
 				joinColumns = { @JoinColumn (name = "MESSAGE_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -48,7 +49,7 @@ public class Message extends DomainObject {
 	}
 
 
-	@ManyToOne(fetch=FetchType.LAZY) //cambiato
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL) //cambiato
 	@JoinTable(name = "MESSAGE_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "MESSAGE_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })

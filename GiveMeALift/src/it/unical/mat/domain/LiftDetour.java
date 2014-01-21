@@ -3,6 +3,7 @@ package it.unical.mat.domain;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,17 +24,17 @@ public class LiftDetour extends DomainObject {
 	
 	private LiftPoint dropOffPoint;
 	
-	private List<Lift> liftList;
+//	private List<Lift> liftList;
 	
 	public LiftDetour(LiftPoint pickUpPoint, LiftPoint dropOffPoint) {
 		super();
 		this.pickUpPoint = pickUpPoint;
 		this.dropOffPoint = dropOffPoint;
-		liftList=new LinkedList<Lift>();
+//		liftList=new LinkedList<Lift>();
 	}
 
 	public LiftDetour(){
-		liftList=new LinkedList<Lift>();
+//		liftList=new LinkedList<Lift>();
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public class LiftDetour extends DomainObject {
 	public long getId() {return super.getId();};
 	
 	
-	@ManyToOne(fetch=FetchType.LAZY) //cascade=CascadeType.ALL //cambiato
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL ) //cascade=CascadeType.ALL //cambiato
 	@JoinColumn(name="PICK_UP")
 	public LiftPoint getPickUpPoint() {
 		return pickUpPoint;
@@ -56,7 +57,7 @@ public class LiftDetour extends DomainObject {
 
 
 
-	@ManyToOne(fetch=FetchType.LAZY) //cascade=CascadeType.ALL //cambiato
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL ) //cascade=CascadeType.ALL //cambiato
 	@JoinColumn(name="DROP_OFF")
 	public LiftPoint getDropOffPoint() {
 		return dropOffPoint;
@@ -75,21 +76,21 @@ public class LiftDetour extends DomainObject {
 			this.dropOffPoint=ld.dropOffPoint;
 		if(ld.pickUpPoint!=null)
 			this.pickUpPoint=ld.pickUpPoint;
-		if(ld.liftList!=null)
-			this.liftList=ld.liftList;
+//		if(ld.liftList!=null)
+//			this.liftList=ld.liftList;
 	}
 	
-	@ManyToMany(fetch=FetchType.LAZY) //cascade=CascadeType.ALL
-	@JoinTable(name = "LIFT_DETOURS_JOIN",
-				joinColumns = { @JoinColumn (name = "LIFT_DETOUR_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "LIFT_ID") })
-	public List<Lift> getLiftList() {
-		return liftList;
-	}
-
-	public void setLiftList(List<Lift> liftList) {
-		this.liftList = liftList;
-	}
+//	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL ) //cascade=CascadeType.ALL
+//	@JoinTable(name = "LIFT_DETOURS_JOIN",
+//				joinColumns = { @JoinColumn (name = "LIFT_DETOUR_ID") },
+//				inverseJoinColumns = { @JoinColumn(name = "LIFT_ID") })
+//	public List<Lift> getLiftList() {
+//		return liftList;
+//	}
+//
+//	public void setLiftList(List<Lift> liftList) {
+//		this.liftList = liftList;
+//	}
 
 	@Override
 	public int hashCode() {
@@ -97,8 +98,8 @@ public class LiftDetour extends DomainObject {
 		int result = 1;
 		result = prime * result
 				+ ((dropOffPoint == null) ? 0 : dropOffPoint.hashCode());
-		result = prime * result
-				+ ((liftList == null) ? 0 : liftList.hashCode());
+//		result = prime * result
+//				+ ((liftList == null) ? 0 : liftList.hashCode());
 		result = prime * result
 				+ ((pickUpPoint == null) ? 0 : pickUpPoint.hashCode());
 		return result;
@@ -118,11 +119,11 @@ public class LiftDetour extends DomainObject {
 				return false;
 		} else if (!dropOffPoint.equals(other.dropOffPoint))
 			return false;
-		if (liftList == null) {
-			if (other.liftList != null)
-				return false;
-		} else if (!liftList.equals(other.liftList))
-			return false;
+//		if (liftList == null) {
+//			if (other.liftList != null)
+//				return false;
+//		} else if (!liftList.equals(other.liftList))
+//			return false;
 		if (pickUpPoint == null) {
 			if (other.pickUpPoint != null)
 				return false;

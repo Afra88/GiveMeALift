@@ -90,8 +90,8 @@
 	<link rel="stylesheet" href="css/form.css">
 	<link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css">
 	
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="js/cssJs/jquery-migrate-1.1.1.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="js/cssJs/superfish.js"></script>
 	<script src="js/cssJs/jquery.equalheights.js"></script>
 	<script src="js/cssJs/jquery.easing.1.3.js"></script>

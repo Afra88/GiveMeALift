@@ -2,7 +2,7 @@ package it.unical.mat.datamapper;
 
 import it.unical.mat.domain.DomainObject;
 import it.unical.mat.domain.Lift;
-import it.unical.mat.domain.RegisteredUser;
+import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.util.HibernateUtil;
 
 import java.util.Date;
@@ -22,6 +22,31 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class LiftMapper extends AbstractMapper {
+	
+//	public long persist(Lift l, List<LiftDetour> detours, LiftPoint p, LiftPoint d, LiftPreference prefs, RegisteredUser user){
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		Transaction transaction = null;
+//		long objectId = 0;
+//		try {
+//			transaction = session.beginTransaction();
+//			l.setDetours(detours);
+//			l.setLiftPreferences(prefs);
+//			l.setPickUpPoint(p);
+//			l.setDropOffPoint(d);
+//			l.setUserOffering(user);
+//			l.setUserOffering(user);
+//			session.persist(l);
+//			session.flush();
+//			transaction.commit();
+//		} catch (HibernateException e) {
+//			e.printStackTrace();
+//			transaction.rollback();
+//		} finally {
+//			session.close();
+//		}
+//		return objectId;	
+//	}
+	
 	
 	public List<Lift> findLiftByFromAndTo(String cityFrom, String cityTo, String date){
 		List<Lift> result = new LinkedList<Lift>();
@@ -121,7 +146,13 @@ public class LiftMapper extends AbstractMapper {
 				List<Lift> objects=query.list();
 				Lift l=(Lift) objects.get(0);
 				Hibernate.initialize(l.getLiftPreferences());
+				Hibernate.initialize(l.getUserOffering());
 				Hibernate.initialize(l.getDetours());
+				for (LiftDetour ld : l.getDetours()) {					
+					Hibernate.initialize(ld.getPickUpPoint());
+				}
+				if(l.getReturnLift()!=null)
+					Hibernate.initialize(l.getReturnLift());
 				transaction.commit();
 				return l;
 		} catch (HibernateException | SecurityException | IllegalArgumentException e) {

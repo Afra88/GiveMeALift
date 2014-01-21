@@ -2,9 +2,11 @@ package it.unical.mat.domain;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -42,6 +45,7 @@ public class Lift extends DomainObject {
 	private LiftPreference liftPreferences;
 	private List<User> usersBookingList;
 	private User userOffering;
+	private Lift returnLift;
 	
 
 	public Lift(){
@@ -93,7 +97,7 @@ public class Lift extends DomainObject {
 		this.nSeat = nSeat;
 	}
 
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinTable(name = "LIFT_DETOURS_JOIN",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "DETOUR_ID") })
@@ -102,7 +106,7 @@ public class Lift extends DomainObject {
 	}
 	
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinTable(name = "LIFT_USER_BOOKING",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -110,7 +114,7 @@ public class Lift extends DomainObject {
 		return usersBookingList;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY) //ok
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL) //ok
 	@JoinTable(name = "LIFT_USER_OFFERING",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -165,7 +169,7 @@ public class Lift extends DomainObject {
 	}
 
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name = "LIFT_PICK_UP_POINT_JOIN",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_POINT_ID") })
@@ -183,7 +187,7 @@ public class Lift extends DomainObject {
 
 
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name = "LIFT_DROP_OFF_POINT_JOIN",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_POINT_ID") })
@@ -195,7 +199,7 @@ public class Lift extends DomainObject {
 		this.dropOffPoint = dropOffPoint;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY) //cambiato
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL) //cambiato
 	@JoinTable(name = "PREFERENCE_LIFT_JOIN", 
 				joinColumns = { @JoinColumn(name = "LIFT_ID") }, 
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_PREFERENCE_ID")}
@@ -250,6 +254,16 @@ public class Lift extends DomainObject {
 
 	public void setUserOffering(User userOffering) {
 		this.userOffering = userOffering;
+	}
+	
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JoinColumn(name="RETURN_LIFT_ID")
+	public Lift getReturnLift() {
+		return returnLift;
+	}
+	
+	public void setReturnLift(Lift returnLift) {
+		this.returnLift = returnLift;
 	}
 
 	@Override
@@ -353,6 +367,32 @@ public class Lift extends DomainObject {
 		return true;
 	}
 	
+	public List<String> computeRoute(){
+		List<String> route=new ArrayList<String>();
+		String city="";
+		for (LiftDetour ld : this.detours) {
+			city=ld.getPickUpPoint().getCity(); //FIXME only city is used
+			if(!route.contains(city))
+				route.add(city);
+		}
+		city=this.dropOffPoint.getCity();
+		if(!route.contains(city))
+			route.add(city);
+		return route;
+		
+	}
+	
+	public List<String> computeRouteOnlyDetours(){
+		List<String> route=new ArrayList<String>();
+		String city="";
+		for (LiftDetour ld : this.detours) {
+			city=ld.getPickUpPoint().getCity(); //FIXME only city is used
+			if(!route.contains(city) && !city.equals(pickUpPoint.getCity()) && !city.equals(dropOffPoint.getCity()))
+				route.add(city);
+		}
+		return route;
+		
+	}
 	
 	
 	

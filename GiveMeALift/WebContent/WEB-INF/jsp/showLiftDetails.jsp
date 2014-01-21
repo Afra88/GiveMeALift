@@ -18,12 +18,12 @@
 		<table id="liftDetails">
 			<tr>
 				<td colspan="2">
-					${lift.get(0).pickUpPoint.city}
-					-
-					<c:forEach items="${lift.get(0).detours}" var="i" >
-						${i.dropOffPoint.city}
+					<c:forEach items="${route}" var="i" >
+						${i} 
+						<c:if test="${i!=lift.get(0).dropOffPoint.city}">
+							-
+						</c:if>
 					</c:forEach>
-					${lift.get(0).dropOffPoint.city}
 				</td>
 			</tr>
 			<tr>

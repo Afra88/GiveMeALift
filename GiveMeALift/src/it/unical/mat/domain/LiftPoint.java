@@ -25,7 +25,7 @@ public class LiftPoint extends DomainObject {
 	public LiftPoint() {}
 
 	public LiftPoint(String city){
-		this.city = city;
+		this.city = city; //FIXME only city is used
 	}
 	
 	@Override

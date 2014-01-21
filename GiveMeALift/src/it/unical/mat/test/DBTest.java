@@ -104,7 +104,7 @@ public class DBTest {
 		pref.setLuggageSize(1);
 		pref.setPinkTrip(true);
 		pref.setRoadType("Autostrada");
-		pref.setTimesForThisRoute(1);
+//		pref.setTimesForThisRoute(1);
 		
 		LiftPreferenceMapper lpref = new LiftPreferenceMapper();
 		lpref.insert(pref);

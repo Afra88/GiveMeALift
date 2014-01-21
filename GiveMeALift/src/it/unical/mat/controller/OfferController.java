@@ -9,16 +9,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
-import it.unical.mat.datamapper.LiftPointMapper;
-import it.unical.mat.datamapper.LiftPreferenceMapper;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.LiftPreference;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.service.DetoursCostConverterFacade;
+import it.unical.mat.service.LiftToViewConverterFacade;
+import it.unical.mat.service.ParseDate;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,7 +35,194 @@ public class OfferController {
 		else{
 			return "signUp";
 		}
+	}
+	
+	@RequestMapping(value ="/Step1UpdateLiftOfferALift")
+	public String step1UpdateLiftOfferALift(@RequestParam String lift,Model model,HttpSession session){
+		if(session.getAttribute("user")!=null && lift.matches("[0-9]+")){
+				LiftMapper lm=new LiftMapper();
+				Lift l=lm.findById(lift);
+				LiftToViewConverterFacade lc=new LiftToViewConverterFacade();
+				List<Object> lConverted=lc.convert(l);
+				Lift returnLift=l.getReturnLift();
+				if(returnLift!=null){
+					List<Object> lrConverted=lc.convert(returnLift);
+					model.addAttribute("returnDate", ParseDate.getItalianFormat(l.getReturnLift().getDepartureDate().toString()));
+					model.addAttribute("returnTimeH",Integer.parseInt((String) lrConverted.get(1)));
+					model.addAttribute("returnTimeM",Integer.parseInt((String) lConverted.get(2)));					
+				}
+				model.addAttribute("lift",l);
+				model.addAttribute("goingDate", ParseDate.getItalianFormat(l.getDepartureDate().toString()));
+				model.addAttribute("goingTimeH",Integer.parseInt((String) lConverted.get(1)));
+				model.addAttribute("goingTimeM",Integer.parseInt((String) lConverted.get(2)));
+
+				model.addAttribute("path",l.computeRouteOnlyDetours());
+				return "step1_updateLift_offerALift";
+		}
+		return "error";
 	}	
+	
+	@RequestMapping(value ="/Step2UpdateLiftInsertALift")
+	public String step2UpdateLiftInsertALift(
+			@RequestParam String lift,
+			@RequestParam("mapFrom") String mapFrom, 
+    		@RequestParam("mapTo") String mapTo,
+    		@RequestParam(value="detour0",required=false) String detour0,
+    		@RequestParam(value="detour1",required=false) String detour1,
+    		@RequestParam(value="detour2",required=false) String detour2,
+    		@RequestParam(value="detour3",required=false) String detour3,
+    		@RequestParam(value="detour4",required=false) String detour4,
+    		@RequestParam("date") String date,
+    		@RequestParam("goingTimeH") String goingHour,
+    		@RequestParam("goingTimeM") String goingMins,
+    		@RequestParam(value="returnTimeH",required=false) String returnHour,
+    		@RequestParam(value="returnTimeM",required=false) String returnMins,
+    		Model model,HttpSession session){
+		
+			if(session.getAttribute("user")!=null && lift.matches("[0-9]+")){
+			String[] dates = date.split(",");
+			String completeGoingDate = dates[0];
+			
+			int gmins = Integer.parseInt(goingMins);
+			long goingTime = gmins + (Integer.parseInt(goingHour)*60);
+				
+			// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
+			String completeReturnDate = null;
+			
+			Date dG = null;
+			long dateGoingMillis = 0;
+			
+			Date dR = null;
+			long dateReturnMillis = Integer.MAX_VALUE;
+			int rmins = Integer.MAX_VALUE;
+			long returnTime = Integer.MAX_VALUE;
+			// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
+			
+			boolean returnIsPresent=false;
+			
+			if(dates.length>1 /*and controllo dell'ora di ritorno*/){                      // SE C'è DATA DI RITORNO	
+				returnIsPresent=true;
+				
+				completeReturnDate = dates[1];		
+				
+				SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+				dG = null;
+				dR = null;
+				try {
+					dG = f.parse(dates[0]);
+					dG.setHours(Integer.parseInt(goingHour));
+					dG.setMinutes(Integer.parseInt(goingMins));
+					dR = f.parse(dates[1]);
+					dR.setHours(Integer.parseInt(returnHour));
+					dR.setMinutes(Integer.parseInt(returnMins));
+				} catch (ParseException e) {		e.printStackTrace();	}
+				
+				dateGoingMillis = dG.getTime();
+				dateReturnMillis = dR.getTime();
+				
+				Date today = new Date();			
+				System.out.println(today);
+				if(dG.compareTo(today)<=0){
+					System.out.println(dG.compareTo(today));
+					model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
+					return "step1_updateLift_offerALift";
+				}
+				if(dR!=null && dR.compareTo(today)<=0){
+					model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
+					return "step1_updateLift_offerALift";
+				}
+				if(dR.compareTo(dG)<=0){
+					model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
+					return "step1_updateLift_offerALift";
+				}
+				
+				rmins = Integer.parseInt(returnMins);
+				returnTime = rmins + (Integer.parseInt(returnHour)*60);
+		
+			}
+			
+			
+			
+			if(mapFrom == "" || mapTo == "" || mapFrom==null || mapTo==null){
+				model.addAttribute("error", "Scegli i luoghi di Partenza e Arrivo.");
+				return "step1_updateLift_offerALift";
+			}
+			
+			
+			ArrayList<String> inputs = new ArrayList<String> ();			
+			
+			
+			inputs.add(completeGoingDate);	        //i=0
+			// se non c'è è gia settata a "NULL"
+			inputs.add(completeReturnDate);		    //i=1 
+			
+			inputs.add(goingHour);				    //i=2		
+			if(gmins>=10)	inputs.add(goingMins);	//i=3
+			else inputs.add("0"+goingMins);
+			
+			if(returnIsPresent){
+				inputs.add(returnHour);				    //i=4		
+				if(rmins>=10)	inputs.add(returnMins); //i=5		
+				else		inputs.add("0"+returnMins);		
+			}
+			else {
+				inputs.add(null); //i=4
+				inputs.add(null); //i=5
+			}		
+			
+	//		if(detour0!="")
+	//			inputs.add(detour0);			//i=8
+	//		if(detour1!="")
+	//			inputs.add(detour1);			//i=9
+	//		if(detour2!="")
+	//			inputs.add(detour2);			//i=10
+	//		if(detour3!="")
+	//			inputs.add(detour3);			//i=11
+	//		if(detour4!="")
+	//			inputs.add(detour4);			//i=12
+			
+			System.out.println(" FROM: " + mapFrom);
+			System.out.println(" TO: " + mapTo);
+			
+			System.out.println(" DET0: " + detour0);
+			System.out.println(" DET1: " + detour1);
+			System.out.println(" DET2: " + detour2);
+			System.out.println(" DET3: " + detour3);
+			System.out.println(" DET4: " + detour4);
+			
+			List<String> path=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3,
+					detour4);
+			
+			model.addAttribute("inputs", inputs);
+			model.addAttribute("path", path);
+			
+			if(returnIsPresent){
+				if( dateGoingMillis > dateReturnMillis ){
+					System.out.println("errore Data");			
+					return "step1_updateLift_offerALift";
+				}
+				else if( dateGoingMillis == dateReturnMillis && goingTime<returnTime) {
+						model.addAttribute("inputs",inputs);
+						return "step2_updateLift_insertALift";	
+					}	
+			}		
+
+			model.addAttribute("inputs",inputs);
+			LiftMapper lm=new LiftMapper();
+			Lift l=lm.findById(lift);
+			
+			List<Integer> costs=DetoursCostConverterFacade.getListDetourCosts(l);
+			model.addAttribute("costs",costs);
+			
+
+			//se non è presente la data di ritorno
+			model.addAttribute("lift",l);
+			return "step2_updateLift_insertALift";	
+		}
+		return "error";
+	}
+	
+	
 	
 	@RequestMapping(value ="/InsertALift")
 	public String insertAnOffer(
@@ -158,7 +344,6 @@ public class OfferController {
 		
 		
 		ArrayList<String> inputs = new ArrayList<String> ();
-		ArrayList<String> path = new ArrayList<String>();
 		
 //		inputs.add(mapFrom);				 
 //		inputs.add(mapTo);					
@@ -202,19 +387,8 @@ public class OfferController {
 		System.out.println(" DET3: " + detour3);
 		System.out.println(" DET4: " + detour4);
 		
-		path.add(mapFrom);
-		if(detour0 != "" && detour0!=(null))
-			path.add(detour0);
-		if(detour1 != "" && detour1!=(null))
-			path.add(detour1);
-		if(detour2 != "" && detour2!=(null))
-			path.add(detour2);
-		if(detour3 != "" && detour3!=(null))
-			path.add(detour3);
-		if(detour4 != "" && detour4!=(null))
-			path.add(detour4);
-		path.add(mapTo);
-		
+		List<String> path=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3,
+				detour4);
 		
 		model.addAttribute("inputs", inputs);
 		model.addAttribute("path", path);
@@ -251,6 +425,24 @@ public class OfferController {
 		model.addAttribute("inputs",inputs);
 		return "insertALift";			
 	}
+
+	private List<String> composePath(String mapFrom, String mapTo, String detour0,
+			String detour1, String detour2, String detour3, String detour4) {
+		List<String> path=new ArrayList<String>();
+		path.add(mapFrom);
+		if(detour0 != "" && detour0!=(null))
+			path.add(detour0);
+		if(detour1 != "" && detour1!=(null))
+			path.add(detour1);
+		if(detour2 != "" && detour2!=(null))
+			path.add(detour2);
+		if(detour3 != "" && detour3!=(null))
+			path.add(detour3);
+		if(detour4 != "" && detour4!=(null))
+			path.add(detour4);
+		path.add(mapTo);
+		return path;
+	}
 	
 	
 	
@@ -278,23 +470,10 @@ public class OfferController {
     		@RequestParam("pinkTrip") String pinkTrip,
     		@RequestParam(value="drivingLicence",required=false) String checkLicence,
 			Model m, HttpSession session){
-		
-		
-		if(checkLicence == null)
-			return "insertALift"; // ti fanno la multa ! :D
 
-		
-		///////////////////////// MAPPER ////////////////////////////////////
-	
-		LiftPointMapper pm = new LiftPointMapper();
-		LiftDetourMapper ldm = new LiftDetourMapper(); 
 		LiftMapper lm = new LiftMapper();
-		LiftPreferenceMapper lpm = new LiftPreferenceMapper();
-		
-		///////////////////////// MAPPER ////////////////////////////////////
 		
 				
-		/* Parametri da inserire in Lift*/	
 		String[] costs = price.split(",");     //COST
 		Integer totcost = 0;
 		for (int i = 0; i < costs.length; i++) {
@@ -302,11 +481,6 @@ public class OfferController {
 		}
 		
 		Integer nSeats = Integer.parseInt(seats);    //NSEATS
-		
-		/*
-		 * TODO
-		 */
-		
 		
 		Boolean possibleDetour = false;
 		
@@ -334,71 +508,10 @@ public class OfferController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}		
-		
-		
-		LiftPoint point0 = new LiftPoint(detour0);	LiftPoint point1 = new LiftPoint(detour0);
-		LiftPoint point2 = new LiftPoint(detour0);	LiftPoint point3 = new LiftPoint(detour0);
-		LiftPoint point4 = new LiftPoint(detour0);
 
-		ArrayList <LiftPoint> path = new ArrayList<LiftPoint>();
-	//	path.add(new LiftPoint(mapFrom));    //		pickUpPoint  0
-
-
-		LiftPoint from = new LiftPoint(mapFrom);
-		pm.insert(from);
-		path.add(from);
-		
-//		path.add(new LiftPoint(mapTo));  		//dropOffPoint path.size()-1
-		
-		LiftPoint to = new LiftPoint(mapTo);
-		path.add(to);
-		pm.insert(to);
-
-		
-		if(detour0 != "" && detour0!=(null)){
-			
-			path.add(point0);
-//			path.add(new LiftPoint(detour0));
-			pm.insert(point0);
-
-		}
-		if(detour1 != "" && detour1!=(null)){
-			
-			path.add(point1);
-			pm.insert(point1);
-
-		}
-		if(detour2 != "" && detour2!=(null)){
-			
-			path.add(point2);
-			pm.insert(point2);
-
-		}
-		if(detour3 != "" && detour3!=(null)){
-			path.add(point3);
-			pm.insert(point3);
-
-		}
-		if(detour4 != "" && detour4!=(null)){
-			
-			path.add(point4);
-			pm.insert(point4);
-			
-		}
-
-
-		LiftPoint pickUpPoint = path.get(0);
-		LiftPoint dropOffPoint = path.get(path.size()-1);
-		
-		/////////////////////////UTENTE ////////////////////////////////////		
-		RegisteredUser user = 	(RegisteredUser) session.getAttribute("user");	
-		/////////////////////////UTENTE ////////////////////////////////////		
-			
-				
 		/////////////////////////LIFT PREFERENCES////////////////////////////////////
 		Integer luggageSize;
 		Boolean pink;
-
 		
 		if(luggage == "piccolo")
 			luggageSize = 1;
@@ -412,108 +525,111 @@ public class OfferController {
 		else
 			pink = true;
 		
+		
 		LiftPreference lp = new LiftPreference(roadType,luggageSize,delay,pink);
-		lpm.insert(lp);
 		
 		/////////////////////////LIFT PREFERENCES////////////////////////////////////
 		
+		ArrayList <LiftPoint> path = new ArrayList<LiftPoint>();
+		
+		LiftPoint from = new LiftPoint(mapFrom);
+		path.add(from);
+
+		if(detour0 != "" && detour0!=(null)){
+			LiftPoint point0 = new LiftPoint(detour0);	
+			path.add(point0);
+		}
+		if(detour1 != "" && detour1!=(null)){
+			LiftPoint point1 = new LiftPoint(detour1);
+			path.add(point1);
+		}
+		if(detour2 != "" && detour2!=(null)){
+			LiftPoint point2 = new LiftPoint(detour2);	
+			path.add(point2);
+		}
+		if(detour3 != "" && detour3!=(null)){
+			LiftPoint point3 = new LiftPoint(detour3);
+			path.add(point3);
+		}
+		if(detour4 != "" && detour4!=(null)){
+			LiftPoint point4 = new LiftPoint(detour4);
+			path.add(point4);
+		}
+		LiftPoint to = new LiftPoint(mapTo);
+		path.add(to);
+		
+		if(checkLicence == null || checkLicence == "" || checkLicence=="false"){
+			List<String> pathString=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3,
+					detour4);
+			m.addAttribute("path",pathString);
+			m.addAttribute("error", "Attenzione, devi dichiarare di essere in possesso di patente di guida valida ed assicurazione RCA.");
+			return "insertALift"; // ti fanno la multa ! :D
+		}
+				
 		java.sql.Date sd = new java.sql.Date(departureDate.getTime()); // TODO controllare e fare una conversione precisa
-						
-		/////////////////////////LIFT  ////////////////////////////////////
-		Lift l = new Lift(totcost, nSeats, possibleDetour, departureTime, sd, pickUpPoint, dropOffPoint);				
-		l.setUserOffering(user);		
-		l.setLiftPreferences(lp);
-		/////////////////////////LIFT  ////////////////////////////////////
 
 		DetoursCostConverterFacade df = new DetoursCostConverterFacade();
 		List<Integer> prices = new ArrayList<Integer>();
 		
-		
-		 //ADD SINGLE COST OF EACH DETOUR TO THE LIFT
 		for (int i = 0; i < costs.length; i++) {
 			prices.add(Integer.parseInt(costs[i]));
 		}
-		
-		df.createStringCost(prices, l);
 
-		
-		/////////////////////////Ad ogni LIFT  DETOUR trovato assegno il lift che sto inserendo ////////////////////////////////////
 		List<LiftDetour> detours = new ArrayList<LiftDetour>();
 		for (int i = 0; i < path.size()-1; i++) {
-			for (int j = i+1; j < path.size(); j++) {				
-
-				//funzione find dai campi pickUpPoint e dropOffPoint 				
-				List<LiftDetour> list = ldm.findDetourFromPickUpAndDropOffPoints(path.get(i).getCity(), path.get(j).getCity());
-				
-				LiftDetour tmpDetour;
-				
-				// se esiste lo prendo altrimenti lo creo
-				if(list.size() > 0)
-					 tmpDetour = list.get(0);
-				else
-					tmpDetour = new LiftDetour(path.get(i),path.get(j));								
-				//una volta trovato o creato va associato al lift di partenza				
-				tmpDetour.getLiftList().add(l); 				
-				
-				// se esiste lo aggiorno altrimenti lo inserisco
-				if(list.size() > 0)
-					ldm.update(tmpDetour);  //check update
-				else
-					ldm.insert(tmpDetour);
-				
+			for (int j = i+1; j < path.size(); j++) {
+				System.out.println("Detour: "+path.get(i).getCity()+" "+path.get(j).getCity());
+				LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
 				detours.add(tmpDetour);
 			}			
 		}
 
-		/////////////////////////LIFT  DETOURS////////////////////////////////////
-		//set deours e salvo
-		l.setDetours(detours); 		
-		lm.insert(l);			
+		System.out.println("Partenza data: "+sd);
+		System.out.println("tempo partenze: "+departureTime);
 		
-		///////////////////////// RETURN LIFT IF PRESENT ////////////////////////////////////
-		
+		Lift l = new Lift(totcost, nSeats, possibleDetour, departureTime, sd, path.get(0), path.get(path.size()-1));
+		RegisteredUser user = 	(RegisteredUser) session.getAttribute("user");		
+		l.setDetours(detours);
+		l.setLiftPreferences(lp);
+		l.setUserOffering(user);
+		df.createStringCost(prices, l);
+
 		if(returnIsPresent){
 			long mstimeR = (1000*60*Integer.parseInt(returnMins)) + (1000*60*60*Integer.parseInt(returnHour));		
 			Time returnTime = new Time(mstimeR);       //RETURNTIME
 			java.sql.Date srd = new java.sql.Date(returnDate.getTime()); // cambiare
 			
-			//Creo lift ritorno
-			Lift lr = new Lift(totcost, nSeats, possibleDetour, returnTime, srd,  pickUpPoint, dropOffPoint);
-
-			//metto utente e preferenze che sono gli stessi dell'andata
-			lr.setUserOffering(user);
-			lr.setLiftPreferences(lp);			
+			System.out.println("Partenza data: "+srd);
+			System.out.println("tempo partenze: "+returnTime);
+			
+			prices.clear();
+			if(costs.length>1)
+				for (int i = costs.length-1; i <= 0; i--) 
+					prices.add(Integer.parseInt(costs[i]));
+			
 			
 			List<LiftDetour> detoursReturn = new ArrayList<LiftDetour>();
-			
-//			Scorro gli stessi detour e li inverto
-			
-			for (int i = 0; i < detours.size(); i++) {									
-				
-				List<LiftDetour> list = ldm.findDetourFromPickUpAndDropOffPoints(detours.get(i).getDropOffPoint().getCity(), detours.get(i).getPickUpPoint().getCity());
-				LiftDetour temp;
-				
-				// se esiste lo prendo altrimenti lo creo
-				if(list.size() > 0)
-					 temp = list.get(0);
-				else
-					temp = new LiftDetour(detours.get(i).getDropOffPoint() ,detours.get(i).getPickUpPoint());		// Inversione						
-				//una volta trovato o creato va associato al lift di partenza				
-				temp.getLiftList().add(lr); 				
-				
-				// se esiste lo aggiorno altrimenti lo inserisco
-				if(list.size() > 0)
-					ldm.update(temp);
-				else
-					ldm.insert(temp);
-				
-				detoursReturn.add(temp);
-		
+			for (int i = path.size()-1; i>0 ; i--) {
+				for (int j = i-1; j >=0; j--) {
+					System.out.println("Detour Ritorno: "+path.get(i).getCity()+" "+path.get(j).getCity());
+					LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
+					detoursReturn.add(tmpDetour);
+				}			
 			}
-			//set deours e salvo
+			
+			Lift lr = new Lift(totcost, nSeats, possibleDetour, returnTime, srd,  path.get(path.size()-1), path.get(0));		
 			lr.setDetours(detoursReturn);
-			lm.insert(lr);			
+			lr.setLiftPreferences(lp);
+			lr.setUserOffering(user);
+			df.createStringCost(prices, lr);
+			l.setReturnLift(lr);		
+		
 		}		
+
+		lm.insert(l);		
+		
+		///////////////////////// RETURN LIFT IF PRESENT ////////////////////////////////////
+		
 		
 		return "submitALift";
 	}	
