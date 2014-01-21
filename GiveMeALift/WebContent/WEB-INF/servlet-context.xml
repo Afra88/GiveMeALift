@@ -28,6 +28,7 @@
     <mvc:resources mapping="/js/**" location="/WEB-INF/resources/js/" />
     <mvc:resources mapping="/images/**" location="/WEB-INF/resources/images/" />
     <mvc:resources mapping="/font/**" location="/WEB-INF/resources/font/" />
+    <mvc:resources mapping="/avatars/**" location="/WEB-INF/resources/avatars/" />
  
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    		<property name="prefix" value="/WEB-INF/jsp/" />
