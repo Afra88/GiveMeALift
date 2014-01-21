@@ -254,8 +254,6 @@ public class RegisteredUser extends User {
 		} else if (!userActivity.equals(other.userActivity))
 			return false;
 		return true;
-	}
-	
-	
+	}	
 
 }

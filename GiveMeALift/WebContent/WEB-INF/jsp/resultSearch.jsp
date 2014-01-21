@@ -128,7 +128,7 @@
         	 <div class="rec">
 	        	<c:choose>
 	        		<c:when test="$user.profilePhoto!=null">
-	        			<img height="120px" src="http://farm1.static.flickr.com/3650/3323058611_d35c894fab_m.jpg" class="img_inner fleft " />
+	        			<img height="120px" src="" class="img_inner fleft " /> <% //TODO %>
 	         		</c:when>
 	        		<c:otherwise>
 	        			<img height="120px" src="images/default_user.jpg" class="img_inner fleft " />

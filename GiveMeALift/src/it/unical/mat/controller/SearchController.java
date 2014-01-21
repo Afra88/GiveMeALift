@@ -2,8 +2,16 @@ package it.unical.mat.controller;
 
 import java.util.List;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
+
 import it.unical.mat.datamapper.LiftMapper;
+import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Lift;
+import it.unical.mat.domain.RegisteredUser;
+import it.unical.mat.domain.User;
+import it.unical.mat.service.LiftToViewConverterFacade;
+
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -128,11 +136,35 @@ public class SearchController {
 	}
 
 	@RequestMapping(value="/HandleShowLiftDetail", method = RequestMethod.GET)
-	public String retriveLiftDetails(@RequestParam("lift") String lift, Model model){
+	public String retriveLiftDetails(@RequestParam("lift") String lift, Model model, HttpSession session){
 		LiftMapper lm=new LiftMapper();
 		if(lift.matches("[0-9]+")){
 			Lift l=lm.findById(lift);
-			model.addAttribute("lift",l);
+			LiftToViewConverterFacade lc=new LiftToViewConverterFacade();
+			model.addAttribute("lift",lc.convert(l));
+			RegisteredUser u=(RegisteredUser) session.getAttribute("user");
+			if(u!=null){
+				if(l.getUserOffering().getId()!=u.getId()){				
+					RegisteredUserMapper rm=new RegisteredUserMapper();
+					RegisteredUser r=rm.findRegisteredUserById(l.getUserOffering().getId());
+					model.addAttribute("userOffering",r);
+					model.addAttribute("userNickName",r.computeNickName());
+					model.addAttribute("userAge",r.computeAge());
+				}
+				else{
+					model.addAttribute("userOffering",u);
+					model.addAttribute("userNickName",u.computeNickName());
+					model.addAttribute("userAge",u.computeAge());
+				}
+			}
+			else{
+				RegisteredUserMapper rm=new RegisteredUserMapper();
+				RegisteredUser r=rm.findRegisteredUserById(l.getUserOffering().getId());
+				model.addAttribute("userOffering",r);
+				model.addAttribute("userNickName",r.computeNickName());
+				model.addAttribute("userAge",r.computeAge());
+			}
+			System.out.println(l.getDetours().size());
 			return "showLiftDetails";
 		}
 		return "error";

@@ -26,11 +26,8 @@ public class LiftPoint extends DomainObject {
 
 	public LiftPoint(String city){
 		this.city = city;
-		this.street = "nd";
-		this.province = "nd";
-		this.region = "nd";
-		this.state = "nd";
 	}
+	
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/pagination.css" type="text/css" />
     <link rel="stylesheet" href="css/blueTable.css">
     <link rel="stylesheet" href="css/orangeTable.css">
+    <link rel="stylesheet" href="css/pictogram-button.css">
     
     <link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">

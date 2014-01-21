@@ -372,11 +372,15 @@ a.next1 {
 	background-color: #D5888E;
 }
 
-.box {
-	background-color: #eeeef2;
+.box { //modificato
+	background-color: white;
 	padding: 10px 10px 12px;
-	text-align: center;
+	/* text-align: center; */
 	margin-bottom: 20px;
+	border: 5px solid #eeeef2;
+	/* background: url(../images/box1.jpg) center;
+	background-size:280px 160px; */
+	
 }
 
 a.gal {

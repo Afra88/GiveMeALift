@@ -13,8 +13,6 @@ public class LiftPreference extends DomainObject {
 
 	@Column(name = "ROAD_TYPE")
 	private String roadType;
-	@Column(name = "TIMES_FOR_THIS_ROUTE")
-	private Integer timesForThisRoute;
 	@Column(name = "LUGGAGE_SIZE")
 	private Integer luggageSize;
 	@Column(name = "SCHEDULE_FLEXIBILITY")
@@ -25,16 +23,15 @@ public class LiftPreference extends DomainObject {
 	public LiftPreference() {
 	}
 	
-	public LiftPreference(String roadType, Integer times, 
-			Integer luggageSize, String scheduleFlexibility,
-			Boolean pinkTrip){
+	
+	public LiftPreference(String roadType, Integer luggageSize, String scheduleFlexibility,
+			Boolean pinkTrip) {
 		this.roadType = roadType;
-		this.timesForThisRoute = times;
 		this.luggageSize = luggageSize;
 		this.scheduleFlexibility = scheduleFlexibility;
 		this.pinkTrip = pinkTrip;
 	}
-	
+
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,31 +51,6 @@ public class LiftPreference extends DomainObject {
 	public void setRoadType(String roadType) {
 		this.roadType = roadType;
 	}
-
-
-
-	public int getTimesForThisRoute() {
-		return timesForThisRoute;
-	}
-
-
-
-	public void setTimesForThisRoute(int timesForThisRoute) {
-		this.timesForThisRoute = timesForThisRoute;
-	}
-
-
-
-	public int getLuggageSize() {
-		return luggageSize;
-	}
-
-
-
-	public void setLuggageSize(int luggageSize) {
-		this.luggageSize = luggageSize;
-	}
-
 
 
 	public String getScheduleFlexibility() {
@@ -110,8 +82,6 @@ public class LiftPreference extends DomainObject {
 		LiftPreference lp = (LiftPreference) object2;
 		if(lp.roadType != null)
 			this.roadType = lp.roadType;
-		if(lp.timesForThisRoute != null)
-			this.timesForThisRoute = lp.timesForThisRoute;
 		if(lp.luggageSize != null)
 			this.luggageSize = lp.luggageSize;
 		if(lp.scheduleFlexibility != null)
@@ -121,13 +91,12 @@ public class LiftPreference extends DomainObject {
 	}
 
 
-	public void setTimesForThisRoute(Integer timesForThisRoute) {
-		this.timesForThisRoute = timesForThisRoute;
-	}
-
-
 	public void setLuggageSize(Integer luggageSize) {
 		this.luggageSize = luggageSize;
+	}
+	
+	public Integer getLuggageSize() {
+		return luggageSize;
 	}
 
 	@Override
@@ -143,10 +112,6 @@ public class LiftPreference extends DomainObject {
 		result = prime
 				* result
 				+ ((scheduleFlexibility == null) ? 0 : scheduleFlexibility
-						.hashCode());
-		result = prime
-				* result
-				+ ((timesForThisRoute == null) ? 0 : timesForThisRoute
 						.hashCode());
 		return result;
 	}
@@ -180,15 +145,9 @@ public class LiftPreference extends DomainObject {
 				return false;
 		} else if (!scheduleFlexibility.equals(other.scheduleFlexibility))
 			return false;
-		if (timesForThisRoute == null) {
-			if (other.timesForThisRoute != null)
-				return false;
-		} else if (!timesForThisRoute.equals(other.timesForThisRoute))
-			return false;
 		return true;
 	}
 
-	
 	
 	
 }

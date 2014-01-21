@@ -33,6 +33,8 @@ public class Lift extends DomainObject {
 	private Time departureTime;
 	@Column(name="DEPARTURE_DATE")
 	private Date departureDate;
+	
+	//TODO Textarea descrizione
 
 	private LiftPoint pickUpPoint;
 	private LiftPoint dropOffPoint;

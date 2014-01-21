@@ -4,21 +4,19 @@
 <!DOCTYPE html>
 <html lang="it">
 	<head>
-	<title>I miei passaggi</title>
+	<title>I passaggi prenotati</title>
 
 	<meta charset="utf-8">
 	
 	<link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/ourAdditions.css">
 	<link rel="stylesheet" href="css/pagination.css" type="text/css" />
-	<link rel="stylesheet" href="css/pictogram-button.css" type="text/css" />
 
 	<link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/font-awesome.css">
 	<link rel="stylesheet" href="css/touchTouch.css">   
-	<link rel="stylesheet" href="css/form.css">   
 	
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery-migrate-1.1.1.js"></script>
@@ -69,7 +67,7 @@
   		<c:when test="${noRes==true}">
   			<div class="grid_12">
   				<div class="clear" ></div>
-  				<h4>Finora non ci sono passaggi da te offerti</h4>
+  				<h4>Finora non ci sono passaggi da te prenotati</h4>
   			</div>
   			<div class="clear"></div>
   		</c:when>
@@ -77,40 +75,21 @@
   		<div class="clear"></div>
 	    <div class="prod">
   			<c:forEach items="${pageHolder.pageList}" var="lift" >
-		      <div class="grid_12">
+		      <div class="grid_3">
 		        <div class="box">
 		          <div class="maxheight">
-		          <table style="width: 900px" >
-		          	<tr>		          	
-		          		<td><div class="emphatizeWhen">${lift.departureDate} - ${lift.departureTime}</div></td>
-		          		<td style="text-align: right;">
-				        	<div class="emphatizePrice">${lift.cost} &#8364; a persona</div>
-				        </td>
-		          	</tr>
-		          	<tr>
-			          	<td>
-					        <div class="emphatizeLift">${lift.getPickUpPoint().city} - ${lift.getDropOffPoint().city}</div>
-				       		<c:choose>
-				       			<c:when test="${lift.possibleDetour}==true">
-				       				   Deviazioni possibili
-				       			</c:when>
-				       			<c:otherwise>
-				       				Nessuna deviazione
-				       			</c:otherwise>
-				       		</c:choose>
-				        </td>
-				        <td style="text-align: right;">
-				        	<div class="emphatizeSeat"><input id="seats" class="number" type="number" name="seats" maxlength="4" size="3" step="1" > posti disponibili</div>
-				        </td>
-			        </tr>
-			        <tr style="text-align: right;">
-			        	<td colspan="2" >
-			        		<a href="DeleteOfferedLift?lift=${lift.getId()}" class="button red"> <span class="trash"></span> Elimina </a>
-			        		<a href="UpdateOfferedLift?lift=${lift.getId()}" class="button green"> <span class="edit"></span> Modifica </a>
-			        		<a href="HandleShowLiftDetail?lift=${lift.getId()}" class="button cyan"> <span class="preview"></span> Visualizza Annuncio</a>
-				        </td>	        
-			        </tr>
-		          </table>
+		          	<div class="emphatizeWhen">${lift.departureDate} - ${lift.departureTime}</div>
+				        <div class="emphatizeLift">${lift.getPickUpPoint().city} - ${lift.getDropOffPoint().city}</div>
+			       		<c:choose>
+			       			<c:when test="${lift.possibleDetour}==true">
+			       				   Deviazioni possibili
+			       			</c:when>
+			       			<c:otherwise>
+			       				Nessuna deviazione
+			       			</c:otherwise>
+			       		</c:choose>
+			        	<div class="emphatizePrice">${lift.cost} &#8364; a persona</div>
+			        	<div class="emphatizeSeat"> ${lift.nSeat} posti disponibili</div>
 		          	</div>
 		        </div>
 		      </div>

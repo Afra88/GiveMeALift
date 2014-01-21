@@ -18,29 +18,25 @@ import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.LiftPreference;
 import it.unical.mat.domain.RegisteredUser;
-import it.unical.mat.domain.User;
+import it.unical.mat.service.DetoursCostConverterFacade;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import service.DetoursCostConverterFacade;
 
 @Controller
 public class OfferController {
 	
 	@RequestMapping(value ="/OfferALift")
-	public String directToOffers(Model model, HttpSession session) {
-		User u=(User) session.getAttribute("user");
-		if(u!= null){
-		 		return "offerALift";	
-		 }
-		 else{
-		 		return "home";
-		 }
-	}
+	public String insertAnOffer(Model model,HttpSession session){
+			if(session.getAttribute("user")!=null){
+			return "offerALift";
+		}
+		else{
+			return "signUp";
+		}
+	}	
 	
 	@RequestMapping(value ="/InsertALift")
 	public String insertAnOffer(
@@ -56,9 +52,9 @@ public class OfferController {
     		@RequestParam("goingTimeM") String goingMins,
     		@RequestParam(value="returnTimeH",required=false) String returnHour,
     		@RequestParam(value="returnTimeM",required=false) String returnMins,
-    		Model model){
+    		Model model,HttpSession session){
 		
-		/*split of date parameters for checking*/
+/*split of date parameters for checking*/
 //		12/01/2014,12/01/2014
 //		System.out.println(date);
 //		System.out.println(goingHour);
@@ -73,13 +69,13 @@ public class OfferController {
 		long goingTime = gmins + (Integer.parseInt(goingHour)*60);
 			
 		// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
-		String completeReturnDate = "NULL";
+		String completeReturnDate = "";
 		
 		Date dG = null;
 		long dateGoingMillis = 0;
 		
 		Date dR = null;
-		long dateReturnMillis = Integer.MAX_VALUE;;
+		long dateReturnMillis = Integer.MAX_VALUE;
 		int rmins = Integer.MAX_VALUE;
 		long returnTime = Integer.MAX_VALUE;
 		// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
@@ -102,11 +98,32 @@ public class OfferController {
 			dR = null;
 			try {
 				dG = f.parse(dates[0]);
+				dG.setHours(Integer.parseInt(goingHour));
+				dG.setMinutes(Integer.parseInt(goingMins));
 				dR = f.parse(dates[1]);
+				dR.setHours(Integer.parseInt(returnHour));
+				dR.setMinutes(Integer.parseInt(returnMins));
 			} catch (ParseException e) {		e.printStackTrace();	}
 			
 			dateGoingMillis = dG.getTime();
 			dateReturnMillis = dR.getTime();
+			
+			Date today = new Date();			
+			System.out.println(today);
+			if(dG.compareTo(today)<=0){
+				System.out.println(dG.compareTo(today));
+				model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
+				return "offerALift";
+			}
+			if(dR!=null && dR.compareTo(today)<=0){
+				model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
+				return "offerALift";
+			}
+			if(dR.compareTo(dG)<=0){
+				model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
+				return "offerALift";
+			}
+			
 			
 //			gmins = Integer.parseInt(goingMins);
 //			goingTime = gmins + (Integer.parseInt(goingHour)*60);
@@ -129,12 +146,13 @@ public class OfferController {
 		
 		
 		
-		if(mapFrom == "" || mapTo == ""){
+		if(mapFrom == "" || mapTo == "" || mapFrom==null || mapTo==null){
 			/*
 			 *  mettere un attributo al model per far capire all'utente che c'è stato un errore
 			 *  (lanciare un alert)
 			 */
-			System.out.println("Scegli luogo Partenza/Arrivo");			
+			System.out.println("Scegli luogo Partenza/Arrivo");
+			model.addAttribute("error", "Scegli i luoghi di Partenza e Arrivo.");
 			return "offerALift";
 		}
 		
@@ -219,9 +237,13 @@ public class OfferController {
 					model.addAttribute("inputs",inputs);
 					return "insertALift";	
 				}
+				else{
+					model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
+					return "offerALift";	
+				}
 			}
-			System.out.println("errore Ora/minuti");			
-			return "offerALift";
+			
+
 		
 		}					
 		
@@ -252,7 +274,6 @@ public class OfferController {
     		@RequestParam("luggage") String luggage,
     		@RequestParam("delay") String delay,
     		@RequestParam("deviation") String deviation,
-    		@RequestParam("timesForThisRoute") String timesForThisRoute,
     		@RequestParam("roadType") String roadType,
     		@RequestParam("pinkTrip") String pinkTrip,
     		@RequestParam(value="drivingLicence",required=false) String checkLicence,
@@ -396,7 +417,7 @@ public class OfferController {
 		/////////////////////////LIFT PREFERENCES////////////////////////////////////
 		Integer luggageSize;
 		Boolean pink;
-		Integer times = Integer.parseInt(timesForThisRoute);
+
 		
 		if(luggage == "piccolo")
 			luggageSize = 1;
@@ -410,7 +431,7 @@ public class OfferController {
 		else
 			pink = true;
 		
-		LiftPreference lp = new LiftPreference(roadType,times,luggageSize,delay,pink);
+		LiftPreference lp = new LiftPreference(roadType,luggageSize,delay,pink);
 		lpm.insert(lp);
 		
 		/////////////////////////LIFT PREFERENCES////////////////////////////////////
@@ -506,7 +527,7 @@ public class OfferController {
 				
 				LiftDetour dt = new LiftDetour();
 				dt.setPickUpPoint(p);
-				dt.setPickUpPoint(d);
+				dt.setDropOffPoint(d);
 				ldm.insert(dt);
 			}
 				

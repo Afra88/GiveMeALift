@@ -47,7 +47,7 @@
 	<script src="js/cssJs/jquery.easing.1.3.js"></script>
 	<script src="js/cssJs/jquery.ui.totop.js"></script>
 	<script type="text/javascript" src="js/jQueryElement/jquery.format.1.05.js"></script>
-	<script src="http://code.jquery.com/jquery-latest.js"> 
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
     
 	 <!--  	Google Place Autocomplete -->
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&language=it&region=IT"></script>
@@ -341,17 +341,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h2> Tratta percorsa </h2></td>
-				<td>
-					<h2><input type="number" id="timesForThisRoute" name="timesForThisRoute" class="number" maxlength="6" size="6" value="0" > volte</h2>
-				</td>
-			</tr>
-			<tr>
 				<td><h2> Preferisco viaggiare su: </h2></td>
 				<td>
 					<select id="roadType" name="roadType">
 						<option value="freeway">Autostrada</option>
-						<option value="country">Strada di paese</option>
+						<option value="noFreeway">Strada di paese</option>
 					</select>
 				</td>
 			</tr>

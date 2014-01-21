@@ -2,7 +2,6 @@
 <%@ page session="true" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- <% User user=(User)session.getAttribute("user"); %> --%>
-<form method="post" action="LogOut">
 	<table class="login">
 		<tr>
 		<c:choose>
@@ -19,8 +18,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<input type="submit" value="Esci" />
+				<a href="LogOut" class="button black">  Esci </a>
 			</td>
 		</tr>
 	</table>
-</form>

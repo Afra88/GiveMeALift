@@ -71,7 +71,7 @@ public class UserController {
 	 	}
 	 }
 	 
-	 @RequestMapping(value = "/LogOut", method = RequestMethod.POST)
+	 @RequestMapping(value = "/LogOut")
 	 public String userSignedOut(Model model, HttpSession session){
 		User u=(User) session.getAttribute("user");
 		if(u!=null){
@@ -91,12 +91,16 @@ public class UserController {
 					nPage="1";				
 				LiftMapper lm=new LiftMapper();
 				List<Lift> result=lm.findLiftOfferedByUser(u.getId());
-				PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(result);		
-				pageHolder.setPageSize(12);	
-				pageHolder.setPage(Integer.parseInt(nPage));
-				model.addAttribute("pages", pageHolder.getPageCount());
-				model.addAttribute("page",pageHolder.getPage());
-				model.addAttribute("pageHolder",pageHolder);
+				if(result.size()>0){
+					PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(result);		
+					pageHolder.setPageSize(12);	
+					pageHolder.setPage(Integer.parseInt(nPage));
+					model.addAttribute("pages", pageHolder.getPageCount());
+					model.addAttribute("page",pageHolder.getPage());
+					model.addAttribute("pageHolder",pageHolder);
+				}
+				else
+					model.addAttribute("noRes",true);
 				return "userOfferedLift";	
 			}
 			else{
@@ -104,4 +108,49 @@ public class UserController {
 		 	}
 	 }
 	
+	 @RequestMapping(value="/ShowUserBookedLift")
+	 private String retriveUserBookedLift(@RequestParam(value="page",required=false) String nPage, Model model, HttpSession session){
+		 User u=(User) session.getAttribute("user");
+			if(u!=null){
+				if(nPage==null || nPage=="")
+					nPage="1";				
+				LiftMapper lm=new LiftMapper();
+				List<Lift> result=lm.findLiftBookedByUser(u.getId());
+				if(result.size()>0){
+					PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(result);		
+					pageHolder.setPageSize(12);	
+					pageHolder.setPage(Integer.parseInt(nPage));
+					model.addAttribute("pages", pageHolder.getPageCount());
+					model.addAttribute("page",pageHolder.getPage());
+					model.addAttribute("pageHolder",pageHolder);
+					model.addAttribute("noRes",false);
+				}
+				else
+					model.addAttribute("noRes",true);
+				return "userBookedLift";	
+			}
+			else{
+		 		return "errorRegistration";
+		 	}
+	 }
+	 
+	 @RequestMapping(value="/ShowLiftOfferedDetails")
+	 private String retriveAOfferedLift(@RequestParam String lift, Model model, HttpSession session){
+		 User u=(User) session.getAttribute("user");
+			if(u!=null){			
+				LiftMapper lm=new LiftMapper();
+				Lift result=lm.findById(lift);
+				if(result!=null){
+					model.addAttribute("lift",result);
+					model.addAttribute("noRes",false);
+				}
+				else
+					model.addAttribute("noRes",true);
+				return "userOfferedLiftDetails";	
+			}
+			else{
+		 		return "errorRegistration";
+		 	}
+	 }
+
 }

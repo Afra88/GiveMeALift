@@ -6,8 +6,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import it.unical.mat.domain.DomainObject;
 import it.unical.mat.domain.RegisteredUser;
+import it.unical.mat.domain.User;
+import it.unical.mat.util.HibernateUtil;
 
 
 public class RegisteredUserMapper extends AbstractMapper {
@@ -82,6 +90,29 @@ public class RegisteredUserMapper extends AbstractMapper {
 
 		if(users.size()==1)
 			return users.get(0);
+		return null;
+	}
+
+	public RegisteredUser findRegisteredUserById(Long id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+				Query query= session.createQuery("from RegisteredUser where id=:par1");
+				query.setLong("par1", id);
+				@SuppressWarnings("unchecked")
+				List<User> objects=query.list();
+				RegisteredUser l=(RegisteredUser) objects.get(0);
+				Hibernate.initialize(l.getDriverInfo());
+//				Hibernate.initialize(l.getDriverInfo().getCar());
+				transaction.commit();
+				return l;
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
 		return null;
 	}
 

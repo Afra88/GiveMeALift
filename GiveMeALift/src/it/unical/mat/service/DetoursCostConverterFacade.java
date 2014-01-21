@@ -1,4 +1,4 @@
-package service;
+package it.unical.mat.service;
 
 import it.unical.mat.domain.Lift;
 

@@ -2,6 +2,7 @@ package it.unical.mat.datamapper;
 
 import it.unical.mat.domain.DomainObject;
 import it.unical.mat.domain.Lift;
+import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.util.HibernateUtil;
 
 import java.util.Date;
@@ -115,6 +116,7 @@ public class LiftMapper extends AbstractMapper {
 			transaction = session.beginTransaction();
 				Query query= session.createQuery("from Lift where id=:par1");
 				query.setLong("par1", Long.parseLong(lift));
+//				System.out.println(objects.get(0).getClass());
 				@SuppressWarnings("unchecked")
 				List<Lift> objects=query.list();
 				Lift l=(Lift) objects.get(0);
@@ -138,6 +140,18 @@ public class LiftMapper extends AbstractMapper {
 		Map<String,Object> parameters =new HashMap<String, Object>();
 		parameters.put("par1", id);
 		Collection<DomainObject> objects=find(findStatement, parameters,false);
+		for (DomainObject object : objects) {
+			result.add((Lift) object);
+		}	
+		return result;
+	}
+
+	public List<Lift> findLiftBookedByUser(long id) {
+		List<Lift> result=new LinkedList<Lift>();
+		String findStatement="select * from Lift, LIFT_USER_BOOKING where lift.lift_id=LIFT_USER_BOOKING.lift_id and LIFT_USER_BOOKING.user_id=:par1 and DATEDIFF(departureDate,CURDATE())>=0 ";
+		Map<String,Object> parameters =new HashMap<String, Object>();
+		parameters.put("par1", id);
+		Collection<DomainObject> objects=find(findStatement, parameters,true);
 		for (DomainObject object : objects) {
 			result.add((Lift) object);
 		}	

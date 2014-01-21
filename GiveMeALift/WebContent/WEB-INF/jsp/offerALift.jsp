@@ -27,6 +27,12 @@
 <!-- 			class="ui-widget-content"></div> -->
 <!-- 	</div> -->
 	
+	<c:choose>
+		<c:when test="${error!=null}">
+			<div class="clear" ></div>
+			<h4 class="center" >${error}</h4>
+		</c:when>
+	</c:choose>
 
 	<form method="get" action="InsertALift">
 	<p class="greenTable">
