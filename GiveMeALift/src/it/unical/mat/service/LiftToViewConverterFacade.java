@@ -39,7 +39,7 @@ public class LiftToViewConverterFacade {
 		if(roadType.equals("freeway"))
 			roadTypeString="Autostrada";
 		if(roadType.equals("noFreeway"))
-			roadTypeString="No Autostrada";
+			roadTypeString="Evito l'autostrada";
 		String delay=l.getLiftPreferences().getScheduleFlexibility();
 		String delayString = "";
 		if(delay.equals("strict"))
@@ -52,14 +52,25 @@ public class LiftToViewConverterFacade {
 			delayString="+/- un'ora";
 		if(delay.equals("2h"))
 			delayString="+/- due ore";
+		String deviation=l.getLiftPreferences().getScheduleFlexibility();
+		String deviationString="";
+		if(deviation.equals("nothing"))
+			deviationString="Nessuna deviazione";
+		if(deviation.equals("15min"))
+			deviationString="15 minuti al massimo";
+		if(deviation.equals("30min"))
+			deviationString="30 minuti al massimo";
+		if(deviation.equals("any"))
+			deviationString="Qualsiasi deviazione";
 		List<Object> converted=new ArrayList<Object>();
 		converted.add(l);
 		converted.add(goingTimeH);
 		converted.add(goingTimeM);
 		converted.add(delayString);
-		converted.add(luggageSize);
+		converted.add(deviationString);
 		converted.add(pink);
 		converted.add(roadTypeString);
+		converted.add(luggageSize);
 
 		return converted;
 	}

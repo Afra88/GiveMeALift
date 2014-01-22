@@ -97,6 +97,7 @@
 	</c:choose>
 	<form method="get" action="Step2UpdateLiftInsertALift">
 	<input type="hidden" value="${lift.id}" name="lift" >
+	<input type="hidden" value="${liftReturn.id}" name="liftReturn" >
 	<p class="greenTable">
 		<table id="fillOffer">
 			<tr><td colspan="2">Itinerario</td></tr>

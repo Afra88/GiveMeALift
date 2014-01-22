@@ -238,7 +238,8 @@
 		</c:when>
 	</c:choose>
  	<form action="Step3UpdateLiftSubmitALift" method="post" id="form" >
-	<!-- hidden div per visualizzare nel dom i valori di path -->
+ 	<input type="hidden" value="${lift.id}" name="lift" >
+ 	<input type="hidden" value="${liftReturn}" name="liftReturn" >
  		<c:choose>
 		<c:when test="${path.size()>2}">
 			<c:forEach var="i"  begin="1" end="${path.size()-2}" > 
@@ -327,12 +328,18 @@
 				</td>
 			</tr>
 			<tr>
-				<td> <%//TODO %>
-					<textarea  cols="40" rows="6" maxlength="700" >
-					TODO
-					Fornisci informazioni aggiuntive sul tuo viaggio. 
-					Cerca di invogliare più passeggeri a contattarti!
-					</textarea>
+				<td>
+				<c:choose>
+					<c:when test="${lift!=null}">
+						<textarea  cols="40" rows="6" maxlength="700" >${lift.description}</textarea>
+					</c:when>
+					<c:otherwise>
+						<textarea  cols="40" rows="6" maxlength="700" >
+						Fornisci informazioni aggiuntive sul tuo viaggio. 
+						Cerca di invogliare più passeggeri a contattarti!
+						</textarea>
+					</c:otherwise>
+				</c:choose>
 				</td>
 			
 				<td>
@@ -348,11 +355,20 @@
 							<c:if test="${lift.liftPreferences.luggageSize==1}">
 		  						<option value="small" selected="selected" >Piccolo</option>
 							</c:if>
+							<c:if test="${lift.liftPreferences.luggageSize!=1}">
+		  						<option value="small" >Piccolo</option>
+							</c:if>
 							<c:if test="${lift.liftPreferences.luggageSize==2}">
 		 				 		<option selected="selected" value="medium">Medio</option>
 		 				 	</c:if>
+		 				 	<c:if test="${lift.liftPreferences.luggageSize!=2}">
+		 				 		<option value="medium">Medio</option>
+		 				 	</c:if>
 		 				 	<c:if test="${lift.liftPreferences.luggageSize==3}">
 			  					<option value="large" selected="selected">Grande</option>
+		 				 	</c:if>
+		 				 	<c:if test="${lift.liftPreferences.luggageSize!=3}">
+			  					<option value="large">Grande</option>
 		 				 	</c:if>
 						</select>
 					</c:when>
@@ -373,19 +389,34 @@
 					<c:when test="${lift!=null}">
 						<select id="delay" name="delay">
 							<c:if test="${lift.liftPreferences.scheduleFlexibility=='strict'}">
+			  					<option value="strict" selected="selected">puntuale</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.scheduleFlexibility!='strict'}">
 			  					<option value="strict">puntuale</option>
 							</c:if>
 							<c:if test="${lift.liftPreferences.scheduleFlexibility=='15min'}">
+			 				 	<option value="15min" selected="selected">+/- 15 minuti</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.scheduleFlexibility!='15min'}">
 			 				 	<option value="15min">+/- 15 minuti</option>
 							</c:if>
 		 				 	<c:if test="${lift.liftPreferences.scheduleFlexibility=='30min'}">
+		  						<option value="30min" selected="selected">+/- 30 minuti</option>
+		 				 	</c:if>
+		 				 	<c:if test="${lift.liftPreferences.scheduleFlexibility!='30min'}">
 		  						<option value="30min">+/- 30 minuti</option>
 		 				 	</c:if>
 		  					<c:if test="${lift.liftPreferences.scheduleFlexibility=='1h'}">
+		  						<option selected="selected" value="1h">+/- un'ora</option>
+		  					</c:if>
+		  					<c:if test="${lift.liftPreferences.scheduleFlexibility!='1h'}">
 		  						<option value="1h">+/- un'ora</option>
 		  					</c:if>
 		  					<c:if test="${lift.liftPreferences.scheduleFlexibility=='2h'}">
-			  					<option value="2h">+/- due ore</option>
+			  					<option selected="selected" value="2h">+/- due ore</option>
+		  					</c:if>
+		  					<c:if test="${lift.liftPreferences.scheduleFlexibility!='2h'}">
+			  					<option   value="2h">+/- due ore</option>
 		  					</c:if>
 						</select>
 					</c:when>
@@ -405,8 +436,8 @@
 			<td><h2> Disponibile a deviazioni: </h2></td>
 				<td>
 					<c:choose>
-					<c:when test="${lift!=null}"></c:when>
-						<%-- <select id="deviation" name="deviation">
+ 					<c:when test="${lift!=null}"></c:when>
+						<select id="deviation" name="deviation">
 							<c:if test="${lift.liftPreferences.deviation==nothing}">
 			 				 	<option value="nothing">Nessuna deviazione, mi dispiace... :|</option>
 							</c:if>
@@ -419,7 +450,7 @@
 							<c:if test="${lift.liftPreferences.deviation==any}">
 			  					<option value="any">Qualsiasi deviazione. No Problem! :D</option>
 							</c:if>		  					
-						</select> --%>
+						</select>
 					<c:otherwise>
 						<select id="deviation" name="deviation">
 		 				 	<option value="nothing">Nessuna deviazione, mi dispiace... :|</option>
@@ -439,17 +470,23 @@
 					<c:when test="${lift!=null}">
 						<select id="roadType" name="roadType">
 							<c:if test="${lift.liftPreferences.roadType==freeway}">
+								<option selected="selected" value="freeway">Autostrada</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.roadType!=freeway}">
 								<option value="freeway">Autostrada</option>
 							</c:if>
 							<c:if test="${lift.liftPreferences.roadType==noFreeway}">
-								<option value="noFreeway">Strada di paese</option>
+								<option selected="selected" value="noFreeway">Evito l'autostrada</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.roadType!=noFreeway}">
+								<option value="noFreeway">Evito l'autostrada</option>
 							</c:if>
 						</select>
 					</c:when>
 					<c:otherwise>
 						<select id="roadType" name="roadType">
 							<option value="freeway">Autostrada</option>
-							<option value="noFreeway">Strada di paese</option>
+							<option value="noFreeway">Evito l'autostrada</option>
 						</select>
 					</c:otherwise>
 					</c:choose>
@@ -462,9 +499,15 @@
 					<c:when test="${lift!=null}">
 						<select id="pinkTrip" name="pinkTrip"> 
 							<c:if test="${lift.liftPreferences.pinkTrip==false}">
+			  					<option selected="selected" value="bothPass">Viaggio con uomini e donne</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.pinkTrip!=false}">
 			  					<option value="bothPass">Viaggio con uomini e donne</option>
 							</c:if>
 							<c:if test="${lift.liftPreferences.pinkTrip==true}">
+		  						<option selected="selected" value="onlyWomen">Viaggio solo con donne</option>
+		  					</c:if>
+		  					<c:if test="${lift.liftPreferences.pinkTrip!=true}">
 		  						<option value="onlyWomen">Viaggio solo con donne</option>
 		  					</c:if>
 						</select>

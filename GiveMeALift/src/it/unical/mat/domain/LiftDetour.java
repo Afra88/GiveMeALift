@@ -21,6 +21,9 @@ public class LiftDetour extends DomainObject {
 	
 	private LiftPoint dropOffPoint;
 	
+	@Column(name="DETOUR_COST")
+	private Integer cost;
+	
 //	private List<Lift> liftList;
 	
 	public LiftDetour(LiftPoint pickUpPoint, LiftPoint dropOffPoint) {
@@ -73,6 +76,8 @@ public class LiftDetour extends DomainObject {
 			this.dropOffPoint=ld.dropOffPoint;
 		if(ld.pickUpPoint!=null)
 			this.pickUpPoint=ld.pickUpPoint;
+		if(ld.cost!=null)
+			this.cost=ld.cost;
 //		if(ld.liftList!=null)
 //			this.liftList=ld.liftList;
 	}
@@ -88,15 +93,23 @@ public class LiftDetour extends DomainObject {
 //	public void setLiftList(List<Lift> liftList) {
 //		this.liftList = liftList;
 //	}
+	
+	public Integer getCost() {
+		return cost;
+	}
+	
+	public void setCost(Integer cost) {
+		this.cost = cost;
+	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
+		result = prime * result + ((cost == null) ? 0 : cost.hashCode());
 		result = prime * result
 				+ ((dropOffPoint == null) ? 0 : dropOffPoint.hashCode());
-//		result = prime * result
-//				+ ((liftList == null) ? 0 : liftList.hashCode());
 		result = prime * result
 				+ ((pickUpPoint == null) ? 0 : pickUpPoint.hashCode());
 		return result;
@@ -111,16 +124,16 @@ public class LiftDetour extends DomainObject {
 		if (getClass() != obj.getClass())
 			return false;
 		LiftDetour other = (LiftDetour) obj;
+		if (cost == null) {
+			if (other.cost != null)
+				return false;
+		} else if (!cost.equals(other.cost))
+			return false;
 		if (dropOffPoint == null) {
 			if (other.dropOffPoint != null)
 				return false;
 		} else if (!dropOffPoint.equals(other.dropOffPoint))
 			return false;
-//		if (liftList == null) {
-//			if (other.liftList != null)
-//				return false;
-//		} else if (!liftList.equals(other.liftList))
-//			return false;
 		if (pickUpPoint == null) {
 			if (other.pickUpPoint != null)
 				return false;
@@ -128,5 +141,8 @@ public class LiftDetour extends DomainObject {
 			return false;
 		return true;
 	}
+
+	
+
 	
 }

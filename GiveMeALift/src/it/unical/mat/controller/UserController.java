@@ -9,7 +9,6 @@ import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
-
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -151,6 +150,43 @@ public class UserController {
 			else{
 		 		return "errorRegistration";
 		 	}
+	 }
+	 
+	 @RequestMapping(value="/DeleteLiftOffered")
+	 private String deleteLiftOffered(@RequestParam String lift, Model model, HttpSession session){
+		 User u=(User) session.getAttribute("user");
+			if(u!=null){			
+				LiftMapper lm=new LiftMapper();
+				Lift l=lm.findById(lift);
+				if(l.getIsReturn()){
+					Lift lgoing=lm.findLiftByLiftReturn(Long.parseLong(lift));
+//					Lift ll=new Lift();
+//	TODO				System.out.println(lgoing.getReturnLift());
+//	riprovare così-->			ll.setReturnLift(null); 
+//					lm.update(ll, lgoing.getId());
+//					if(ll.getReturnLift()!=null)
+//						System.out.println(lgoing.getReturnLift());
+//					else
+//						System.out.println("è nullo");
+					boolean deleted=lm.deleteReturnLift(lgoing, l); 
+					if(deleted){
+						model.addAttribute("error",false);
+						return "userDeleteLiftOffered";	
+					}
+					else
+						model.addAttribute("error",true);
+				}
+				else{
+					boolean result=lm.delete(Long.parseLong(lift),Lift.class);
+					if(result){
+						model.addAttribute("error",false);
+					}
+					else
+						model.addAttribute("error",true);
+				}
+			}
+			return "userDeleteLiftOffered";	
+//	 		return "errorRegistration";
 	 }
 
 }

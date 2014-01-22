@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import it.unical.mat.domain.DomainObject;
-import it.unical.mat.domain.Lift;
 import it.unical.mat.util.HibernateUtil;
 
 public abstract class AbstractMapper {

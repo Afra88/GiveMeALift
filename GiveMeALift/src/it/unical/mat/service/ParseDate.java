@@ -35,4 +35,14 @@ public class ParseDate {
 		GregorianCalendar g=new GregorianCalendar(Locale.ITALIAN);
 		return g.get(Calendar.DAY_OF_MONTH)+"/"+g.get(Calendar.MONTH)+"/"+g.get(Calendar.YEAR);
 	}
+	
+	public static Date getUtilDateFormat(String date){
+		Date d=null;
+		try {
+			d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return d;
+	}
 }

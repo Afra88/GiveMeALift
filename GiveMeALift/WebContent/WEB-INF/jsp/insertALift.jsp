@@ -309,7 +309,7 @@
 					Numero posti disponibili
 				</td>
 				<td>
-					<input id="seats" class="number" type="number" name="seats" maxlength="4" size="3">
+					<input id="seats" class="number" type="number" name="seats" maxlength="4" size="3" value="0" >
 				</td>
 			</tr>
 			<tr>
@@ -319,7 +319,7 @@
 			</tr>
 			<tr>
 				<td>
-					<textarea  cols="40" rows="6" maxlength="700" >
+					<textarea  cols="40" rows="6" maxlength="700" name="description" >
 					Fornisci informazioni aggiuntive sul tuo viaggio. 
 					Cerca di invogliare più passeggeri a contattarti!
 					</textarea>
@@ -333,8 +333,8 @@
 				<td><h2> Bagaglio massimo consentito: </h2></td>
 				<td>
 					<select id="luggage" name="luggage">
+	  					<option selected="selected" value="small">Piccolo</option>
 	 				 	<option value="medium">Medio</option>
-	  					<option value="small">Piccolo</option>
 	  					<option value="large">Grande</option>
 					</select>
 				</td>
@@ -343,7 +343,7 @@
 				<td><h2> Partirò: </h2></td>
 				<td>
 					<select id="delay" name="delay">
-	  					<option value="strict">puntuale</option>
+	  					<option selected="selected" value="strict">puntuale</option>
 	 				 	<option value="15min">+/- 15 minuti</option>
 	  					<option value="30min">+/- 30 minuti</option>
 	  					<option value="1h">+/- un'ora</option>
@@ -355,7 +355,7 @@
 			<td><h2> Disponibile a deviazioni: </h2></td>
 				<td>
 					<select id="deviation" name="deviation">
-	 				 	<option value="nothing">Nessuna deviazione, mi dispiace... :|</option>
+	 				 	<option selected="selected" value="nothing">Nessuna deviazione, mi dispiace... :|</option>
 	  					<option value="15min">15 minuti al massimo</option>
 	  					<option value="30min">30 minuti al massimo</option>
 	  					<option value="any">Qualsiasi deviazione. No Problem! :D</option>
@@ -366,7 +366,7 @@
 				<td><h2> Preferisco viaggiare su: </h2></td>
 				<td>
 					<select id="roadType" name="roadType">
-						<option value="freeway">Autostrada</option>
+						<option selected="selected" value="freeway">Autostrada</option>
 						<option value="noFreeway">Evito l'autostrada</option>
 					</select>
 				</td>
@@ -375,7 +375,7 @@
 				<td><h2> Viaggio rosa: </h2></td>
 				<td>
 					<select id="pinkTrip" name="pinkTrip"> 
-	  					<option value="bothPass">viaggio con uomini e donne</option>
+	  					<option selected="selected" value="bothPass">viaggio con uomini e donne</option>
 	  					<option value="onlyWomen">viaggio solo con donne</option>
 					</select>
 				</td>

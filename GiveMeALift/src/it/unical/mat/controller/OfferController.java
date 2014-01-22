@@ -15,7 +15,6 @@ import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.LiftPreference;
 import it.unical.mat.domain.RegisteredUser;
-import it.unical.mat.service.DetoursCostConverterFacade;
 import it.unical.mat.service.LiftToViewConverterFacade;
 import it.unical.mat.service.ParseDate;
 
@@ -47,6 +46,7 @@ public class OfferController {
 				Lift returnLift=l.getReturnLift();
 				if(returnLift!=null){
 					List<Object> lrConverted=lc.convert(returnLift);
+					model.addAttribute("liftReturn",returnLift);
 					model.addAttribute("returnDate", ParseDate.getItalianFormat(l.getReturnLift().getDepartureDate().toString()));
 					model.addAttribute("returnTimeH",Integer.parseInt((String) lrConverted.get(1)));
 					model.addAttribute("returnTimeM",Integer.parseInt((String) lConverted.get(2)));					
@@ -64,7 +64,8 @@ public class OfferController {
 	
 	@RequestMapping(value ="/Step2UpdateLiftInsertALift")
 	public String step2UpdateLiftInsertALift(
-			@RequestParam String lift,
+			@RequestParam("lift") String lift,
+			@RequestParam("liftReturn") String liftReturnId,
 			@RequestParam("mapFrom") String mapFrom, 
     		@RequestParam("mapTo") String mapTo,
     		@RequestParam(value="detour0",required=false) String detour0,
@@ -80,68 +81,52 @@ public class OfferController {
     		Model model,HttpSession session){
 		
 			if(session.getAttribute("user")!=null && lift.matches("[0-9]+")){
-			String[] dates = date.split(",");
-			String completeGoingDate = dates[0];
-			
-			int gmins = Integer.parseInt(goingMins);
-			long goingTime = gmins + (Integer.parseInt(goingHour)*60);
+				Date today = new Date() ;
 				
-			// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
-			String completeReturnDate = null;
-			
-			Date dG = null;
-			long dateGoingMillis = 0;
-			
-			Date dR = null;
-			long dateReturnMillis = Integer.MAX_VALUE;
-			int rmins = Integer.MAX_VALUE;
-			long returnTime = Integer.MAX_VALUE;
-			// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
-			
-			boolean returnIsPresent=false;
-			
-			if(dates.length>1 /*and controllo dell'ora di ritorno*/){                      // SE C'è DATA DI RITORNO	
-				returnIsPresent=true;
+				String[] dates = date.split(",");
+				String completeGoingDate = dates[0];
+				String completeReturnDate = null;
 				
-				completeReturnDate = dates[1];		
+				int gmins = Integer.parseInt(goingMins);
+//				int goingTime = gmins + (Integer.parseInt(goingHour)*60);
+				int rmins = 0;
+//				int returnTime;
 				
-				SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-				dG = null;
-				dR = null;
-				try {
-					dG = f.parse(dates[0]);
-					dG.setHours(Integer.parseInt(goingHour));
-					dG.setMinutes(Integer.parseInt(goingMins));
-					dR = f.parse(dates[1]);
-					dR.setHours(Integer.parseInt(returnHour));
-					dR.setMinutes(Integer.parseInt(returnMins));
-				} catch (ParseException e) {		e.printStackTrace();	}
-				
-				dateGoingMillis = dG.getTime();
-				dateReturnMillis = dR.getTime();
-				
-				Date today = new Date();			
-				System.out.println(today);
+				Date dG = ParseDate.getUtilDateFormat(completeGoingDate);
+
+				dG.setHours(Integer.parseInt(goingHour));
+				dG.setMinutes(Integer.parseInt(goingMins));
+			
 				if(dG.compareTo(today)<=0){
 					System.out.println(dG.compareTo(today));
-					model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
+					model.addAttribute("error", "La data di andata non è valida.");
 					return "step1_updateLift_offerALift";
 				}
-				if(dR!=null && dR.compareTo(today)<=0){
-					model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
-					return "step1_updateLift_offerALift";
-				}
-				if(dR.compareTo(dG)<=0){
-					model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
-					return "step1_updateLift_offerALift";
-				}
+
+				if(dates.length>1){                      // SE C'è DATA DI RITORNO	
+					completeReturnDate=dates[1];
+					Date dR = ParseDate.getUtilDateFormat(completeReturnDate);
+					rmins = Integer.parseInt(returnMins);
+//					returnTime = rmins + (Integer.parseInt(returnHour)*60);
+
+					dR.setHours(Integer.parseInt(returnHour));
+					dR.setMinutes(Integer.parseInt(returnMins));
+
+					if(dR!=null && dR.compareTo(today)<=0){
+						model.addAttribute("error", "La data di ritorno non è valida.");
+						return "step1_updateLift_offerALift";
+					}
+					if(dR.compareTo(dG)<=0){
+						model.addAttribute("error", "La data di ritorno non può essere precedente alla data di andata.");
+						return "step1_updateLift_offerALift";
+					}
+//					if( dateGoingMillis == dateReturnMillis && goingTime>returnTime) {
+//						model.addAttribute("inputs",inputs);
+//						return "step2_updateLift_insertALift";	
+//					}	
 				
-				rmins = Integer.parseInt(returnMins);
-				returnTime = rmins + (Integer.parseInt(returnHour)*60);
 		
 			}
-			
-			
 			
 			if(mapFrom == "" || mapTo == "" || mapFrom==null || mapTo==null){
 				model.addAttribute("error", "Scegli i luoghi di Partenza e Arrivo.");
@@ -152,70 +137,40 @@ public class OfferController {
 			ArrayList<String> inputs = new ArrayList<String> ();			
 			
 			
-			inputs.add(completeGoingDate);	        //i=0
-			// se non c'è è gia settata a "NULL"
-			inputs.add(completeReturnDate);		    //i=1 
+			inputs.add(completeGoingDate);	        
+			inputs.add(completeReturnDate);		    
 			
-			inputs.add(goingHour);				    //i=2		
-			if(gmins>=10)	inputs.add(goingMins);	//i=3
+			inputs.add(goingHour);				    		
+			if(gmins>=10)	inputs.add(goingMins);	
 			else inputs.add("0"+goingMins);
 			
-			if(returnIsPresent){
-				inputs.add(returnHour);				    //i=4		
-				if(rmins>=10)	inputs.add(returnMins); //i=5		
-				else		inputs.add("0"+returnMins);		
+			if(completeReturnDate!=null){
+				inputs.add(returnHour);				    	
+				if(rmins>=10)	
+					inputs.add(returnMins); 
+				else		
+					inputs.add("0"+returnMins);
+				model.addAttribute("liftReturn",liftReturnId);
 			}
 			else {
-				inputs.add(null); //i=4
-				inputs.add(null); //i=5
+				inputs.add(null);
+				inputs.add(null);
 			}		
 			
-	//		if(detour0!="")
-	//			inputs.add(detour0);			//i=8
-	//		if(detour1!="")
-	//			inputs.add(detour1);			//i=9
-	//		if(detour2!="")
-	//			inputs.add(detour2);			//i=10
-	//		if(detour3!="")
-	//			inputs.add(detour3);			//i=11
-	//		if(detour4!="")
-	//			inputs.add(detour4);			//i=12
-			
-			System.out.println(" FROM: " + mapFrom);
-			System.out.println(" TO: " + mapTo);
-			
-			System.out.println(" DET0: " + detour0);
-			System.out.println(" DET1: " + detour1);
-			System.out.println(" DET2: " + detour2);
-			System.out.println(" DET3: " + detour3);
-			System.out.println(" DET4: " + detour4);
-			
-			List<String> path=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3,
-					detour4);
+			List<String> path=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3, detour4);
 			
 			model.addAttribute("inputs", inputs);
-			model.addAttribute("path", path);
-			
-			if(returnIsPresent){
-				if( dateGoingMillis > dateReturnMillis ){
-					System.out.println("errore Data");			
-					return "step1_updateLift_offerALift";
-				}
-				else if( dateGoingMillis == dateReturnMillis && goingTime<returnTime) {
-						model.addAttribute("inputs",inputs);
-						return "step2_updateLift_insertALift";	
-					}	
-			}		
+			model.addAttribute("path", path);	
 
 			model.addAttribute("inputs",inputs);
 			LiftMapper lm=new LiftMapper();
 			Lift l=lm.findById(lift);
 			
-			List<Integer> costs=DetoursCostConverterFacade.getListDetourCosts(l);
-			model.addAttribute("costs",costs);
-			
+			List<Integer> costs=new ArrayList<Integer>();
+			for (LiftDetour ld : l.getDetours()) {
+				costs.add(ld.getCost());
+			}
 
-			//se non è presente la data di ritorno
 			model.addAttribute("lift",l);
 			return "step2_updateLift_insertALift";	
 		}
@@ -270,13 +225,6 @@ public class OfferController {
 		
 		if(dates.length>1 /*and controllo dell'ora di ritorno*/){                      // SE C'è DATA DI RITORNO	
 			returnIsPresent=true;
-			
-//			for (String string : dates) {
-//				System.out.println("---"+string);
-//			}
-//		String[] goingDate = dates[0].split("/");
-//		String[] returnDate = dates[1].split("/");
-			
 			completeReturnDate = dates[1];		
 			
 			SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
@@ -446,6 +394,194 @@ public class OfferController {
 	
 	
 	
+	@RequestMapping(value="/Step3UpdateLiftSubmitALift")
+	public String step3UpdateLiftSubmitOffer(
+			@RequestParam("lift") String liftId,
+			@RequestParam("liftReturn") String liftReturnId,
+			@RequestParam("mapFrom") String mapFrom, 
+    		@RequestParam("mapTo") String mapTo,
+    		@RequestParam(value="detour0",required=false) String detour0,
+    		@RequestParam(value="detour1",required=false) String detour1,
+    		@RequestParam(value="detour2",required=false) String detour2,
+    		@RequestParam(value="detour3",required=false) String detour3,
+    		@RequestParam(value="detour4",required=false) String detour4,
+    		@RequestParam("date") String date,
+    		@RequestParam("goingTimeH") String goingHour,
+    		@RequestParam("goingTimeM") String goingMins,
+    		@RequestParam(value="returnTimeH",required=false) String returnHour,
+    		@RequestParam(value="returnTimeM",required=false) String returnMins,			
+    		
+    		@RequestParam("price") String price,
+    		@RequestParam("seats") String seats,
+    		@RequestParam("luggage") String luggage,
+    		@RequestParam("delay") String delay,
+    		@RequestParam("description") String description,
+    		@RequestParam("deviation") String deviation,
+    		@RequestParam("roadType") String roadType,
+    		@RequestParam("pinkTrip") String pinkTrip,
+    		@RequestParam(value="drivingLicence",required=false) String checkLicence,
+			Model m, HttpSession session){
+
+		LiftMapper lm = new LiftMapper();
+						
+		String[] costs = price.split(",");     //COST
+		Integer totcost = 0;
+		for (int i = 0; i < costs.length; i++) {
+			totcost += Integer.parseInt(costs[i]);
+		}
+		
+		Integer nSeats = Integer.parseInt(seats);    //NSEATS
+		
+		Boolean possibleDetour = false;
+		
+		if(deviation != null && deviation!="")
+			possibleDetour = true;
+		
+		long mstimeG = (1000*60*Integer.parseInt(goingMins)) + (1000*60*60*Integer.parseInt(goingHour));		
+		Time departureTime = new Time(mstimeG);       //DEPARTURETIME
+		
+		SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+		Date departureDate = null;   
+		Date returnDate = null;
+		String[] dates = date.split(",");
+		boolean returnIsPresent = false;
+
+		try {
+			departureDate = f.parse(dates[0]);            //DEPARTUREDATE
+			if (dates.length > 1) {
+				returnIsPresent = true;
+				returnDate = f.parse(dates[1]);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}		
+
+		/////////////////////////LIFT PREFERENCES////////////////////////////////////
+		Integer luggageSize;
+		Boolean pink;
+		
+		if(luggage.equalsIgnoreCase("piccolo"))
+			luggageSize = 1;
+		else if(luggage.equalsIgnoreCase("medio"))
+			luggageSize = 2;
+		else
+			luggageSize = 3;	
+		
+		if(pinkTrip.equalsIgnoreCase("viaggio con uomini e donne"))
+			pink = false;
+		else
+			pink = true;
+		
+		
+		LiftPreference lp = new LiftPreference(roadType,luggageSize,delay,pink);
+		
+		/////////////////////////LIFT PREFERENCES////////////////////////////////////
+		
+		ArrayList <LiftPoint> path = new ArrayList<LiftPoint>();
+		
+		LiftPoint from = new LiftPoint(mapFrom);
+		path.add(from);
+
+		if(detour0 != "" && detour0!=(null)){
+			LiftPoint point0 = new LiftPoint(detour0);	
+			path.add(point0);
+		}
+		if(detour1 != "" && detour1!=(null)){
+			LiftPoint point1 = new LiftPoint(detour1);
+			path.add(point1);
+		}
+		if(detour2 != "" && detour2!=(null)){
+			LiftPoint point2 = new LiftPoint(detour2);	
+			path.add(point2);
+		}
+		if(detour3 != "" && detour3!=(null)){
+			LiftPoint point3 = new LiftPoint(detour3);
+			path.add(point3);
+		}
+		if(detour4 != "" && detour4!=(null)){
+			LiftPoint point4 = new LiftPoint(detour4);
+			path.add(point4);
+		}
+		LiftPoint to = new LiftPoint(mapTo);
+		path.add(to);
+		
+		if(checkLicence == null || checkLicence == "" || checkLicence=="false"){
+			List<String> pathString=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3, detour4);
+			m.addAttribute("path",pathString);
+			m.addAttribute("error", "Attenzione, devi dichiarare di essere in possesso di patente di guida valida ed assicurazione RCA.");
+			return "step2_updateLift_insertALift"; // ti fanno la multa ! :D
+		}
+				
+		java.sql.Date sd = new java.sql.Date(departureDate.getTime()); // TODO controllare e fare una conversione precisa
+
+		List<LiftDetour> detours = new ArrayList<LiftDetour>();
+		for (int i = 0; i < path.size()-1; i++) {
+			for (int j = i+1; j < path.size(); j++) {
+				System.out.println("Detour: "+path.get(i).getCity()+" "+path.get(j).getCity());
+				LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
+				int cost = 0;
+				if(j-i==1)
+					cost=Integer.parseInt(costs[i]);
+				else{
+					for (int k = i; k < j; k++)
+						cost+=Integer.parseInt(costs[k]);						
+				}
+				tmpDetour.setCost(cost);
+				detours.add(tmpDetour);
+			}			
+		}
+
+		System.out.println("Partenza data: "+sd);
+		System.out.println("tempo partenze: "+departureTime);
+		
+		Lift l = new Lift(totcost, nSeats, possibleDetour, departureTime, sd, path.get(0), path.get(path.size()-1));
+		RegisteredUser user = 	(RegisteredUser) session.getAttribute("user");		
+		l.setDetours(detours);
+		l.setLiftPreferences(lp);
+		l.setUserOffering(user);
+//		DetoursCostConverterFacade.createStringCost(prices, l);
+
+		if(returnIsPresent){
+			long mstimeR = (1000*60*Integer.parseInt(returnMins)) + (1000*60*60*Integer.parseInt(returnHour));		
+			Time returnTime = new Time(mstimeR);       //RETURNTIME
+			java.sql.Date srd = new java.sql.Date(returnDate.getTime()); // cambiare
+			
+			System.out.println("Partenza data: "+srd);
+			System.out.println("tempo partenze: "+returnTime);
+			
+			List<LiftDetour> detoursReturn = new ArrayList<LiftDetour>();
+			for (int i = path.size()-1; i>0 ; i--) {
+				for (int j = i-1; j >=0; j--) {
+					System.out.println("Detour Ritorno: "+path.get(i).getCity()+" "+path.get(j).getCity());
+					LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
+					int cost = 0;
+					if(i-j==1)
+						cost=Integer.parseInt(costs[j]);
+					else{
+						for (int k = j; k < i; k++)
+							cost+=Integer.parseInt(costs[k]);						
+					}
+					tmpDetour.setCost(cost);
+					detoursReturn.add(tmpDetour);
+				}			
+			}
+			
+			Lift lr = new Lift(totcost, nSeats, possibleDetour, returnTime, srd,  path.get(path.size()-1), path.get(0));		
+			lr.setDetours(detoursReturn);
+			lr.setLiftPreferences(lp);
+			lr.setUserOffering(user);
+			lr.setIsReturn(true);
+			lm.update(lr, Long.parseLong(liftReturnId));		
+		}		
+
+		l.setIsReturn(false);
+		l.setDescription(description);
+		l.setDeviation(deviation);
+		lm.update(l,Long.parseLong(liftId));		
+		
+		return "step3_updateLift_submitALift";
+	}
+	
 	@RequestMapping(value="/SubmitALift")
 	public String submitOffer(			
 			@RequestParam("mapFrom") String mapFrom, 
@@ -464,8 +600,9 @@ public class OfferController {
     		@RequestParam("price") String price,
     		@RequestParam("seats") String seats,
     		@RequestParam("luggage") String luggage,
-    		@RequestParam("delay") String delay,
+    		@RequestParam("description") String description,
     		@RequestParam("deviation") String deviation,
+    		@RequestParam("delay") String delay,
     		@RequestParam("roadType") String roadType,
     		@RequestParam("pinkTrip") String pinkTrip,
     		@RequestParam(value="drivingLicence",required=false) String checkLicence,
@@ -513,14 +650,14 @@ public class OfferController {
 		Integer luggageSize;
 		Boolean pink;
 		
-		if(luggage == "piccolo")
+		if(luggage.equalsIgnoreCase("piccolo"))
 			luggageSize = 1;
-		else if(luggage == "medio")
+		else if(luggage.equalsIgnoreCase("medio"))
 			luggageSize = 2;
 		else
 			luggageSize = 3;	
 		
-		if(pinkTrip.equals("viaggio con uomini e donne"))
+		if(pinkTrip.equalsIgnoreCase("viaggio con uomini e donne"))
 			pink = false;
 		else
 			pink = true;
@@ -568,18 +705,19 @@ public class OfferController {
 				
 		java.sql.Date sd = new java.sql.Date(departureDate.getTime()); // TODO controllare e fare una conversione precisa
 
-		DetoursCostConverterFacade df = new DetoursCostConverterFacade();
-		List<Integer> prices = new ArrayList<Integer>();
-		
-		for (int i = 0; i < costs.length; i++) {
-			prices.add(Integer.parseInt(costs[i]));
-		}
-
 		List<LiftDetour> detours = new ArrayList<LiftDetour>();
 		for (int i = 0; i < path.size()-1; i++) {
 			for (int j = i+1; j < path.size(); j++) {
 				System.out.println("Detour: "+path.get(i).getCity()+" "+path.get(j).getCity());
 				LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
+				int cost = 0;
+				if(j-i==1)
+					cost=Integer.parseInt(costs[i]);
+				else{
+					for (int k = i; k < j; k++)
+						cost+=Integer.parseInt(costs[k]);						
+				}
+				tmpDetour.setCost(cost);
 				detours.add(tmpDetour);
 			}			
 		}
@@ -592,7 +730,7 @@ public class OfferController {
 		l.setDetours(detours);
 		l.setLiftPreferences(lp);
 		l.setUserOffering(user);
-		df.createStringCost(prices, l);
+//		DetoursCostConverterFacade.createStringCost(prices, l);
 
 		if(returnIsPresent){
 			long mstimeR = (1000*60*Integer.parseInt(returnMins)) + (1000*60*60*Integer.parseInt(returnHour));		
@@ -602,17 +740,20 @@ public class OfferController {
 			System.out.println("Partenza data: "+srd);
 			System.out.println("tempo partenze: "+returnTime);
 			
-			prices.clear();
-			if(costs.length>1)
-				for (int i = costs.length-1; i <= 0; i--) 
-					prices.add(Integer.parseInt(costs[i]));
-			
 			
 			List<LiftDetour> detoursReturn = new ArrayList<LiftDetour>();
 			for (int i = path.size()-1; i>0 ; i--) {
 				for (int j = i-1; j >=0; j--) {
 					System.out.println("Detour Ritorno: "+path.get(i).getCity()+" "+path.get(j).getCity());
 					LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
+					int cost = 0;
+					if(i-j==1)
+						cost=Integer.parseInt(costs[j]);
+					else{
+						for (int k = j; k < i; k++)
+							cost+=Integer.parseInt(costs[k]);						
+					}
+					tmpDetour.setCost(cost);
 					detoursReturn.add(tmpDetour);
 				}			
 			}
@@ -620,11 +761,19 @@ public class OfferController {
 			Lift lr = new Lift(totcost, nSeats, possibleDetour, returnTime, srd,  path.get(path.size()-1), path.get(0));		
 			lr.setDetours(detoursReturn);
 			lr.setLiftPreferences(lp);
+			lr.setIsReturn(true);
 			lr.setUserOffering(user);
-			df.createStringCost(prices, lr);
-			l.setReturnLift(lr);		
+//			DetoursCostConverterFacade.createStringCost(prices, lr);
+			l.setReturnLift(lr);
 		
-		}		
+		}
+		
+		l.setIsReturn(false);
+		l.setDescription(description);
+		l.setDeviation(deviation);
+		
+		System.out.println(deviation);
+		System.out.println(description);
 
 		lm.insert(l);		
 		
@@ -632,7 +781,7 @@ public class OfferController {
 		
 		
 		return "submitALift";
-	}	
+	}
 	
 	
 	

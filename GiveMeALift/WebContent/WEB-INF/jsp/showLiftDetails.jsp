@@ -106,19 +106,10 @@
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Dimensione del bagaglio</h4>
+					<h4>Deviazioni</h4>
 				</td>
 				<td>
 					${lift.get(4)}
-				</td>
-			</tr>
-			<tr>
-				<td class="labelTable">
-					<h4>Auto</h4>
-				</td>
-				<td>
-					${$userOffering.driverInfo.car.brand}
-					 ${$userOffering.driverInfo.car.model}
 				</td>
 			</tr>
 			<tr>
@@ -135,6 +126,23 @@
 				</td>
 				<td>
 					${lift.get(6)}
+				</td>
+			</tr>
+			<tr>
+				<td class="labelTable">
+					<h4>Dimensione del bagaglio</h4>
+				</td>
+				<td>
+					${lift.get(7)}
+				</td>
+			</tr>
+			<tr>
+				<td class="labelTable">
+					<h4>Auto</h4>
+				</td>
+				<td>
+					${$userOffering.driverInfo.car.brand}
+					 ${$userOffering.driverInfo.car.model}
 				</td>
 			</tr>
 	</table>

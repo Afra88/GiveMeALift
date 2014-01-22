@@ -29,6 +29,12 @@ public class RegisteredUser extends User {
 	
 	@Column(name="PROFILE_PHOTO")
 	private String profilePhoto;
+	
+	@Column(name="DESCRIPTION")
+	private String description;
+	
+	@Column(name="SHOW_CONTACTS")
+	private Boolean showContacts;
 
 	private UserActivity userActivity;
 	
@@ -41,6 +47,7 @@ public class RegisteredUser extends User {
 	private List<Feedback> receivedFeedback;
 	
 	private DriverInfo driverInfo;
+	
 	
 	public RegisteredUser() {
 		super();
@@ -107,7 +114,11 @@ public class RegisteredUser extends User {
 		if(u.receivedFeedback!=null)
 			this.receivedFeedback=u.receivedFeedback;
 		if(u.userActivity!=null)
-			this.userActivity=u.userActivity;	
+			this.userActivity=u.userActivity;
+		if(u.description!=null)
+			this.description=u.description;
+		if(u.showContacts!=null)
+			this.showContacts=u.showContacts;
 	}
 	
 	@OneToOne (fetch = FetchType.LAZY,cascade=CascadeType.ALL)
@@ -174,6 +185,22 @@ public class RegisteredUser extends User {
 	public void setDriverInfo(DriverInfo driverInfo) {
 		this.driverInfo = driverInfo;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public Boolean getShowContacts() {
+		return showContacts;
+	}
+	
+	public void setShowContacts(Boolean showContacts) {
+		this.showContacts = showContacts;
+	}
 
 	@Override
 	public int hashCode() {
@@ -181,6 +208,8 @@ public class RegisteredUser extends User {
 		int result = super.hashCode();
 		result = prime * result
 				+ ((countAlert == null) ? 0 : countAlert.hashCode());
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result
 				+ ((driverInfo == null) ? 0 : driverInfo.hashCode());
 		result = prime
@@ -200,6 +229,8 @@ public class RegisteredUser extends User {
 				* result
 				+ ((receivedFeedback == null) ? 0 : receivedFeedback.hashCode());
 		result = prime * result
+				+ ((showContacts == null) ? 0 : showContacts.hashCode());
+		result = prime * result
 				+ ((userActivity == null) ? 0 : userActivity.hashCode());
 		return result;
 	}
@@ -217,6 +248,11 @@ public class RegisteredUser extends User {
 			if (other.countAlert != null)
 				return false;
 		} else if (!countAlert.equals(other.countAlert))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
 			return false;
 		if (driverInfo == null) {
 			if (other.driverInfo != null)
@@ -252,6 +288,11 @@ public class RegisteredUser extends User {
 			if (other.receivedFeedback != null)
 				return false;
 		} else if (!receivedFeedback.equals(other.receivedFeedback))
+			return false;
+		if (showContacts == null) {
+			if (other.showContacts != null)
+				return false;
+		} else if (!showContacts.equals(other.showContacts))
 			return false;
 		if (userActivity == null) {
 			if (other.userActivity != null)

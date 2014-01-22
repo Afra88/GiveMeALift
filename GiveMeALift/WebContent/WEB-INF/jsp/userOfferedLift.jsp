@@ -27,6 +27,8 @@
 	<script src="js/jquery.easing.1.3.js"></script>
 	<script src="js/jquery.ui.totop.js"></script>
 	<script src="js/touchTouch.jquery.js"></script>
+	
+	<script type="text/javascript" src="js/offeredLiftPagination.js" ></script>
 	<script>
 	$(document).ready(function () {
 	    $().UItoTop({
@@ -90,14 +92,14 @@
 		          	<tr>
 			          	<td>
 					        <div class="emphatizeLift">${lift.getPickUpPoint().city} - ${lift.getDropOffPoint().city}</div>
-				       		<c:choose>
+				       		<%-- <c:choose>
 				       			<c:when test="${lift.possibleDetour==true}">
 				       				   Deviazioni possibili
 				       			</c:when>
 				       			<c:otherwise>
 				       				Nessuna deviazione
 				       			</c:otherwise>
-				       		</c:choose>
+				       		</c:choose> --%>
 				        </td>
 				        <td style="text-align: right;">
 				        	<div class="emphatizeSeat"><input id="seats" class="number" type="number" name="seats" maxlength="4" size="3" step="1" value="${lift.nSeat}" > posti disponibili</div>
@@ -105,7 +107,7 @@
 			        </tr>
 			        <tr style="text-align: right;">
 			        	<td colspan="2" >
-			        		<a href="DeleteOfferedLift?lift=${lift.getId()}" class="button red"> <span class="trash"></span> Elimina </a>
+			        		<a href="DeleteLiftOffered?lift=${lift.getId()}" class="button red"> <span class="trash"></span> Elimina </a>
 			        		<a href="Step1UpdateLiftOfferALift?lift=${lift.getId()}" class="button green"> <span class="edit"></span> Modifica </a>
 			        		<a href="HandleShowLiftDetail?lift=${lift.getId()}" class="button cyan"> <span class="preview"></span> Visualizza Annuncio</a>
 				        </td>	        
@@ -147,5 +149,8 @@
 			  		</c:otherwise>
 			  	</c:choose>
 			</div>
+		<form action="ShowUserOfferedLift" id="form" >
+			<input type="hidden" id=next_page name=page value="1" />
+		</form>
 </div>
 <%@include file="footer.jsp" %>
