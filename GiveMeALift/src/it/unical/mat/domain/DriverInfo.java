@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table(name="DRIVER_INFO")
 public class DriverInfo extends DomainObject {
@@ -160,7 +163,7 @@ public class DriverInfo extends DomainObject {
 		this.comfort = comfort;
 	}
 
-
+	@Cascade(value=CascadeType.SAVE_UPDATE)
 	@OneToOne(fetch=FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	public User getUser() {

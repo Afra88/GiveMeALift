@@ -2,6 +2,7 @@ package it.unical.mat.domain;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +27,7 @@ public class UserActivity extends DomainObject {
 	private Integer answersPercentage;
 	
 	//relazione 1a1 con User in base alla chiave primaria
-	@OneToOne (fetch = FetchType.LAZY)
+	@OneToOne (fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	private User user;
 	

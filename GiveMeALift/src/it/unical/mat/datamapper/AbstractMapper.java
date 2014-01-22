@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import it.unical.mat.domain.DomainObject;
+import it.unical.mat.domain.Lift;
 import it.unical.mat.util.HibernateUtil;
 
 public abstract class AbstractMapper {
@@ -32,12 +33,12 @@ public abstract class AbstractMapper {
 		return objectId;	
 	}
 
-	public boolean delete(Long id){
+	public boolean delete(Long id, Class<? extends DomainObject> objectClass){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			DomainObject object= (DomainObject) session.get(DomainObject.class, id);
+			DomainObject object= (DomainObject) session.get(objectClass, id);
 			session.delete(object);
 			transaction.commit();
 			return true;

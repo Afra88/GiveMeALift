@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -206,7 +207,7 @@ public abstract class User extends DomainObject {
 			this.listSocialNetworkProfiles = u.listSocialNetworkProfiles;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY) //ok
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //ok
 	@JoinTable(name = "SOCIAL_NETWORK_USER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "SOCIAL_NETWORK_PROFILE_ID") })

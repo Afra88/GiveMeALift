@@ -20,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity
 @Table(name="LIFT")
 public class Lift extends DomainObject {
@@ -97,7 +99,7 @@ public class Lift extends DomainObject {
 		this.nSeat = nSeat;
 	}
 
-	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL) //FIXME quando è fatto detour cost
 	@JoinTable(name = "LIFT_DETOURS_JOIN",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "DETOUR_ID") })
@@ -106,7 +108,7 @@ public class Lift extends DomainObject {
 	}
 	
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "LIFT_USER_BOOKING",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -114,7 +116,7 @@ public class Lift extends DomainObject {
 		return usersBookingList;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL) //ok
+	@ManyToOne(fetch=FetchType.LAZY) //ok
 	@JoinTable(name = "LIFT_USER_OFFERING",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -169,7 +171,8 @@ public class Lift extends DomainObject {
 	}
 
 
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinTable(name = "LIFT_PICK_UP_POINT_JOIN",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_POINT_ID") })
@@ -186,8 +189,8 @@ public class Lift extends DomainObject {
 
 
 
-
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinTable(name = "LIFT_DROP_OFF_POINT_JOIN",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_POINT_ID") })
@@ -199,7 +202,8 @@ public class Lift extends DomainObject {
 		this.dropOffPoint = dropOffPoint;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL) //cambiato
+	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@ManyToOne(fetch=FetchType.LAZY) //cambiato
 	@JoinTable(name = "PREFERENCE_LIFT_JOIN", 
 				joinColumns = { @JoinColumn(name = "LIFT_ID") }, 
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_PREFERENCE_ID")}
@@ -218,22 +222,32 @@ public class Lift extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		Lift l=(Lift) object2;
+		if(l.possibleDetour!=null)
+			this.possibleDetour=l.possibleDetour;
 		if(l.cost!=null)
 			this.cost=l.cost;
+		if(l.departureDate!=null)
+			this.departureDate=l.departureDate;
+		if(l.departureTime!=null)
+			this.departureTime=l.departureTime;
+		if(l.detoursCost!=null) //FIXME
+			this.detoursCost=l.detoursCost;
+		if(l.userOffering!=null)
+			this.userOffering=l.userOffering;
 		if(l.dropOffPoint!=null)
 			this.dropOffPoint=l.dropOffPoint;
 		if(l.pickUpPoint!=null)
 			this.pickUpPoint=l.pickUpPoint;
 		if(l.nSeat!=null)
 			this.nSeat=l.nSeat;
-		if(this.possibleDetour!=null)
-			this.possibleDetour=l.possibleDetour;
-		if(this.detours!=null)
+		if(l.detours!=null)
 			this.detours=l.detours;
-		if(this.liftPreferences!=null)
+		if(l.liftPreferences!=null)
 			this.liftPreferences=l.liftPreferences;
-		if(this.usersBookingList!=null)
+		if(l.usersBookingList!=null)
 			this.usersBookingList=l.usersBookingList;
+		if(l.returnLift!=null)
+			this.returnLift=l.returnLift;
 	}
 	
 	public Date getDepartureDate() {

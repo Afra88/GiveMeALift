@@ -11,6 +11,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 @Table(name="FEEDBACK")
 public class Feedback extends DomainObject {
@@ -34,6 +37,7 @@ public class Feedback extends DomainObject {
 	@Column(name="FEEDBACK_ID")
 	public long getId() {return super.getId();};
 	
+	@Cascade(value=CascadeType.SAVE_UPDATE)
 	@ManyToOne(fetch=FetchType.LAZY) //ok
 	@JoinTable(name = "FEEDBACK_SENDER_JOIN",
 				joinColumns = { @JoinColumn (name = "FEEDBACK_ID") },
@@ -48,7 +52,7 @@ public class Feedback extends DomainObject {
 		this.feedbackSender = sender;
 	}
 
-
+	@Cascade(value=CascadeType.ALL)
 	@ManyToOne(fetch=FetchType.LAZY) //ok
 	@JoinTable(name = "FEEDBACK_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "FEEDBACK_ID") },

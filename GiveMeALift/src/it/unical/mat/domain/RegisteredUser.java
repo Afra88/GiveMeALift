@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity
 @DiscriminatorValue("RE")
 public class RegisteredUser extends User {
@@ -58,6 +60,7 @@ public class RegisteredUser extends User {
 		super(email,psw,name,surname,gender,birthYear);
 	}
 
+	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@ManyToOne(fetch = FetchType.LAZY) //cambiato
 	@JoinTable(name = "PERSONAL_PREFERENCES_USER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
@@ -107,7 +110,7 @@ public class RegisteredUser extends User {
 			this.userActivity=u.userActivity;	
 	}
 	
-	@OneToOne (fetch = FetchType.LAZY)
+	@OneToOne (fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	public UserActivity getUserActivity() {
 		return userActivity;
@@ -117,7 +120,8 @@ public class RegisteredUser extends User {
 		this.userActivity = userActivity;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //cambiato aa
+	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
 	@JoinTable(name = "MESSAGE_SENDER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
@@ -141,7 +145,7 @@ public class RegisteredUser extends User {
 		this.messagesReceived = messagesReceived;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //cambiato aa
 	@JoinTable(name = "FEEDBACK_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "FEEDBACK_ID") })
@@ -161,7 +165,7 @@ public class RegisteredUser extends User {
 		this.profilePhoto = profilePhoto;
 	}
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	public DriverInfo getDriverInfo() {
 		return driverInfo;

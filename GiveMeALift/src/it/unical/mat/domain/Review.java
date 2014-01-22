@@ -2,6 +2,7 @@ package it.unical.mat.domain;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -62,7 +63,7 @@ public class Review extends DomainObject {
 			this.date = r.date;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY) //cambiato
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //cambiato
 	@JoinTable(name = "REVIEUW_USER_JOIN",
 				joinColumns = { @JoinColumn (name = "REVIEUW_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })

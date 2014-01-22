@@ -1,9 +1,5 @@
 package it.unical.mat.domain;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,11 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
+//FIXME quando decisi i costi dei detour
 @Entity
 @Table(name="LIFT_DETOUR")
 public class LiftDetour extends DomainObject {
@@ -43,8 +40,8 @@ public class LiftDetour extends DomainObject {
 	@Column(name="LIFT_DETOUR_ID")
 	public long getId() {return super.getId();};
 	
-	
-	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL ) //cascade=CascadeType.ALL //cambiato
+	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@ManyToOne(fetch=FetchType.LAZY) //cascade=CascadeType.ALL //cambiato
 	@JoinColumn(name="PICK_UP")
 	public LiftPoint getPickUpPoint() {
 		return pickUpPoint;
@@ -56,8 +53,8 @@ public class LiftDetour extends DomainObject {
 	}
 
 
-
-	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL ) //cascade=CascadeType.ALL //cambiato
+	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@ManyToOne(fetch=FetchType.LAZY ) //cascade=CascadeType.ALL //cambiato
 	@JoinColumn(name="DROP_OFF")
 	public LiftPoint getDropOffPoint() {
 		return dropOffPoint;
