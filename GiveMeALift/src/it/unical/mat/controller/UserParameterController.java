@@ -9,7 +9,6 @@ import it.unical.mat.domain.User;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.ant.FindLeaksTask;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,33 +21,41 @@ public class UserParameterController {
 	@RequestMapping(value = "/ShowUserProfile")
 	public String showUserProfile(Model model, HttpSession session) {
 		User u = (User)session.getAttribute("user");
-		if(u!=null){
-			String email = u.getEmail();
-			String psw = u.getPassword();
 		
-			if(email!="" && email!=null && psw!="" && psw!=null) {
-			 
-				RegisteredUserMapper rm=new RegisteredUserMapper();
-				RegisteredUser ru = rm.findUserByEmailAndPassword(email, psw);
-			 	
-				 if(ru!= null){
-			 		session.setAttribute("user", ru);
-			 		
-			 		char firstLetter = u.getSurname().charAt(0);
-			 		model.addAttribute("firstLetter", firstLetter);
-			 		
-			 		return "showUserProfile";	
-			 	}
-			 	else{
-			 		return "home";
-			 	}
-			 }
-			 else{
-			 		return "home";
-			 	}
+		if(u!=null){
+			
+			RegisteredUser ru = (RegisteredUser)u;
+			
+			session.setAttribute("user", ru);
+			return "showUserProfile";
 		}
+		
 		else
-			return "home";
+			return "error";
+		
+//		if(u!=null){
+//			String email = u.getEmail();
+//			String psw = u.getPassword();
+//		
+//			if(email!="" && email!=null && psw!="" && psw!=null) {
+//			 
+//				RegisteredUserMapper rm=new RegisteredUserMapper();
+//				RegisteredUser ru = rm.findUserByEmailAndPassword(email, psw);
+//			 	
+//				 if(ru!= null){
+//			 		session.setAttribute("user", ru);
+//			 		return "showUserProfile";	
+//			 	}
+//			 	else{
+//			 		return "home";
+//			 	}
+//			 }
+//			 else{
+//			 		return "home";
+//			 	}
+//		}
+//		else
+//			return "home";
 	}
  
 	@RequestMapping(value = "/ModifyUserProfile" )
@@ -64,60 +71,46 @@ public class UserParameterController {
 		
 		
 		User u = (User)session.getAttribute("user");
+		
 		if(u!=null){
-	//		System.out.println(u.getName());
-	//		System.out.println(u.getSurname());
-	//		System.out.println(u.getEmail());
-	//		System.out.println(u.getPassword());
-	//		System.out.println(u.getGender());
-	//		System.out.println(u.getPhone());
-	//		System.out.println(u.getMobilePhone());
-	//		System.out.println(u.getAddress());
-	//		System.out.println(u.getAddress().getCity() + "," + u.getAddress().getCity());
-			
-			String email = u.getEmail();	
-			String psw = u.getPassword();	
-			//CONTROLLO U == NULL
-			if(email!=null && email!="" && psw!=null && psw!="")
-			{
-				RegisteredUser ru = new RegisteredUser();			
-				RegisteredUserMapper rm = new RegisteredUserMapper();
-				ru = rm.findUserByEmailAndPassword(email, psw);
-				
-				System.out.println(ru.getId());
-				
-				if(ru.getName()!= name)
-					ru.setName(name);			
-				if(ru.getSurname()!=surname)
-					ru.setSurname(surname);
-				if(ru.getMobilePhone()!=mobilePhone)
-					ru.setMobilePhone(mobilePhone);
-				if(ru.getPhone()!=phone)
-					ru.setPhone(phone);
-				
-				Address a = new Address();
-				if(ru.getAddress()==null){
-						a.setStreet(street);
-						a.setCity(city);
-						a.setState(state);				
-				}
-				else{
-					if(ru.getAddress().getStreet()!= street)
-						a.setStreet(street);
-					if(ru.getAddress().getCity()!=city)
-						a.setCity(city);
-					if(ru.getAddress().getState()!=state)
-						a.setState(state);				
-				}
-				
-				ru.setAddress(a);
-				
-				rm.update(ru);
 	
-				return "showUserProfile";
+			RegisteredUser ru = (RegisteredUser) u;
+			RegisteredUserMapper rm = new RegisteredUserMapper();
+						
+			if(ru.getName()!= name)
+				ru.setName(name);			
+			if(ru.getSurname()!=surname)
+				ru.setSurname(surname);
+			if(ru.getMobilePhone()!=mobilePhone)
+				ru.setMobilePhone(mobilePhone);
+			if(ru.getPhone()!=phone)
+				ru.setPhone(phone);
+			
+			Address a = new Address();
+			if(ru.getAddress()==null){
+					a.setStreet(street);
+					a.setCity(city);
+					a.setState(state);				
 			}
-			else
-				return "home";
+			else{
+				if(ru.getAddress().getStreet()!= street)
+					a.setStreet(street);
+				if(ru.getAddress().getCity()!=city)
+					a.setCity(city);
+				if(ru.getAddress().getState()!=state)
+					a.setState(state);				
+			}
+			
+			ru.setAddress(a);
+			rm.update(ru,ru.getId());
+			
+
+		//	session.setAttribute("user", rm.findRegisteredUserById(ru.getId()));
+			
+			// ha senso se si salva su DB, fare controllo(user sessione ,user DB)!!
+			session.setAttribute("user", ru);
+
+			return "showUserProfile";
 		}
 		else
 			return "home";
@@ -128,30 +121,89 @@ public class UserParameterController {
 		User u = (User)session.getAttribute("user");
 		
 		if(u!=null){
-			String email = u.getEmail();
-			String psw = u.getPassword();
+		 
+		RegisteredUser ru = (RegisteredUser) u;
+		session.setAttribute("user", ru);
+		 
+		System.out.println("di:"+ru.getDriverInfo());
+//		 System.out.println("car:"+ru.getDriverInfo().getCar());
+		 
 		
-			if(email!="" && email!=null && psw!="" && psw!=null) {
-				
-				RegisteredUserMapper rm=new RegisteredUserMapper();
-				RegisteredUser ru = rm.findUserByEmailAndPassword(email, psw);
-		 	
-				if(ru!= null){
-				 	session.setAttribute("user", ru);
-				 	return "showUserCar";	
-				}
-				else
-					return "home";
-			}
-			else
-				return "home";
+		if(	ru.getDriverInfo() == null||ru.getDriverInfo().getCar() == null	)
+		 {			 
+			 return "add";
+		 } 
+		else
+			 return "showUserCar";	
+		}
+		
+		else
+			return "home";
+		
+	}
+	
+	
+	@RequestMapping(value = "/AddCarDetails")
+	public String addCarDetails(Model model, HttpSession session){
+		User u = (User)session.getAttribute("user");
+		
+		if(u!=null){ 
+			 return "addCarDetails";	
+		}else
+			return "home";
+		
+	}
+	
+	
+	
+	
+	
+	@RequestMapping(value = "/SubmitCar")
+	public String submitCar(		
+//			@RequestParam("brandAuto") String brandAuto,
+//			@RequestParam("modelAuto") String modelAuto,
+			@RequestParam("colorAuto") String colorAuto,
+			@RequestParam("confortAuto") String confortAuto,
+//			@RequestParam("photoCar") String photoCar,
+			Model model, HttpSession session){
+		
+		User u = (User)session.getAttribute("user");
+	
+		if(u!=null){
+			
+			 RegisteredUser ru = (RegisteredUser) u;
+			 Car car = new Car();
+			 DriverInfo d = new DriverInfo();
+//			 car.setBrand(brandAuto);
+			 car.setColor(colorAuto);
+			 
+			Integer c = null;
+			if(confortAuto == "base")
+				c=1;
+			else if(confortAuto == "normale")
+				c=2;
+			else if(confortAuto == "confortevole")
+				c=3;
+			else if(confortAuto == "lusso")
+				c=4;
+			 
+			 car.setConfort(c);
+//			 car.setModel(modelAuto);
+//			 d.setCar_photo(photoCar);
+
+			 
+			 d.setCar(car);				 
+			 
+			 ru.setDriverInfo(d);
+									
+			return "submitCar";
 		}
 		else
 			return "home";
 	}
 	
 	
-/*	@RequestMapping(value = "/ModifyUserCar" )
+	@RequestMapping(value = "/ModifyUserCar" )
 	public String modifyUserCar(
 			@RequestParam("brandAuto") String brand,
 			@RequestParam("modelAuto") String model,
@@ -162,13 +214,9 @@ public class UserParameterController {
 		
 		User u = (User)session.getAttribute("user");
 		if(u!=null){
-			String email = u.getEmail();
-			String psw = u.getPassword();
-		
-		if(email!=null && email!="" && psw!=null && psw!="")
-		{
+			
 			RegisteredUserMapper rm = new RegisteredUserMapper();
-			RegisteredUser ru = rm.findUserByEmailAndPassword(email, psw);
+			RegisteredUser ru = (RegisteredUser) u;			
 			
 			Car car = new Car();
 			DriverInfo d = new DriverInfo();
@@ -224,12 +272,11 @@ public class UserParameterController {
 //			
 //			rm.update(u);
 
-			return "showUserProfile";
+			return "showUserCar";
 		}
 		else
 			return "home";
+
 	}
-	
-	}
-		*/
+		
 }

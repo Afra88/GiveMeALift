@@ -116,4 +116,24 @@ public class RegisteredUserMapper extends AbstractMapper {
 		return null;
 	}
 
+	public List<RegisteredUser> findUsersFromCity(String city) {
+		List<RegisteredUser> users = new LinkedList<RegisteredUser>();
+		
+		String findStatement = "from User"
+				+ " where " 			
+				+ " city = :par1"
+				;
+		
+		Map<String, Object> parameters=new HashMap<String, Object>();
+		parameters.put("par1", city);
+		
+		Collection<DomainObject> objects = find(findStatement, parameters,false);
+		for (DomainObject object : objects) {
+			users.add((RegisteredUser) object);
+		}		
+
+		
+			return users;
+	}
+
 }
