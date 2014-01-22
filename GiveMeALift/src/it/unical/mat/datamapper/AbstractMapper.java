@@ -1,6 +1,5 @@
 package it.unical.mat.datamapper;
 
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -51,12 +50,12 @@ public abstract class AbstractMapper {
 		}
 	}
 	
-	public boolean update(DomainObject object2){
+	public boolean update(DomainObject object2, long id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			DomainObject object= (DomainObject) session.get(DomainObject.class, (Serializable) object2.getId());
+			DomainObject object= (DomainObject) session.get(object2.getClass(), id);
 			object.copy(object2);
 			transaction.commit();
 			return true;
