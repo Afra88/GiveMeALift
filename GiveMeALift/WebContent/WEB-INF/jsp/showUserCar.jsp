@@ -58,25 +58,36 @@
 			<tr>
 				<td>Marca</td>
 				<td> 
-					<input id="brandCar" name="brandCar" type="text" value ="${user.getDriverInfo().getCar().getBrand()}" required="required"></input>
+					<input id="brandCar" name="brandCar" type="text" value ="${user.getDriverInfo().getCar().getBrand()}"></input>
 				</td>
 			</tr>
 			<tr>
 				<td>Modello</td>
 				<td> 
-					<input id="modelCar" name="modelCar" type="text" value ="${user.getDriverInfo().getCar().getModel()}" required="required"></input>
+					<input id="modelCar" name="modelCar" type="text" value ="${user.getDriverInfo().getCar().getModel()}"></input>
 				</td>
 			</tr>
 			<tr>
 				<td>Colore</td>
 				<td> 
-					<input id="colorCar" name="colorCar" type="text" value ="${user.getDriverInfo().getCar().getColor()}" required="required"></input>
+					<input id="colorCar" name="colorCar" type="text" value ="${user.getDriverInfo().getCar().getColor()}"></input>		
+					
 				</td>
 			</tr>
 			<tr>
 				<td>Confort</td>
 				<td> 
-					<input id="confortCar" name="confortCar" type="text" value ="${user.getDriverInfo().getCar().getConfort()}" required="required"></input>
+					<input id="confortCar" name="confortCar" type="text" value ="${user.getDriverInfo().getCar().getConfort()}"></input>
+				
+<%-- 				<c:when test="${user.getDriverInfo().getCar().getConfort() == base}"> --%>
+				<select id="confortAuto" name="confortAuto">
+							<option>base</option>
+							<option selected="selected">normale</option>
+							<option>confortevole</option>
+							<option>lusso</option>
+						</select>
+<%-- 					<c:when> --%>
+				
 				</td>
 			</tr>
 			<tr>
@@ -91,7 +102,7 @@
 		</table>
 		<p class="center"><input type="submit"  value="Salva" class="button" /></p>
 	</form>
- 	<form method=get> <!--action="deleteCar"> -->
+ 	<form method=get action="DeleteUserCar"> -->
 		<p class="center"><input type="submit"  value="Elimina Auto" class="button" /></p>
 	</form>
 </div>

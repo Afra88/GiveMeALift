@@ -1,5 +1,6 @@
 package it.unical.mat.controller;
 
+import it.unical.mat.datamapper.DriverInfoMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Car;
@@ -160,22 +161,25 @@ public class UserParameterController {
 	
 	@RequestMapping(value = "/SubmitCar")
 	public String submitCar(		
-//			@RequestParam("brandAuto") String brandAuto,
-//			@RequestParam("modelAuto") String modelAuto,
+			@RequestParam("car-makes") String brandAuto,
+			@RequestParam("car-models") String modelAuto,
 			@RequestParam("colorAuto") String colorAuto,
 			@RequestParam("confortAuto") String confortAuto,
-//			@RequestParam("photoCar") String photoCar,
+			//@RequestParam("photoCar") String photoCar,
 			Model model, HttpSession session){
 		
 		User u = (User)session.getAttribute("user");
 	
 		if(u!=null){
 			
-			 RegisteredUser ru = (RegisteredUser) u;
-			 Car car = new Car();
-			 DriverInfo d = new DriverInfo();
-//			 car.setBrand(brandAuto);
-			 car.setColor(colorAuto);
+			RegisteredUser ru = (RegisteredUser) u;
+			RegisteredUserMapper rm = new RegisteredUserMapper();
+			 
+			Car car = new Car();
+			DriverInfo d = new DriverInfo();
+			car.setBrand(brandAuto);
+			car.setModel(modelAuto);
+			car.setColor(colorAuto);
 			 
 			Integer c = null;
 			if(confortAuto == "base")
@@ -187,14 +191,15 @@ public class UserParameterController {
 			else if(confortAuto == "lusso")
 				c=4;
 			 
-			 car.setConfort(c);
-//			 car.setModel(modelAuto);
-//			 d.setCar_photo(photoCar);
-
+			car.setConfort(c);
+			
+			//			 d.setCar_photo(photoCar);
+			d.setCar(car);				 
 			 
-			 d.setCar(car);				 
-			 
-			 ru.setDriverInfo(d);
+			ru.setDriverInfo(d);
+			rm.update(ru, ru.getId());
+			
+			session.setAttribute("user", ru);
 									
 			return "submitCar";
 		}
@@ -205,11 +210,11 @@ public class UserParameterController {
 	
 	@RequestMapping(value = "/ModifyUserCar" )
 	public String modifyUserCar(
-			@RequestParam("brandAuto") String brand,
-			@RequestParam("modelAuto") String model,
-			@RequestParam("colorAuto") String color,
-			@RequestParam("confortAuto") String confort,
-			@RequestParam("photoCar") String photoCar,
+			@RequestParam("brandCar") String brand,
+			@RequestParam("modelCar") String model,
+			@RequestParam("colorCar") String color,
+			@RequestParam("confortCar") String confort,
+			//@RequestParam("photoCar") String photoCar,
 			Model m, HttpSession session) {
 		
 		User u = (User)session.getAttribute("user");
@@ -220,12 +225,13 @@ public class UserParameterController {
 			
 			Car car = new Car();
 			DriverInfo d = new DriverInfo();
+			Integer c = null;
 			
 			if(ru.getDriverInfo() == null){
 				
-				d.setCar_photo(photoCar);
+			//	d.setCar_photo(photoCar);
 				d.setColor(color);
-				Integer c = null;
+				
 				if(confort == "base")
 					c=1;
 				else if(confort == "normale")
@@ -245,38 +251,63 @@ public class UserParameterController {
 			}else{
 				
 				if(ru.getDriverInfo().getCar().getBrand() != brand)
-				{	car.setBrand(brand);
-					
-				}
+					car.setBrand(brand);
+				if(ru.getDriverInfo().getCar().getColor() != color)
+					car.setColor(color);
+	
+				if(confort == "base")
+					c=1;
+				else if(confort == "normale")
+					c=2;
+				else if(confort == "confortevole")
+					c=3;
+				else if(confort == "lusso")
+					c=4;
+						
+				if(ru.getDriverInfo().getCar().getConfort() != c)
+					car.setConfort(c);
+				if(ru.getDriverInfo().getCar().getModel() != model)
+					car.setModel(model);
+//				if(ru.getDriverInfo().getCar_photo() != photoCar)
+//				{
+//					d.setCar_photo(photoCar);
+//					ru.setDriverInfo(d);
+//				}
+			}
+			d.setCar(car);
+			rm.update(ru, ru.getId());
 				
+			session.setAttribute("user", ru);
+			return "showUserCar";
+			
 		}
 			
-//			if(u.getName()!= name)
-//				u.setName(name);			
-//			if(u.getSurname()!=surname)
-//				u.setSurname(surname);
-//			if(u.getMobilePhone()!=mobilePhone)
-//				u.setMobilePhone(mobilePhone);
-//			if(u.getPhone()!=phone)
-//				u.setPhone(phone);
-//			
-//			Address a = new Address();
-//			if(u.getAddress().getStreet()!= street)
-//				a.setStreet(street);
-//			if(u.getAddress().getCity()!=city)
-//				a.setCity(city);
-//			if(u.getAddress().getState()!=state)
-//				a.setState(state);
-//			
-//			u.setAddress(a);
-//			
-//			rm.update(u);
-
-			return "showUserCar";
-		}
 		else
 			return "home";
-
 	}
+	
+	@RequestMapping(value = "/DeleteUserCar" )
+	public String deleteUserCar(Model model, HttpSession session) {
 		
+		User u = (User)session.getAttribute("user");
+		if(u!=null){
+			RegisteredUser ru = (RegisteredUser) u;
+			DriverInfo d = ru.getDriverInfo();
+			Car car = d.getCar();
+			DriverInfoMapper dm = new DriverInfoMapper();
+						
+			boolean deleted = dm.deleteCar(d, car, ru);
+			if(deleted){
+				model.addAttribute("error",false);
+				return "showDeleteMsg";	
+			}
+			else{
+				model.addAttribute("error",false);
+				return "showDeleteMsg";
+			}
+		}
+		
+		return "home";
+		
+	}
 }

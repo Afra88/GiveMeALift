@@ -20,6 +20,11 @@
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/font-awesome.css">
 		<link rel="stylesheet" href="css/form.css">
+		
+		<script type="text/javascript" src="http://www.carqueryapi.com/js/jquery.min.js"></script>
+		<script type="text/javascript" src="http://www.carqueryapi.com/js/carquery.0.3.3.js"></script>
+		<script type="text/javascript" src="js/carBrandAndModel.js"></script>
+	
 	</head>
 	
 	<body>
@@ -60,28 +65,22 @@
 					<td colspan="2"> La mia auto </td>
 				</tr>
 				<tr>
+					<td>Anno</td>
+					<td><select name="car-years" id="car-years"></select></td>
+				</tr>
+				<tr>
 					<td>Marca</td>
 					<td> 
-<!-- 						<select id="brandAuto" name="brandAuto" url="" required="required"></select> -->
-<!-- 						<option selected="selected" value="">Scegli</option> -->
-						<select id="brandAuto" name="brandAuto" >
-							<option value="Fiat">Fiat</option>
-							<option value="Ford">Ford</option>
-							<option value="Mercedes">Mercedes</option>
-						</select>
-
-					
+						<select name="car-makes" id="car-makes"></select> 
 					</td>
 				</tr>
 				<tr>
 					<td>Modello</td>
 					<td>
-<!-- 						<select id="modelAuto" name="modelAuto" url="" required="required"></select> -->
-<!-- 						<option selected="selected" value="">Scegli</option> -->
-						<select id="modelAuto" name="modelAuto" >
-							<option value="500">500</option>
-							<option value="Fiesta">Fiesta</option>
-						</select>
+
+						
+						<select name="car-models" id="car-models"></select>
+						
 					</td>
 				</tr>
 				<tr>
@@ -99,18 +98,18 @@
 					<td>Colore</td>
 					<td>
 						<select id="colorAuto" name="colorAuto">
-							<option value="FFAD5B">arancio</option>
-							<option value="FFFFFF">bianco</option>
-							<option value="0000FF">blu</option>
-							<option value="BBBBFD">celeste</option>				
-							<option value="C0C0C0">grigio chiaro</option>
-							<option value="A0A0A0">grigio metallizzato</option>
-							<option value="996633">marrone</option>
-							<option value="000000" selected="selected">nero</option>
-							<option value="988800">oro</option>
-							<option value="FF04FF">rosa</option>
-							<option value="FF0000">rosso</option>
-							<option value="00FF00">verde</option>
+							<option>arancio</option>
+							<option>bianco</option>
+							<option>blu</option>
+							<option>celeste</option>				
+							<option>grigio chiaro</option>
+							<option selected="selected">grigio metallizzato</option>
+							<option>marrone</option>
+							<option>nero</option>
+							<option>oro</option>
+							<option>rosa</option>
+							<option>rosso</option>
+							<option>verde</option>
 						</select>
 					</td>
 				</tr>
@@ -119,6 +118,15 @@
 <!-- 				<td> -->
 <%-- 					<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%>
 <!-- 				</td> -->
+
+					<td>
+					<img src="/GiveMeALift/avatars/${user.id}.jpg"   width="150" onerror="this.style.visibility = 'hidden'">
+					<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data"> 
+	<!-- 						<form name="myWebForm" method="post" enctype="multipart/form-data">  -->
+					<input type="file" name="uploadFile"/><br>
+					<input value="Carica" type="submit"/>							
+					</form>
+				</td>
 			</tr>
 				</table>
 			</div>
