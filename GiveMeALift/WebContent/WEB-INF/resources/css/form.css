@@ -18,33 +18,33 @@
 
 input[type=text],input[type=password] {
 	border: 1px solid #d4d4d4;
-	/* padding: 7px 10px 5px; */
+	padding: 7px 10px 5px;
 	background-color: #fff;
 
 	width: 180px;
 	height: 29px;
-	/* float:left; */
+	float:left;
 	font: 14px/18px  Arial, Helvetica, sans-serif;
 	color:#858080;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box; /*Firefox 1-3*/
-	-webkit-box-sizing: border-box; /* Safari */
+	-moz-box-sizing: border-box; Firefox 1-3
+	-webkit-box-sizing: border-box; Safari
 }
 
-input[type=submit],input[type=button] {
+/* input[type=submit],input[type=button] {
 	border: 1px solid #d4d4d4;
 	padding: 7px 10px 5px;
-	/* background-color: #fff; */
+	background-color: #fff;
 	min-width: 100px;
 	height: 29px;
-	/* float:left; */
+	float:left;
 	font: 14px/18px  Arial, Helvetica, sans-serif;
 	color:#858080;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box; /* Firefox 1-3 */
-	-webkit-box-sizing: border-box; /* Safari */
+	-moz-box-sizing: border-box; Firefox 1-3
+	-webkit-box-sizing: border-box; Safari
 	display: compact;
-}
+} */
 
 
 .form textarea {
@@ -57,8 +57,8 @@ input[type=submit],input[type=button] {
 	position: relative;
 	resize:none;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box; /*Firefox 1-3*/
-	-webkit-box-sizing: border-box; /* Safari */
+	-moz-box-sizing: border-box; Firefox 1-3
+	-webkit-box-sizing: border-box; Safari
 	float:left;
 	font: 14px/18px  Arial, Helvetica, sans-serif;
 	color:#858080;
@@ -150,8 +150,8 @@ input[type=submit],input[type=button] {
 	padding: 20px 10px;
 	z-index: 999;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box; /*Firefox 1-3*/
-	-webkit-box-sizing: border-box; /* Safari */
+	-moz-box-sizing: border-box; Firefox 1-3
+	-webkit-box-sizing: border-box; Safari
 }
 
 .success_wrapper {

@@ -97,7 +97,7 @@ public class DBTest {
 		ldm.insert(det2);
 		
 		
-		l.setPossibleDetour(true);
+//		l.setPossibleDetour(true);
 		l.setUserOffering(user);
 		
 		LiftPreference pref = new LiftPreference();

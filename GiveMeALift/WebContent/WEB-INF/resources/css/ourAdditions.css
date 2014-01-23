@@ -20,19 +20,19 @@
 	text-align: center;
 }
 
-.sidebar1 .sliderBox{
+.sliderBox{
 	/* text-align: center; */
 	padding: 10px;
 	padding-bottom: 20px;
 }
 
-.sidebar1 #range{
+#range{
 	border:0; 
 	color:black;
 	font-weight:bold;
 }
 
-.sidebar1 #slider-range{
+#slider-range{
 	border:3px; 
 }
 
@@ -72,7 +72,7 @@
 	background-color: #F5F5F5;
 }
 
-input[type="button"],input[type="submit"]{
+/* input[type="button"],input[type="submit"]{
 	background-color:#F5F5F5;
 	padding: 7px 10px 9px;
 	min-width: 40px;
@@ -83,11 +83,11 @@ input[type="button"],input[type="submit"]{
   	text-align: center;
   	font-family: fantasy;
 	
-}
+} */
 
-input[type="button"]:HOVER{
+/* input[type="button"]:HOVER{
 	background-color:white;
-}
+} */
 
 .labelTable{
 	font-weight: bold;

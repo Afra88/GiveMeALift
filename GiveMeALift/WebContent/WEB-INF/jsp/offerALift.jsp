@@ -66,6 +66,7 @@
 					<ol>
 <!-- 						<li><input id="detour0" class="autocomplete" type="text" name="detour0"></input></li> -->
 <!-- 						<li><input type="text" id=detour name=detour /></li> -->
+							<li></li>
 					</ol></td>
 			</tr>
 			<tr>

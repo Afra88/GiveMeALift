@@ -45,8 +45,8 @@ public class RegisteredUser extends User {
 	private List<Message> messagesReceived;
 	
 	private List<Feedback> receivedFeedback;
-	
-	private DriverInfo driverInfo;
+
+	private Car car;
 	
 	
 	public RegisteredUser() {
@@ -119,6 +119,8 @@ public class RegisteredUser extends User {
 			this.description=u.description;
 		if(u.showContacts!=null)
 			this.showContacts=u.showContacts;
+		if(u.car!=null)
+			this.car=u.car;
 	}
 	
 	@OneToOne (fetch = FetchType.LAZY,cascade=CascadeType.ALL)
@@ -178,12 +180,12 @@ public class RegisteredUser extends User {
 	
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
-	public DriverInfo getDriverInfo() {
-		return driverInfo;
+	public Car getCar() {
+		return car;
 	}
 	
-	public void setDriverInfo(DriverInfo driverInfo) {
-		this.driverInfo = driverInfo;
+	public void setCar(Car car) {
+		this.car = car;
 	}
 	
 	public String getDescription() {
@@ -206,12 +208,11 @@ public class RegisteredUser extends User {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((car == null) ? 0 : car.hashCode());
 		result = prime * result
 				+ ((countAlert == null) ? 0 : countAlert.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result
-				+ ((driverInfo == null) ? 0 : driverInfo.hashCode());
 		result = prime
 				* result
 				+ ((messagesReceived == null) ? 0 : messagesReceived.hashCode());
@@ -244,6 +245,11 @@ public class RegisteredUser extends User {
 		if (getClass() != obj.getClass())
 			return false;
 		RegisteredUser other = (RegisteredUser) obj;
+		if (car == null) {
+			if (other.car != null)
+				return false;
+		} else if (!car.equals(other.car))
+			return false;
 		if (countAlert == null) {
 			if (other.countAlert != null)
 				return false;
@@ -253,11 +259,6 @@ public class RegisteredUser extends User {
 			if (other.description != null)
 				return false;
 		} else if (!description.equals(other.description))
-			return false;
-		if (driverInfo == null) {
-			if (other.driverInfo != null)
-				return false;
-		} else if (!driverInfo.equals(other.driverInfo))
 			return false;
 		if (messagesReceived == null) {
 			if (other.messagesReceived != null)
@@ -301,6 +302,7 @@ public class RegisteredUser extends User {
 			return false;
 		return true;
 	}
+	
 	
 	
 	

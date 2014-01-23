@@ -24,6 +24,10 @@ public class Message extends DomainObject {
 	private String text;
 	@Column(name="DATE_SENDING")
 	private Date dateSending;
+	@Column(name="READ")
+	private Boolean isRead;
+	@Column(name="ARCHIVIATED")
+	private Boolean isArchiviated;
 	
 	public Message() {}
 	
@@ -87,6 +91,23 @@ public class Message extends DomainObject {
 		this.dateSending = dateSending;
 	}
 
+	
+	public Boolean getIsArchiviated() {
+		return isArchiviated;
+	}
+	
+	public void setIsArchiviated(Boolean isArchiviated) {
+		this.isArchiviated = isArchiviated;
+	}
+	
+	public void setIsRead(Boolean isRead) {
+		this.isRead = isRead;
+	}
+	
+	public Boolean getIsRead() {
+		return isRead;
+	}
+	
 
 
 	@Override
@@ -100,15 +121,22 @@ public class Message extends DomainObject {
 			this.text=m.text;
 		if(m.dateSending!=null)
 			this.dateSending=m.dateSending;
+		if(m.isRead!=null)
+			this.isRead=m.isRead;
+		if(m.isArchiviated!=null)
+			this.isArchiviated=m.isArchiviated;
 	}
 
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result
 				+ ((dateSending == null) ? 0 : dateSending.hashCode());
+		result = prime * result
+				+ ((isArchiviated == null) ? 0 : isArchiviated.hashCode());
+		result = prime * result + ((isRead == null) ? 0 : isRead.hashCode());
 		result = prime * result
 				+ ((receiver == null) ? 0 : receiver.hashCode());
 		result = prime * result + ((sender == null) ? 0 : sender.hashCode());
@@ -131,6 +159,16 @@ public class Message extends DomainObject {
 				return false;
 		} else if (!dateSending.equals(other.dateSending))
 			return false;
+		if (isArchiviated == null) {
+			if (other.isArchiviated != null)
+				return false;
+		} else if (!isArchiviated.equals(other.isArchiviated))
+			return false;
+		if (isRead == null) {
+			if (other.isRead != null)
+				return false;
+		} else if (!isRead.equals(other.isRead))
+			return false;
 		if (receiver == null) {
 			if (other.receiver != null)
 				return false;
@@ -148,6 +186,7 @@ public class Message extends DomainObject {
 			return false;
 		return true;
 	}
+	
 	
 	
 

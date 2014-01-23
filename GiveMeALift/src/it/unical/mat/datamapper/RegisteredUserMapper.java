@@ -103,8 +103,7 @@ public class RegisteredUserMapper extends AbstractMapper {
 				@SuppressWarnings("unchecked")
 				List<User> objects=query.list();
 				RegisteredUser l=(RegisteredUser) objects.get(0);
-				Hibernate.initialize(l.getDriverInfo());
-//				Hibernate.initialize(l.getDriverInfo().getCar());
+				Hibernate.initialize(l.getCar());
 				transaction.commit();
 				return l;
 		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
@@ -135,5 +134,26 @@ public class RegisteredUserMapper extends AbstractMapper {
 		
 			return users;
 	}
+	
+	public RegisteredUser findRegisteredUserByTelephone(String telephone) {
+		List<RegisteredUser> users = new LinkedList<RegisteredUser>();				
+				String findStatement = "from RegisteredUser"
+						+ " where " 			
+						+ " mobilePhone= :par1"
+						;
+				
+				Map<String, Object> parameters=new HashMap<String, Object>();
+				parameters.put("par1", telephone);
+				
+				Collection<DomainObject> objects = find(findStatement, parameters,false);
+				for (DomainObject object : objects) {
+					users.add((RegisteredUser) object);
+				}		
+		
+				if(users.size()==1)
+					return users.get(0);
+				return null;
+	}
+
 
 }

@@ -37,7 +37,7 @@ public class OfferController {
 	}
 	
 	@RequestMapping(value ="/Step1UpdateLiftOfferALift")
-	public String step1UpdateLiftOfferALift(@RequestParam String lift,Model model,HttpSession session){
+	public String step1UpdateLiftOfferALift(@RequestParam String lift, Model model, HttpSession session){
 		if(session.getAttribute("user")!=null && lift.matches("[0-9]+")){
 				LiftMapper lm=new LiftMapper();
 				Lift l=lm.findById(lift);
@@ -476,7 +476,7 @@ public class OfferController {
 		LiftPreference lp = new LiftPreference(roadType,luggageSize,delay,pink);
 		
 		/////////////////////////LIFT PREFERENCES////////////////////////////////////
-		
+	
 		ArrayList <LiftPoint> path = new ArrayList<LiftPoint>();
 		
 		LiftPoint from = new LiftPoint(mapFrom);
