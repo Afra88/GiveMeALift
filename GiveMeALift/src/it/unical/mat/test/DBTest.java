@@ -148,4 +148,8 @@ public class DBTest {
 		assertTrue(ldm.findDetourFromPickUpAndDropOffPoints("Cosenza", "Firenze").size()> 0);
 	}
 
+	@Test
+	public void usersFromCity(){
+		assertTrue(rm.findUsersFromCity("Cosenza").size() > 0 );
+	}
 }

@@ -69,19 +69,19 @@
 			<tr>
 				<td>Marca</td>
 				<td> 
-					<input id="brandCar" name="brandCar" type="text" value ="${user.getDriverInfo().getCar().getBrand()}"></input>
+					<input id="brandCar" name="brandCar" type="text" value ="${user.getCar().getBrand()}"></input>
 				</td>
 			</tr>
 			<tr>
 				<td>Modello</td>
 				<td> 
-					<input id="modelCar" name="modelCar" type="text" value ="${user.getDriverInfo().getCar().getModel()}"></input>
+					<input id="modelCar" name="modelCar" type="text" value ="${user.getCar().getModel()}"></input>
 				</td>
 			</tr>
 			<tr>
 				<td>Colore</td>
 				<td> 
-					<input id="colorCar" name="colorCar" type="text" value ="${user.getDriverInfo().getCar().getColor()}"></input>		
+					<input id="colorCar" name="colorCar" type="text" value ="${user.getCar().getColor()}"></input>		
 					
 				</td>
 			</tr>
@@ -89,16 +89,16 @@
 				<td>Confort</td>
 				<td> 
 					<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getConfort() == 1}">
+						<c:when test="${user.getCar().getConfort() == 1}">
 							<input id="confortCar" name="confortCar" type="text" value ="base"></input>
 						</c:when>
-						<c:when test="${user.getDriverInfo().getCar().getConfort() == 2}">
+						<c:when test="${user.getCar().getConfort() == 2}">
 							<input id="confortCar" name="confortCar" type="text" value ="normale"></input>
 						</c:when>
-						<c:when test="${user.getDriverInfo().getCar().getConfort() == 3}">
+						<c:when test="${user.getCar().getConfort() == 3}">
 							<input id="confortCar" name="confortCar" type="text" value ="confortevole"></input>
 						</c:when>
-						<c:when test="${user.getDriverInfo().getCar().getConfort() == 4}">
+						<c:when test="${user.getCar().getConfort() == 4}">
 							<input id="confortCar" name="confortCar" type="text" value ="lusso"></input>
 						</c:when>
 					</c:choose>
@@ -107,7 +107,7 @@
 			<tr>
 				<td>Foto</td>
 				<td>
-<%-- 					<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%>
+<%-- 					<img id="photoCar" name="photoCar" src="${user.getCar().getPhoto()}"></img> --%>
 					<img src="/GiveMeALift/avatars/${user.id}_car.jpg"   width="150" onerror="this.style.visibility = 'hidden'">					
 				</td>
 			</tr>
@@ -150,7 +150,7 @@
 					<td>
 						<select id="colorAuto" name="colorAuto">
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==arancio}">
+						<c:when test="${user.getCar().getColor()==arancio}">
 							<option selected="selected">arancio</option>
 						</c:when>
 						<c:otherwise>
@@ -158,7 +158,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==bianco}">
+						<c:when test="${user.getCar().getColor()==bianco}">
 							<option selected="selected">bianco</option>
 						</c:when>
 						<c:otherwise>
@@ -166,7 +166,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==blu}">
+						<c:when test="${user.getCar().getColor()==blu}">
 							<option selected="selected">blu</option>
 						</c:when>
 						<c:otherwise>
@@ -174,7 +174,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==celeste}">
+						<c:when test="${user.getCar().getColor()==celeste}">
 							<option selected="selected">celeste</option>	
 						</c:when>
 						<c:otherwise>
@@ -182,7 +182,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==grigio}">			
+						<c:when test="${user.getCar().getColor()==grigio}">			
 							<option selected="selected">grigio</option>
 						</c:when>
 						<c:otherwise>
@@ -190,7 +190,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==marrone}">
+						<c:when test="${user.getCar().getColor()==marrone}">
 							<option selected="selected">marrone</option>
 						</c:when>
 						<c:otherwise>
@@ -198,7 +198,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==bianco}">
+						<c:when test="${user.getCar().getColor()==bianco}">
 							<option selected="selected">nero</option>
 						</c:when>
 						<c:otherwise>
@@ -206,7 +206,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==oro}">
+						<c:when test="${user.getCar().getColor()==oro}">
 							<option selected="selected">oro</option>
 						</c:when>
 						<c:otherwise>
@@ -214,7 +214,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==rosa}">
+						<c:when test="${user.getCar().getColor()==rosa}">
 							<option selected="selected">rosa</option>
 						</c:when>
 						<c:otherwise>
@@ -222,7 +222,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==rosso}">
+						<c:when test="${user.getCar().getColor()==rosso}">
 							<option selected="selected">rosso</option>
 						</c:when>
 						<c:otherwise>
@@ -230,7 +230,7 @@
 						</c:otherwise>
 						</c:choose>
 						<c:choose>
-						<c:when test="${user.getDriverInfo().getCar().getColor()==verde}">
+						<c:when test="${user.getCar().getColor()==verde}">
 							<option selected="selected">verde</option>
 						</c:when>
 						<c:otherwise>
@@ -252,7 +252,7 @@
 <!-- 						</select> -->
 
 						<c:choose>
-							<c:when test="${user.getDriverInfo().getCar().getConfort()==1}">
+							<c:when test="${user.getCar().getConfort()==1}">
 								<option selected="selected">base</option>
 							</c:when>
 							<c:otherwise>
@@ -260,7 +260,7 @@
 							</c:otherwise>
 							</c:choose>
 							<c:choose>
-							<c:when test="${user.getDriverInfo().getCar().getConfort()==2}">
+							<c:when test="${user.getCar().getConfort()==2}">
 								<option selected="selected">normale</option>
 							</c:when>
 							<c:otherwise>
@@ -268,7 +268,7 @@
 							</c:otherwise>
 							</c:choose>
 							<c:choose>
-							<c:when test="${user.getDriverInfo().getCar().getConfort()==3}">
+							<c:when test="${user.getCar().getConfort()==3}">
 								<option selected="selected">confortevole</option>
 							</c:when>
 							<c:otherwise>
@@ -276,7 +276,7 @@
 							</c:otherwise>
 							</c:choose>
 							<c:choose>
-							<c:when test="${user.getDriverInfo().getCar().getConfort()==4}">
+							<c:when test="${user.getCar().getConfort()==4}">
 								<option selected="selected">lusso</option>
 							</c:when>
 							<c:otherwise>

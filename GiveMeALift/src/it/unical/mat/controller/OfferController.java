@@ -476,7 +476,7 @@ public class OfferController {
 		LiftPreference lp = new LiftPreference(roadType,luggageSize,delay,pink);
 		
 		/////////////////////////LIFT PREFERENCES////////////////////////////////////
-	
+
 		ArrayList <LiftPoint> path = new ArrayList<LiftPoint>();
 		
 		LiftPoint from = new LiftPoint(mapFrom);
@@ -775,15 +775,17 @@ public class OfferController {
 		System.out.println(deviation);
 		System.out.println(description);
 
-		lm.insert(l);		
+		if(	lm.insert(l)!=0){
+			
+			return "submitALift";
+		}
 		
+		return "error";
 		///////////////////////// RETURN LIFT IF PRESENT ////////////////////////////////////
 		
 		
-		return "submitALift";
 	}
 	
 	
 	
 }
-
