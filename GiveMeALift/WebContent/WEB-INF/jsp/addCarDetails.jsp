@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%-- <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -58,7 +59,7 @@
 		
 		
 		
-			<form method="get" action="SubmitCar">
+			<form:form modelAttribute="uploadForm" method="post" action="SubmitCar"  enctype="multipart/form-data">
 			<div class="greenTable">
 				<table id="addMyCar" class="table">
 				<tr>
@@ -102,8 +103,7 @@
 							<option>bianco</option>
 							<option>blu</option>
 							<option>celeste</option>				
-							<option>grigio chiaro</option>
-							<option selected="selected">grigio metallizzato</option>
+							<option selected="selected">grigio</option>
 							<option>marrone</option>
 							<option>nero</option>
 							<option>oro</option>
@@ -113,6 +113,7 @@
 						</select>
 					</td>
 				</tr>
+				
 				<tr>
 				<td>Foto</td>
 <!-- 				<td> -->
@@ -120,18 +121,23 @@
 <!-- 				</td> -->
 
 					<td>
-					<img src="/GiveMeALift/avatars/${user.id}.jpg"   width="150" onerror="this.style.visibility = 'hidden'">
-					<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data"> 
-	<!-- 						<form name="myWebForm" method="post" enctype="multipart/form-data">  -->
-					<input type="file" name="uploadFile"/><br>
-					<input value="Carica" type="submit"/>							
-					</form>
+					<img src="/GiveMeALift/avatars/${user.id}_car.jpg"   width="150" onerror="this.style.visibility = 'hidden'">
+<!-- 					<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data">  -->
+<!-- 							<form name="myWebForm" method="post" enctype="multipart/form-data">  --> 
+<!-- 					<input type="file" name="uploadFile"/><br> -->
+
+<%-- 					<form:form method="post" action="Save" modelAttribute="uploadForm" enctype="multipart/form-data"> --%>
+<!-- 					<p>Select files to upload. Press Add button to add more file inputs.</p> -->
+				
+     				<input name="files[0]" type="file" />
+<!-- 				    <input type="submit" value="Carica foto" />				     -->
+<%-- 					</form:form> --%>
 				</td>
 			</tr>
 				</table>
 			</div>
 				<p align = "center"><input value="Conferma" type="submit"/></p>
-			</form>
+			</form:form>
 			
 	</div>
 </div>

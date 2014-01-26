@@ -1,4 +1,7 @@
 <%@include file="header.jsp"%>
+
+<META http-equiv="refresh" content="3; URL=ShowUserCar">
+
 <div class="container_12">
 	<div class="grid_12">
 	<c:choose>
@@ -9,6 +12,8 @@
 			<h3 class="center" >L'eliminazione dell'auto è avvenuta con successo. </h3>		
 		</c:otherwise>
 	</c:choose>
+	
+	<h4 class="center" >Redirect in 3 secondi</h4>
 	</div>
 </div>
 
