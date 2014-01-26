@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/pagination.css" type="text/css" />
     <link rel="stylesheet" href="css/blueTable.css">
     <link rel="stylesheet" href="css/orangeTable.css">
+    <link rel="stylesheet" href="js/pictogram-button.css" >
     
     <link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
@@ -251,17 +252,17 @@
 	<input type="hidden" id="mapTo" name="mapTo" value="${path.get(path.size()-1)}" /> 
 	
 	<c:choose>
-	<c:when test="${inputs.get(1)!=null}">
-		<input type="hidden" id="date" name="date" value="${inputs.get(0)},${inputs.get(1)}" >
+	<c:when test="${inputs.size()>3}">
+		<input type="hidden" id="date" name="date" value="${inputs.get(0)},${inputs.get(3)}" >
+		<input type="hidden" id="returnTimeH" name="returnTimeH" value="${inputs.get(4)}" >
+		<input type="hidden" id="returnTimeM" name="returnTimeM" value="${inputs.get(5)}" >
 	</c:when>
 	<c:otherwise>
-		<input type="hidden" id="date" name="date" value="${inputs.get(1)}" >
+		<input type="hidden" id="date" name="date" value="${inputs.get(0)}" >
 	</c:otherwise>
 	</c:choose>
-	<input type="hidden" id="goingTimeH" name="goingTimeH" value="${inputs.get(2)}" >
-	<input type="hidden" id="goingTimeM" name="goingTimeM" value="${inputs.get(3)}" >
-	<input type="hidden" id="returnTimeH" name="returnTimeH" value="${inputs.get(4)}" >
-	<input type="hidden" id="returnTimeM" name="returnTimeM" value="${inputs.get(5)}" >
+	<input type="hidden" id="goingTimeH" name="goingTimeH" value="${inputs.get(1)}" >
+	<input type="hidden" id="goingTimeM" name="goingTimeM" value="${inputs.get(2)}" >
 		
 	<div class="greenTable">
 		<table id="plusDetails" class=table>
@@ -331,10 +332,10 @@
 				<td>
 				<c:choose>
 					<c:when test="${lift!=null}">
-						<textarea  cols="40" rows="6" maxlength="700" >${lift.description}</textarea>
+						<textarea  cols="40" rows="6" maxlength="700" name="description"  >${lift.description}</textarea>
 					</c:when>
 					<c:otherwise>
-						<textarea  cols="40" rows="6" maxlength="700" >
+						<textarea  cols="40" rows="6" maxlength="700" name="description" >
 						Fornisci informazioni aggiuntive sul tuo viaggio. 
 						Cerca di invogliare più passeggeri a contattarti!
 						</textarea>
@@ -436,21 +437,34 @@
 			<td><h2> Disponibile a deviazioni: </h2></td>
 				<td>
 					<c:choose>
- 					<c:when test="${lift!=null}"></c:when>
+ 					<c:when test="${lift!=null}">
 						<select id="deviation" name="deviation">
 							<c:if test="${lift.liftPreferences.deviation==nothing}">
+			 				 	<option value="nothing" selected="selected">Nessuna deviazione, mi dispiace... :|</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.deviation!=nothing}">
 			 				 	<option value="nothing">Nessuna deviazione, mi dispiace... :|</option>
 							</c:if>
-							<c:if test="${lift.liftPreferences.deviation==15min}">
+							<c:if test="${lift.liftPreferences.deviation=='15min'}">
+			  					<option selected="selected" value="15min">15 minuti al massimo</option>
+						  	</c:if>
+						  	<c:if test="${lift.liftPreferences.deviation!='15min'}">
 			  					<option value="15min">15 minuti al massimo</option>
 						  	</c:if>
-							<c:if test="${lift.liftPreferences.deviation==30min}">
+							<c:if test="${lift.liftPreferences.deviation!='30min'}">
 			  					<option value="30min">30 minuti al massimo</option>
 							</c:if>
-							<c:if test="${lift.liftPreferences.deviation==any}">
+							<c:if test="${lift.liftPreferences.deviation=='30min'}">
+			  					<option selected="selected" value="30min">30 minuti al massimo</option>
+							</c:if>
+							<c:if test="${lift.liftPreferences.deviation!=any}">
 			  					<option value="any">Qualsiasi deviazione. No Problem! :D</option>
-							</c:if>		  					
+							</c:if>	
+							<c:if test="${lift.liftPreferences.deviation==any}">
+			  					<option selected="selected" value="any">Qualsiasi deviazione. No Problem! :D</option>
+							</c:if>	  					
 						</select>
+ 					</c:when>
 					<c:otherwise>
 						<select id="deviation" name="deviation">
 		 				 	<option value="nothing">Nessuna deviazione, mi dispiace... :|</option>
@@ -540,16 +554,17 @@
 			</tr>
 			<tr>
 				<td colspan="2" >
-					<b><i>${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)}</i></b>
+				<b><i>${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)}</i></b>
 					<br>
-					<font color="blue">Andata:</font> ${inputs.get(0)} - ore: ${inputs.get(2)}:${inputs.get(3)}
+					<font color="blue">Andata:</font> ${inputs.get(0)} - ore: ${inputs.get(1)}:${inputs.get(2)}
 					<br>
-					<font color="blue">Ritorno:</font> ${inputs.get(1)} - ore: ${inputs.get(4)}:${inputs.get(5)}
-				</td>	
+					<c:if test="${inputs.size()>3}">
+						<font color="blue">Ritorno:</font> ${inputs.get(3)} - ore: ${inputs.get(4)}:${inputs.get(5)}
+				</c:if>
 			</tr>
 			<tr>
 				<td>
-					<input type="button" id="goBack" value="Indietro" onClick="history.back()"/>
+					<input type="button" class="button"  id="goBack" value="Indietro" onClick="history.back()"/>
 				</td>
 				<td>
 					<!-- <input type="button" value="Pubblica" id="submit"  /> -->

@@ -250,17 +250,17 @@
 	<input type="hidden" id="mapTo" name="mapTo" value="${path.get(path.size()-1)}" /> 
 	
 	<c:choose>
-	<c:when test="${inputs.get(1)!='NULL'}">
-		<input type="hidden" id="date" name="date" value="${inputs.get(0)},${inputs.get(1)}" >
+	<c:when test="${inputs.size()>3}">
+		<input type="hidden" id="date" name="date" value="${inputs.get(0)},${inputs.get(3)}" >
+		<input type="hidden" id="returnTimeH" name="returnTimeH" value="${inputs.get(4)}" >
+		<input type="hidden" id="returnTimeM" name="returnTimeM" value="${inputs.get(5)}" >
 	</c:when>
 	<c:otherwise>
-		<input type="hidden" id="date" name="date" value="${inputs.get(1)}" >
+		<input type="hidden" id="date" name="date" value="${inputs.get(0)}" >
 	</c:otherwise>
 	</c:choose>
-	<input type="hidden" id="goingTimeH" name="goingTimeH" value="${inputs.get(2)}" >
-	<input type="hidden" id="goingTimeM" name="goingTimeM" value="${inputs.get(3)}" >
-	<input type="hidden" id="returnTimeH" name="returnTimeH" value="${inputs.get(4)}" >
-	<input type="hidden" id="returnTimeM" name="returnTimeM" value="${inputs.get(5)}" >
+	<input type="hidden" id="goingTimeH" name="goingTimeH" value="${inputs.get(1)}" >
+	<input type="hidden" id="goingTimeM" name="goingTimeM" value="${inputs.get(2)}" >
 	
 	
 <%-- 	<!-- hidden div per visualizzare nel dom i valori di inputs -->
@@ -393,9 +393,11 @@
 				<td colspan="2" >
 					<b><i>${path.get(0)} <img src="images/freccia1.gif" height="10px"/> ${path.get(path.size()-1)}</i></b>
 					<br>
-					<font color="blue">Andata:</font> ${inputs.get(0)} - ore: ${inputs.get(2)}:${inputs.get(3)}
+					<font color="blue">Andata:</font> ${inputs.get(0)} - ore: ${inputs.get(1)}:${inputs.get(2)}
 					<br>
-					<font color="blue">Ritorno:</font> ${inputs.get(1)} - ore: ${inputs.get(4)}:${inputs.get(5)}
+					<c:if test="${inputs.size()>3}">
+						<font color="blue">Ritorno:</font> ${inputs.get(3)} - ore: ${inputs.get(4)}:${inputs.get(5)}
+					</c:if>
 				</td>	
 <%-- 	 		<c:forEach var="i" items="${inputs}">  --%>
 <!-- 	 		<tr>  -->

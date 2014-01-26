@@ -83,12 +83,14 @@
 	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
 	<link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" href="js/pictogram-button.css" >
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/font-awesome.css">
 	<link rel="stylesheet" href="css/slider.css">
 	<link rel="stylesheet" href="css/elastislide.css">
 	<link rel="stylesheet" href="css/form.css">
 	<link rel="stylesheet" href="js/GooglePlaceAutocomplete/placeAutocomplete.css">
+	
 	
 	<script src="js/cssJs/jquery-migrate-1.1.1.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -198,7 +200,7 @@
 				<script type="text/javascript" src="js/currentDate.js"></script>
 			</label>
 			<div class="clear"></div>
-			<div class="btns"><input type="submit" value="Cerca"/></div>
+			<div class="btns"><input class="button cyan" type="submit" value="Cerca"/></div>
             <div class="clear"></div>
 <!--             </p> -->
 		</form>

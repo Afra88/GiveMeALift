@@ -9,6 +9,7 @@ import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.service.LiftToViewConverterFacade;
+import it.unical.mat.service.ParseDate;
 
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
@@ -153,6 +154,12 @@ public class SearchController {
 				model.addAttribute("userOffering",u);
 				model.addAttribute("userNickName",u.computeNickName());
 				model.addAttribute("userAge",u.computeAge());
+				if(u.getUserActivity()!=null){
+					if(u.getUserActivity().getMemberSince()!=null)
+						model.addAttribute("memberSince",ParseDate.getItalianFormat(u.getUserActivity().getMemberSince().toString()));
+					if(u.getUserActivity().getLastOnline()!=null)
+						model.addAttribute("lastOnline",ParseDate.getItalianFormat(u.getUserActivity().getLastOnline().toString()));
+				}
 			}
 //			else{
 //				RegisteredUserMapper rm=new RegisteredUserMapper();

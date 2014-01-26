@@ -19,17 +19,28 @@ public class LiftPreference extends DomainObject {
 	private String scheduleFlexibility;
 	@Column(name = "PINK_TRIP")
 	private Boolean pinkTrip;
+	@Column(name="DEVIATION")
+	private String deviation;
 	
 	public LiftPreference() {
 	}
 	
 	
 	public LiftPreference(String roadType, Integer luggageSize, String scheduleFlexibility,
-			Boolean pinkTrip) {
+			Boolean pinkTrip, String deviation) {
 		this.roadType = roadType;
 		this.luggageSize = luggageSize;
 		this.scheduleFlexibility = scheduleFlexibility;
 		this.pinkTrip = pinkTrip;
+		this.deviation=deviation;
+	}
+	
+	public void setDeviation(String deviation) {
+		this.deviation = deviation;
+	}
+	
+	public String getDeviation() {
+		return deviation;
 	}
 
 	@Override
@@ -88,6 +99,8 @@ public class LiftPreference extends DomainObject {
 			this.scheduleFlexibility = lp.scheduleFlexibility;
 		if(lp.pinkTrip != null)
 			this.pinkTrip = lp.pinkTrip;
+		if(lp.deviation!=null)
+			this.deviation = lp.deviation;
 	}
 
 
@@ -99,10 +112,13 @@ public class LiftPreference extends DomainObject {
 		return luggageSize;
 	}
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((deviation == null) ? 0 : deviation.hashCode());
 		result = prime * result
 				+ ((luggageSize == null) ? 0 : luggageSize.hashCode());
 		result = prime * result
@@ -116,6 +132,7 @@ public class LiftPreference extends DomainObject {
 		return result;
 	}
 
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -125,6 +142,11 @@ public class LiftPreference extends DomainObject {
 		if (getClass() != obj.getClass())
 			return false;
 		LiftPreference other = (LiftPreference) obj;
+		if (deviation == null) {
+			if (other.deviation != null)
+				return false;
+		} else if (!deviation.equals(other.deviation))
+			return false;
 		if (luggageSize == null) {
 			if (other.luggageSize != null)
 				return false;

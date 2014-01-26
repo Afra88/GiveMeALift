@@ -23,12 +23,12 @@ input[type=text],input[type=password] {
 
 	width: 180px;
 	height: 29px;
-	float:left;
+/* 	float:left; */
 	font: 14px/18px  Arial, Helvetica, sans-serif;
 	color:#858080;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box; Firefox 1-3
-	-webkit-box-sizing: border-box; Safari
+	-moz-box-sizing: border-box; /* Firefox 1-3 */
+	-webkit-box-sizing: border-box; /* Safari */
 }
 
 /* input[type=submit],input[type=button] {

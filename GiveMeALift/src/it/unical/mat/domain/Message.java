@@ -29,6 +29,8 @@ public class Message extends DomainObject {
 	@Column(name="ARCHIVIATED")
 	private Boolean isArchiviated;
 	
+	//TODO server messaggio di risposta
+	
 	public Message() {}
 	
 	

@@ -29,7 +29,7 @@ public class RegisteredUserMapper extends AbstractMapper {
 		return result;
 	}
 	
-	public List<RegisteredUser> getMaleUsers(String g){
+	public List<RegisteredUser> findMale(String g){
 		List<RegisteredUser> users = new LinkedList<RegisteredUser>();
 				
 		String findStatement = "from RegisteredUser"
@@ -50,7 +50,7 @@ public class RegisteredUserMapper extends AbstractMapper {
 	}
 	
 	
-	public List<RegisteredUser> getUserBornInYear(Integer year){
+	public List<RegisteredUser> findByBirthYear(Integer year){
 		List<RegisteredUser> users = new LinkedList<RegisteredUser>();
 		
 		String findStatement = "from RegisteredUser"
@@ -153,6 +153,28 @@ public class RegisteredUserMapper extends AbstractMapper {
 				if(users.size()==1)
 					return users.get(0);
 				return null;
+	}
+	
+	public List<?> findMemberByMonth() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {			
+			String findStatement = "select month(User_Activity.MEMBERSINCE),count(User_id) from User,User_Activity "
+					+ " where User.User_ID=User_Activity.MEMBER_ACTIVITY_ID"
+					+ " group by month(User_Activity.MEMBERSINCE) ";
+		
+			transaction = session.beginTransaction();
+			Query query = session.createSQLQuery(findStatement);
+			List<?> res=query.list();
+			transaction.commit();
+			return res;
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return null;
 	}
 
 

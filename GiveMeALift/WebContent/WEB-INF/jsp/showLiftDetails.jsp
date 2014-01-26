@@ -28,7 +28,7 @@
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Partenza</h4>
+					<h5>Partenza</h5>
 				</td>
 				<td>
 					<c:choose>
@@ -55,7 +55,7 @@
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Arrivo</h4>
+					<h5>Arrivo</h5>
 				</td>
 				<td>
 				<c:choose>
@@ -82,31 +82,23 @@
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Data</h4>
+					<h5>Data</h5>
 				</td>
 				<td>
-					${lift.get(0).departureDate}
+					${lift.get(1)}
 				</td>
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Ora</h4>
+					<h5>Ora</h5>
 				</td>
 				<td>
-					${lift.get(1)}:${lift.get(2)}
+					${lift.get(2)}:${lift.get(3)}
 				</td>
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Flessibilità oraria</h4>
-				</td>
-				<td>
-					${lift.get(3)}
-				</td>
-			</tr>
-			<tr>
-				<td class="labelTable">
-					<h4>Deviazioni</h4>
+					<h5>Flessibilità oraria</h5>
 				</td>
 				<td>
 					${lift.get(4)}
@@ -114,7 +106,7 @@
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Viaggio Rosa</h4>
+					<h5>Deviazioni</h5>
 				</td>
 				<td>
 					${lift.get(5)}
@@ -122,7 +114,7 @@
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Tipo di strada</h4>
+					<h5>Viaggio Rosa</h5>
 				</td>
 				<td>
 					${lift.get(6)}
@@ -130,7 +122,7 @@
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Dimensione del bagaglio</h4>
+					<h5>Tipo di strada</h5>
 				</td>
 				<td>
 					${lift.get(7)}
@@ -138,7 +130,15 @@
 			</tr>
 			<tr>
 				<td class="labelTable">
-					<h4>Auto</h4>
+					<h5>Dimensione del bagaglio</h5>
+				</td>
+				<td>
+					${lift.get(8)}
+				</td>
+			</tr>
+			<tr>
+				<td class="labelTable">
+					<h5>Auto</h5>
 				</td>
 				<td>
 					${$userOffering.driverInfo.car.brand}
@@ -158,7 +158,7 @@
 			</tr>
 			<tr>
 				<td>
-					<h4>Prezzo</h4>
+					<h5>Prezzo</h5>
 				</td>
 				<td>
 					<b>${lift.get(0).cost}  &#8364; a persona</b>
@@ -166,7 +166,7 @@
 			</tr>
 			<tr>
 				<td>
-					<h4>Posti disponibili</h4>
+					<h5>Posti disponibili</h5>
 				</td>
 				<td>
 					<b>${lift.get(0).nSeat}</b>
@@ -256,38 +256,42 @@
 					<h4>Attività</h4>
 				</td>
 			</tr>
-			<tr>
+			<%-- <tr>
 				<td>
 					Passaggi Offerti
 				</td>
 				<td>
 					${userOffering.userActivity.ridesOffered}
 				</td>
-			</tr>
-			<tr>
-				<td>
-					Iscrizione
-				</td>
-				<td>
-					${userOffering.userActivity.memberSince}
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Ultima volta online
-				</td>
-				<td>
-					${userOffering.userActivity.lastOnline}
-				</td>
-			</tr>
-			<tr>
+			</tr> --%>
+			<c:if test="${memberSince!=null}">
+				<tr>
+					<td>
+						<h5>Utente dal</h5>
+					</td>
+					<td>
+						${memberSince}
+					</td>
+				</tr>
+			</c:if>
+			<c:if test="${lastOnline!=null}">
+				<tr>
+					<td>
+						<h5>Online il </h5>
+					</td>
+					<td>
+						${lastOnline}
+					</td>
+				</tr>
+			</c:if>
+			<%-- <tr>
 				<td>
 					Percentuale di risposta
 				</td>
 				<td>
 					${userOffering.userActivity.answersPercentage}
 				</td>
-			</tr>
+			</tr> --%>
 	</table>
 </div>
 </div>

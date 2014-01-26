@@ -1,5 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%-- <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -20,11 +20,6 @@
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/font-awesome.css">
 		<link rel="stylesheet" href="css/form.css">
-		
-		<script type="text/javascript" src="http://www.carqueryapi.com/js/jquery.min.js"></script>
-		<script type="text/javascript" src="http://www.carqueryapi.com/js/carquery.0.3.3.js"></script>
-		<script type="text/javascript" src="js/carBrandAndModel.js"></script>
-		
 	</head>
 	<body>
 		<header>
@@ -50,267 +45,69 @@
 		  	</div>
 		  </div>
 		</header>
-	<div class="content">
-	<div class="container_12">
-	<div class="grid_6">
-	<div class="greenTable">
 	
+	<div class="container_12">
+	<div class="grid_12">
+	<div class="greenTable">
+	<form method="get" action="ModifyUserCar">
 		
 			<table id="personalAuto" class=table>
 			<tr>
 				<td colspan="2"> La mia auto </td>
 			</tr>
 			<tr>
-				<td>Anno</td>
-				<td> 
-					<input id="yearCar" name="yearCar" type="text" value ="${year}"></input>
-				</td>
-			</tr>
-			<tr>
 				<td>Marca</td>
 				<td> 
-					<input id="brandCar" name="brandCar" type="text" value ="${user.getCar().getBrand()}"></input>
+					<input id="brandCar" name="brandCar" type="text" value ="${user.getDriverInfo().getCar().getBrand()}"></input>
 				</td>
 			</tr>
 			<tr>
 				<td>Modello</td>
 				<td> 
-					<input id="modelCar" name="modelCar" type="text" value ="${user.getCar().getModel()}"></input>
+					<input id="modelCar" name="modelCar" type="text" value ="${user.getDriverInfo().getCar().getModel()}"></input>
 				</td>
 			</tr>
 			<tr>
 				<td>Colore</td>
 				<td> 
-					<input id="colorCar" name="colorCar" type="text" value ="${user.getCar().getColor()}"></input>		
+					<input id="colorCar" name="colorCar" type="text" value ="${user.getDriverInfo().getCar().getColor()}"></input>		
 					
 				</td>
 			</tr>
 			<tr>
 				<td>Confort</td>
 				<td> 
-					<c:choose>
-						<c:when test="${user.getCar().getConfort() == 1}">
-							<input id="confortCar" name="confortCar" type="text" value ="base"></input>
-						</c:when>
-						<c:when test="${user.getCar().getConfort() == 2}">
-							<input id="confortCar" name="confortCar" type="text" value ="normale"></input>
-						</c:when>
-						<c:when test="${user.getCar().getConfort() == 3}">
-							<input id="confortCar" name="confortCar" type="text" value ="confortevole"></input>
-						</c:when>
-						<c:when test="${user.getCar().getConfort() == 4}">
-							<input id="confortCar" name="confortCar" type="text" value ="lusso"></input>
-						</c:when>
-					</c:choose>
+					<input id="confortCar" name="confortCar" type="text" value ="${user.getDriverInfo().getCar().getConfort()}"></input>
+				
+<%-- 				<c:when test="${user.getDriverInfo().getCar().getConfort() == base}"> --%>
+				<select id="confortAuto" name="confortAuto">
+							<option>base</option>
+							<option selected="selected">normale</option>
+							<option>confortevole</option>
+							<option>lusso</option>
+						</select>
+<%-- 					<c:when> --%>
+				
 				</td>
 			</tr>
 			<tr>
 				<td>Foto</td>
-				<td>
-<%-- 					<img id="photoCar" name="photoCar" src="${user.getCar().getPhoto()}"></img> --%>
-					<img src="/GiveMeALift/avatars/${user.id}_car.jpg"   width="150" onerror="this.style.visibility = 'hidden'">					
-				</td>
+<!-- 				<td> -->
+<%-- 					<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%>
+<!-- 				</td> -->
 			</tr>
 			<tr>
 			</tr>
+			
 		</table>
-	</div>
-	</div>
-
-
-<!-- 	<div class="grid_4 prefix_1"> troppo piccola? -->
-	<div class="grid_6">
-	<div class="orangeTable" style="margin-top: 20px;">
-	
-<!-- 	<form method="get" action="ModifyUserCar"> -->
-<form:form modelAttribute="uploadForm" method="post" action="SubmitCar" enctype="multipart/form-data">
-
-	<table id="modifyMyCar" class="table"> 
-		<tr>
-			<td colspan="2"> Modifica Auto </td>
-		</tr>
-		<tr>
-					<td>Anno</td>
-					<td><select name="car-years" id="car-years"></select></td>
-				</tr>
-				<tr>
-					<td>Marca</td>
-					<td> 
-						<select name="car-makes" id="car-makes"></select> 
-					</td>
-				</tr>
-				<tr>
-					<td>Modello</td>
-					<td>
-						<select name="car-models" id="car-models"></select>
-					</td>
-				</tr>
-				<tr>
-					<td>Colore</td>
-					<td>
-						<select id="colorAuto" name="colorAuto">
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==arancio}">
-							<option selected="selected">arancio</option>
-						</c:when>
-						<c:otherwise>
-							<option>arancio</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==bianco}">
-							<option selected="selected">bianco</option>
-						</c:when>
-						<c:otherwise>
-							<option>bianco</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==blu}">
-							<option selected="selected">blu</option>
-						</c:when>
-						<c:otherwise>
-							<option>blu</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==celeste}">
-							<option selected="selected">celeste</option>	
-						</c:when>
-						<c:otherwise>
-							<option>celeste</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==grigio}">			
-							<option selected="selected">grigio</option>
-						</c:when>
-						<c:otherwise>
-							<option>grigio</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==marrone}">
-							<option selected="selected">marrone</option>
-						</c:when>
-						<c:otherwise>
-							<option>marrone</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==bianco}">
-							<option selected="selected">nero</option>
-						</c:when>
-						<c:otherwise>
-							<option>nero</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==oro}">
-							<option selected="selected">oro</option>
-						</c:when>
-						<c:otherwise>
-							<option>oro</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==rosa}">
-							<option selected="selected">rosa</option>
-						</c:when>
-						<c:otherwise>
-							<option>rosa</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==rosso}">
-							<option selected="selected">rosso</option>
-						</c:when>
-						<c:otherwise>
-							<option>rosso</option>
-						</c:otherwise>
-						</c:choose>
-						<c:choose>
-						<c:when test="${user.getCar().getColor()==verde}">
-							<option selected="selected">verde</option>
-						</c:when>
-						<c:otherwise>
-							<option>verde</option>
-						</c:otherwise>
-						</c:choose>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>Confort</td>
-					<td>
-					<select id="confortAuto" name="confortAuto">
-<!-- 						<select id="confortAuto" name="confortAuto"> -->
-<!-- 							<option>base</option> -->
-<!-- 							<option selected="selected">normale</option> -->
-<!-- 							<option>confortevole</option> -->
-<!-- 							<option>lusso</option> -->
-<!-- 						</select> -->
-
-						<c:choose>
-							<c:when test="${user.getCar().getConfort()==1}">
-								<option selected="selected">base</option>
-							</c:when>
-							<c:otherwise>
-								<option>base</option>
-							</c:otherwise>
-							</c:choose>
-							<c:choose>
-							<c:when test="${user.getCar().getConfort()==2}">
-								<option selected="selected">normale</option>
-							</c:when>
-							<c:otherwise>
-								<option>normale</option>
-							</c:otherwise>
-							</c:choose>
-							<c:choose>
-							<c:when test="${user.getCar().getConfort()==3}">
-								<option selected="selected">confortevole</option>
-							</c:when>
-							<c:otherwise>
-								<option>confortevole</option>
-							</c:otherwise>
-							</c:choose>
-							<c:choose>
-							<c:when test="${user.getCar().getConfort()==4}">
-								<option selected="selected">lusso</option>
-							</c:when>
-							<c:otherwise>
-								<option>lusso</option>
-							</c:otherwise>
-						</c:choose>
-					</select>
-					</td>
-				</tr>
-				<tr>
-					<td>Foto</td>
-					<td>
-<!-- 					<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data">  -->
-<!-- 						<form name="myWebForm" method="post" enctype="multipart/form-data">  -->
-<!-- 					<input type="file" name="uploadFile"/><br> -->
-					<input name="files[0]" type="file" />
-					
-<!-- 					<input value="Carica" type="submit"/>							 -->
-<!-- 					</form> -->
-				</td>
-				</tr>
-	</table>
 		<p class="center"><input type="submit"  value="Salva" class="button" /></p>
-	</form:form>
-	</div>
-	</div>
-	</div>
-		</div>
- 	<form method=get action="DeleteUserCar"> 
+	</form>
+ 	<form method=get action="DeleteUserCar"> -->
 		<p class="center"><input type="submit"  value="Elimina Auto" class="button" /></p>
 	</form>
-
-
-
+</div>
+</div>
+</div>
 	
 	
 	

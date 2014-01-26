@@ -10,16 +10,9 @@ public class LiftToViewConverterFacade {
 
 	public List<Object> convert(Lift l) {
 		Time t=l.getDepartureTime();
-		String goingTimeH="";
-		if(t.getHours()<=9)
-			goingTimeH="0"+t.getHours();
-		else
-			goingTimeH=""+t.getHours();
-		String goingTimeM="";
-		if(t.getMinutes()<=9)
-			goingTimeM="0"+t.getMinutes();
-		else
-			goingTimeM=""+t.getMinutes();
+		String[] splitted=t.toString().split(":");
+		String goingTimeH=splitted[0];
+		String goingTimeM=splitted[1];
 		int luggage=l.getLiftPreferences().getLuggageSize();
 		String luggageSize = null;
 		if(luggage == 1)
@@ -52,7 +45,7 @@ public class LiftToViewConverterFacade {
 			delayString="+/- un'ora";
 		if(delay.equals("2h"))
 			delayString="+/- due ore";
-		String deviation=l.getLiftPreferences().getScheduleFlexibility();
+		String deviation=l.getLiftPreferences().getDeviation();
 		String deviationString="";
 		if(deviation.equals("nothing"))
 			deviationString="Nessuna deviazione";
@@ -64,6 +57,7 @@ public class LiftToViewConverterFacade {
 			deviationString="Qualsiasi deviazione";
 		List<Object> converted=new ArrayList<Object>();
 		converted.add(l);
+		converted.add(ParseDate.getItalianFormat(l.getDepartureDate().toString()));
 		converted.add(goingTimeH);
 		converted.add(goingTimeM);
 		converted.add(delayString);

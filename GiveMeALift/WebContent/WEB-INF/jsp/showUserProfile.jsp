@@ -1,5 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%-- <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%> --%>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -52,10 +52,8 @@
 <!--    <div class="content"> -->
     <div class="container_12" id="contentOpacity" >
 		<div class="grid_12">
-		<form:form modelAttribute="uploadForm" method="post" action="ModifyUserProfile" enctype="multipart/form-data">
 			<div class="greenTable">
 				<table id="personalPhoto" class=table>
-				
 					<tr>
 						<td colspan="2">La mia foto</td>
 					</tr>
@@ -72,19 +70,16 @@
 						</td>
 						<td> 
 						<img src="/GiveMeALift/avatars/${user.id}.jpg"   width="150" onerror="this.style.visibility = 'hidden'">
-						<input name="files[0]" type="file" />
-						
-<%-- 							<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data">  --%>
-<%-- 							<form name="myWebForm" method="post" enctype="multipart/form-data">  --%>
-<!-- 								<input type="file" name="uploadFile"/><br> -->
-<!-- 								<input value="Carica" type="submit"/>							 -->
-<%-- 							</form> --%>
-							
+							<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data"> 
+	<!-- 						<form name="myWebForm" method="post" enctype="multipart/form-data">  -->
+								<input type="file" name="uploadFile"/><br>
+								<input value="Carica" type="submit"/>							
+							</form>
 						</td>
 					</tr>
 					</table>
 				</div>
-<%-- 				<form method="get" action="ModifyUserProfile"> --%>
+				<form method="get" action="ModifyUserProfile">
 				<div class="greenTable">
 					<table id="personalIinfo" class="table">
 					<tr>
@@ -221,8 +216,8 @@
 				</tr>
 		</table>
 		</div>		
-		<p class="center"><input type="submit"  value="Salva" class="button green"/></p> 
-		</form:form>
+		<p class="center"><input type="submit"  value="Salva" class="button" /></p> 
+		</form>
 	</div>		
   </div>
 <!--   </div> -->

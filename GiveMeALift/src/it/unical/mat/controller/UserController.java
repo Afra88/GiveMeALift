@@ -4,18 +4,23 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import it.unical.mat.datamapper.AdministratorMapper;
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
+import it.unical.mat.domain.Administrator;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
+
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Component
 @Controller
 public class UserController {
 	
@@ -34,21 +39,21 @@ public class UserController {
 	    		@RequestParam("name") String name, @RequestParam("surname") String surname,
 	    		@RequestParam("gender") String gender, @RequestParam("year") Integer birthYear,
 	    		Model model, HttpSession session) {
-		 if(email!="" && email!=null && psw!="" && psw!=null && name!="" && name!=null 
-				 && gender!="" && gender!=null && surname!=null && surname!="" && birthYear!=null){
-		 	RegisteredUser u=new RegisteredUser(email, psw, name, surname,gender,birthYear);
-		 	RegisteredUserMapper rm=new RegisteredUserMapper();
-		 	if(rm.insert(u)!=0){
-		 		session.setAttribute("user", u);
-		 		return "home";	
-		 	}
-		 	else{
-		 		return "errorRegistration";
-		 	}
-		 }
-		 else{
-		 		return "errorRegistration";
-		 	}
+				if(email!="" && email!=null && psw!="" && psw!=null && name!="" && name!=null 
+						 && gender!="" && gender!=null && surname!=null && surname!="" && birthYear!=null){
+				 	RegisteredUser u=new RegisteredUser(email, psw, name, surname,gender,birthYear);
+				 	RegisteredUserMapper rm=new RegisteredUserMapper();
+				 	if(rm.insert(u)!=0){
+				 		session.setAttribute("user", u);
+				 		return "home";	
+				 	}
+				 	else{
+				 		return "errorRegistration";
+				 	}
+				 }
+				 else{
+				 		return "errorRegistration";
+				 	}
 	}
 	 
 	 @RequestMapping(value = "/LogIn", method = RequestMethod.POST)
@@ -62,12 +67,28 @@ public class UserController {
 				return "home";	
 			}
 			else{
-		 		return "errorRegistration";
+				AdministratorMapper am=new AdministratorMapper();
+//				Administrator user=new Administrator();
+//				user.setName("Admin");
+//				user.setSurname("Admin");
+//				user.setEmail("admin@admin.aa");
+//				user.setGender("M");
+//				user.setBirthYear(1975); 
+//				user.setPhone("0984000001");
+//				user.setPassword("aa");
+//				Address ad = new Address("Viale Mancini", "Cosenza", "Italia");
+//				user.setAddress(ad);
+//				am.insert(user);
+				System.out.println("Admin");
+				Administrator a=(Administrator) am.findAdministratorByEmailAndPassword(email, psw);
+				System.out.println(a);
+				if(a!=null){
+					session.setAttribute("user",a);
+					return "homeAdmin";	
+				}
 		 	}
 	 	}
-	 	else{
-	 		return "errorRegistration";
-	 	}
+	 	return "errorRegistration";
 	 }
 	 
 	 @RequestMapping(value = "/LogOut")
@@ -97,6 +118,7 @@ public class UserController {
 					model.addAttribute("pages", pageHolder.getPageCount());
 					model.addAttribute("page",pageHolder.getPage());
 					model.addAttribute("pageHolder",pageHolder);
+					//TODO ora e data in formato italiano
 				}
 				else
 					model.addAttribute("noRes",true);

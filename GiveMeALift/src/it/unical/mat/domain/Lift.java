@@ -40,8 +40,6 @@ public class Lift extends DomainObject {
 	private Date departureDate;
 	@Column(name="DESCRIPTION") 
 	private String description;
-	@Column(name="DEVIATION")
-	private String deviation;
 	@Column(name="IS_RETURN")
 	private Boolean isReturn;
 	
@@ -230,14 +228,6 @@ public class Lift extends DomainObject {
 	public void setDescription(String description) {
 		this.description = description;
 	}	
-
-	public String getDeviation() {
-		return deviation;
-	}
-	
-	public void setDeviation(String deviation) {
-		this.deviation = deviation;
-	}
 	
 	@Override
 	public void copy(DomainObject object2) {
@@ -270,8 +260,6 @@ public class Lift extends DomainObject {
 			this.returnLift=l.returnLift;
 		if(l.description!=null)
 			this.description=l.description;
-		if(l.deviation!=null)
-			this.deviation=l.deviation;
 		if(l.isReturn!=null)
 			this.isReturn=l.isReturn;
 	}
@@ -355,8 +343,6 @@ public class Lift extends DomainObject {
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((detours == null) ? 0 : detours.hashCode());
 		result = prime * result
-				+ ((deviation == null) ? 0 : deviation.hashCode());
-		result = prime * result
 				+ ((dropOffPoint == null) ? 0 : dropOffPoint.hashCode());
 		result = prime * result
 				+ ((isReturn == null) ? 0 : isReturn.hashCode());
@@ -408,11 +394,6 @@ public class Lift extends DomainObject {
 			if (other.detours != null)
 				return false;
 		} else if (!detours.equals(other.detours))
-			return false;
-		if (deviation == null) {
-			if (other.deviation != null)
-				return false;
-		} else if (!deviation.equals(other.deviation))
 			return false;
 		if (dropOffPoint == null) {
 			if (other.dropOffPoint != null)

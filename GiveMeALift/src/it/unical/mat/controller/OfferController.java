@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -73,45 +74,32 @@ public class OfferController {
     		@RequestParam(value="detour2",required=false) String detour2,
     		@RequestParam(value="detour3",required=false) String detour3,
     		@RequestParam(value="detour4",required=false) String detour4,
-    		@RequestParam("date") String date,
+    		@RequestParam(value="checkReturn",required=false) String thereIsReturn,
+    		@RequestParam("goingDate") String goingDate,
+    		@RequestParam(value="returnDate",required=false) String returnDate,
     		@RequestParam("goingTimeH") String goingHour,
     		@RequestParam("goingTimeM") String goingMins,
     		@RequestParam(value="returnTimeH",required=false) String returnHour,
     		@RequestParam(value="returnTimeM",required=false) String returnMins,
     		Model model,HttpSession session){
 		
-			if(session.getAttribute("user")!=null && lift.matches("[0-9]+")){
-				Date today = new Date() ;
-				
-				String[] dates = date.split(",");
-				String completeGoingDate = dates[0];
-				String completeReturnDate = null;
-				
-				int gmins = Integer.parseInt(goingMins);
-//				int goingTime = gmins + (Integer.parseInt(goingHour)*60);
-				int rmins = 0;
-//				int returnTime;
-				
-				Date dG = ParseDate.getUtilDateFormat(completeGoingDate);
+			if(session.getAttribute("user")!=null && lift.matches("[0-9]+") && goingDate!=null && goingDate!="" && goingHour!=null && goingHour!=null && goingMins!=null && goingMins!=""){		
+				Calendar today = Calendar.getInstance();
+				Calendar dG = ParseDate.getUtilDateFormat(goingDate,Integer.parseInt(goingHour), Integer.parseInt(goingMins));
+				ArrayList<String> inputs = new ArrayList<String> ();						
 
-				dG.setHours(Integer.parseInt(goingHour));
-				dG.setMinutes(Integer.parseInt(goingMins));
-			
 				if(dG.compareTo(today)<=0){
 					System.out.println(dG.compareTo(today));
 					model.addAttribute("error", "La data di andata non è valida.");
 					return "step1_updateLift_offerALift";
 				}
+				
+				inputs.add(goingDate);	        				
+				inputs.add(goingHour);				    		
+				inputs.add(goingMins);
 
-				if(dates.length>1){                      // SE C'è DATA DI RITORNO	
-					completeReturnDate=dates[1];
-					Date dR = ParseDate.getUtilDateFormat(completeReturnDate);
-					rmins = Integer.parseInt(returnMins);
-//					returnTime = rmins + (Integer.parseInt(returnHour)*60);
-
-					dR.setHours(Integer.parseInt(returnHour));
-					dR.setMinutes(Integer.parseInt(returnMins));
-
+				if(returnDate!=null && returnDate!="" && thereIsReturn=="true"){
+					Calendar dR = ParseDate.getUtilDateFormat(returnDate, Integer.parseInt(goingHour), Integer.parseInt(goingMins));
 					if(dR!=null && dR.compareTo(today)<=0){
 						model.addAttribute("error", "La data di ritorno non è valida.");
 						return "step1_updateLift_offerALift";
@@ -120,12 +108,9 @@ public class OfferController {
 						model.addAttribute("error", "La data di ritorno non può essere precedente alla data di andata.");
 						return "step1_updateLift_offerALift";
 					}
-//					if( dateGoingMillis == dateReturnMillis && goingTime>returnTime) {
-//						model.addAttribute("inputs",inputs);
-//						return "step2_updateLift_insertALift";	
-//					}	
-				
-		
+					inputs.add(returnDate);		    
+					inputs.add(returnHour);				    		
+					inputs.add(returnMins);
 			}
 			
 			if(mapFrom == "" || mapTo == "" || mapFrom==null || mapTo==null){
@@ -133,44 +118,18 @@ public class OfferController {
 				return "step1_updateLift_offerALift";
 			}
 			
-			
-			ArrayList<String> inputs = new ArrayList<String> ();			
-			
-			
-			inputs.add(completeGoingDate);	        
-			inputs.add(completeReturnDate);		    
-			
-			inputs.add(goingHour);				    		
-			if(gmins>=10)	inputs.add(goingMins);	
-			else inputs.add("0"+goingMins);
-			
-			if(completeReturnDate!=null){
-				inputs.add(returnHour);				    	
-				if(rmins>=10)	
-					inputs.add(returnMins); 
-				else		
-					inputs.add("0"+returnMins);
-				model.addAttribute("liftReturn",liftReturnId);
-			}
-			else {
-				inputs.add(null);
-				inputs.add(null);
-			}		
-			
 			List<String> path=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3, detour4);
 			
 			model.addAttribute("inputs", inputs);
-			model.addAttribute("path", path);	
-
-			model.addAttribute("inputs",inputs);
+			model.addAttribute("path", path);
+			
 			LiftMapper lm=new LiftMapper();
 			Lift l=lm.findById(lift);
 			
 			List<Integer> costs=new ArrayList<Integer>();
-			for (LiftDetour ld : l.getDetours()) {
+			for (LiftDetour ld : l.getDetours()) 
 				costs.add(ld.getCost());
-			}
-
+			
 			model.addAttribute("lift",l);
 			return "step2_updateLift_insertALift";	
 		}
@@ -188,190 +147,58 @@ public class OfferController {
     		@RequestParam(value="detour2",required=false) String detour2,
     		@RequestParam(value="detour3",required=false) String detour3,
     		@RequestParam(value="detour4",required=false) String detour4,
-    		@RequestParam("date") String date,
+    		@RequestParam(value="checkReturn",required=false) String thereIsReturn,
+    		@RequestParam("goingDate") String goingDate,
+    		@RequestParam(value="returnDate",required=false) String returnDate,
     		@RequestParam("goingTimeH") String goingHour,
     		@RequestParam("goingTimeM") String goingMins,
     		@RequestParam(value="returnTimeH",required=false) String returnHour,
     		@RequestParam(value="returnTimeM",required=false) String returnMins,
     		Model model,HttpSession session){
 		
-/*split of date parameters for checking*/
-//		12/01/2014,12/01/2014
-//		System.out.println(date);
-//		System.out.println(goingHour);
-//		System.out.println(goingMins);
-//		System.out.println(returnHour);
-//		System.out.println(returnMins);
-		
-		String[] dates = date.split(",");
-		String completeGoingDate = dates[0];
-		
-		int gmins = Integer.parseInt(goingMins);
-		long goingTime = gmins + (Integer.parseInt(goingHour)*60);
-			
-		// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
-		String completeReturnDate = "";
-		
-		Date dG = null;
-		long dateGoingMillis = 0;
-		
-		Date dR = null;
-		long dateReturnMillis = Integer.MAX_VALUE;
-		int rmins = Integer.MAX_VALUE;
-		long returnTime = Integer.MAX_VALUE;
-		// ************** UTILI SOLO SE SE C'è DATA DI RITORNO	
-		
-		boolean returnIsPresent=false;
-		
-		if(dates.length>1 /*and controllo dell'ora di ritorno*/){                      // SE C'è DATA DI RITORNO	
-			returnIsPresent=true;
-			completeReturnDate = dates[1];		
-			
-			SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-			dG = null;
-			dR = null;
-			try {
-				dG = f.parse(dates[0]);
-				dG.setHours(Integer.parseInt(goingHour));
-				dG.setMinutes(Integer.parseInt(goingMins));
-				dR = f.parse(dates[1]);
-				dR.setHours(Integer.parseInt(returnHour));
-				dR.setMinutes(Integer.parseInt(returnMins));
-			} catch (ParseException e) {		e.printStackTrace();	}
-			
-			dateGoingMillis = dG.getTime();
-			dateReturnMillis = dR.getTime();
-			
-			Date today = new Date();			
-			System.out.println(today);
+		if(session.getAttribute("user")!=null && goingDate!=null && goingDate!="" && goingHour!=null && goingHour!=null && goingMins!=null && goingMins!=""){		
+			Calendar today = Calendar.getInstance();
+			Calendar dG = ParseDate.getUtilDateFormat(goingDate,Integer.parseInt(goingHour), Integer.parseInt(goingMins));
+			ArrayList<String> inputs = new ArrayList<String> ();						
+
 			if(dG.compareTo(today)<=0){
 				System.out.println(dG.compareTo(today));
-				model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
-				return "offerALift";
-			}
-			if(dR!=null && dR.compareTo(today)<=0){
-				model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
-				return "offerALift";
-			}
-			if(dR.compareTo(dG)<=0){
-				model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
-				return "offerALift";
+				model.addAttribute("error", "La data di andata non è valida.");
+				return "step1_updateLift_offerALift";
 			}
 			
-			
-//			gmins = Integer.parseInt(goingMins);
-//			goingTime = gmins + (Integer.parseInt(goingHour)*60);
-			
-			rmins = Integer.parseInt(returnMins);
-			returnTime = rmins + (Integer.parseInt(returnHour)*60);
-			
-	//		String goingDay = goingDate[0];
-	//		String goingMonth = goingDate[1];
-	//		String goingYear = goingDate[2];
-	//		String returnDay = returnDate[0];
-	//		String returnMonth = returnDate[1];
-	//		String returnYear = returnDate[2];
-			
-	//		System.out.println("partenza: "+goingDay + goingMonth + goingYear +"ritorno:" + returnDay + returnMonth + returnYear);
-	//		
-	
-			
-		}//if return date is present
-		
-		
+			inputs.add(goingDate);	        				
+			inputs.add(goingHour);				    		
+			inputs.add(goingMins);
+
+			if(returnDate!=null && returnDate!="" && thereIsReturn=="true"){
+				Calendar dR = ParseDate.getUtilDateFormat(returnDate, Integer.parseInt(goingHour), Integer.parseInt(goingMins));
+				if(dR!=null && dR.compareTo(today)<=0){
+					model.addAttribute("error", "La data di ritorno non è valida.");
+					return "step1_updateLift_offerALift";
+				}
+				if(dR.compareTo(dG)<=0){
+					model.addAttribute("error", "La data di ritorno non può essere precedente alla data di andata.");
+					return "step1_updateLift_offerALift";
+				}
+				inputs.add(returnDate);		    
+				inputs.add(returnHour);				    		
+				inputs.add(returnMins);
+		}
 		
 		if(mapFrom == "" || mapTo == "" || mapFrom==null || mapTo==null){
-			/*
-			 *  mettere un attributo al model per far capire all'utente che c'è stato un errore
-			 *  (lanciare un alert)
-			 */
-			System.out.println("Scegli luogo Partenza/Arrivo");
 			model.addAttribute("error", "Scegli i luoghi di Partenza e Arrivo.");
-			return "offerALift";
+			return "step1_updateLift_offerALift";
 		}
 		
-		
-		ArrayList<String> inputs = new ArrayList<String> ();
-		
-//		inputs.add(mapFrom);				 
-//		inputs.add(mapTo);					
-		
-		
-		inputs.add(completeGoingDate);	        //i=0
-		// se non c'è è gia settata a "NULL"
-		inputs.add(completeReturnDate);		    //i=1 
-		
-		inputs.add(goingHour);				    //i=2		
-		if(gmins>=10)	inputs.add(goingMins);	//i=3
-		else inputs.add("0"+goingMins);
-		
-		if(returnIsPresent){
-			inputs.add(returnHour);				    //i=4		
-			if(rmins>=10)	inputs.add(returnMins); //i=5		
-			else		inputs.add("0"+returnMins);		
-		}
-		else {
-			inputs.add("NULL"); //i=4
-			inputs.add("NULL"); //i=5
-		}		
-		
-//		if(detour0!="")
-//			inputs.add(detour0);			//i=8
-//		if(detour1!="")
-//			inputs.add(detour1);			//i=9
-//		if(detour2!="")
-//			inputs.add(detour2);			//i=10
-//		if(detour3!="")
-//			inputs.add(detour3);			//i=11
-//		if(detour4!="")
-//			inputs.add(detour4);			//i=12
-		
-		System.out.println(" FROM: " + mapFrom);
-		System.out.println(" TO: " + mapTo);
-		
-		System.out.println(" DET0: " + detour0);
-		System.out.println(" DET1: " + detour1);
-		System.out.println(" DET2: " + detour2);
-		System.out.println(" DET3: " + detour3);
-		System.out.println(" DET4: " + detour4);
-		
-		List<String> path=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3,
-				detour4);
+		List<String> path=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3, detour4);
 		
 		model.addAttribute("inputs", inputs);
-		model.addAttribute("path", path);
-		
-//		int last = path.size()-1;
-//		System.out.println(".."+path.get(last));
-//		System.out.println(path.get(path.size()-1));
-		
-		
-		if(returnIsPresent){
-			if( dateGoingMillis > dateReturnMillis ){
-				System.out.println("errore Data");			
-				return "offerALift";
-			}
-			else if( dateGoingMillis < dateReturnMillis ){			
-				model.addAttribute("inputs",inputs);
-				return "insertALift";			
-			}else{
-				if (goingTime<returnTime) {
-					model.addAttribute("inputs",inputs);
-					return "insertALift";	
-				}
-				else{
-					model.addAttribute("error", "I dati inseriti non sono validi, riprova.");
-					return "offerALift";	
-				}
-			}
-			
-
-		
-		}					
-		
-		//se non è presente la data di ritorno
-		model.addAttribute("inputs",inputs);
-		return "insertALift";			
+		model.addAttribute("path", path);	
+				
+				return "insertALift";	
+		}
+		return "error";			
 	}
 
 	private List<String> composePath(String mapFrom, String mapTo, String detour0,
@@ -472,11 +299,13 @@ public class OfferController {
 		else
 			pink = true;
 		
+		if(deviation==null)
+			deviation="nothing";
 		
-		LiftPreference lp = new LiftPreference(roadType,luggageSize,delay,pink);
+		LiftPreference lp = new LiftPreference(roadType,luggageSize,delay,pink,deviation);
 		
 		/////////////////////////LIFT PREFERENCES////////////////////////////////////
-
+	
 		ArrayList <LiftPoint> path = new ArrayList<LiftPoint>();
 		
 		LiftPoint from = new LiftPoint(mapFrom);
@@ -576,7 +405,6 @@ public class OfferController {
 
 		l.setIsReturn(false);
 		l.setDescription(description);
-		l.setDeviation(deviation);
 		lm.update(l,Long.parseLong(liftId));		
 		
 		return "step3_updateLift_submitALift";
@@ -662,8 +490,10 @@ public class OfferController {
 		else
 			pink = true;
 		
+		if(deviation==null)
+			deviation="nothing";
 		
-		LiftPreference lp = new LiftPreference(roadType,luggageSize,delay,pink);
+		LiftPreference lp = new LiftPreference(roadType,luggageSize,delay,pink,deviation);
 		
 		/////////////////////////LIFT PREFERENCES////////////////////////////////////
 		
@@ -770,22 +600,18 @@ public class OfferController {
 		
 		l.setIsReturn(false);
 		l.setDescription(description);
-		l.setDeviation(deviation);
 		
 		System.out.println(deviation);
 		System.out.println(description);
 
-		if(	lm.insert(l)!=0){
-			
+		if(lm.insert(l)!=0){			
 			return "submitALift";
-		}
-		
-		return "error";
-		///////////////////////// RETURN LIFT IF PRESENT ////////////////////////////////////
-		
+		}	
+		return "error";		
 		
 	}
 	
 	
 	
 }
+

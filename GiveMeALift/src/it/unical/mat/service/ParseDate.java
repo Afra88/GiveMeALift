@@ -36,13 +36,14 @@ public class ParseDate {
 		return g.get(Calendar.DAY_OF_MONTH)+"/"+g.get(Calendar.MONTH)+"/"+g.get(Calendar.YEAR);
 	}
 	
-	public static Date getUtilDateFormat(String date){
-		Date d=null;
-		try {
-			d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return d;
+	public static Calendar getUtilDateFormat(String date, int goingHour, int goingMins){
+		String[] d=date.split("/");
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.HOUR_OF_DAY,goingHour);
+		cal.set(Calendar.MINUTE,goingMins);
+		cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(d[0]));
+		cal.set(Calendar.MONTH, Integer.parseInt(d[1])-1);
+		cal.set(Calendar.YEAR, Integer.parseInt(d[2]));
+		return cal;
 	}
 }

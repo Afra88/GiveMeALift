@@ -9,12 +9,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import it.unical.mat.datamapper.AdministratorMapper;
 import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.LiftPointMapper;
-import it.unical.mat.datamapper.LiftPreferenceMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Address;
+import it.unical.mat.domain.Administrator;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
@@ -30,16 +31,19 @@ import org.junit.Test;
 public class DBTest {
 	
 	private static RegisteredUser user = new RegisteredUser(); 
-	private static RegisteredUserMapper rm = new RegisteredUserMapper();
 	private static Lift l = new Lift();
+	private static Administrator a=new Administrator();
+	private static RegisteredUserMapper rm = new RegisteredUserMapper();
 	private static LiftMapper lm = new LiftMapper();
 	private static LiftPointMapper lpm = new LiftPointMapper();
 	private static LiftDetourMapper ldm = new LiftDetourMapper();
+	private static AdministratorMapper am=new AdministratorMapper();
 	
 	@BeforeClass
 	public static void prepareDB(){
 		insertUser(user);
-		insertLift(l);				
+		insertLift(l);
+		insertAdmin(a);
 	}
 	
 
@@ -51,10 +55,26 @@ public class DBTest {
 		user.setGender("M");
 		user.setBirthYear(1975); 
 		user.setPhone("0984000001");
+		user.setPassword("aa");
 		Address a = new Address("Viale Mancini", "Cosenza", "Italia");
 		user.setAddress(a);
 		user.setCountAlert(1);
 		rm.insert(user);
+		
+	}
+	
+	private static void insertAdmin(Administrator user) {
+		
+		user.setName("Admin");
+		user.setSurname("Admin");
+		user.setEmail("admin@admin.aa");
+		user.setGender("M");
+		user.setBirthYear(1975); 
+		user.setPhone("0984000001");
+		user.setPassword("aa");
+		Address a = new Address("Viale Mancini", "Cosenza", "Italia");
+		user.setAddress(a);
+		am.insert(user);
 		
 	}
 
@@ -64,11 +84,6 @@ public class DBTest {
 		LiftPoint p0 = new LiftPoint("Firenze");	//detour0
 		LiftPoint p1 = new LiftPoint("Napoli");		//detour1
 		LiftPoint dropOffPoint = new LiftPoint("Cosenza");
-		
-		lpm.insert(pickUpPoint);
-		lpm.insert(p0);
-		lpm.insert(p1);
-		lpm.insert(dropOffPoint);
 		
 		l.setPickUpPoint(pickUpPoint);
 		l.setDropOffPoint(dropOffPoint);
@@ -86,28 +101,18 @@ public class DBTest {
 		det2.setPickUpPoint(p1);
 		det2.setDropOffPoint(dropOffPoint);
 		
-//		List<LiftDetour> detours = new LinkedList<LiftDetour>();
-//		detours.add(det0);
-//		detours.add(det1);
-//		detours.add(det2);
-//		l.setDetours(detours);
-		
-		ldm.insert(det0);
-		ldm.insert(det1);
-		ldm.insert(det2);
-		
-		
-//		l.setPossibleDetour(true);
+		List<LiftDetour> detours = new LinkedList<LiftDetour>();
+		detours.add(det0);
+		detours.add(det1);
+		detours.add(det2);
+		l.setDetours(detours);
+
 		l.setUserOffering(user);
 		
 		LiftPreference pref = new LiftPreference();
 		pref.setLuggageSize(1);
 		pref.setPinkTrip(true);
 		pref.setRoadType("Autostrada");
-//		pref.setTimesForThisRoute(1);
-		
-		LiftPreferenceMapper lpref = new LiftPreferenceMapper();
-		lpref.insert(pref);
 		l.setLiftPreferences(pref);
 		
 		try {
@@ -128,13 +133,18 @@ public class DBTest {
 	
 	@Test
 	public void UsersBornIn(){
-		assertTrue(rm.getUserBornInYear(1975).size() > 1);
+		assertTrue(rm.findByBirthYear(1975).size() > 0);
 	}
 	
 	@Test
 	public void UsersOfGender(){
-		assertTrue(rm.getMaleUsers("M").size() >= 0);
-		assertTrue(rm.getMaleUsers("F").size() == 0);
+		assertTrue(rm.findMale("M").size() > 0);
+		assertTrue(rm.findMale("F").size() == 0);
+	}
+	
+	@Test
+	public void UsersAdministrators(){
+		assertTrue(am.findAdministratorByEmailAndPassword("admin@admin.aa", "aa")!=null);
 	}
 		
 	
@@ -148,8 +158,4 @@ public class DBTest {
 		assertTrue(ldm.findDetourFromPickUpAndDropOffPoints("Cosenza", "Firenze").size()> 0);
 	}
 
-	@Test
-	public void usersFromCity(){
-		assertTrue(rm.findUsersFromCity("Cosenza").size() > 0 );
-	}
 }
