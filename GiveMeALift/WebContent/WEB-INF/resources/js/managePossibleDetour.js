@@ -4,7 +4,7 @@
 $(document).ready( function() {
  $("#add_detour").click( function() {
 	if (contId<5) {		
-		$("ol").append("<li id=><input  class=\"autocomplete\"  type=\"text\" id=detour"+contId+" name=detour"+contId+" /></li>");
+		$("ol").append("<li><input  class=\"autocomplete\"  type=\"text\" id=detour"+contId+" name=detour"+contId+" /></li>");
 		contId++;		
 	} 
  });
