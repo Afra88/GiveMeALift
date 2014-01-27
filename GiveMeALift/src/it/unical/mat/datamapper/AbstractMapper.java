@@ -2,7 +2,7 @@ package it.unical.mat.datamapper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.hibernate.HibernateException;
@@ -57,6 +57,7 @@ public abstract class AbstractMapper {
 			transaction = session.beginTransaction();
 			DomainObject object= (DomainObject) session.get(object2.getClass(), id);
 			object.copy(object2);
+			session.update(object);
 			transaction.commit();
 			return true;
 		} catch (HibernateException e) {
@@ -68,7 +69,7 @@ public abstract class AbstractMapper {
 		return false;	
 	}
 
-	protected Collection<DomainObject> find(String findStatement,Map<String,Object> parameters, boolean isSql){
+	protected List<DomainObject> find(String findStatement,Map<String,Object> parameters, boolean isSql){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {
@@ -102,7 +103,7 @@ public abstract class AbstractMapper {
 					}
 				}
 				@SuppressWarnings("unchecked")
-				Collection<DomainObject> objects=query.list();
+				List<DomainObject> objects=query.list();
 				transaction.commit();
 				return objects;
 		} catch (HibernateException | NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
