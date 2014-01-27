@@ -1,5 +1,6 @@
 package it.unical.mat.service;
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -8,6 +9,9 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class ParseDate {
+	
+	public final static String[] months=new String[]{"Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+		"Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"};
 	
 	public static int compare(String d1,String d2){
 		try {
@@ -29,6 +33,11 @@ public class ParseDate {
 	public static String getItalianFormat(String date){
 		String[] d=date.split("-");
 		return d[2]+"/"+d[1]+"/"+d[0];
+	}
+	
+	public static String getTimeHM(Time time){
+		String[] d=time.toString().split(":");
+		return d[0]+":"+d[1];
 	}
 
 	public static String newDate() {

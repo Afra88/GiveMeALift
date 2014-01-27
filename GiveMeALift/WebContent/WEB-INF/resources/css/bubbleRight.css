@@ -1,0 +1,71 @@
+.bubbleRight
+{
+	position: relative;
+		width: 85%;
+		min-height: 45px;
+	padding: 6px;
+	background: #F0F8FF;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border: #7F7F7F solid 2px;
+	margin-bottom: 20px;
+	display: inline-block;
+	margin-right: 30px;
+}
+
+.bubbleRight:after
+{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 15px 0 15px 15px;
+	border-color: transparent #F0F8FF;
+	display:block;
+	width: 0;
+	z-index: 1;
+	margin-top: -15px;
+	right: -15px;
+	top: 50%;
+}
+
+.bubbleRight:before
+{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 16px 0 16px 16px;
+	border-color: transparent #7F7F7F;
+	display: block;
+	width: 0;
+	z-index: 0;
+	margin-top: -16px;
+	right: -18px;
+	top: 50%;
+}
+
+.bubbleRight .sender
+{
+	text-align: right;
+	font: 16px 'Droid Sans', Arial, Helvetica, sans-serif;
+	font-weight: 600;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.bubbleRight .when
+{
+	display: block;
+	text-align: left;
+	font-style:italic;
+	font: 14px 'Droid Sans', Arial, Helvetica, sans-serif ;
+}
+.bubbleRight .message
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: block;
+	text-align: right;
+	padding-right:20px;
+	font: 16px  'Droid Sans', Arial, Helvetica, sans-serif;
+}

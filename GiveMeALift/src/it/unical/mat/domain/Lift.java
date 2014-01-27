@@ -3,7 +3,6 @@ package it.unical.mat.domain;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.Cascade;
 
@@ -43,19 +43,21 @@ public class Lift extends DomainObject {
 	@Column(name="IS_RETURN")
 	private Boolean isReturn;
 	
+	@Version
+	@Column(name="OPT_LOCK")
+	private int version;
 	
 	private LiftPoint pickUpPoint;
 	private LiftPoint dropOffPoint;
 	private List<LiftDetour> detours;
 	private LiftPreference liftPreferences;
-	private List<User> usersBookingList;
+//	private List<User> usersBookingList;
 	private User userOffering;
 	private Lift returnLift;
 	
-
 	public Lift(){
-		detours=new LinkedList<LiftDetour>();
-		usersBookingList=new LinkedList<User>();
+//		detours=new LinkedList<LiftDetour>();
+//		usersBookingList=new LinkedList<User>();
 	}	
 	
 	public Lift(Integer cost, Integer nSeat, Boolean possibleDetour,
@@ -71,7 +73,14 @@ public class Lift extends DomainObject {
 	
 	}
 	
+	public int getVersion() {
+		return version;
+	}
 	
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	
 	@Override
 	@Id
@@ -113,13 +122,13 @@ public class Lift extends DomainObject {
 	}
 	
 	
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name = "LIFT_USER_BOOKING",
-				joinColumns = { @JoinColumn (name = "LIFT_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
-	public List<User> getUsersBookingList() {
-		return usersBookingList;
-	}
+//	@ManyToMany(fetch=FetchType.LAZY)
+//	@JoinTable(name = "LIFT_USER_BOOKING",
+//				joinColumns = { @JoinColumn (name = "LIFT_ID") },
+//				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+//	public List<User> getUsersBookingList() {
+//		return usersBookingList;
+//	}
 
 	@ManyToOne(fetch=FetchType.LAZY) //ok
 	@JoinTable(name = "LIFT_USER_OFFERING",
@@ -129,9 +138,9 @@ public class Lift extends DomainObject {
 		return userOffering;
 	}
 	
-	public void setUsersBookingList(List<User> usersBookingList) {
-		this.usersBookingList = usersBookingList;
-	}
+//	public void setUsersBookingList(List<User> usersBookingList) {
+//		this.usersBookingList = usersBookingList;
+//	}
 
 
 	public void setDetours(List<LiftDetour> detours) {
@@ -254,8 +263,8 @@ public class Lift extends DomainObject {
 			this.detours=l.detours;
 		if(l.liftPreferences!=null)
 			this.liftPreferences=l.liftPreferences;
-		if(l.usersBookingList!=null)
-			this.usersBookingList=l.usersBookingList;
+//		if(l.usersBookingList!=null)
+//			this.usersBookingList=l.usersBookingList;
 		if(l.returnLift!=null)
 			this.returnLift=l.returnLift;
 		if(l.description!=null)
@@ -355,9 +364,9 @@ public class Lift extends DomainObject {
 				+ ((returnLift == null) ? 0 : returnLift.hashCode());
 		result = prime * result
 				+ ((userOffering == null) ? 0 : userOffering.hashCode());
-		result = prime
-				* result
-				+ ((usersBookingList == null) ? 0 : usersBookingList.hashCode());
+//		result = prime
+//				* result
+//				+ ((usersBookingList == null) ? 0 : usersBookingList.hashCode());
 		return result;
 	}
 
@@ -430,11 +439,11 @@ public class Lift extends DomainObject {
 				return false;
 		} else if (!userOffering.equals(other.userOffering))
 			return false;
-		if (usersBookingList == null) {
-			if (other.usersBookingList != null)
-				return false;
-		} else if (!usersBookingList.equals(other.usersBookingList))
-			return false;
+//		if (usersBookingList == null) {
+//			if (other.usersBookingList != null)
+//				return false;
+//		} else if (!usersBookingList.equals(other.usersBookingList))
+//			return false;
 		return true;
 	}
 	

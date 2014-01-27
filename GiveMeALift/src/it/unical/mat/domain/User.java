@@ -1,7 +1,6 @@
 package it.unical.mat.domain;
 
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -67,7 +66,7 @@ public abstract class User extends DomainObject {
 	private List<SocialNetworkProfile> listSocialNetworkProfiles;
 
 	public User() {
-		listSocialNetworkProfiles=new LinkedList<SocialNetworkProfile>();
+//		listSocialNetworkProfiles=new LinkedList<SocialNetworkProfile>();
 	}
 
 	public User(String email, String psw, String name, 

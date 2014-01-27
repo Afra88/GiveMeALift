@@ -6,7 +6,7 @@ import java.util.List;
 
 import it.unical.mat.domain.Lift;
 
-public class LiftToViewConverterFacade {
+public class LiftToViewFacade {
 
 	public List<Object> convert(Lift l) {
 		Time t=l.getDepartureTime();

@@ -16,7 +16,7 @@ import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.LiftPoint;
 import it.unical.mat.domain.LiftPreference;
 import it.unical.mat.domain.RegisteredUser;
-import it.unical.mat.service.LiftToViewConverterFacade;
+import it.unical.mat.service.LiftToViewFacade;
 import it.unical.mat.service.ParseDate;
 
 import org.springframework.stereotype.Controller;
@@ -42,20 +42,20 @@ public class OfferController {
 		if(session.getAttribute("user")!=null && lift.matches("[0-9]+")){
 				LiftMapper lm=new LiftMapper();
 				Lift l=lm.findById(lift);
-				LiftToViewConverterFacade lc=new LiftToViewConverterFacade();
+				LiftToViewFacade lc=new LiftToViewFacade();
 				List<Object> lConverted=lc.convert(l);
 				Lift returnLift=l.getReturnLift();
 				if(returnLift!=null){
 					List<Object> lrConverted=lc.convert(returnLift);
 					model.addAttribute("liftReturn",returnLift);
-					model.addAttribute("returnDate", ParseDate.getItalianFormat(l.getReturnLift().getDepartureDate().toString()));
-					model.addAttribute("returnTimeH",Integer.parseInt((String) lrConverted.get(1)));
-					model.addAttribute("returnTimeM",Integer.parseInt((String) lConverted.get(2)));					
+					model.addAttribute("returnDate", lrConverted.get(1));
+					model.addAttribute("returnTimeH",Integer.parseInt((String) lrConverted.get(2)));
+					model.addAttribute("returnTimeM",Integer.parseInt((String) lConverted.get(3)));					
 				}
 				model.addAttribute("lift",l);
-				model.addAttribute("goingDate", ParseDate.getItalianFormat(l.getDepartureDate().toString()));
-				model.addAttribute("goingTimeH",Integer.parseInt((String) lConverted.get(1)));
-				model.addAttribute("goingTimeM",Integer.parseInt((String) lConverted.get(2)));
+				model.addAttribute("goingDate", lConverted.get(1));
+				model.addAttribute("goingTimeH",Integer.parseInt((String) lConverted.get(2)));
+				model.addAttribute("goingTimeM",Integer.parseInt((String) lConverted.get(3)));
 
 				model.addAttribute("path",l.computeRouteOnlyDetours());
 				return "step1_updateLift_offerALift";

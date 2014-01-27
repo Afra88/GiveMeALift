@@ -64,46 +64,7 @@
 	</script>  
     </head>
     <body onload="initialize()">
-	<header>
-  	<div class="container_12">
-		    <div class="grid_12">
-	    <form method="post" action="LoginServlet">
-			<table class="login">
-				<tr>
-					<td><label>Email:</label></td>
-					<td><input type="text" size="40" name="email" id="email" /></td>
-				</tr>
-				<tr>
-					<td><label>Password:</label></td>
-				    <td><input type="password" size="40" name="psw" id="psw" /></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="Accedi" />
-						oppure
-						<a href="userRegistration">Registrati</a>
-					</td>
-				</tr>
-			</table>
-		</form>
-		      <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>
-		      <div class="menu_block">
-		        <nav>
-		          <ul class="sf-menu">
-		            <li class="current"><a href="">Home</a></li>
-		            <li><a href="OfferALift">Offri un passaggio!</a></li>
-		            <!-- <li><a href="blog.html">Blog</a></li>
-		            <li><a href="recipes.html">Recipes</a></li>
-		            <li><a href="contacts.html">Contacts</a></li> -->
-		          </ul>
-		        </nav>
-		        <div class="clear"></div>
-		      </div>
-		      <div class="clear"></div>
-		    </div>
-		  </div>
-
-	</header>
+	<%@include file="chooseMenu.jsp"%>
 	<div class="content">
   	<div class="container_12">
      <div class="grid_12">
@@ -116,7 +77,7 @@
     <c:choose>
 	<c:when test="${noResult==1}" >
 	<div class="grid_12">
-		<div  class="center"><h3>Non ci sono risultati per questa ricerca</h3></div>
+		<div  class="center"><h4>Non ci sono risultati per questa ricerca</h4></div>
 	</div>
 	 <p class="grid_7" ></p>
 	</c:when>
@@ -127,8 +88,8 @@
         	<input type="hidden" id="liftID" value="${lift.getId()}" />
         	 <div class="rec">
 	        	<c:choose>
-	        		<c:when test="$user.profilePhoto!=null">
-	        			<img height="120px" src="" class="img_inner fleft " /> <% //TODO %>
+	        		<c:when test="${user.profilePhoto!=null}">
+	        			<img height="120px" src="${user.profilePhoto}" class="img_inner fleft " /> <% //TODO %>
 	         		</c:when>
 	        		<c:otherwise>
 	        			<img height="120px" src="images/default_user.jpg" class="img_inner fleft " />
@@ -137,15 +98,15 @@
         	<div class="extra_wrapper">
 	        	<div class="emphatizeWhen">${lift.departureDate} - ${lift.departureTime}</div>
 		        <div><div class="emphatizeLift">${lift.getPickUpPoint().city} - ${lift.getDropOffPoint().city}  </div>
-	       		<c:choose>
-	       			<c:when test="${lift.possibleDetour}==true">
-	       				   Deviazioni possibili
+	       		<%-- <c:choose>
+	       			<c:when test="${lift.detours.size()>0}">
+	       				  ${lift.detours.size()} tappe intermedie
 	       			</c:when>
 	       			<c:otherwise>
-	       				Nessuna deviazione
+	       				Nessuna tappa intermedia
 	       			</c:otherwise>
 	       		</c:choose>
-	       		</div>
+	       		</div> --%>
 	        	<div class="emphatizePrice">${lift.cost} &#8364; a persona</div>
 	        	<div class="emphatizeSeat"> ${lift.nSeat} posti disponibili</div>
 	        	</div>
@@ -153,6 +114,7 @@
         	<form method="get" action="HandleShowLiftDetail" id="detailsForm_${lift.getId()}">
 	        	<input name="lift" type="hidden" value="${lift.getId()}" >
         	</form>
+        	</div>
         	</div>
 		</c:forEach>
 		 	<div id="tnt_pagination">
@@ -265,15 +227,6 @@
     </div>
 </div>
 </div>
-<footer>
-  <div class="container_12">
-    <div class="grid_12">
-      <div class="copy"> Give me a lift(C) 2045 | <a href="#">Politica Privacy</a> | Design by: <a href="http://www.templatemonster.com/">TemplateMonster.com</a> </div>
-    </div>
-  </div>
-</footer>
-</body>
-</html>
-
+<%@include file="footer.jsp"%>
 
 

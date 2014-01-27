@@ -1,0 +1,27 @@
+.simpleTable
+{
+	border-top:1px solid black;
+	border-collapse:collapse;
+	width:100%;
+	table-layout: fixed;
+}
+.simpleTable td
+{
+	border-bottom:1px solid gray;
+	vertical-align: middle;
+	/* text-align: center; */
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+.simpleTable tr:HOVER
+{
+	background: #F0F8FF;
+}
+.simpleTable td .text{
+ 	margin-left:10px;
+    padding-top:53px;
+	vertical-align: middle;
+	font-weight: bold;
+}
+

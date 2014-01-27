@@ -5,16 +5,21 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
+import org.hibernate.type.StringType;
 
 import it.unical.mat.domain.DomainObject;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
+import it.unical.mat.service.ParseDate;
 import it.unical.mat.util.HibernateUtil;
 
 
@@ -155,19 +160,35 @@ public class RegisteredUserMapper extends AbstractMapper {
 				return null;
 	}
 	
-	public List<?> findMemberByMonth() {
+	public HashMap<String,Integer> findMemberByMonth() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {			
-			String findStatement = "select month(User_Activity.MEMBERSINCE),count(User_id) from User,User_Activity "
+			String findStatement = "select month(User_Activity.MEMBERSINCE) as M, count(User_id) as C from User,User_Activity "
 					+ " where User.User_ID=User_Activity.MEMBER_ACTIVITY_ID"
 					+ " group by month(User_Activity.MEMBERSINCE) ";
-		
+			
 			transaction = session.beginTransaction();
-			Query query = session.createSQLQuery(findStatement);
-			List<?> res=query.list();
+			Query query = session.createSQLQuery(findStatement).addScalar("M", StringType.INSTANCE).addScalar("C", StringType.INSTANCE);
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			@SuppressWarnings("unchecked")
+			List<Map<String,String>> aliasToValueMapList=query.list();
+			HashMap<String, Integer> result=new HashMap<String, Integer>();
+			for (Map<String, String> map : aliasToValueMapList) {
+				Set<String> keys=map.keySet();
+				String month = null;
+				for (String string : keys) {
+					if(string.equals("M"))
+						month=map.get(string);
+					if(string.equals("C"))
+						result.put(ParseDate.months[Integer.parseInt(month)-1], Integer.parseInt(map.get(string)));
+				}
+			}
+			for (Entry<String, Integer> res : result.entrySet()) {
+				System.out.println(res.getKey()+" "+res.getValue());
+			}
 			transaction.commit();
-			return res;
+			return result;
 		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
 			e.printStackTrace();
 			transaction.rollback();

@@ -1,11 +1,11 @@
 /**/
 
-@import url(http://fonts.googleapis.com/css?family=Glegoo);
-/*       'Glegoo', serif      */
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans);
+/*       'Droid Sans', serif      */
 
-@import "../css/reset.css";
-@import "../css/grid.css";
-@import "../css/superfish.css";
+@import "reset.css";
+@import "grid.css";
+@import "superfish.css";
 
 input {
 	outline:  none !important;
@@ -28,7 +28,7 @@ text-decoration:none;
 
 
 body {
-	font: 12px/18px  Arial, Helvetica, sans-serif;
+	font: 12px/18px  'Droid Sans', Arial, Helvetica, sans-serif;
 	color:#858080;
 	background-color: #fff;
 	position:relative;
@@ -53,8 +53,9 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
-	font-family: 'Glegoo', serif;
-	color: #aba8a8;
+	font-family: 'Droid Sans', serif;
+/* 	color: #aba8a8; */
+	color: grey;
 }
 
 h3 {
@@ -72,7 +73,8 @@ h3 {
 h4 {
 	font-size: 18px;
 	line-height: 18px;
-	margin-bottom: 12px;
+	margin-bottom: 6px;
+	margin-top: 6px;
 }
 
 h4.head1 {
@@ -280,7 +282,7 @@ h1 a img {
 
 .car_div .title {
 
-	font: 19px/41px 'Glegoo', serif;
+	font: 19px/41px 'Droid Sans', serif;
 
 	padding-top: 9px;
 	margin-bottom: 20px;
@@ -442,12 +444,12 @@ a.link1 {
 	padding: 4px 5px 6px;
 	text-align: center;
 	font-size: 14px;
-	font-family: 'Glegoo', serif;
+	font-family: 'Droid Sans', serif;
 	background-color: #eeeef2;
 
 }
 
-.post {
+.post 
 	overflow: hidden;
 
 }

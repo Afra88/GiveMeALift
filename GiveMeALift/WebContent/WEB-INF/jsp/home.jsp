@@ -83,7 +83,7 @@
 	<link rel="stylesheet" type="text/css"  href="js/calendar/tcal.css">
 	<link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
-	<link rel="stylesheet" href="js/pictogram-button.css" >
+	<link rel="stylesheet" href="css/pictogram-button.css" >
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/font-awesome.css">
 	<link rel="stylesheet" href="css/slider.css">
@@ -155,29 +155,7 @@
 	</script>
 </head>
 <body class="page1" onload="initialize()">
-<header>
-  <div class="container_12">
-    <div class="grid_12">
-	    <c:choose>
-    		<c:when test="${user!=null}">
-    			<%@include file="signedUpForm.jsp"%>
-    		</c:when>
-    		<c:otherwise>
-		    	<%@include file="logInForm.jsp"%>
-    		</c:otherwise>
-    	</c:choose>
-          <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>   
-          <c:choose>
-          <c:when test="${user!=null}">
-          	<%@include file="userMenu.jsp" %>
-          </c:when>
-          <c:otherwise>
-         	 <%@include file="classicMenu.jsp" %>
-          </c:otherwise>
-          </c:choose>    
-  </div>
-  </div>
-</header>
+<%@include file="chooseMenu.jsp"%>
 <div class="content">
   <div class="container_12">
 	<div class="grid_2">

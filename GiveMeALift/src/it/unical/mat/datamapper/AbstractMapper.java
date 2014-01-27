@@ -57,7 +57,7 @@ public abstract class AbstractMapper {
 			transaction = session.beginTransaction();
 			DomainObject object= (DomainObject) session.get(object2.getClass(), id);
 			object.copy(object2);
-			session.update(object);
+//			session.update(object);
 			transaction.commit();
 			return true;
 		} catch (HibernateException e) {

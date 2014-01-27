@@ -8,7 +8,7 @@ import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.RegisteredUser;
-import it.unical.mat.service.LiftToViewConverterFacade;
+import it.unical.mat.service.LiftToViewFacade;
 import it.unical.mat.service.ParseDate;
 
 import org.springframework.beans.support.PagedListHolder;
@@ -139,7 +139,7 @@ public class SearchController {
 		LiftMapper lm=new LiftMapper();
 		if(lift.matches("[0-9]+")){
 			Lift l=lm.findById(lift);
-			LiftToViewConverterFacade lc=new LiftToViewConverterFacade();
+			LiftToViewFacade lc=new LiftToViewFacade();
 			model.addAttribute("lift",lc.convert(l));
 			model.addAttribute("route",l.computeRoute());
 			RegisteredUser u=(RegisteredUser) session.getAttribute("user");
@@ -172,6 +172,33 @@ public class SearchController {
 			return "showLiftDetails";
 		}
 		return "error";
+	}
+	
+	@RequestMapping(value="ContactUser")
+	public String contactAnOtherUser(@RequestParam String lift, @RequestParam String seat, Model m, HttpSession session){
+		if(session.getAttribute("user")!=null){
+			m.addAttribute("lift",lift);
+			m.addAttribute("seat", seat);
+			return "bookALift";
+		}
+		return "userLogIn"; //TODO
+	}
+	
+	@RequestMapping(value="BookALift")
+	public String handleBooking(@RequestParam String lift, @RequestParam String seat,Model model, HttpSession session){
+		if(session.getAttribute("user")!=null && lift!=null && lift!=""){
+			LiftMapper lm=new LiftMapper();
+			Lift l=new Lift();
+			int nSeat=Integer.parseInt(seat)-1;
+			l.setnSeat(nSeat);
+			boolean updated=lm.update(l, Long.parseLong(lift));
+			if(updated)
+				model.addAttribute("out", "La prenotazione è avvenuta con successo.");
+			else
+				model.addAttribute("out", "La prenotazione non è avvenuta. Riprovare in seguito.");
+			return "bookALift";
+		}
+		return "error"; //TODO
 	}
 
 }

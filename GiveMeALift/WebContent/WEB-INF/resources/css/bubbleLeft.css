@@ -1,0 +1,71 @@
+.bubbleLeft
+{
+	position: relative;
+	width: 85%;
+	min-height: 45px;
+	padding: 6px;
+	background: #F0F8FF;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border: #7F7F7F solid 2px;
+	margin-bottom: 20px;
+	display: inline-block;
+	margin-left: 30px;
+}
+
+.bubbleLeft:after
+{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 15px 15px 15px 0;
+	border-color: transparent #F0F8FF;
+	display: inline;
+	width: 0;
+	z-index: 1;
+	margin-top: -15px;
+	left: -15px;
+	top: 50%;
+	
+}
+
+.bubbleLeft:before
+{
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 16px 16px 16px 0;
+	border-color: transparent #7F7F7F;
+	display: inline;
+	width: 0;
+	z-index: 0;
+	margin-top: -16px;
+	left: -18px;
+	top: 50%;
+}
+
+.bubbleLeft .sender
+{
+	font: 16px 'Droid Sans', Arial, Helvetica, sans-serif;
+	font-weight: 600;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.bubbleLeft .when
+{
+	text-align: right;
+	font-style:italic;
+	font: 14px 'Droid Sans', Arial, Helvetica, sans-serif ;
+	display: block;
+}
+.bubbleLeft .message
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: block;
+	text-indent: 20px;
+	font: 16px  'Droid Sans', Arial, Helvetica, sans-serif;
+}
+

@@ -13,6 +13,7 @@ import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
 
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,7 +36,7 @@ public class UserController {
 	    }
 	 
 	 @RequestMapping(value = "/SignUp", method= RequestMethod.POST )
-	    public String userLogIn(@RequestParam("email") String email, @RequestParam("psw")String psw,
+	    public String userSignUp(@RequestParam("email") String email, @RequestParam("psw")String psw,
 	    		@RequestParam("name") String name, @RequestParam("surname") String surname,
 	    		@RequestParam("gender") String gender, @RequestParam("year") Integer birthYear,
 	    		Model model, HttpSession session) {
@@ -57,7 +58,7 @@ public class UserController {
 	}
 	 
 	 @RequestMapping(value = "/LogIn", method = RequestMethod.POST)
-	 public String userSignedUp(@RequestParam("email") String email, @RequestParam("psw")String psw,
+	 public String userLogIn(@RequestParam("email") String email, @RequestParam("psw")String psw,
 			 Model model, HttpSession session){
 		RegisteredUserMapper rm=new RegisteredUserMapper();
 		if(email!="" && email!=null && psw!="" && psw!=null){
@@ -83,8 +84,8 @@ public class UserController {
 				Administrator a=(Administrator) am.findAdministratorByEmailAndPassword(email, psw);
 				System.out.println(a);
 				if(a!=null){
-					session.setAttribute("user",a);
-					return "homeAdmin";	
+					session.setAttribute("admin",a);
+					return "home";	
 				}
 		 	}
 	 	}

@@ -1,6 +1,5 @@
 package it.unical.mat.domain;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -40,9 +39,9 @@ public class RegisteredUser extends User {
 	
 	private PersonalPreference personalPreference;
 
-	private List<Message> messagesSent;
-	
-	private List<Message> messagesReceived;
+//	private List<Message> messagesSent;
+//	
+//	private List<Message> messagesReceived;
 	
 	private List<Feedback> receivedFeedback;
 
@@ -51,9 +50,9 @@ public class RegisteredUser extends User {
 	
 	public RegisteredUser() {
 		super();
-		messagesSent=new LinkedList<Message>();
-		messagesReceived=new LinkedList<Message>();
-		receivedFeedback=new LinkedList<Feedback>();
+//		messagesSent=new LinkedList<Message>();
+//		messagesReceived=new LinkedList<Message>();
+//		receivedFeedback=new LinkedList<Feedback>();
 	}			
 
 	public RegisteredUser(String email, String psw, String name,
@@ -105,10 +104,10 @@ public class RegisteredUser extends User {
 			this.onlyPassenger=u.onlyPassenger;
 		if(u.countAlert!=null)
 			this.countAlert=u.countAlert;
-		if(u.messagesReceived!=null)
-			this.messagesReceived=u.messagesReceived;
-		if(u.messagesSent!=null)
-			this.messagesSent=u.messagesSent;
+//		if(u.messagesReceived!=null)
+//			this.messagesReceived=u.messagesReceived;
+//		if(u.messagesSent!=null)
+//			this.messagesSent=u.messagesSent;
 		if(u.personalPreference!=null)
 			this.personalPreference=u.personalPreference;
 		if(u.receivedFeedback!=null)
@@ -133,32 +132,33 @@ public class RegisteredUser extends User {
 		this.userActivity = userActivity;
 	}
 
+//	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+//	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
+//	@JoinTable(name = "MESSAGE_SENDER_JOIN",
+//				joinColumns = { @JoinColumn (name = "USER_ID") },
+//				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
+//	public List<Message> getMessagesSent() {
+//		return messagesSent;
+//	}
+//
+//	public void setMessagesSent(List<Message> messagesSent) {
+//		this.messagesSent = messagesSent;
+//	}
+
+//	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //cambiato aa
+//	@JoinTable(name = "MESSAGE_RECEIVED",
+//				joinColumns = { @JoinColumn (name = "USER_ID") },
+//				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
+//	public List<Message> getMessagesReceived() {
+//		return messagesReceived;
+//	}
+//
+//	public void setMessagesReceived(List<Message> messagesReceived) {
+//		this.messagesReceived = messagesReceived;
+//	}
+//
 	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
-	@JoinTable(name = "MESSAGE_SENDER_JOIN",
-				joinColumns = { @JoinColumn (name = "USER_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
-	public List<Message> getMessagesSent() {
-		return messagesSent;
-	}
-
-	public void setMessagesSent(List<Message> messagesSent) {
-		this.messagesSent = messagesSent;
-	}
-
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //cambiato aa
-	@JoinTable(name = "MESSAGE_RECEIVER_JOIN",
-				joinColumns = { @JoinColumn (name = "USER_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "MESSAGE_ID") })
-	public List<Message> getMessagesReceived() {
-		return messagesReceived;
-	}
-
-	public void setMessagesReceived(List<Message> messagesReceived) {
-		this.messagesReceived = messagesReceived;
-	}
-
-	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //cambiato aa
 	@JoinTable(name = "FEEDBACK_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "FEEDBACK_ID") })
@@ -213,11 +213,11 @@ public class RegisteredUser extends User {
 				+ ((countAlert == null) ? 0 : countAlert.hashCode());
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
-		result = prime
-				* result
-				+ ((messagesReceived == null) ? 0 : messagesReceived.hashCode());
-		result = prime * result
-				+ ((messagesSent == null) ? 0 : messagesSent.hashCode());
+//		result = prime
+//				* result
+//				+ ((messagesReceived == null) ? 0 : messagesReceived.hashCode());
+//		result = prime * result
+//				+ ((messagesSent == null) ? 0 : messagesSent.hashCode());
 		result = prime * result
 				+ ((onlyPassenger == null) ? 0 : onlyPassenger.hashCode());
 		result = prime
@@ -260,16 +260,16 @@ public class RegisteredUser extends User {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (messagesReceived == null) {
-			if (other.messagesReceived != null)
-				return false;
-		} else if (!messagesReceived.equals(other.messagesReceived))
-			return false;
-		if (messagesSent == null) {
-			if (other.messagesSent != null)
-				return false;
-		} else if (!messagesSent.equals(other.messagesSent))
-			return false;
+//		if (messagesReceived == null) {
+//			if (other.messagesReceived != null)
+//				return false;
+//		} else if (!messagesReceived.equals(other.messagesReceived))
+//			return false;
+//		if (messagesSent == null) {
+//			if (other.messagesSent != null)
+//				return false;
+//		} else if (!messagesSent.equals(other.messagesSent))
+//			return false;
 		if (onlyPassenger == null) {
 			if (other.onlyPassenger != null)
 				return false;

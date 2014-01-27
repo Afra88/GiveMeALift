@@ -3,6 +3,7 @@ package it.unical.mat.util;
 import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Administrator;
 import it.unical.mat.domain.Car;
+import it.unical.mat.domain.Conversation;
 import it.unical.mat.domain.Feedback;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
@@ -33,6 +34,7 @@ public class HibernateUtil {
 								.addAnnotatedClass(Administrator.class)
 								.addAnnotatedClass(Address.class)
 //								.addAnnotatedClass(DomainObject.class)
+								.addAnnotatedClass(Conversation.class)
 								.addAnnotatedClass(LiftPoint.class)
 								.addAnnotatedClass(LiftDetour.class)
 								.addAnnotatedClass(Lift.class)

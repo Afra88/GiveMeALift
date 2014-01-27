@@ -162,11 +162,11 @@
 				<td><span class="label"> Data partenza: </span> 
 					<c:choose>
 						<c:when test="${lift!=null}">
-							<span id=date><input type="text" name="date" class="tcal" value="${goingDate}" ></span>
+							<span id=date><input type="text" name="goingDate" class="tcal" value="${goingDate}" ></span>
 						</c:when>
 						<c:otherwise>
 <!-- 						<script type="text/javascript" src="js/currentDate.js"></script> -->
-							<span id=date><input type="text" name="date" class="tcal" value="" ></span>
+							<span id=date><input type="text" name="goingDate" class="tcal" value="" ></span>
 						</c:otherwise>
 					</c:choose>
 				</td>
@@ -185,7 +185,8 @@
 						  	</c:otherwise>
 						  </c:choose>
 							</c:forEach>
-						</select> 														  						
+						</select> 
+						:														  						
 						<select id="goingTimeM" name="goingTimeM">
 						 <c:forEach var="i" step="1" begin="00" end="59" >
 						  <c:choose>
