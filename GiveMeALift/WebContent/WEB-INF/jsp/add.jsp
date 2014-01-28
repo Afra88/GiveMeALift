@@ -14,12 +14,13 @@
 	    <link rel="stylesheet" href="css/pagination.css" type="text/css" />
 	    <link rel="stylesheet" href="css/blueTable.css">
 	    <link rel="stylesheet" href="css/orangeTable.css">
-	    
-	    <link rel="icon" href="images/favicon.ico">
-		<link rel="shortcut icon" href="images/favicon.ico">
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/font-awesome.css">
 		<link rel="stylesheet" href="css/form.css">
+		<link rel="stylesheet" href="css/pictogram-button.css">
+	    
+	    <link rel="icon" href="images/favicon.ico">
+		<link rel="shortcut icon" href="images/favicon.ico">
 		
 		
 		
@@ -65,7 +66,11 @@
 			</tr>
 			<tr>
 				<td>
-					<input value="Aggiungi un'auto" type="submit"/>
+					<div class="btns">
+						<p align="left">
+							<input class="button orange" value="Aggiungi un'auto" type="submit"/>
+						</p>
+					</div>	
 				</td>
 			</tr>
 		</table>

@@ -15,12 +15,13 @@
 	    <link rel="stylesheet" href="css/pagination.css" type="text/css" />
 	    <link rel="stylesheet" href="css/blueTable.css">
 	    <link rel="stylesheet" href="css/orangeTable.css">
-	    
-	    <link rel="icon" href="images/favicon.ico">
-		<link rel="shortcut icon" href="images/favicon.ico">
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/font-awesome.css">
 		<link rel="stylesheet" href="css/form.css">
+		<link rel="stylesheet" href="css/pictogram-button.css">
+	    
+	    <link rel="icon" href="images/favicon.ico">
+		<link rel="shortcut icon" href="images/favicon.ico">
 		
 		<script type="text/javascript" src="http://www.carqueryapi.com/js/jquery.min.js"></script>
 		<script type="text/javascript" src="http://www.carqueryapi.com/js/carquery.0.3.3.js"></script>
@@ -136,9 +137,13 @@
 			</tr>
 				</table>
 			</div>
-				<p align = "center"><input value="Conferma" type="submit"/></p>
-			</form:form>
 			
+			<div class="btns">
+				<p align="center">
+					<input class="button orange" value="Conferma" type="submit"/>
+				</p>
+			</div>
+			</form:form>
 	</div>
 </div>
 	

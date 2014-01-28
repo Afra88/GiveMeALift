@@ -33,8 +33,7 @@ public class FileUpload extends HttpServlet{
 //	private String connectionId;
 	
 	File f = null;
-    String configName = null;
-	
+    	
     @SuppressWarnings("resource")
 	public void doPost(final HttpServletRequest request,final HttpServletResponse response)  throws ServletException, IOException {
     	
