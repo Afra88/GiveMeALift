@@ -98,6 +98,7 @@ public class RegisteredUser extends User {
 	@Override
 	public void copy(DomainObject object2) {
 		RegisteredUser u=(RegisteredUser)(object2);
+		super.copy(object2);
 		if(u.onlyPassenger!=null)
 			this.onlyPassenger=u.onlyPassenger;
 		if(u.countAlert!=null)

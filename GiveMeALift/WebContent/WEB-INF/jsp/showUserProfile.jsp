@@ -123,13 +123,13 @@
 								type="text" value="${user.surname}" required="required"></input>
 							</td>
 						</tr>
-						<tr>
+						<%-- <tr>
 							<td>Scegli Nickname</td>
 							<td><select id="nickname" name="nickname">
 									<option>${user.name}</option>
 									<option selected="selected">${user.computeNickName()}</option>
 							</select></td>
-						</tr>
+						</tr> --%>
 						<tr>
 							<td>Email</td>
 							<td><input id="profileEmail" name="profileEmail" type="text"
@@ -142,12 +142,12 @@
 								placeholder="3XX XXXX XXX" value="${user.getMobilePhone()}"
 								maxlength="10"></input></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td colspan="2"><input id="hideCellPhone"
 								name="hideCellPhone" type="checkbox" /> <small><i>Non
 										mostrare il mio numero di cellulare su Give Me a Lift</i></small> manca
 								nel DB</td>
-						</tr>
+						</tr> -->
 						<tr>
 							<td>Telefono</td>
 							<td><input id="profilePhone" name="profilePhone" type="text"
@@ -156,14 +156,15 @@
 						</tr>
 						<tr>
 							<td colspan="2"><input id="hidePhone" name="hidePhone"
-								type="checkbox" /> <i>Non mostrare il mio numero di telefono
-									su Give Me a Lift</i>manca nel DB</td>
+								type="checkbox" /> <i>Non mostrare i miei numeri di telefono
+									su Give Me a Lift</i></td>
 						</tr>
 						<tr>
 							<td>Anno di nascita</td>
-							<td><input id="birthYear" name="birthYear" type="number"
+							<td> ${user.birthYear}
+								<%-- <input id="birthYear" name="birthYear" type="number"
 								readonly="readonly" value="${user.birthYear}"
-								required="required" size="4"></input> <!-- 						<select id="birthYear" name="birthYear"> -->
+								required="required" size="4"></input>  --%><!-- 						<select id="birthYear" name="birthYear"> -->
 								<%-- 						  <c:forEach var="i" step="1" begin="1914" end="1996" > --%>
 								<%-- 							<option>${i}</option> --%> <%-- 							</c:forEach> --%>
 								<!-- 						</select> --></td>
@@ -214,7 +215,7 @@
 				</div>
 			</div>
 
-			<div class="grid_6">
+<%-- 			<div class="grid_6">
 				<div class="orangeTable">
 					<table id="personalPref" class=table>
 						<tr>
@@ -330,7 +331,7 @@
 						</tr>
 					</table>
 				</div>
-			</div>
+			</div> --%>
 
 			<div class="grid_6">
 				<div class="greenTable">

@@ -57,10 +57,10 @@ public class CopyOfUserParameterController {
 			@RequestParam("address") String street,
 			@RequestParam("cityAddress") String city,
 			@RequestParam("stateAddress") String state,
-			@RequestParam("chatness") String chatnessLevel,
-			@RequestParam("music") String musicOnBoard,
-			@RequestParam("smoking") String smokingOnBoard,
-			@RequestParam("pets") String petsOnBoard,
+//			@RequestParam("chatness") String chatnessLevel,
+//			@RequestParam("music") String musicOnBoard,
+//			@RequestParam("smoking") String smokingOnBoard,
+//			@RequestParam("pets") String petsOnBoard,
 			Model model, HttpSession session) {
 		
 		
@@ -70,36 +70,36 @@ public class CopyOfUserParameterController {
 			
 			RegisteredUser ru = new RegisteredUser();
 		
-			PersonalPreference pref = new PersonalPreference(); //ru.getPersonalPreference();
-					
-			int level = 0;
-			if(chatnessLevel.equals("1"))
-				level = 1;
-			else if(chatnessLevel.equals("2"))
-				level = 2;
-			else if(chatnessLevel.equals("3"))
-				level = 3;
-			
-			Boolean musicOn = false;
-			if(musicOnBoard.equals("noMus"))
-				musicOn = false;
-			else
-				musicOn = true;
-			Boolean smokingOn = false;
-			if(smokingOnBoard.equals("noSmok"))
-				smokingOn = false;
-			else
-				smokingOn = true;
-			Boolean petsOn = false;
-			if(petsOnBoard.equals("noPets"))
-				petsOn = false;
-			else
-				petsOn = true;
-			
-			pref.setChatnessLevel(level);
-			pref.setMusic(musicOn);
-			pref.setSmoking(smokingOn);
-			pref.setPetsOnBoard(petsOn);	
+//			PersonalPreference pref = new PersonalPreference(); //ru.getPersonalPreference();
+//					
+//			int level = 0;
+//			if(chatnessLevel.equals("1"))
+//				level = 1;
+//			else if(chatnessLevel.equals("2"))
+//				level = 2;
+//			else if(chatnessLevel.equals("3"))
+//				level = 3;
+//			
+//			Boolean musicOn = false;
+//			if(musicOnBoard.equals("noMus"))
+//				musicOn = false;
+//			else
+//				musicOn = true;
+//			Boolean smokingOn = false;
+//			if(smokingOnBoard.equals("noSmok"))
+//				smokingOn = false;
+//			else
+//				smokingOn = true;
+//			Boolean petsOn = false;
+//			if(petsOnBoard.equals("noPets"))
+//				petsOn = false;
+//			else
+//				petsOn = true;
+//			
+//			pref.setChatnessLevel(level);
+//			pref.setMusic(musicOn);
+//			pref.setSmoking(smokingOn);
+//			pref.setPetsOnBoard(petsOn);	
 			
 			Address a = new Address();
 			a = new Address();
@@ -112,7 +112,7 @@ public class CopyOfUserParameterController {
 			ru.setPhone(phone);
 			ru.setMobilePhone(mobilePhone);
 			ru.setAddress(a);
-			ru.setPersonalPreference(pref);
+//			ru.setPersonalPreference(pref);
 			
 			
 			RegisteredUserMapper rm = new RegisteredUserMapper();
@@ -135,8 +135,9 @@ public class CopyOfUserParameterController {
 			uploadPhoto(uploadForm, u, filename); 
 			
 	        //--------------- FOTO ---------------
-		       
-		    
+		     
+			RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
+		    session.setAttribute("user", ruNew);
 			return "showUserProfile";
 		}
 		else
