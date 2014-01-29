@@ -70,6 +70,7 @@
 							<td>
 								immagine 1 stella
 							</td>
+							
 							</c:if>
 							<c:if test="{$user.giveAvgRating()==2}">
 							<td>
