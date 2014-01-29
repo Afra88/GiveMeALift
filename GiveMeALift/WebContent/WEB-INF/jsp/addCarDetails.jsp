@@ -79,10 +79,7 @@
 				<tr>
 					<td>Modello</td>
 					<td>
-
-						
 						<select name="car-models" id="car-models"></select>
-						
 					</td>
 				</tr>
 				<tr>
@@ -121,8 +118,23 @@
 <%-- 					<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%>
 <!-- 				</td> -->
 
+
 					<td>
-					<img src="/GiveMeALift/avatars/${user.id}_car.jpg"   width="150" onerror="this.style.visibility = 'hidden'">
+						<c:choose>
+							<c:when test="${user.getCar().getPhotoCar()!=null}">
+								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" height="120px" onerror="this.style.visibility = 'hidden'"> 
+								<input name="files[0]" type="file" />
+							</c:when>
+							<c:otherwise>
+								<img height="120px" src="images/default_car.jpg" />
+								<input name="files[0]" type="file" />
+							</c:otherwise>
+						</c:choose>
+					</td>
+
+
+<!-- 					<td> -->
+<%-- 					<img src="/GiveMeALift/avatars/${user.id}_car.jpg"   width="150" onerror="this.style.visibility = 'hidden'"> --%>
 <!-- 					<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data">  -->
 <!-- 							<form name="myWebForm" method="post" enctype="multipart/form-data">  --> 
 <!-- 					<input type="file" name="uploadFile"/><br> -->
@@ -130,10 +142,10 @@
 <%-- 					<form:form method="post" action="Save" modelAttribute="uploadForm" enctype="multipart/form-data"> --%>
 <!-- 					<p>Select files to upload. Press Add button to add more file inputs.</p> -->
 				
-     				<input name="files[0]" type="file" />
+<!--      				<input name="files[0]" type="file" /> -->
 <!-- 				    <input type="submit" value="Carica foto" />				     -->
 <%-- 					</form:form> --%>
-				</td>
+<!-- 				</td> -->
 			</tr>
 				</table>
 			</div>

@@ -204,6 +204,20 @@ public class RegisteredUser extends User {
 	public void setShowContacts(Boolean showContacts) {
 		this.showContacts = showContacts;
 	}
+	
+//	public Integer computeAvgRating(){
+//		Integer sum = 0;
+//		int tot = receivedFeedback.size();
+//		for (Feedback f : receivedFeedback) {
+//			sum += f.getRating();
+//		}
+//		
+//		return sum/tot;
+//	}
+//	
+//	public Integer giveAvgRating(){
+//		return computeAvgRating();
+//	}
 
 	@Override
 	public int hashCode() {

@@ -36,9 +36,33 @@ public class CopyOfUserParameterController {
 	
 	@RequestMapping(value = "/ShowUserProfile")
 	public String showUserProfile(Model model, HttpSession session) {
-		User u = (User)session.getAttribute("user");
+		RegisteredUser u = (RegisteredUser)session.getAttribute("user");
 		
 		if(u!=null){
+//			PersonalPreference pref = u.getPersonalPreference();
+//			
+//			System.out.println("__"+pref);
+//			
+//			if (pref == null) {
+//				pref = new PersonalPreference();
+//				pref.setChatnessLevel(1);
+//				pref.setMusic(false);
+//				pref.setSmoking(false);
+//				pref.setPetsOnBoard(false);
+//				
+//
+//				u.setPersonalPreference(pref);				
+//				session.setAttribute("user", u);	
+//			}
+//			
+//			
+//			System.out.println(pref.getChatnessLevel());
+//			System.out.println(pref.getMusic());
+//			System.out.println(pref.getPetsOnBoard());
+//			System.out.println(pref.getSmoking());
+			
+			
+			
 			
 			return "showUserProfile";
 		}
@@ -61,18 +85,35 @@ public class CopyOfUserParameterController {
 //			@RequestParam("music") String musicOnBoard,
 //			@RequestParam("smoking") String smokingOnBoard,
 //			@RequestParam("pets") String petsOnBoard,
+			@RequestParam("note") String description,
 			Model model, HttpSession session) {
 		
 		
-		User u = (User)session.getAttribute("user");
+		RegisteredUser u = (RegisteredUser)session.getAttribute("user");
+//		PersonalPreference p = u.getPersonalPreference();
+//
+//		System.out.println("_ModifyUserProfile_"+p);
+//		System.out.println(p.getChatnessLevel());
+//		System.out.println(p.getMusic());
+//		System.out.println(p.getPetsOnBoard());
+//		System.out.println(p.getSmoking());
 		
 		if(u!=null){
 			
 			RegisteredUser ru = new RegisteredUser();
+			
+			RegisteredUser user= u;
+			
 		
-//			PersonalPreference pref = new PersonalPreference(); //ru.getPersonalPreference();
+//			PersonalPreference pref = user.getPersonalPreference(); //new PersonalPreference(); //ru.getPersonalPreference();
 //					
-//			int level = 0;
+//			int level = pref.getChatnessLevel(); //1;
+//			Boolean musicOn = pref.getMusic(); //false;
+//			Boolean smokingOn = pref.getSmoking(); //false;
+//			Boolean petsOn = pref.getPetsOnBoard(); //false;
+//			
+//			System.out.println("chatness:"+ pref.getChatnessLevel());
+//			
 //			if(chatnessLevel.equals("1"))
 //				level = 1;
 //			else if(chatnessLevel.equals("2"))
@@ -80,27 +121,32 @@ public class CopyOfUserParameterController {
 //			else if(chatnessLevel.equals("3"))
 //				level = 3;
 //			
-//			Boolean musicOn = false;
+//			
 //			if(musicOnBoard.equals("noMus"))
 //				musicOn = false;
 //			else
 //				musicOn = true;
-//			Boolean smokingOn = false;
+//			
 //			if(smokingOnBoard.equals("noSmok"))
 //				smokingOn = false;
 //			else
 //				smokingOn = true;
-//			Boolean petsOn = false;
+//			
 //			if(petsOnBoard.equals("noPets"))
 //				petsOn = false;
 //			else
 //				petsOn = true;
 //			
+//			
+//			//pref = new PersonalPreference();
+//			
 //			pref.setChatnessLevel(level);
 //			pref.setMusic(musicOn);
 //			pref.setSmoking(smokingOn);
-//			pref.setPetsOnBoard(petsOn);	
-			
+//			pref.setPetsOnBoard(petsOn);
+//		
+//			System.out.println("chatness:"+ pref.getChatnessLevel());
+//			
 			Address a = new Address();
 			a = new Address();
 			a.setStreet(street);
@@ -112,21 +158,9 @@ public class CopyOfUserParameterController {
 			ru.setPhone(phone);
 			ru.setMobilePhone(mobilePhone);
 			ru.setAddress(a);
-//			ru.setPersonalPreference(pref);
+		//	ru.setPersonalPreference(pref);
 			
-			
-			RegisteredUserMapper rm = new RegisteredUserMapper();
-							
-			boolean modified = rm.update(ru, u.getId());
-			System.out.println("Userupdate: "+ modified);
-			
-			
-			if(modified)
-				model.addAttribute("modified", true);
-			else
-				model.addAttribute("modified", false);
-	
-
+			ru.setDescription(description);
 			
 			//--------------- FOTO ---------------
 			
@@ -135,9 +169,33 @@ public class CopyOfUserParameterController {
 			uploadPhoto(uploadForm, u, filename); 
 			
 	        //--------------- FOTO ---------------
-		     
-			RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
-		    session.setAttribute("user", ruNew);
+			
+			ru.setProfilePhoto(filename);
+			
+			RegisteredUserMapper rm = new RegisteredUserMapper();
+							
+			boolean modified = rm.update(ru, u.getId());
+			System.out.println("Userupdate: "+ modified);
+			
+			
+			if(modified){
+				model.addAttribute("modified", true);
+				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
+				
+//				PersonalPreference p1 = ruNew.getPersonalPreference();
+//
+//				System.out.println("_ModifyUserProfile_runew_"+p1);
+//				System.out.println(p1.getChatnessLevel());
+//				System.out.println(p1.getMusic());
+//				System.out.println(p1.getPetsOnBoard());
+//				System.out.println(p1.getSmoking());
+				
+				session.setAttribute("user", ruNew);
+			}
+			else
+				model.addAttribute("modified", false);
+	
+
 			return "showUserProfile";
 		}
 		else
@@ -145,7 +203,6 @@ public class CopyOfUserParameterController {
 	}
 	 
 
-	
 	
 	@RequestMapping(value = "/ShowUserCar")
 	public String showUserCar(Model model, HttpSession session){
@@ -181,7 +238,7 @@ public class CopyOfUserParameterController {
 	}
 	
 	
-	@RequestMapping(value = "/SubmitCar", method = RequestMethod.POST)
+	@RequestMapping(value = "/SubmitCar", method = RequestMethod.POST) 
 	public String submitCar(	
 			@RequestParam("car-years") String year,
 			@RequestParam("car-makes") String brandAuto,
@@ -217,18 +274,7 @@ public class CopyOfUserParameterController {
 				c=4;
 			 
 			car.setConfort(c);
-//			car.setCarPhoto(photoCar);
-			
-			ru.setCar(car);
-			
-			boolean modified = rm.update(ru, u.getId());
-			
-			
-			System.out.println("In submitCar:"+
-								"---update user per new car: "+ modified);
-			
-			//session.setAttribute("user", ru);
-			
+		
 			
 			//--------------- FOTO ---------------
 			
@@ -238,11 +284,24 @@ public class CopyOfUserParameterController {
 			 
 		    //--------------- FOTO ---------------
 		         
-			if(modified)
+			car.setCarPhoto(filename);			
+			ru.setCar(car);
+
+			boolean modified = rm.update(ru, u.getId());
+			
+			
+			System.out.println("In submitCar:"+
+								"---update user per new car: "+ modified);
+			
+
+			if(modified){
 				model.addAttribute("modified", true);
+				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
+			    session.setAttribute("user", ruNew);
+			}
 			else
-				model.addAttribute("modified", true);	//è false -- metto true solo per prova
-									
+				model.addAttribute("modified", false);	//è false -- metto true solo per prova
+		
 		        
 			return "submitCar";
 		}
@@ -286,8 +345,9 @@ public class CopyOfUserParameterController {
 	}
 	
 	
-	@RequestMapping(value = "/ModifyUserCar" )
+	@RequestMapping(value = "/ModifyUserCar", method = RequestMethod.POST) 	
 	public String modifyUserCar(
+			@ModelAttribute("uploadForm") FileUploadForm uploadForm,
 			@RequestParam("brandCar") String brand, 
 			@RequestParam("modelCar") String model, 
 			@RequestParam("colorCar") String color,
@@ -299,17 +359,17 @@ public class CopyOfUserParameterController {
 		if(u!=null){
 			
 			RegisteredUserMapper rm = new RegisteredUserMapper();
-			RegisteredUser user = (RegisteredUser) u;
-			RegisteredUser ru = new RegisteredUser(); //(RegisteredUser) u;			
+			RegisteredUser ru = new RegisteredUser(); 	
 			
 					
-			Car car = user.getCar();
+//			Car car = user.getCar();
+			Car car = new Car();
 			Integer c = null;
 			
 			System.out.println("In MOdifyUserCar:");
 			System.out.println(car);
 			
-			if(car!=null){
+//			if(car!=null){
 //			if(ru.getDriverInfo() == null){
 				
 				System.out.println("car!=null");
@@ -328,36 +388,47 @@ public class CopyOfUserParameterController {
 				car.setColor(color);
 				car.setModel(model);
 
-				//	car.setCarPhoto(photoCar);
+				
+
+				//--------------- FOTO ---------------
+				
+				String filename = u.getId()+"_car.jpg";					
+				uploadPhoto(uploadForm, u, filename); 
+				
+		        //--------------- FOTO ---------------
+				
+				car.setCarPhoto(filename);
 
 
 //			}
 			
-			CarMapper carMapper=new CarMapper();
-			boolean carUpdated = carMapper.update(car,user.getCar().getId());
+//			CarMapper carMapper=new CarMapper();
+//			boolean carUpdated = carMapper.update(car,user.getCar().getId());
 			boolean modified = false;
 					
-			System.out.println("carUpdated---"+ carUpdated);
+//			System.out.println("carUpdated---"+ carUpdated);
 			
-			if(carUpdated){
-				m.addAttribute("carUpdated", true);
+//			if(carUpdated){
+//				m.addAttribute("carUpdated", true);
 				ru.setCar(car);
 				modified = rm.update(ru, u.getId());
-			}
-			else
-				m.addAttribute("carUpdated", true);		//è false -- metto true solo per prova
+//			}
+//			else
+//				m.addAttribute("carUpdated", true);		//è false -- metto true solo per prova
 			
 //			boolean modified = rm.update(ru, u.getId());
-			if(modified)
+			if(modified){
 				m.addAttribute("modified", true);
+				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
+			    session.setAttribute("user", ruNew);
+			}
 			else
-				m.addAttribute("modified", true);	//è false -- metto true solo per prova
+				m.addAttribute("modified", false);	//è false -- metto true solo per prova
 			
 			System.out.println("userUp:"+ modified);
 			
-			} // end if car	
-			
-
+//			} // end if car	
+		
 			return "showUserCar";
 			
 		}
@@ -374,7 +445,16 @@ public class CopyOfUserParameterController {
 			RegisteredUser ru = (RegisteredUser) u;
 			Car car = ru.getCar();
 			CarMapper cm = new CarMapper();
-						
+			
+			//--------------- FOTO ---------------
+			String filename = ru.getId()+"_car.jpg";					
+			String fullPath = servletContext.getRealPath("/WEB-INF/resources/avatars/"+filename);			
+			File f = new File(fullPath);
+			
+			if(f.exists())
+				f.delete();
+			//--------------- FOTO ---------------
+			
 			boolean deleted = cm.deleteCar(car, ru);
 			if(deleted)
 				model.addAttribute("error",false);

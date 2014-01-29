@@ -65,11 +65,11 @@
 						<tr>
 							<td colspan="2">La mia auto</td>
 						</tr>
-						<tr>
-							<td>Anno</td>
-							<td><input id="yearCar" name="yearCar" type="text"
-								value="${year}"></input></td>
-						</tr>
+<!-- 						<tr> -->
+<!-- 							<td>Anno</td> -->
+<!-- 							<td><input id="yearCar" name="yearCar" type="text" -->
+<%-- 								value="${year}"></input></td> --%>
+<!-- 						</tr> -->
 						<tr>
 							<td>Marca</td>
 							<td><input id="brandCar" name="brandCar" type="text"
@@ -104,7 +104,8 @@
 										<input id="confortCar" name="confortCar" type="text"
 											value="lusso"></input>
 									</c:when>
-								</c:choose></td>
+								</c:choose>
+							</td>
 						</tr>
 						<tr>
 							<td>Foto</td>
@@ -288,7 +289,10 @@
 									<!-- 					<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data">  -->
 									<!-- 						<form name="myWebForm" method="post" enctype="multipart/form-data">  -->
 									<!-- 					<input type="file" name="uploadFile"/><br> --> 
-									<input name="files[0]" type="file" /> <!-- 					<input value="Carica" type="submit"/>							 -->
+									
+									<input name="files[0]" type="file" /> 
+									
+									<!-- 					<input value="Carica" type="submit"/>							 -->
 									<!-- 					</form> -->
 								</td>
 							</tr>

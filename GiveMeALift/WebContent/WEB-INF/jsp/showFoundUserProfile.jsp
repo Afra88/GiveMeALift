@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="css/font-awesome.css">
 <link rel="stylesheet" href="css/form.css">
 <link rel="stylesheet" href="css/pictogram-button.css">
+<link rel="stylesheet" href="css/starRating.css">
 
 <link rel="icon" href="images/favicon.ico">
 <link rel="shortcut icon" href="images/favicon.ico">
@@ -60,11 +61,11 @@
 					</tr>
 					<tr>
 						<td>Ultimo accesso</td>
-						<td>${r.getLastOnline()}</td>
+<%-- 						<td>${receiver.getLastOnline()}</td> --%>
 					</tr>
 					<tr>
 						<td>Utente dal</td>
-						<td>${r.getMemberSince()}</td>
+<%-- 						<td>${receiver.getMemberSince()}</td> --%>
 					</tr>
 				</table>
 			</div>
@@ -75,44 +76,78 @@
 					</tr>
 					<tr>
 						<td>Foto</td>
-						<td> ${r.getCar().getPhotoCar()}</td>
+						<td>
+						<c:choose>
+								<c:when test="${receiver.getCar().getCarPhot()!=null}">
+									<img height="120px" src=" avatars/${receiver.getId()}_car.jpg" />
+								</c:when>
+								<c:otherwise>
+									<img height="120px" src="images/default_car.jpg" />
+								</c:otherwise>
+							</c:choose>
+						
+						</td>
+		
 					</tr>
 					<tr>
 						<td>Marca</td>
-						<td>${r.getCar().getBrand()}</td>
+						<td>${receiver.getCar().getBrand()}</td>
 					</tr>
 					<tr>
 						<td>Modello</td>
-						<td>${r.getCar().getModel()}</td>
+						<td>${receiver.getCar().getModel()}</td>
 					</tr>
 					<tr>
 						<td>Colore</td>
-						<td>${r.getCar().getColor()}</td>
+						<td>${receiver.getCar().getColor()}</td>
 					</tr>
 					<tr>
 						<td>Confort</td>
-						<td>${r.getCar().getConfort()}</td>
+						<td>${receiver.getCar().getConfort()}</td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<div class="grid_8">
 			<div class="blueTable">
+				<input id="receiverId" name="receiverId" value = "${receiver.getId()}" type="hidden">
 				<table>
 					<tr>
 						<td colspan="2">${receiver.computeNickName()} (${receiver.computeAge()} anni)</td>
 					</tr>
 					<tr>
+						<td>Valutazione media</td>
+						<td> ${receiver.giveAvgRating()} <td>
+						<c:if test="${receiver.giveAvgRating()}==1">
+						immagine 1 stella
+						</c:if>
+						
+						<c:if test="${receiver.giveAvgRating()}==2">
+						immagine 2 stella
+						</c:if>
+						
+						<c:if test="${receiver.giveAvgRating()}==3">
+						immagine 3 stella
+						</c:if>
+						
+						<c:if test="${receiver.giveAvgRating()}==4">
+						immagine 4 stella
+						</c:if>
+						
+						<c:if test="${receiver.giveAvgRating()}==5">
+						immagine 5 stella
+						</c:if>
+					</tr>
+					<tr>
 						<td>
 							<c:choose>
 								<c:when test="${receiver.profilePhoto!=null}">
-									<img src="${receiver.profilePhoto}" />
+									<img src=" avatars/${receiver.getId()}.jpg" />
 								</c:when>
 								<c:otherwise>
 									<img height="120px" src="images/default_user.jpg" />
 								</c:otherwise>
-							</c:choose>
-							
+							</c:choose>							
 						</td>
 						<td>
 							<div>
@@ -210,16 +245,57 @@
 					${userOffering.userActivity.answersPercentage}
 				</td>
 			</tr> --%>
+			
+			<tr>
+			<td colspan="2">" ${receiver.getDescription()} "
+			</td>
+			</tr>
 				</table>
 			</div>
 		</div>
+		
 	</div>
+<div align = "center">
+
+<c:choose>
+
+<c:when test="${released == true}">
+	<form action="UserInsertFeedback" method="post" id="form">
+			<input id="feedback" name="feedback" type="text" placeholder="passeggero/conducente"  size="15" maxlength="10" > 
+			
+			<div class="starRate">
+				<div> Valutazione corrente: 3 stelle<b></b></div>
+					<ul>
+					<li><a href="#"><span> Dai 1 stella :( </span></a></li>
+					<li><a href="#"><span> Dai 2 stelle :| </span></a></li>
+					<li><a href="#"><span> Dai 3 stelle :) </span><b></b></a></li>
+					<li><a href="#"><span> Dai 4 stella ;) </span></a></li>
+					<li><a href="#"><span> Dai 5 stelle ;D </span></a></li>
+					</ul>
+				</div>
+				
+				<input type="submit" class="button cyan" value="Trova">
+			
+			</form>
+			</c:when>
+			<c:otherwise>
+			buh
+			</c:otherwise>
+	</c:choose>
+</div>		
+		
+		<div class="starRate">
+<div>Currently rated: 3 stars<b></b></div>
+<ul>
+<li><a href="#"><span>Give it 5 stars</span></a></li>
+<li><a href="#"><span>Give it 4 stars</span></a></li>
+<li><a href="#"><span>Give it 3 stars</span><b></b></a></li>
+<li><a href="#"><span>Give it 2 stars</span></a></li>
+<li><a href="#"><span>Give it 1 star</span></a></li>
+</ul>
+</div>
 	
-	<div>
-	<form>
 	
-	</form>
-	</div>
 
 	<footer>
 		<div class="container_12">

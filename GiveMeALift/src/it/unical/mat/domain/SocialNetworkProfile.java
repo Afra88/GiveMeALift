@@ -70,7 +70,7 @@ class SocialNetworkUserID implements Serializable{
 	public void setSocialNetworkType(String socialNetworkType) {
 		this.socialNetworkType = socialNetworkType;
 	}
-	
+		
 	public User getUser() {
 		return user;
 	}
