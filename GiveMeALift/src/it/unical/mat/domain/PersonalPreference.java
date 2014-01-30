@@ -15,7 +15,7 @@ public class PersonalPreference extends DomainObject {
 //	private Boolean childrensOnBoard;
 	@Column(name="PETS_ON_BOARD")
 	private Boolean petsOnBoard;
-	@Column(name="smocking")
+	@Column(name="SMOKING")
 	private Boolean smoking;
 	@Column(name="MUSIC")
 	private Boolean music;
@@ -39,86 +39,6 @@ public class PersonalPreference extends DomainObject {
 	public long getId() {
 		return super.getId();
 	}
-	
-//	public boolean isChildrensOnBoard() {
-//		return childrensOnBoard;
-//	}
-
-
-
-
-
-//	public void setChildrensOnBoard(boolean childrensOnBoard) {
-//		this.childrensOnBoard = childrensOnBoard;
-//	}
-
-
-
-
-
-	public boolean isPetsOnBoard() {
-		return petsOnBoard;
-	}
-
-
-
-
-
-	public void setPetsOnBoard(boolean petsOnBoard) {
-		this.petsOnBoard = petsOnBoard;
-	}
-
-
-
-
-
-	public boolean isSmoking() {
-		return smoking;
-	}
-
-
-
-
-
-	public void setSmoking(boolean smoking) {
-		this.smoking = smoking;
-	}
-
-
-
-
-
-	public boolean isMusic() {
-		return music;
-	}
-
-
-
-
-
-	public void setMusic(boolean music) {
-		this.music = music;
-	}
-
-
-
-
-
-	public int getChatnessLevel() {
-		return chatnessLevel;
-	}
-
-
-
-
-
-	public void setChatnessLevel(int chatnessLevel) {
-		this.chatnessLevel = chatnessLevel;
-	}
-
-
-
-
 
 	@Override
 	public void copy(DomainObject object2) {
