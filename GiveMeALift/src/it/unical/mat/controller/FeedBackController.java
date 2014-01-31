@@ -213,6 +213,8 @@ public class FeedBackController {
 			FeedbackMapper fm = new FeedbackMapper();			
 			List<Feedback> l = fm.findGivenFeedback(id);
 		
+			System.out.println("size"+l.size());
+			
 			if(l.size()==0){
 				model.addAttribute("noFeed", true);
 				return "userSearchForFeedback";
