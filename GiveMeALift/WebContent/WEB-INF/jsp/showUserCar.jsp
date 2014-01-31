@@ -110,9 +110,22 @@
 						<tr>
 							<td>Foto</td>
 							<td>
-								<%-- 					<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%>
-								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" width="150"
-								onerror="this.style.visibility = 'hidden'">
+							
+							<c:choose>
+							<c:when test="${user.getCar().getCarPhoto()!=null}">
+								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" height="120px" onerror="this.style.visibility = 'hidden'"> 
+<!-- 								<input name="files[0]" type="file" /> -->
+							</c:when>
+							<c:otherwise>
+								<img height="120px" src="images/default_car.jpg" />
+								<input name="files[0]" type="file" />
+							</c:otherwise>
+						</c:choose>
+							
+<%-- 													<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%>
+<%-- 								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" width="150" --%>
+<!-- 								onerror="this.style.visibility = 'hidden'"> -->
+								
 							</td>
 						</tr>
 						<tr>

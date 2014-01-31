@@ -1,5 +1,6 @@
 package it.unical.mat.domain;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -43,7 +44,7 @@ public class RegisteredUser extends User {
 //	
 //	private List<Message> messagesReceived;
 	
-	private List<Feedback> receivedFeedback;
+//	private List<Feedback> receivedFeedback;
 
 	private Car car;
 	
@@ -67,7 +68,7 @@ public class RegisteredUser extends User {
 	}
 
 	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-	@ManyToOne(fetch = FetchType.LAZY) //cambiato
+	@ManyToOne(fetch = FetchType.EAGER) //cambiato
 	@JoinTable(name = "PERSONAL_PREFERENCES_USER_JOIN",
 				joinColumns = { @JoinColumn (name = "USER_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "PERSONAL_PREFERENCES_ID") })
@@ -111,8 +112,8 @@ public class RegisteredUser extends User {
 //			this.messagesSent=u.messagesSent;
 		if(u.personalPreference!=null)
 			this.personalPreference=u.personalPreference;
-		if(u.receivedFeedback!=null)
-			this.receivedFeedback=u.receivedFeedback;
+//		if(u.receivedFeedback.size()>0)
+//			this.receivedFeedback=u.receivedFeedback;
 		if(u.userActivity!=null)
 			this.userActivity=u.userActivity;
 		if(u.description!=null)
@@ -158,18 +159,18 @@ public class RegisteredUser extends User {
 //		this.messagesReceived = messagesReceived;
 //	}
 //
-	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
-	@JoinTable(name = "FEEDBACK_RECEIVER_JOIN",
-				joinColumns = { @JoinColumn (name = "USER_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "FEEDBACK_ID") })
-	public List<Feedback> getReceivedFeedback() {
-		return receivedFeedback;
-	}
-
-	public void setReceivedFeedback(List<Feedback> receivedFeedback) {
-		this.receivedFeedback = receivedFeedback;
-	}
+//	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+//	@OneToMany(fetch=FetchType.LAZY) //cambiato aa
+//	@JoinTable(name = "FEEDBACK_RECEIVER_JOIN",
+//				joinColumns = { @JoinColumn (name = "USER_ID") },
+//				inverseJoinColumns = { @JoinColumn(name = "FEEDBACK_ID") })
+//	public List<Feedback> getReceivedFeedback() {
+//		return receivedFeedback;
+//	}
+//
+//	public void setReceivedFeedback(List<Feedback> receivedFeedback) {
+//		this.receivedFeedback = receivedFeedback;
+//	}
 	
 	public String getProfilePhoto() {
 		return profilePhoto;
@@ -206,13 +207,18 @@ public class RegisteredUser extends User {
 	}
 	
 //	public Integer computeAvgRating(){
-//		Integer sum = 0;
 //		int tot = receivedFeedback.size();
-//		for (Feedback f : receivedFeedback) {
-//			sum += f.getRating();
+//		int avg = 0;
+//		if(tot != 0){
+//			Integer sum = 0;
+//			for (Feedback f : receivedFeedback) {
+//				sum += f.getRating();
+//			}
+//			avg = sum/tot;
+//			
+//			/* TODO controlli intervalli e arrotond */	
 //		}
-//		
-//		return sum/tot;
+//		return avg;
 //	}
 //	
 //	public Integer giveAvgRating(){
@@ -241,9 +247,9 @@ public class RegisteredUser extends User {
 						.hashCode());
 		result = prime * result
 				+ ((profilePhoto == null) ? 0 : profilePhoto.hashCode());
-		result = prime
-				* result
-				+ ((receivedFeedback == null) ? 0 : receivedFeedback.hashCode());
+//		result = prime
+//				* result
+//				+ ((receivedFeedback == null) ? 0 : receivedFeedback.hashCode());
 		result = prime * result
 				+ ((showContacts == null) ? 0 : showContacts.hashCode());
 		result = prime * result
@@ -300,11 +306,11 @@ public class RegisteredUser extends User {
 				return false;
 		} else if (!profilePhoto.equals(other.profilePhoto))
 			return false;
-		if (receivedFeedback == null) {
-			if (other.receivedFeedback != null)
-				return false;
-		} else if (!receivedFeedback.equals(other.receivedFeedback))
-			return false;
+//		if (receivedFeedback == null) {
+//			if (other.receivedFeedback != null)
+//				return false;
+//		} else if (!receivedFeedback.equals(other.receivedFeedback))
+//			return false;
 		if (showContacts == null) {
 			if (other.showContacts != null)
 				return false;

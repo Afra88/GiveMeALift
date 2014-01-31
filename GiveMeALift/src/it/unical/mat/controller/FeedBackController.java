@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 import javax.swing.text.DateFormatter;
 
+import it.unical.mat.datamapper.FeedbackMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Feedback;
@@ -78,9 +79,12 @@ public class FeedBackController {
 				model.addAttribute("receiver",r);
 				model.addAttribute("found", true);
 				
+				FeedbackMapper fm = new FeedbackMapper();
+				List<Feedback> l = fm.findGivenFeedback(u.getId());
+				
 				boolean exist= false;
-				for (Feedback f : r.getReceivedFeedback()) {
-					if(f.getSender().getId()==u.getId());
+				for (Feedback f : l) {
+					if(f.getReceiver().getId()==r.getId());
 						exist = true;	
 				} 
 				
@@ -110,7 +114,7 @@ public class FeedBackController {
 			RegisteredUserMapper rm = new RegisteredUserMapper();
 			
 			RegisteredUser sender = (RegisteredUser)u;
-			RegisteredUser receiver = rm.findRegisteredUserById(Long.parseLong(idReceiver));
+			//RegisteredUser receiver = rm.findRegisteredUserById(Long.parseLong(idReceiver));
 			
 			RegisteredUser newRE = new RegisteredUser();
 			
@@ -118,17 +122,19 @@ public class FeedBackController {
 			f.setReceiver(newRE);
 			f.setSender(sender);
 			f.setRating(Integer.parseInt(rating));
+			//f.setText(text);
+						
+			FeedbackMapper fm = new FeedbackMapper();
+//			List<Feedback> l = fm.findReceivedFeedback(newRE.getId());
 			
-			List<Feedback> l = newRE.getReceivedFeedback();
-			l.add(f);
+			if(fm.insert(f)>0){
 			
-			newRE.setReceivedFeedback(l);
-	
-			if(rm.update(receiver, receiver.getId())){
+//			if(rm.update(receiver, receiver.getId())){
 				
 			//	model.addAttribute("updated", true);
 				return "showFoundUserProfile";
 			}
+			
 			
 			//model.addAttribute("updated", false);
 			return "error";
@@ -144,24 +150,45 @@ public class FeedBackController {
 		
 		if(u!=null){
 			
-			RegisteredUser r = (RegisteredUser) u;
-			model.addAttribute("user", r);
+			RegisteredUserMapper rm = new RegisteredUserMapper();
+			RegisteredUser r = rm.findRegisteredUserById(u.getId());
+			Long id = r.getId();
 			
-			List<Feedback> l = r.getReceivedFeedback(); 
-			List<RegisteredUser> senders = new ArrayList<RegisteredUser>();
-			List<Integer> ratings = new ArrayList<Integer>();
+			session.setAttribute("user", r);
 			
-			for (Feedback f : l) {
-		
-				senders.add((RegisteredUser)f.getSender());
-				ratings.add(f.getRating());
+			FeedbackMapper fm = new FeedbackMapper();
+			List<Feedback> l = fm.findReceivedFeedback(id);
+			boolean noFeed= false;		
+			
+			if(l.size()!=0){
+				noFeed = false;
+				//model.addAttribute("noFeed", true);
+				//return "showReceivedFeedback";
+			
+				List<RegisteredUser> senders = new ArrayList<RegisteredUser>();
+				List<Integer> ratings = new ArrayList<Integer>();
 				
+				for (Feedback f : l) {
+			
+					senders.add((RegisteredUser)f.getSender());
+					ratings.add(f.getRating());
+					
+				}
+				// prendere direttamente i feedback per scorrerli insieme
+				model.addAttribute("senders", senders);
+				model.addAttribute("ratings", ratings);
+				
+	//			model.addAttribute("feedback", l);
 			}
-			// prendere direttamente i feedback per scorrerli insieme
-			model.addAttribute("senders", senders);
-			model.addAttribute("ratings", ratings);
-				
+			else
+				noFeed = true;
 			
+			Double avg = fm.computeAvgRating(id);
+			
+			model.addAttribute("avg", avg);
+			
+			System.out.println("avg"+avg);
+			model.addAttribute("noFeed", noFeed);
 			
 			return "showReceivedFeedback";
 			
@@ -171,36 +198,46 @@ public class FeedBackController {
 	}
 	
 	@RequestMapping(value="/ReleasedFeedback")
-	public String showReceivedFeedback(Model model, HttpSession session){
+	public String showGivenFeedback(Model model, HttpSession session){
 		
 		User u = (User) session.getAttribute("user");
 		
 		if(u!=null){
 			
-			RegisteredUser r = (RegisteredUser) u;
-			model.addAttribute("user", r);
+			RegisteredUserMapper rm = new RegisteredUserMapper();
+			RegisteredUser r = rm.findRegisteredUserById(u.getId());
+			Long id = r.getId();
 			
-			List<Feedback> l = r.getReceivedFeedback(); 
-			List<RegisteredUser> senders = new ArrayList<RegisteredUser>();
-			List<Integer> ratings = new ArrayList<Integer>();
+			session.setAttribute("user", r);
 			
-			for (Feedback f : l) {
-				if(f.getReceiver() == r){
-					senders.add((RegisteredUser)f.getSender());
+			FeedbackMapper fm = new FeedbackMapper();			
+			List<Feedback> l = fm.findGivenFeedback(id);
+		
+			if(l.size()==0){
+				model.addAttribute("noFeed", true);
+				return "userSearchForFeedback";
+			}
+			else{
+				
+				model.addAttribute("noFeed", false);
+				List<RegisteredUser> receivers = new ArrayList<RegisteredUser>();
+				List<Integer> ratings = new ArrayList<Integer>();
+				
+				for (Feedback f : l) {
+					receivers.add((RegisteredUser)f.getReceiver());
 					ratings.add(f.getRating());
 				}
+				model.addAttribute("feedback", l);
+				model.addAttribute("senders", receivers);
+				model.addAttribute("ratings", ratings);		
+				
+				return "showReleasedFeedback";
+				
 			}
-			
-			model.addAttribute("senders", senders);
-			model.addAttribute("ratings", ratings);		
-			
-			return "showReceivedFeedback";
-			
-		}
 		
+		}
 		return "home";
+	
 	}
-	
-	
 	
 }

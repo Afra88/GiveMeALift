@@ -95,6 +95,10 @@ public class PersonalPreference extends DomainObject {
 	}
 
 
+	public Integer getChatnessLevel() {
+		return chatnessLevel;
+	}
+
 	public void setMusic(Boolean music) {
 		this.music = music;
 	}

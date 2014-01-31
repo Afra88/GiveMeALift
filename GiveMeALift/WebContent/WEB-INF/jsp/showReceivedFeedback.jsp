@@ -57,67 +57,108 @@
 	</header>
 	<div class="content">
 		<div class="container_12">
-	
-		<div class="grid_6">
-				<div class="greenTable">
-					<table id="personalAuto" class=table>
+			<div class="grid_4">
+				<div class="greenTable" style="margin-left: 0; margin-right: 0">
+					<table id="avgRating">
 						<tr>
 							<td colspan="2">Valutazione media</td>
 						</tr>
 						<tr>
-							<td>{$user.giveAvgRating()}</td>
-							<c:if test="{$user.giveAvgRating()==1}">
-							<td>
-								immagine 1 stella
-							</td>
-							
+							<td>${avg}</td>
+							<c:if test="${avg==0}">
+								<td><img height="50px" src="images/feedback/0t.png" /></td>
 							</c:if>
-							<c:if test="{$user.giveAvgRating()==2}">
-							<td>
-								immagine 2 stella
-							</td>
+
+							<c:if
+								test="${avg>0 && $avg<=0.5 }">
+								<td><img height="50px" src="images/feedback/0_5t.png" />
+								</td>
 							</c:if>
-							<c:if test="{$user.giveAvgRating()==3}">
-							<td>
-								immagine 3 stella
-							</td>
+
+							<c:if
+								test="${avg>0.5 && $avg<=1}">
+								<td><img height="50px" src="images/feedback/1t.png" /></td>
 							</c:if>
-							<c:if test="{$user.giveAvgRating()==4}">
-							<td>
-								immagine 4 stella
-							</td>
+
+							<c:if
+								test="${avg>1 && $avg<=1.5}">
+								<td><img height="50px" src="images/feedback/1_5t.png" />
+								</td>
 							</c:if>
-							<c:if test="{$user.giveAvgRating()==5}">
-							<td>
-								immagine 5 stella
-							</td>
+
+							<c:if
+								test="${avg>1.5 && $avg<=2}">
+								<td><img height="50px" src="images/feedback/2t.png" /></td>
+							</c:if>
+
+							<c:if
+								test="${avg>2 && $avg<=2.5}">
+								<td><img height="50px" src="images/feedback/2_5t.png" />
+								</td>
+							</c:if>
+
+							<c:if
+								test="${avg>2.5 && $avg<=3}">
+								<td><img height="50px" src="images/feedback/3t.png" /></td>
+							</c:if>
+
+							<c:if
+								test="${avg>3 && $avg<=3.5}">
+								<td><img height="50px" src="images/feedback/3_5t.png" />
+								</td>
+							</c:if>
+
+							<c:if
+								test="${avg>3.5 && $avg<=4}">
+								<td><img height="50px" src="images/feedback/4t.png" /></td>
+							</c:if>
+
+							<c:if
+								test="${avg>4 && $avg<=4.5}">
+								<td><img height="50px" src="images/feedback/4_5t.png" />
+								</td>
+							</c:if>
+
+							<c:if
+								test="${avg>4.5 && $avg<=5}">
+								<td><img height="50px" src="images/feedback/5t.png" /></td>
 							</c:if>
 						</tr>
 					</table>
-
 				</div>
 			</div>
-			
+
 			<div class="grid_6">
-				<div class="greenTable">
-					<table id="personalAuto" class=table>
+				<c:choose>
+					<c:when test="${noFeed==true}">
+<!-- 						<META http-equiv="refresh" content="5; URL=UserInsertFeedback"> -->
+						<h3 class="center">Non hai ancora alcun feedback!</h3>
+<!-- 						<h4 class="center">Redirect in 5 secondi</h4> -->
+					</c:when>
+					<c:otherwise>
+					<div class="grid_6">
+					<div class="greenTable">
+					<table id="myFeedback" class=table>
 						<tr>
-							<td colspan="2">I miei feedback</td>
+							<td colspan="3">I miei feedback</td>
 						</tr>
-						<c:choose>
-							<c:forEach items="${senders}" var="i" >
-							<tr>						
-								<td> ${i.computeNickName()}</td>	
-<!-- 								<td> ${ratings</td>	 -->
-								
-							</tr>
+						<c:forEach items="${senders}" var="i">
+								<%--step="1">--%>
+								<tr>
+									<td colspan="2">${i.computeNickName()}
+										${i.getProfilePhoto()}</td>
+									<!-- 							
+									<td> ${ratings{ }}</td>	 -->
+								</tr>
 							</c:forEach>
-					</c:choose>			
-					</table>
-
+						</table>
+					</div>
 				</div>
+			</c:otherwise>
+			</c:choose>
 			</div>
-		</div>
+			</div>
+		
 	</div>
 
 

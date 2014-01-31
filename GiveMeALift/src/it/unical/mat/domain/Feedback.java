@@ -52,7 +52,7 @@ public class Feedback extends DomainObject {
 		this.feedbackSender = sender;
 	}
 
-	@Cascade(value=CascadeType.ALL)
+	@Cascade(value=CascadeType.SAVE_UPDATE)
 	@ManyToOne(fetch=FetchType.LAZY) //ok
 	@JoinTable(name = "FEEDBACK_RECEIVER_JOIN",
 				joinColumns = { @JoinColumn (name = "FEEDBACK_ID") },

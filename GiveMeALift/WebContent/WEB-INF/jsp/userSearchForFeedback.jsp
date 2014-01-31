@@ -125,9 +125,15 @@
 			<div class="clear"></div>
 			<br>
 			
+		<c:choose>
+			<c:when test="${noFeed==true}">
+				<META http-equiv="refresh" content="4; URL=UserInsertFeedback">
+					<h3 class="center">Non hai ancora lasciato alcun feedback!</h3>
+					<h4 class="center">Trova un utente ed esprimi il tuo parere!</h4>
+			</c:when>
+		</c:choose>	
 			
-			
-			<h3 class=>Lascia un feedback ad un altro utente!</h3>
+			<h3>Lascia un feedback ad un altro utente!</h3>
 			<h4>Trova un utente con il quale hai viaggiato indicando il suo
 				numero di cellulare:</h4>
 			<form action="UserInsertFeedback" method="post" id="form">

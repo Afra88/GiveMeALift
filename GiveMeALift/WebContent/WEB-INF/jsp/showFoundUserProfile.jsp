@@ -24,6 +24,15 @@
 <link rel="icon" href="images/favicon.ico">
 <link rel="shortcut icon" href="images/favicon.ico">
 
+<link rel="stylesheet" href="js/starRating/jquery.rating.css">
+
+<script type="text/javascript" src="js/starRating/jquery.form.js"></script>
+<script type="text/javascript" src="js/starRating/jquery.js"></script>
+<script type="text/javascript" src="js/starRating/jquery.MetaData.js"></script>
+<script type="text/javascript" src="js/starRating/jquery.rating.js"></script>
+<script type="text/javascript" src="js/starRating/jquery.pack.js"></script>
+
+
 </head>
 <body>
 	<header>
@@ -61,11 +70,15 @@
 					</tr>
 					<tr>
 						<td>Ultimo accesso</td>
-<%-- 						<td>${receiver.getLastOnline()}</td> --%>
+<%-- 							<c:if test="${receiver.getLastOnline()!=null}"> --%>
+<%-- 	 							<td>${receiver.getLastOnline()}</td>  --%>
+<%-- 							</c:if> --%>
 					</tr>
 					<tr>
 						<td>Utente dal</td>
-<%-- 						<td>${receiver.getMemberSince()}</td> --%>
+<%-- 							<c:if test="${receiver.getMemberSince()!=null}"> --%>
+<%-- 								<td>${receiver.getMemberSince()}</td> --%>
+<%-- 							</c:if> --%>
 					</tr>
 				</table>
 			</div>
@@ -78,7 +91,7 @@
 						<td>Foto</td>
 						<td>
 						<c:choose>
-								<c:when test="${receiver.getCar().getCarPhot()!=null}">
+								<c:when test="${receiver.getCar().getCarPhoto()!=null}">
 									<img height="120px" src=" avatars/${receiver.getId()}_car.jpg" />
 								</c:when>
 								<c:otherwise>
@@ -103,7 +116,22 @@
 					</tr>
 					<tr>
 						<td>Confort</td>
-						<td>${receiver.getCar().getConfort()}</td>
+						<td>
+						<c:choose>
+							<c:when test="${receiver.getCar().getConfort()==1}">
+							base <img height="20px" src="images/carConfort/base.png" />
+							</c:when>
+							<c:when test="${receiver.getCar().getConfort()==2}">
+							normale <img height="20px" src="images/carConfort/normale.png" />
+							</c:when>
+							<c:when test="${receiver.getCar().getConfort()==3}">
+							confortevole <img height="20px" src="images/carConfort/confortevole.png" />
+							</c:when>
+							<c:when test="${receiver.getCar().getConfort()==4}">
+							lusso <img height="20px" src="images/carConfort/lusso.png" />
+							</c:when>
+						</c:choose>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -113,30 +141,79 @@
 				<input id="receiverId" name="receiverId" value = "${receiver.getId()}" type="hidden">
 				<table>
 					<tr>
-						<td colspan="2">${receiver.computeNickName()} (${receiver.computeAge()} anni)</td>
+						<td colspan="2">
+							${receiver.computeNickName()} (${receiver.computeAge()} anni) - <c:if test="${receiver.getGender()=='M'}"> Uomo</c:if> <c:if test="${receiver.getGender()=='F'}"> Donna</c:if>
+						</td>
 					</tr>
 					<tr>
 						<td>Valutazione media</td>
-						<td> ${receiver.giveAvgRating()} <td>
-						<c:if test="${receiver.giveAvgRating()}==1">
-						immagine 1 stella
-						</c:if>
-						
-						<c:if test="${receiver.giveAvgRating()}==2">
-						immagine 2 stella
-						</c:if>
-						
-						<c:if test="${receiver.giveAvgRating()}==3">
-						immagine 3 stella
-						</c:if>
-						
-						<c:if test="${receiver.giveAvgRating()}==4">
-						immagine 4 stella
-						</c:if>
-						
-						<c:if test="${receiver.giveAvgRating()}==5">
-						immagine 5 stella
-						</c:if>
+						<tr>
+							<td>${avg}</td>
+							<c:if test="{$avg==0}">
+							<td>
+								<img height="120px" src="images/feedback/0t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>0 && $avg<=0.5 }">
+							<td>
+								<img height="120px" src="images/feedback/0_5t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>0.5 && $avg<=1}">
+							<td>
+								<img height="120px" src="images/feedback/1t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>1 && $avg<=1.5}">
+							<td>
+								<img height="120px" src="images/feedback/1_5t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>1.5 && $avg<=2}">
+							<td>
+								<img height="120px" src="images/feedback/2t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>2 && $avg<=2.5}">
+							<td>
+								<img height="120px" src="images/feedback/2_5t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>2.5 && $avg<=3}">
+							<td>
+								<img height="120px" src="images/feedback/3t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>3 && $avg<=3.5}">
+							<td>
+								<img height="120px" src="images/feedback/3_5t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>3.5 && $avg<=4}">
+							<td>
+								<img height="120px" src="images/feedback/4t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>4 && $avg<=4.5}">
+							<td>
+								<img height="120px" src="images/feedback/4_5t.png" />
+							</td>
+							</c:if>
+							
+							<c:if test="{$avg>4.5 && $avg<=5}">
+							<td>
+								<img height="120px" src="images/feedback/5t.png" />
+							</td>
+							</c:if>
 					</tr>
 					<tr>
 						<td>
@@ -162,34 +239,33 @@
 								</c:choose>
 								<c:choose>
 									<c:when
-										test="${receiver.personalPreference.chatnessLevel==1}">
+										test="${receiver.getPersonalPreference().getChatnessLevel()==1}">
 										<img src="images/profile/chatness1.png">
 									</c:when>
 									<c:when
-										test="${receiver.personalPreference.chatnessLevel==2}">
+										test="${receiver.getPersonalPreference().getChatnessLevel()==2}">
 										<img src="images/profile/chatness2.png">
 									</c:when>
 									<c:when
-										test="${receiver.personalPreference.chatnessLevel==3}">
+										test="${receiver.getPersonalPreference().getChatnessLevel()==3}">
 										<img src="images/profile/chatness3.png">
 									</c:when>
 								</c:choose>
-							</div> <c:choose>
-								<c:when test="${receiver.personalPreference.music==true}">
+							<c:choose>
+								<c:when test="${receiver.getPersonalPreference().getMusic()==true}">
 									<img src="images/profile/music.png">
 								</c:when>
-								<c:when test="${receiver.personalPreference.music==false}">
+								<c:when test="${receiver.getPersonalPreference().getMusic()==false}">
 									<img src="images/profile/NoMusic.png">
 								</c:when>
 							</c:choose>
-							<div>
 								<c:choose>
 									<c:when
-										test="${receiver.personalPreference.petsOnBoard==true}">
+										test="${receiver.getPersonalPreference().getPetsOnBoard()==true}">
 										<img src="images/profile/pets.png">
 									</c:when>
 									<c:when
-										test="${receiver.personalPreference.petsOnBoard==false}">
+										test="${receiver.getPersonalPreference().getPetsOnBoard()==false}">
 										<img src="images/profile/NoPets.png">
 									</c:when>
 								</c:choose>
@@ -255,11 +331,34 @@
 		</div>
 		
 	</div>
-<div align = "center">
+	
+<div>
+
+<input name="star1" type="radio" class="star"/>
+<input name="star1" type="radio" class="star"/>
+<input name="star1" type="radio" class="star"/>
+<input name="star1" type="radio" class="star"/>
+<input name="star1" type="radio" class="star"/>
+
+<input name="star2" type="radio" class="star"/>
+<input name="star2" type="radio" class="star"/>
+<input name="star2" type="radio" class="star" checked="checked"/>
+<input name="star2" type="radio" class="star"/>
+<input name="star2" type="radio" class="star"/>
+
+
+<div class="Clear">
+Rating 1:
+(N/M/Y)
+<input class="star" type="radio" name="test-1-rating-1" value="N" title="No"/>
+<input class="star" type="radio" name="test-1-rating-1" value="M" title="Maybe"/>
+<input class="star" type="radio" name="test-1-rating-1" value="Y" title="Yes"/>
+</div>
+
+
 
 <c:choose>
-
-<c:when test="${released == true}">
+<c:when test="${released == false}">
 	<form action="UserInsertFeedback" method="post" id="form">
 			<input id="feedback" name="feedback" type="text" placeholder="passeggero/conducente"  size="15" maxlength="10" > 
 			
@@ -276,24 +375,24 @@
 				
 				<input type="submit" class="button cyan" value="Trova">
 			
-			</form>
-			</c:when>
+	</form>
+</c:when>
 			<c:otherwise>
 			buh
 			</c:otherwise>
 	</c:choose>
 </div>		
 		
-		<div class="starRate">
-<div>Currently rated: 3 stars<b></b></div>
-<ul>
-<li><a href="#"><span>Give it 5 stars</span></a></li>
-<li><a href="#"><span>Give it 4 stars</span></a></li>
-<li><a href="#"><span>Give it 3 stars</span><b></b></a></li>
-<li><a href="#"><span>Give it 2 stars</span></a></li>
-<li><a href="#"><span>Give it 1 star</span></a></li>
-</ul>
-</div>
+<!-- 		<div class="starRate"> -->
+<!-- <div>Currently rated: 3 stars<b></b></div> -->
+<!-- <ul> -->
+<!-- <li><a href="#"><span>Give it 5 stars</span></a></li> -->
+<!-- <li><a href="#"><span>Give it 4 stars</span></a></li> -->
+<!-- <li><a href="#"><span>Give it 3 stars</span><b></b></a></li> -->
+<!-- <li><a href="#"><span>Give it 2 stars</span></a></li> -->
+<!-- <li><a href="#"><span>Give it 1 star</span></a></li> -->
+<!-- </ul> -->
+<!-- </div> -->
 	
 	
 

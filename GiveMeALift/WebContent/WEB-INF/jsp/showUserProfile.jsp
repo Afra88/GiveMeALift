@@ -95,9 +95,9 @@
 							<td>
 							<c:choose>
 								<c:when test="${user.getProfilePhoto()!=null}">
-								<img src="/GiveMeALift/avatars/${user.id}.jpg" width="150"
-								onerror="this.style.visibility = 'hidden'">
-<%-- 									<img src="/GiveMeALift/avatars/${user.id}.jpg" height="120px" onerror="this.style.visibility = 'hidden'">  --%>
+<%-- 								<img src="/GiveMeALift/avatars/${user.id}.jpg" width="150" --%>
+<!-- 								onerror="this.style.visibility = 'hidden'"> -->
+									<img src="/GiveMeALift/avatars/${user.id}.jpg" height="120px" onerror="this.style.visibility = 'hidden'"> 
 									<input name="files[0]" type="file" />
 								</c:when>
 								<c:otherwise>
@@ -259,129 +259,120 @@
 							<td>Conversazione</td>
 							<td>				
 								<img src="images/profile/chatness1.png">
-<%-- <%-- 								<c:choose> --%> --%>
-<%-- <%-- 									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 0}"> --%> --%>
-<!-- <!-- 										<input type="radio" name="chatness" value="1" checked="checked"> --> -->
-<%-- <%-- 									</c:when> --%> --%>
-<%-- <%-- 								</c:choose> --%> --%>
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 1}">  --%>
-<!-- 										<input type="radio" name="chatness" value="1" checked="checked"> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<input type="radio" name="chatness" value="1"> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
+								<c:choose>
+									<c:when test="${user.getPersonalPreference().getChatnessLevel() == null}">
+										<input type="radio" name="chatness" value="1">
+									</c:when>
+									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 1}"> 
+										<input type="radio" name="chatness" value="1">
+									</c:when>
+									<c:otherwise>
+										<input type="radio" name="chatness" value="1" checked="checked">
+									</c:otherwise>
+								</c:choose>
 									
 								
-<!-- 								<img src="images/profile/chatness2.png"> -->
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 2}">  --%>
-<!-- 										<input type="radio" name="chatness" value="2" checked="checked"> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<input type="radio" name="chatness" value="2"> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
+								<img src="images/profile/chatness2.png">
+ 								<c:choose>
+									<c:when test="${user.getPersonalPreference().getChatnessLevel() == null}">
+										<input type="radio" name="chatness" value="2">
+									</c:when>
+									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 2}"> 
+										<input type="radio" name="chatness" value="2">
+									</c:when>
+									<c:otherwise>
+										<input type="radio" name="chatness" value="2" checked="checked">
+									</c:otherwise>
+								</c:choose>
 								
-<!-- 								<img src="images/profile/chatness3.png"> -->
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 3}">  --%>
-<!-- 										<input type="radio" name="chatness" value="3" checked="checked"> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<input type="radio" name="chatness" value="3"> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose>							 --%>
-<!-- 							</td> -->
-<!-- 						</tr> -->
-<!-- 						<tr> -->
-<!-- 							<td>Musica</td> -->
-<!-- 							<td> -->
-<!-- 								<img src="images/profile/NoMusic.png"> -->
-<%-- <%-- 								<c:choose> --%> --%>
-<%-- <%-- 									<c:when test="${user.getPersonalPreference().getMusic() == null}"> --%> --%>
-<!-- <!-- 										<input type="radio" name="music" value="noMus" checked="checked"> --> -->
-<%-- <%-- 									</c:when> --%> --%>
-<%-- <%-- 								</c:choose> --%> --%>
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${user.getPersonalPreference().getMusic() == false}">  --%>
-<!-- 										<input type="radio" name="music" value="noMus" checked="checked"> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<input type="radio" name="music" value="noMus"> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose>	 --%>
 								
-<!-- 								<img src="images/profile/music.png"> -->
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${user.getPersonalPreference().getMusic() == true}">  --%>
-<!-- 										<input type="radio" name="music" value="yesMus" checked="checked"> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<input type="radio" name="music" value="yesMus" > -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose>	 --%>
-<!-- 							</td> -->
-<!-- 						</tr> -->
-<!-- 						<tr> -->
-<!-- 							<td>Fumo</td> -->
-<!-- 							<td> -->
-<!-- 								<img src="images/profile/NoSmoking.png"> -->
-<%-- <%-- 								<c:choose> --%> --%>
-<%-- <%-- 									<c:when test="${user.getPersonalPreference().getSmoking() == null}"> --%> --%>
-<!-- <!-- 										<input type="radio" name="smoking" value="noSmok" checked="checked"> --> -->
-<%-- <%-- 									</c:when> --%> --%>
-<%-- <%-- 								</c:choose> --%> --%>
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${user.getPersonalPreference().getSmoking() == false}">  --%>
-<!-- 										<input type="radio" name="smoking" value="noSmok" checked="checked"> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<input type="radio" name="smoking" value="noSmok"> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
+								<img src="images/profile/chatness3.png">
+								<c:choose>
+									<c:when test="${user.getPersonalPreference().getChatnessLevel() == null}">
+										<input type="radio" name="chatness" value="3">
+									</c:when>
+									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 3}"> 
+										<input type="radio" name="chatness" value="3">
+									</c:when>
+									<c:otherwise>
+										<input type="radio" name="chatness" value="3" checked="checked">
+									</c:otherwise>
+								</c:choose>
+
+						</td>
+						</tr>
+						<tr>
+							<td>Musica</td>
+							<td>				
+								<img src="images/profile/NoMusic.png">
+								<c:choose>
+									<c:when test="${user.getPersonalPreference().getMusic() == false}"> 
+										<input type="radio" name="music" value="noMus" checked="checked">
+									</c:when>
+									<c:otherwise>
+										<input type="radio" name="music" value="noMus">
+									</c:otherwise>
+								</c:choose>
 							
-<!-- 								<img src="images/profile/smoking.png"> -->
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${user.getPersonalPreference().getSmoking() == true}">  --%>
-<!-- 										<input type="radio" name="smoking" value="yesSmok" checked="checked"> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<input type="radio" name="smoking" value="yesSmok"> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
+								<img src="images/profile/music.png">
+								<c:choose>
+									<c:when test="${user.getPersonalPreference().getMusic() == true}"> 
+										<input type="radio" name="music" value="yesMus" checked="checked">
+									</c:when>
+									<c:otherwise>
+										<input type="radio" name="music" value="yesMus">
+									</c:otherwise>
+								</c:choose>
+							</td>
+						</tr>
+						<tr>
+							<td>Fumo</td>
+							<td>
+								<img src="images/profile/NoSmoking.png">
+								<c:choose>
+									<c:when test="${user.getPersonalPreference().getSmoking() == false}"> 
+										<input type="radio" name="smoking" value="noSmok" checked="checked">
+									</c:when>
+									<c:otherwise>
+										<input type="radio" name="smoking" value="noSmok">
+									</c:otherwise>
+								</c:choose>
+							
+								<img src="images/profile/smoking.png">
+								<c:choose>
+									<c:when test="${user.getPersonalPreference().getSmoking() == true}"> 
+										<input type="radio" name="smoking" value="yesSmok" checked="checked">
+									</c:when>
+									<c:otherwise>
+										<input type="radio" name="smoking" value="yesSmok">
+									</c:otherwise>
+								</c:choose>
 								
-<!-- 							</td> -->
-<!-- 						</tr> -->
-<!-- 						<tr> -->
-<!-- 							<td>Animali a bordo</td> -->
-<!-- 							<td> -->
-<!-- 								<img src="images/profile/NoPets.png"> -->
-<%-- <%-- 								<c:choose> --%> --%>
-<%-- <%-- 									<c:when test="${user.getPersonalPreference().getPetsOnBoard() == null}"> --%> --%>
-<!-- <!-- 										<input type="radio" name="pets" value="noPets" checked="checked"> --> -->
-<%-- <%-- 									</c:when> --%> --%>
-<%-- <%-- 								</c:choose> --%> --%>
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${user.getPersonalPreference().getPetsOnBoard() == false}">  --%>
-<!-- 										<input type="radio" name="pets" value="noPets" checked="checked"> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<input type="radio" name="pets" value="noPets"> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose> --%>
+							</td>
+						</tr>
+						<tr>
+							<td>Animali a bordo</td>
+							<td>
+								<img src="images/profile/NoPets.png">
+								<c:choose>
+									<c:when test="${user.getPersonalPreference().getPetsOnBoard() == false}"> 
+										<input type="radio" name="pets" value="noPets" checked="checked">
+									</c:when>
+									<c:otherwise>
+										<input type="radio" name="pets" value="noPets">
+									</c:otherwise>
+								</c:choose>
 								
 									
-<!-- 								<img src="images/profile/pets.png"> -->
-<%-- 								<c:choose> --%>
-<%-- 									<c:when test="${user.getPersonalPreference().getPetsOnBoard() == true}">  --%>
-<!-- 										<input type="radio" name="pets" value="yesPets" checked="checked"> -->
-<%-- 									</c:when> --%>
-<%-- 									<c:otherwise> --%>
-<!-- 										<input type="radio" name="pets" value="yesPets"> -->
-<%-- 									</c:otherwise> --%>
-<%-- 								</c:choose>								 --%>
+								<img src="images/profile/pets.png">
+								<c:choose>
+									<c:when test="${user.getPersonalPreference().getPetsOnBoard() == true}"> 
+										<input type="radio" name="pets" value="yesPets" checked="checked">
+									</c:when>
+									<c:otherwise>
+										<input type="radio" name="pets" value="yesPets">
+									</c:otherwise>
+								</c:choose>								
 							</td>
 						</tr>
 					</table>
@@ -398,16 +389,11 @@
 							<td colspan="2">
 								<p align="left">
 									<c:choose> 
-										<c:when test ="${user.getDescription() == ' ' }">		
-											<textarea name="note" cols="51" rows="10" maxlength="1000">
-												Es: "Studio a Milano, ma sono originario di Bologna e viaggio spesso per
-												andare a trovare la mia famiglia."
-											</textarea>
+										<c:when test ="${user.getDescription() == null }">		
+											<textarea name="note" cols="51" rows="10" maxlength="1000">Es: "Studio a Milano, ma sono originario di Bologna e viaggio spesso per andare a trovare la mia famiglia."</textarea>
 										</c:when>
 										<c:otherwise>
-											<textarea name="note" cols="51" rows="10" maxlength="1000">
-												${user.getDescription()} 
-											</textarea>
+											<textarea name="note" cols="51" rows="10" maxlength="1000">${user.getDescription()}</textarea>
 										</c:otherwise>
 									</c:choose>
 								</p>

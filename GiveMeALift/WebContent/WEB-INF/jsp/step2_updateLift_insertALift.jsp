@@ -335,10 +335,7 @@
 						<textarea  cols="40" rows="6" maxlength="700" name="description"  >${lift.description}</textarea>
 					</c:when>
 					<c:otherwise>
-						<textarea  cols="40" rows="6" maxlength="700" name="description" >
-						Fornisci informazioni aggiuntive sul tuo viaggio. 
-						Cerca di invogliare più passeggeri a contattarti!
-						</textarea>
+						<textarea  cols="40" rows="6" maxlength="700" name="description" >Fornisci informazioni aggiuntive sul tuo viaggio.Cerca di invogliare più passeggeri a contattarti!</textarea> 
 					</c:otherwise>
 				</c:choose>
 				</td>

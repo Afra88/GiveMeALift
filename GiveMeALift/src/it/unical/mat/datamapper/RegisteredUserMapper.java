@@ -16,7 +16,10 @@ import org.hibernate.Transaction;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.hibernate.type.StringType;
 
+import it.unical.mat.domain.Car;
 import it.unical.mat.domain.DomainObject;
+import it.unical.mat.domain.Feedback;
+import it.unical.mat.domain.PersonalPreference;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
 import it.unical.mat.service.ParseDate;
@@ -34,7 +37,7 @@ public class RegisteredUserMapper extends AbstractMapper {
 		return result;
 	}
 	
-	public List<RegisteredUser> findMale(String g){
+	public List<RegisteredUser> findUserOfGender(String g){
 		List<RegisteredUser> users = new LinkedList<RegisteredUser>();
 				
 		String findStatement = "from RegisteredUser"
@@ -109,6 +112,11 @@ public class RegisteredUserMapper extends AbstractMapper {
 				List<User> objects=query.list();
 				RegisteredUser l=(RegisteredUser) objects.get(0);
 				Hibernate.initialize(l.getCar());
+//				List<Feedback> f = l.getReceivedFeedback();
+//				Hibernate.initialize(f);
+//				for (Feedback fb : f) 
+//					Hibernate.initialize(fb);
+					
 				transaction.commit();
 				return l;
 		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
@@ -197,6 +205,40 @@ public class RegisteredUserMapper extends AbstractMapper {
 		}
 		return null;
 	}
-
-
+	
+	public PersonalPreference loadPersonalPreference(Long id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+				RegisteredUser u=(RegisteredUser) session.get(RegisteredUser.class, id);
+				Hibernate.initialize(u.getPersonalPreference());
+				transaction.commit();
+				return u.getPersonalPreference();
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return null;
+	}
+	
+	public boolean deleteUser(RegisteredUser user){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.delete(user);		
+			transaction.commit();
+			return true;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			transaction.rollback();
+			return false;
+		} finally {
+			session.close();
+		}
+	}
+	
 }

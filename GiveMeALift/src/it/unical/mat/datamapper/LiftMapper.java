@@ -183,9 +183,13 @@ public class LiftMapper extends AbstractMapper {
 		Map<String,Object> parameters =new HashMap<String, Object>();
 		parameters.put("par1", id);
 		Collection<DomainObject> objects=find(findStatement, parameters,true);
-		for (DomainObject object : objects) {
-			result.add((Lift) object);
-		}	
+		
+		if(objects!=null){
+			for (DomainObject object : objects) {
+				result.add((Lift) object);
+			}				
+		
+		}
 		return result;
 	}
 
