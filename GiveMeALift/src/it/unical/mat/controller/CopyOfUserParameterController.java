@@ -11,12 +11,14 @@ import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Car;
 import it.unical.mat.domain.PersonalPreference;
 import it.unical.mat.domain.RegisteredUser;
+import it.unical.mat.domain.SocialNetworkProfile;
 import it.unical.mat.domain.User;
 import it.unical.mat.service.FileUploadForm;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,10 +83,16 @@ public class CopyOfUserParameterController {
 			@RequestParam("address") String street,
 			@RequestParam("cityAddress") String city,
 			@RequestParam("stateAddress") String state,
+			
+			@RequestParam(value="fbUrl", required=false) String facebook,
+			@RequestParam(value="twUrl", required=false) String twitter,
+			@RequestParam(value="ytUrl", required=false) String youtube,
+			
 			@RequestParam(value="chatness", required=false) String chatnessLevel,
 			@RequestParam(value="music", required=false) String musicOnBoard,
 			@RequestParam(value="smoking", required=false) String smokingOnBoard,
 			@RequestParam(value="pets", required=false) String petsOnBoard,
+			
 			@RequestParam("note") String description,
 			Model model, HttpSession session) {
 		
@@ -95,8 +103,51 @@ public class CopyOfUserParameterController {
 			
 			RegisteredUser ru = new RegisteredUser();
 			
-			RegisteredUser user= u;
+//			RegisteredUser user= u;
 			RegisteredUserMapper rm = new RegisteredUserMapper();
+			
+			SocialNetworkProfile social = new SocialNetworkProfile();
+			List<SocialNetworkProfile> slist = new ArrayList<SocialNetworkProfile>();
+			social.setLink(null);
+			social.setType(null);
+			
+			
+			System.out.println("obj "+ social +",list "+ slist + " link "+social.getLink() + " type "+social.getType());
+			System.out.println("FB "+facebook +" , TW " +twitter + ",YT "+ youtube);
+			
+			
+			if(!facebook.equals("")){
+				social = new SocialNetworkProfile();
+				social.setLink(facebook);
+				social.setType("FB");
+				slist.add(social);
+//				model.addAttribute("fb",social);
+				System.out.println("link "+social.getLink()+ " type "+social.getType());
+			}
+			if(!twitter.equals("")){
+				social = new SocialNetworkProfile();
+				social.setLink(twitter);
+				social.setType("TWITTER");
+				slist.add(social);
+//				model.addAttribute("tw",social);
+				System.out.println("link "+social.getLink()+ " type "+social.getType());
+			}
+			if(!youtube.equals("")){
+				social = new SocialNetworkProfile();
+				social.setLink(youtube);
+				social.setType("YOUTUBE");
+				slist.add(social);
+//				model.addAttribute("yt",social);
+				System.out.println("link "+social.getLink()+ " type "+social.getType());
+			}
+			
+			ru.setListSocialNetworkProfiles(slist);
+			
+			for (SocialNetworkProfile s : ru.getListSocialNetworkProfiles()) {
+				
+				System.out.println("-------------"+s.getLink());
+			}
+			
 			
 			//PersonalPreference pref = rm.loadPersonalPreference(user.getId());//user.getPersonalPreference(); //new PersonalPreference(); //ru.getPersonalPreference();
 			
@@ -146,8 +197,7 @@ public class CopyOfUserParameterController {
 			System.out.println("descr"+ description);
 			
 			
-			if(ru.getDescription()== null || ( !description.equals("Es: \"Studio a Milano, ma sono originario di Bologna e viaggio spesso per"
-					+ "		andare a trovare la mia famiglia.\"")))
+			if(ru.getDescription() != null)
 				ru.setDescription(description); 
 			
 			//--------------- FOTO ---------------
@@ -174,6 +224,14 @@ public class CopyOfUserParameterController {
 			if(modified){
 				model.addAttribute("modified", true);
 				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
+				
+				
+				
+				
+				
+				for (SocialNetworkProfile s : ruNew.getListSocialNetworkProfiles()) {
+					System.out.println("-------------"+s.getLink());
+				}
 				
 //				PersonalPreference p1 = ruNew.getPersonalPreference();
 //

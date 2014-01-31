@@ -16,6 +16,8 @@ public class SocialNetworkProfile extends DomainObject {
 	
 	@Column(name = "LINK")
 	private String link;
+	@Column(name = "TYPE")
+	private String type;
 	@Embedded
 	@Column(name = "SOCIAL_NETWORK_TYPE_USER_ID", unique = true)
 	private SocialNetworkUserID key;
@@ -41,6 +43,20 @@ public class SocialNetworkProfile extends DomainObject {
 		this.link = link;
 	}
 
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	@Override
 	public void copy(DomainObject object2) {

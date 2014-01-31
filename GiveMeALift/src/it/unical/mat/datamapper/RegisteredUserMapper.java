@@ -112,6 +112,7 @@ public class RegisteredUserMapper extends AbstractMapper {
 				List<User> objects=query.list();
 				RegisteredUser l=(RegisteredUser) objects.get(0);
 				Hibernate.initialize(l.getCar());
+				Hibernate.initialize(l.getListSocialNetworkProfiles());
 //				List<Feedback> f = l.getReceivedFeedback();
 //				Hibernate.initialize(f);
 //				for (Feedback fb : f) 
