@@ -4,14 +4,17 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
+import it.unical.mat.datamapper.SortOption;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.service.LiftToViewFacade;
 import it.unical.mat.service.ParseDate;
 
 import org.springframework.beans.support.PagedListHolder;
+import org.springframework.beans.support.PropertyComparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,9 +60,11 @@ public class SearchController {
     		@RequestParam(value="range",required=false) String range,
     		@RequestParam(value="radio",required=false) String radio,
     		@RequestParam(value="page",required=false) String nPage,
+    		@RequestParam(value="flexibleDate",required=false) String flexibleDate,
     		Model model){
 		
 		LiftMapper lm=new LiftMapper();
+		LiftDetourMapper ldm=new LiftDetourMapper();
 
 //		Lift l=new Lift();
 //		LiftPoint lp=new LiftPoint();
@@ -98,16 +103,27 @@ public class SearchController {
 			sort="date";
 		}
 		
-		if(from!=null && from!="" && to!=null && to!="" && date!=null && date!=""){		
-			List<Lift> listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom);
-//			List<Lift> listResultDetours=lm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom);
-//			if(listResults!=null)
-//				listResults.addAll(listResultDetours);
+		if(from!=null && from!="" && to!=null && to!="" && date!=null && date!=""){
+			List<Lift> listResults=null;
+			List<Lift> listResultDetours=null;
+			if(sort.equals("date")){
+				listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom,flexibleDate,SortOption.DATE);				
+				listResultDetours=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, SortOption.DATE);
+			}
+			if(sort.equals("cost")){				
+				listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom,flexibleDate,SortOption.COST);
+				listResultDetours=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, SortOption.COST);
+			}
+			else{
+				listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom,flexibleDate,null);
+				listResultDetours=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, null);
+			}
+			if(listResults!=null && listResultDetours!=null)
+				listResults.addAll(listResultDetours);
 			
 			int noResult;
 			
-			if(listResults!=null && !listResults.isEmpty()){
-				
+			if(listResults!=null && !listResults.isEmpty()){				
 				PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(listResults);		
 				pageHolder.setPage(Integer.parseInt(nPage));
 				pageHolder.setPageSize(10);	

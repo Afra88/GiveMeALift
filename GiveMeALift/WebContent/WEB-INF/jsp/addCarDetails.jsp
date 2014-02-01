@@ -126,7 +126,7 @@
 								<input name="files[0]" type="file" />
 							</c:when>
 							<c:otherwise>
-								<img height="120px" src="images/default_car.jpg" />
+								<img height="120px" src="images/default_car.png" />
 								<input name="files[0]" type="file" />
 							</c:otherwise>
 						</c:choose>

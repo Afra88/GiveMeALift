@@ -1,12 +1,17 @@
 package it.unical.mat.datamapper;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import it.unical.mat.domain.DomainObject;
+import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
 
 public class LiftDetourMapper extends AbstractMapper{
@@ -47,7 +52,7 @@ public class LiftDetourMapper extends AbstractMapper{
 //		String findStatement= "select d.* from Lift as l, Lift_Detour as d, LIFT_DETOURS_JOIN as j, Lift_point p1, lift_point p2 "
 //							+ "where "
 //							+ "l.lift_id=j.lift_id "
-//							+ "and j.lift_detour_id=d.lift_detour_id "
+//							+ "and j.DETOUR_ID=d.LIFT_DETOUR_ID "
 //							+ "and p1.lift_point_id=d.pick_up and p2.lift_point_id=drop_off "
 //							+ "and( "
 //							+ "p1.city like :par1 "
@@ -82,60 +87,76 @@ public class LiftDetourMapper extends AbstractMapper{
 //	
 //}
 //	
-//	public List<Lift> findDetourByFromAndToAndCostAndTimeAndDate(String cityFrom, 
-//			String cityTo, String date, String cost, Integer timeTo, Integer timeFrom){
-//		List<Lift> result=null;
-//		Map<String, Object> parameters=new HashMap<String, Object>();
-//		String findStatement= "select d.* from Lift as l, Lift_Detour as d, LIFT_DETOURS_JOIN as j, Lift_point p1, lift_point p2 "
-//							+ "where "
-//							+ "l.lift_id=j.lift_id "
-//							+ "and j.lift_detour_id=d.lift_detour_id "
-//							+ "and p1.lift_point_id=d.pick_up and p2.lift_point_id=drop_off "
-//							+ "and( "
-//							+ "p1.city like :par1 "
-//							+ "or p1.street like :par1 "
-//							+ "or p1.state like :par1 "
-//							+ "or p1.province like :par1 "
-//							+ "or p1.region like :par1) "
-//							+ "and (p2.city like :par2 "
-//							+ "or p2.street like :par2 "
-//							+ "or p2.state like :par2 "
-//							+ "or p2.province like :par2 "
-//							+ "or p2.region like :par2)"
-//							;
-////							+ "departureDate=:par3 ";
-//		if(cost!=null){		
-//			if(cost.equals("1")){
-//				findStatement+= "and cost<avg(cost) ";
-//			}
-//			if(cost.equals("2")){
-//				findStatement+= "and cost>=avg(cost) and cost<=max(cost) ";
-//			}
-//			if(cost.equals("3")){
-//				findStatement+= "and cost>=avg(cost) ";
-//			}
-//		}
-//		if(timeTo!=null && timeFrom!=null){
-//			findStatement+= "and departureTime<=:par4 and departureTime>=:par5 ";
-//			parameters.put("par5", timeFrom);
-//			parameters.put("par4", timeTo);
-//		}
-//		parameters.put("par1", cityFrom);
-//		parameters.put("par2", cityTo);
-////		try {
-////			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-////			parameters.put("par3", d);
-////		} catch (ParseException e) {
-////			e.printStackTrace();
-////		}
-//		Collection<DomainObject> objects=find(findStatement, parameters,true);
-//		if(!objects.isEmpty()){		
-//			result = new LinkedList<Lift>();
-//			for (DomainObject object : objects) {
-//				result.add((Lift) object);
-//			}
-//		}
-//		
-//		return result;
-//	}
+	
+	
+	public List<Lift> findDetourByFromAndToAndCostAndTimeAndDate(String cityFrom, 
+			String cityTo, String date, String cost, Integer timeTo, Integer timeFrom, String flexibleDate, SortOption sort){
+		List<Lift> result=null;
+		Map<String, Object> parameters=new HashMap<String, Object>();
+		String findStatement= "select l.* from Lift as l, Lift_Detour as d, LIFT_DETOURS_JOIN as j, Lift_point p1, lift_point p2 "
+							+ "where "
+							+ "l.lift_id=j.lift_id "
+							+ "and j.DETOUR_ID=d.LIFT_DETOUR_ID "
+							+ "and p1.lift_point_id=d.pick_up and p2.lift_point_id=drop_off "
+							+ "and( "
+							+ "p1.city like :par1 "
+							+ "or p1.street like :par1 "
+							+ "or p1.state like :par1 "
+							+ "or p1.province like :par1 "
+							+ "or p1.region like :par1) "
+							+ "and (p2.city like :par2 "
+							+ "or p2.street like :par2 "
+							+ "or p2.state like :par2 "
+							+ "or p2.province like :par2 "
+							+ "or p2.region like :par2)"
+							;
+//							+ "departureDate=:par3 ";
+		if(cost!=null){		
+			if(cost.equals("1")){
+				findStatement+= "and cost<avg(cost) ";
+			}
+			if(cost.equals("2")){
+				findStatement+= "and cost>=avg(cost) and cost<=max(cost) ";
+			}
+			if(cost.equals("3")){
+				findStatement+= "and cost>=avg(cost) ";
+			}
+		}
+		if(timeTo!=null && timeFrom!=null){
+			findStatement+= "and departureTime<=:par4 and departureTime>=:par5 ";
+			parameters.put("par5", timeFrom);
+			parameters.put("par4", timeTo);
+		}
+		parameters.put("par1", cityFrom);
+		parameters.put("par2", cityTo);
+		try {
+			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
+			if(flexibleDate!=null && flexibleDate!="" && flexibleDate.matches("[0-9]+") && Integer.parseInt(flexibleDate)<=60){
+				findStatement+= "and DATEDIFF(departureDate, :d) <=:par5 and DATEDIFF(:d, departureDate)<=:par5 "; //and DATEDIFF(:d, departureDate)<=:par5 or DATEDIFF(departureDate, :d)<=:par5 
+				parameters.put("par5", flexibleDate);
+				parameters.put("d",d);
+			}
+			else{
+				findStatement+= " and departureDate=:par5 ";
+				parameters.put("par5", d);
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		if(sort==SortOption.DATE){
+			findStatement+=" order by departureDate";
+		}
+		if(sort==SortOption.COST){
+			findStatement+=" order by d.cost";
+		}
+		Collection<DomainObject> objects=find(findStatement, parameters,true);
+		if(!objects.isEmpty()){		
+			result = new LinkedList<Lift>();
+			for (DomainObject object : objects) {
+				result.add((Lift) object);
+			}
+		}
+		
+		return result;
+	}
 }

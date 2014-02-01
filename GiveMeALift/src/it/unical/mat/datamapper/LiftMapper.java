@@ -48,16 +48,16 @@ public class LiftMapper extends AbstractMapper {
 //	}
 	
 	
-	public List<Lift> findLiftByFromAndTo(String cityFrom, String cityTo, String date){
+	public List<Lift> findLiftByFromAndTo(String cityFrom, String cityTo, String date, String sort){
 		List<Lift> result = new LinkedList<Lift>();
 		String findStatement= "from Lift"
 							+ " where "
-							+ "(difference(pickUpPoint.city,:par1) >=1 "
+							+ "(difference(pickUpPoint.city,:par1) >=2 "
 							+ "or difference(pickUpPoint.street,:par1) >=1 "
 							+ "or difference(pickUpPoint.state, :par1) >=1 "
 							+ "or difference(pickUpPoint.province, :par1) >=1 "
 							+ "or difference(pickUpPoint.region, :par1) >=1 )"
-							+ "and (difference(dropOffPoint.city, :par2)>=1 "
+							+ "and (difference(dropOffPoint.city, :par2)>=2 "
 							+ "or difference(dropOffPoint.street, :par2) >=1 "
 							+ "or difference(dropOffPoint.state, :par2) >=1 "
 							+ "or difference(dropOffPoint.province, :par2) >=1 "
@@ -82,22 +82,21 @@ public class LiftMapper extends AbstractMapper {
 	}
 	
 	public List<Lift> findLiftByFromAndToAndCostAndTimeAndDate(String cityFrom, 
-			String cityTo, String date, String cost, Integer timeTo, Integer timeFrom){
+			String cityTo, String date, String cost, Integer timeTo, Integer timeFrom, String flexibleDate, SortOption sort){
 		List<Lift> result=null;
 		Map<String, Object> parameters=new HashMap<String, Object>();
 		String findStatement= "from Lift"
 							+ " where "
-							+ "(difference(pickUpPoint.city,:par1) >=1 "
+							+ "(difference(pickUpPoint.city,:par1) >=2 "
 							+ "or difference(pickUpPoint.street,:par1) >=1 "
 							+ "or difference(pickUpPoint.state, :par1) >=1 "
 							+ "or difference(pickUpPoint.province, :par1) >=1 "
 							+ "or difference(pickUpPoint.region, :par1) >=1 )"
-							+ "and (difference(dropOffPoint.city, :par2)>=1 "
+							+ "and (difference(dropOffPoint.city, :par2)>=2 "
 							+ "or difference(dropOffPoint.street, :par2) >=1 "
 							+ "or difference(dropOffPoint.state, :par2) >=1 "
 							+ "or difference(dropOffPoint.province, :par2) >=1 "
 							+ "or difference(dropOffPoint.region, :par2)>=1 )"
-							+ " and departureDate=:par3 ";
 							;
 		if(cost!=null){		
 			if(cost.equals("1")){
@@ -111,17 +110,31 @@ public class LiftMapper extends AbstractMapper {
 			}
 		}
 		if(timeTo!=null && timeFrom!=null){
-			findStatement+= "and departureTime<=:par4 and departureTime>=:par5 ";
-			parameters.put("par5", timeFrom);
-			parameters.put("par4", timeTo);
+			findStatement+= "and departureTime<=:par3 and departureTime>=:par4 ";
+			parameters.put("par4", timeFrom);
+			parameters.put("par3", timeTo);
 		}
 		parameters.put("par1", cityFrom);
 		parameters.put("par2", cityTo);
 		try {
 			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-			parameters.put("par3", d);
+			if(flexibleDate!=null && flexibleDate!="" && flexibleDate.matches("[0-9]+") && Integer.parseInt(flexibleDate)<=60){
+				findStatement+= "and DATEDIFF(departureDate, :d) <=:par5 and DATEDIFF(:d, departureDate)<=:par5 "; //and DATEDIFF(:d, departureDate)<=:par5 or DATEDIFF(departureDate, :d)<=:par5 
+				parameters.put("par5", flexibleDate);
+				parameters.put("d",d);
+			}
+			else{
+				findStatement+= " and departureDate=:par5 ";
+				parameters.put("par5", d);
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
+		}
+		if(sort==SortOption.DATE){
+			findStatement+=" order by departureDate";
+		}
+		if(sort==SortOption.COST){
+			findStatement+=" order by cost";
 		}
 		Collection<DomainObject> objects=find(findStatement, parameters,false);
 		if(!objects.isEmpty()){		

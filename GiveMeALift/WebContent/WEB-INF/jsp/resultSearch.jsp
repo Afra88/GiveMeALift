@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <%@ page contentType="text/html;charset=iso-8859-1" %>
 <html>
     <head>
@@ -162,8 +162,25 @@
                         </td>
                     </tr>
                     <tr>
-                        <td >
-                           <div id=date class=center><script type="text/javascript" src="js/currentDate.js"></script></div>
+                        <td>
+                       		<input type="text" class="tcal" name="date" />
+                          <%--  <div id=date class=center><input type=text name=date value="${date}" /></div> --%>
+                        </td>
+                    </tr>
+                    <tr>
+                    	<td>
+                    		<h5>Date Flessibili</h5>
+                			Seleziona un intervallo ...
+                    	</td>
+                    </tr>
+                    <tr>
+                    	<td >
+                          	<select name="flexibleDate">
+                          		<option selected="selected" value="1" >+/- Un giorno</option>
+                          		<c:forEach var="i" begin="2"  end="60">
+                          			<option value="${i}" >+/- ${i} giorni</option>
+                          		</c:forEach>
+                          	</select>
                         </td>
                     </tr>
                 </table>
