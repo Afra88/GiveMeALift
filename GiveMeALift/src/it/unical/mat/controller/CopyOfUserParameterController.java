@@ -197,14 +197,14 @@ public class CopyOfUserParameterController {
 			System.out.println("descr"+ description);
 			
 			
-			if(ru.getDescription() != null)
+			if(ru.getDescription() == null || ru.getDescription()=="")
 				ru.setDescription(description); 
 			
 			//--------------- FOTO ---------------
 			
 			String filename = u.getId()+".jpg";	
 			
-			uploadPhoto(uploadForm, u, filename); 
+			uploadPhoto(uploadForm, filename); 
 			
 	        //--------------- FOTO ---------------
 			
@@ -332,7 +332,7 @@ public class CopyOfUserParameterController {
 			
 			String filename = u.getId()+"_car.jpg";	
 			
-			uploadPhoto(uploadForm, u, filename);	       
+			uploadPhoto(uploadForm, filename);	       
 			 
 		    //--------------- FOTO ---------------
 		         
@@ -365,7 +365,7 @@ public class CopyOfUserParameterController {
 	 * @param uploadForm
 	 * @param u
 	 */
-	private void uploadPhoto(FileUploadForm uploadForm, User u, String filename) {
+	private void uploadPhoto(FileUploadForm uploadForm, String filename) {
 		List<MultipartFile> files = uploadForm.getFiles();
 		     
 		    if(files != null && files.size() > 0) {
@@ -379,7 +379,7 @@ public class CopyOfUserParameterController {
 					File f = new File(fullPath);
 		    			
 					System.out.println("/resources/avatars/"+filename);
-					System.out.println(f.exists());
+					System.out.println("exists: "+ f.exists());
 					System.out.println(f.getAbsolutePath());
 					System.out.println(f.getPath());
 
@@ -445,7 +445,7 @@ public class CopyOfUserParameterController {
 				//--------------- FOTO ---------------
 				
 				String filename = u.getId()+"_car.jpg";					
-				uploadPhoto(uploadForm, u, filename); 
+				uploadPhoto(uploadForm, filename); 
 				
 		        //--------------- FOTO ---------------
 				

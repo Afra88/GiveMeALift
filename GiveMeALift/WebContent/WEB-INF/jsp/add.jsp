@@ -55,13 +55,13 @@
 	<div class="greenTable">
 	<form method="get" action="AddCarDetails">
 		
-			<table id="personalAuto" class=table>
+			<table id="personalAuto">
 			<tr>
 				<td colspan="2"> La mia auto </td>
 			</tr>
 			<tr>
 				<td rowspan="2">
-					<p><h4>Manca la tua auto!Aggiungine una e riceverai più contatti!</h4></p>
+					<p><h4>Manca la tua auto! Aggiungine una e riceverai pi&ugrave; contatti!</h4></p>
 				</td>
 			</tr>
 			<tr>
@@ -71,6 +71,7 @@
 							<input class="button orange" value="Aggiungi un'auto" type="submit"/>
 						</p>
 					</div>	
+					
 				</td>
 			</tr>
 		</table>

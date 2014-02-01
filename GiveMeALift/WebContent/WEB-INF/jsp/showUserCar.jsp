@@ -91,18 +91,22 @@
 									<c:when test="${user.getCar().getConfort() == 1}">
 										<input id="confortCar" name="confortCar" type="text"
 											value="base"></input>
+										<img height="20px" src="images/carConfort/base.png" />
 									</c:when>
 									<c:when test="${user.getCar().getConfort() == 2}">
 										<input id="confortCar" name="confortCar" type="text"
 											value="normale"></input>
+										<img height="20px" src="images/carConfort/normale.png" />
 									</c:when>
 									<c:when test="${user.getCar().getConfort() == 3}">
 										<input id="confortCar" name="confortCar" type="text"
 											value="confortevole"></input>
+										<img height="20px" src="images/carConfort/confortevole.png" />
 									</c:when>
 									<c:when test="${user.getCar().getConfort() == 4}">
 										<input id="confortCar" name="confortCar" type="text"
 											value="lusso"></input>
+										<img height="20px" src="images/carConfort/lusso.png" />
 									</c:when>
 								</c:choose>
 							</td>

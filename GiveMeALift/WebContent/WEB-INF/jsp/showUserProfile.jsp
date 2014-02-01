@@ -27,7 +27,6 @@
 
 <%-- 	<% session.getParameter("user"); %> --%>
 
-
 <body>
 	<header>
 		<div class="container_12">
@@ -65,7 +64,7 @@
 				<h4 class="center" > Redirect in 3 secondi</h4>
 			</c:when>
 			</c:choose>
-
+			
 
 	<form:form modelAttribute="uploadForm" method="post"
 		action="ModifyUserProfile" enctype="multipart/form-data">
@@ -109,9 +108,10 @@
 <%-- 							<img src="/GiveMeALift/avatars/${user.id}.jpg" --%>
 <!-- 								width="150" onerror="this.style.visibility = 'hidden'"> <input -->
 <%-- 								name="files[0]" type="file" /> 							<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data">  --%>
-								<%-- 							<form name="myWebForm" method="post" enctype="multipart/form-data">  --%>
-								<!-- 								<input type="file" name="uploadFile"/><br> --> <!-- 								<input value="Carica" type="submit"/>							 -->
-								<%-- 							</form> --%></td>
+<%-- 							<form name="myWebForm" method="post" enctype="multipart/form-data">  --%>
+<!-- 								<input type="file" name="uploadFile"/><br> --> <!-- 								<input value="Carica" type="submit"/>							 -->
+<%-- 							</form> --%>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -119,21 +119,36 @@
 				
 				<div class="grid_4">
 				<div class="blueTable">
-				<table id="social" class="table">
+				<table id="social">
 						<tr>
 							<td colspan="2">Social</td>
 						</tr>
-						<tr><td>fb icona?</td></tr>
-						<tr><td>t</td></tr>
+						<tr>
+							<td>
+								<img height="25px" src="images/social/fb.png" />
+								<input id="fbUrl" name="fbUrl" type="text" placeholder="www.facebook.com/Nome" value="${fb.getLink()}"	maxlength="50">
+							</td>
+						</tr>
+						<tr>
+							<td>
+							<img height="25px" src="images/social/tw.png" />
+							<input id="twUrl" name="twUrl" type="text" placeholder="www.twitter.com/Nome" value="${tw.getLink()}"	maxlength="50">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<img height="25px" src="images/social/yt.png" />
+								<input id="ytUrl" name="ytUrl" type="text" placeholder="www.youtube.com/Nome" value="${yt.getLink()}"	maxlength="50">
+							</td>			
 						</table>
 				</div>
 				</div>
-				
+				 
 				
 				<%-- 				<form method="get" action="ModifyUserProfile"> --%>
 				<div class="grid_12">
 				<div class="greenTable">
-					<table id="personalIinfo" class="table">
+					<table id="personalIinfo">
 						<tr>
 							<td colspan="2">Informazioni personali</td>
 						</tr>
@@ -206,7 +221,7 @@
 					</table>
 				</div>
 				<div class="greenTable">
-					<table id="personalAddress" class=table>
+					<table id="personalAddress">
 						<tr>
 							<td colspan="2">Il mio Indirizzo</td>
 						</tr>
@@ -251,7 +266,7 @@
 
 			<div class="grid_6">
 				<div class="orangeTable">
-					<table id="personalPref" class=table>
+					<table id="personalPref">
 						<tr>
 							<td colspan="2">Le mie preferenze</td>
 						</tr>
@@ -372,7 +387,7 @@
 									<c:otherwise>
 										<input type="radio" name="pets" value="yesPets">
 									</c:otherwise>
-								</c:choose>								
+								</c:choose>									
 							</td>
 						</tr>
 					</table>
@@ -381,16 +396,17 @@
 
 			<div class="grid_6">
 				<div class="greenTable">
-					<table id="personalOther" class=table>
+					<table id="personalOther">
 						<tr>
-							<td>Perchè viaggiare con me?</td>
+							<td>Perch&egrave; viaggiare con me?</td>
 						</tr>
 						<tr>
 							<td colspan="2">
 								<p align="left">
 									<c:choose> 
-										<c:when test ="${user.getDescription() == null }">		
-											<textarea name="note" cols="51" rows="10" maxlength="1000">Es: "Studio a Milano, ma sono originario di Bologna e viaggio spesso per andare a trovare la mia famiglia."</textarea>
+										<c:when test="${user.getDescription() == null }">		
+											Es: "Studio a Milano, ma sono originario di Bologna e viaggio spesso per andare a trovare la mia famiglia."
+											<textarea name="note" cols="51" rows="8" maxlength="1000"></textarea>
 										</c:when>
 										<c:otherwise>
 											<textarea name="note" cols="51" rows="10" maxlength="1000">${user.getDescription()}</textarea>
