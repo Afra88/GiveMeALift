@@ -25,7 +25,7 @@ public class RegisteredUser extends User {
 	private Integer countAlert;
 	
 	@Column (name = "ONLY_PASSENGER", nullable=true)
-	private Boolean onlyPassenger;
+	private Boolean onlyPassenger; //TODO eliminarlo
 	
 	@Column(name="PROFILE_PHOTO")
 	private String profilePhoto;
