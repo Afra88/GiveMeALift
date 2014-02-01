@@ -15,7 +15,7 @@ import it.unical.mat.util.HibernateUtil;
 
 public abstract class AbstractMapper {
 	
-	public long insert(DomainObject o){
+	public final long insert(DomainObject o){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		long objectId = 0;
@@ -32,7 +32,7 @@ public abstract class AbstractMapper {
 		return objectId;	
 	}
 
-	public boolean delete(Long id, Class<? extends DomainObject> objectClass){
+	public final boolean delete(Long id, Class<? extends DomainObject> objectClass){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {
@@ -50,7 +50,7 @@ public abstract class AbstractMapper {
 		}
 	}
 	
-	public boolean update(DomainObject object2, long id){
+	public final boolean update(DomainObject object2, long id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {
@@ -69,7 +69,7 @@ public abstract class AbstractMapper {
 		return false;	
 	}
 
-	protected List<DomainObject> find(String findStatement,Map<String,Object> parameters, boolean isSql){
+	protected final List<DomainObject> find(String findStatement,Map<String,Object> parameters, boolean isSql){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {
