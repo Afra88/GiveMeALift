@@ -70,7 +70,7 @@ public class FeedBackController {
 		
 		User u=(User) session.getAttribute("user");
 		
-		if(telephone.matches("[0-9]+") && telephone!=u.getMobilePhone()){
+		if(telephone.matches("[0-9]+") && !telephone.equals(u.getMobilePhone())){
 			RegisteredUserMapper rm = new RegisteredUserMapper();
 			RegisteredUser r = rm.findRegisteredUserByTelephone(telephone);
 			
@@ -82,10 +82,11 @@ public class FeedBackController {
 				FeedbackMapper fm = new FeedbackMapper();
 				List<Feedback> l = fm.findGivenFeedback(u.getId());
 				
+				// controllo se utente già votato
 				boolean exist= false;
 				for (Feedback f : l) {
 					if(f.getReceiver().getId()==r.getId());
-						exist = true;	
+						exist = true;	f.getReceiver().getUserActivity().getLastOnline();
 				} 
 				
 				model.addAttribute("released", exist);

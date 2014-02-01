@@ -92,16 +92,17 @@
 							
 							
 							<td>
+							--${user.getProfilePhoto()}::
 							<c:choose>
 								<c:when test="${user.getProfilePhoto()!=null}">
 <%-- 								<img src="/GiveMeALift/avatars/${user.id}.jpg" width="150" --%>
 <!-- 								onerror="this.style.visibility = 'hidden'"> -->
-									<img src="/GiveMeALift/avatars/${user.id}.jpg" height="120px" onerror="this.style.visibility = 'hidden'"> 
+									<img src="avatars/${user.id}.jpg" height="120px" onerror="this.style.visibility = 'hidden'"> 
 									<input name="files[0]" type="file" />
 								</c:when>
 								<c:otherwise>
 									<img height="120px" src="images/default_user.jpg" />
-									<input name="files[0]" type="file" />
+									<input name="files[0]" type="file" /> 
 								</c:otherwise>
 							</c:choose>
 							

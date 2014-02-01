@@ -214,6 +214,8 @@ public class CopyOfUserParameterController {
 			boolean modified = rm.update(ru, u.getId());
 			System.out.println("Userupdate: "+ modified);
 			
+			//System.out.println("foto "+ ru.getProfilePhoto());
+			
 			System.out.println("_ModifyUserProfile_"+pref);
 //			System.out.println(pref.getChatnessLevel());
 //			System.out.println(pref.getMusic());
@@ -223,9 +225,18 @@ public class CopyOfUserParameterController {
 			
 			if(modified){
 				model.addAttribute("modified", true);
+				
+				System.out.println("foto "+ ru.getProfilePhoto());
+					//model.addAttribute(arg0, arg1)
+				
+				
+				 												
 				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
 				
+				 /* FIXME  QUESTO NUOVO ruNew NON AGGIORNA IL CAMPO FOTO
+				  * 											STAMPA foto null*/
 				
+				System.out.println("foto "+ ruNew.getProfilePhoto());
 				
 				
 				
@@ -233,13 +244,13 @@ public class CopyOfUserParameterController {
 					System.out.println("-------------"+s.getLink());
 				}
 				
-//				PersonalPreference p1 = ruNew.getPersonalPreference();
-//
-//				System.out.println("_ModifyUserProfile_runew_"+p1);
-//				System.out.println(p1.getChatnessLevel());
-//				System.out.println(p1.getMusic());
-//				System.out.println(p1.getPetsOnBoard());
-//				System.out.println(p1.getSmoking());
+				PersonalPreference p1 = ruNew.getPersonalPreference();
+
+				System.out.println("_ModifyUserProfile_runew_"+p1);
+				System.out.println(p1.getChatnessLevel());
+				System.out.println(p1.getMusic());
+				System.out.println(p1.getPetsOnBoard());
+				System.out.println(p1.getSmoking());
 				
 				session.setAttribute("user", ruNew);
 			}
@@ -314,6 +325,9 @@ public class CopyOfUserParameterController {
 			car.setBrand(brandAuto);
 			car.setModel(modelAuto);
 			car.setColor(colorAuto);
+			
+			System.out.println("In MOdifyUserCar:");
+			System.out.println(car);
 			 
 			Integer c = null;
 			if(confortAuto.equals("base"))
@@ -339,6 +353,8 @@ public class CopyOfUserParameterController {
 			car.setCarPhoto(filename);			
 			ru.setCar(car);
 
+			System.out.println("userCar:"+ ru.getCar().getBrand());
+
 			boolean modified = rm.update(ru, u.getId());
 			
 			
@@ -347,8 +363,16 @@ public class CopyOfUserParameterController {
 			
 
 			if(modified){
+				
+				System.out.println(modified + "Utente modif");
+				
 				model.addAttribute("modified", true);
 				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
+				
+				/*FIXME problema aggiornamento perchè -->  ruNew car:null  */
+				
+				System.out.println("ruNew car:"+ ruNew.getCar());
+				
 			    session.setAttribute("user", ruNew);
 			}
 			else
@@ -396,8 +420,8 @@ public class CopyOfUserParameterController {
 		    }
 	}
 	
-	
-	@RequestMapping(value = "/ModifyUserCar", method = RequestMethod.POST) 	
+	@Deprecated
+	@RequestMapping(value = "/noooModifyUserCar", method = RequestMethod.POST) 	
 	public String modifyUserCar(
 			@ModelAttribute("uploadForm") FileUploadForm uploadForm,
 			@RequestParam("brandCar") String brand, 

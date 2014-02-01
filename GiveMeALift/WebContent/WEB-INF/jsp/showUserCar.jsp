@@ -61,7 +61,7 @@
 				<div class="greenTable">
 
 
-					<table id="personalAuto" class=table>
+					<table id="personalAuto">
 						<tr>
 							<td colspan="2">La mia auto</td>
 						</tr>
@@ -147,7 +147,7 @@
 					<form:form modelAttribute="uploadForm" method="post"
 						action="SubmitCar" enctype="multipart/form-data">
 
-						<table id="modifyMyCar" class="table">
+						<table id="modifyMyCar">
 							<tr>
 								<td colspan="2">Modifica Auto</td>
 							</tr>
