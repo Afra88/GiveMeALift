@@ -310,7 +310,7 @@
 			</c:choose>
 			<tr>
 				<td>
-					Numero posti disponibili
+					Numero posti disponibili <img src="images/trip/seatman.png">
 				</td>
 				<td>
 					<c:choose>
@@ -345,7 +345,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h2> Bagaglio massimo consentito: </h2></td>
+				<td><h2> Bagaglio massimo consentito:  <img src="images/trip/luggage.png"> </h2></td>
 				<td>
 					<c:choose>
 					<c:when test="${lift!=null}">
@@ -504,7 +504,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h2> Viaggio rosa: </h2></td>
+				<td><h2> Viaggio rosa: <img src="images/trip/viaggiorosa.png"> </h2></td>
 				<td>
 					<c:choose>
 					<c:when test="${lift!=null}">

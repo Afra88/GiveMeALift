@@ -173,7 +173,7 @@
 				<td>
 				<c:choose>
 					<c:when test="${lift!=null}">
-						<span class="label"> Ora partenza: </span>
+						<span class="label"> Ora partenza: <img src="images/trip/smallclock.png"></span>
 						<select id="goingTimeH" name="goingTimeH" >
 						  <c:forEach var="i" step="1" begin="00" end="23" >
 						  <c:choose>
@@ -201,7 +201,7 @@
 						</select> 	 
 					</c:when>
 					<c:otherwise>
-						<span class="label"> Ora partenza: </span>
+						<span class="label"> Ora partenza: <img src="images/trip/smallclock.png"> </span>
 						<select id="goingTimeH" name="goingTimeH" >
 						  <c:forEach var="i" step="1" begin="00" end="23" >
 							<option>${i}</option>
@@ -232,7 +232,7 @@
 			<td>
 				<c:choose>
 					<c:when test="${lift!=null}">
-						<span class="label"> Ora ritorno (se previsto): </span>
+						<span class="label"> Ora ritorno (se previsto): <img src="images/trip/smallclock.png"></span>
 						<select id="returnTimeH" name="returnTimeH" >
 						  <c:forEach var="i" step="1" begin="00" end="23" >
 						  <c:choose>
@@ -259,7 +259,7 @@
 						</select> 	 
 					</c:when>
 					<c:otherwise>
-						<span class="label"> Ora ritorno: </span>
+						<span class="label"> Ora ritorno: <img src="images/trip/smallclock.png"></span>
 						<select id="returnTimeH" name="returnTimeH" >
 						  <c:forEach var="i" step="1" begin="00" end="23" >
 							<option>${i}</option>

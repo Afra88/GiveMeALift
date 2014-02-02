@@ -192,7 +192,7 @@
 					<input type="text" class="tcal" name="goingDate" />
 				</td>
 				<td>
-					<span class="label"> Ora partenza </span>
+					<span class="label"> Ora partenza <img src="images/trip/smallclock.png"></span>
 					<select id="goingTimeH" name="goingTimeH" >
 					  <c:forEach var="i" step="1" begin="0" end="23" >
 					 	<c:choose>
@@ -231,7 +231,7 @@
 					<input type="text" class="tcal" name="returnDate" />
 				</td>
 				<td>
-					<span class="label"> Ora ritorno </span>					
+					<span class="label"> Ora ritorno <img src="images/trip/smallclock.png"></span>					
 						<select id="returnTimeH" name="returnTimeH">
 						 <c:forEach var="i" step="1" begin="00" end="23" >
 							<c:choose>

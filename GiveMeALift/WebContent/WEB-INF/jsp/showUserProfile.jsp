@@ -181,13 +181,13 @@
 							</td>
 						</tr> 
 						<tr>
-							<td>Email</td>
+							<td>Email <img src="images/profile/email2.png" height="22px" ></td>
 							<td><input id="profileEmail" name="profileEmail" type="text"
 								readonly="readonly" value="${user.email}" required="required"></input>
 							</td>
 						</tr>
 						<tr>
-							<td>Cellulare</td>
+							<td>Cellulare <img src="images/profile/mobilePhone.png"></td>
 							<td><input id="profileCell" name="profileCell" type="text"
 								placeholder="3XX XXXX XXX" value="${user.getMobilePhone()}"
 								maxlength="10"></input></td>

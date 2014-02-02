@@ -306,7 +306,7 @@
 			</tr>
 			<tr>
 				<td>
-					Numero posti disponibili
+					Numero posti disponibili <img src="images/trip/seatman.png">
 				</td>
 				<td>
 					<input id="seats" class="number" type="number" name="seats" maxlength="4" size="3" value="0" >
@@ -327,7 +327,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h2> Bagaglio massimo consentito: </h2></td>
+				<td><h2> Bagaglio massimo consentito:  <img src="images/trip/luggage.png"> </h2></td>
 				<td>
 					<select id="luggage" name="luggage">
 	  					<option selected="selected" value="small">Piccolo</option>
@@ -336,6 +336,30 @@
 					</select>
 				</td>
 			</tr>
+			<c:if test="${user.getCar().getCarPhoto()!=null}">
+				<tr>
+					<td><h2> Automobile </h2></td> 
+					<td>
+						<img src="/GiveMeALift/avatars/default_car.jpg" height="120px" onerror="this.style.visibility = 'hidden'">
+						${user.getCar().getCarPhoto().getBrand()} ${user.getCar().getCarPhoto().getModel()} 
+						<c:if test="${user.getCar().getCarPhoto().getConfort()==1}">
+							<img height="20px" src="images/carConfort/base.png" />
+						</c:if>
+						<c:if test="${user.getCar().getCarPhoto().getConfort()==2}">
+							<img height="20px" src="images/carConfort/normale.png" />
+						</c:if>
+						<c:if test="${user.getCar().getCarPhoto().getConfort()==3}">
+							<img height="20px" src="images/carConfort/confortevole.png" />
+						</c:if>
+						<c:if test="${user.getCar().getCarPhoto().getConfort()==4}">
+							<img height="20px" src="images/carConfort/lusso.png" />
+						</c:if>
+						<c:if test="${user.getCar().getCarPhoto().getColor()}">
+						- Colore: ${user.getCar().getCarPhoto().getColor()}
+						</c:if>
+					</td>
+				</tr>
+			</c:if>
 			<tr>
 				<td><h2> Partirò: </h2></td>
 				<td>
@@ -369,7 +393,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td><h2> Viaggio rosa: </h2></td>
+				<td><h2> Viaggio rosa: <img src="images/trip/viaggiorosa.png"></h2></td>
 				<td>
 					<select id="pinkTrip" name="pinkTrip"> 
 	  					<option selected="selected" value="bothPass">viaggio con uomini e donne</option>
