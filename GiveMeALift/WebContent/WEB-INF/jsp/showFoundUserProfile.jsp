@@ -379,13 +379,13 @@
 			</div>
 		</div>
 
-<input type="hidden" id="receiver" name="idReceiver" value="${receiver.getId()}" >
 
 <div>
 		<c:choose>
 			<c:when test="${released == false}">
 
 				<form action="SubmitFeedback" method="post" id="form">
+<input type="hidden" id="receiver" name="idReceiver" value="${receiver.getId()}" >
 					<div class="grid_8" style="margin: 0 auto; ">
 						<div class="greenTable">
 							<table>

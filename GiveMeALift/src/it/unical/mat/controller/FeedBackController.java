@@ -33,31 +33,30 @@ public class FeedBackController {
 		if(session.getAttribute("user")!=null){
 			
 			
-			//TODO DELETE
-			RegisteredUser u = new RegisteredUser();
-			RegisteredUserMapper rm = new RegisteredUserMapper();
-			u.setName("Aaaa");
-			u.setSurname("B");
-			u.setBirthYear(1985);
-			Address a = new Address();
-			a.setCity("Torino");
-			a.setStreet("Via Nazionale");
-			a.setState("Italia");
-			u.setAddress(a);
-			u.setEmail("ab@mail.it");
-			u.setPassword("aaaaaaaa");
-			u.setGender("M");
-			u.setDescription("ciaociao ciao");
-			u.setMobilePhone("3333333333");
-			u.setMobilePhone("3333333333");
-			u.setPhone("0909090909");
-			PersonalPreference pref = new PersonalPreference();
-			pref.setChatnessLevel(1);
-			pref.setMusic(true);
-			pref.setPetsOnBoard(true);
-			pref.setSmoking(false);
-			u.setPersonalPreference(pref);
-			rm.insert(u);
+//			//TODO DELETE
+//			RegisteredUser u = new RegisteredUser();
+//			RegisteredUserMapper rm = new RegisteredUserMapper();
+//			u.setName("Aaaa");
+//			u.setSurname("B");
+//			u.setBirthYear(1985);
+//			Address a = new Address();
+//			a.setCity("Torino");
+//			a.setStreet("Via Nazionale");
+//			a.setState("Italia");
+//			u.setAddress(a);
+//			u.setEmail("ab@mail.it");
+//			u.setPassword("aaaaaaaa");
+//			u.setGender("M");
+//			u.setDescription("ciaociao ciao");
+//			u.setMobilePhone("3");
+//			u.setPhone("0");
+//			PersonalPreference pref = new PersonalPreference();
+//			pref.setChatnessLevel(1);
+//			pref.setMusic(true);
+//			pref.setPetsOnBoard(true);
+//			pref.setSmoking(false);
+//			u.setPersonalPreference(pref);
+//			rm.insert(u);
 			
 			
 			return "userSearchForFeedback";
@@ -70,9 +69,9 @@ public class FeedBackController {
 			@RequestParam("telephone") String telephone, 
 			Model model, HttpSession session){
 		
-		User u=(User) session.getAttribute("user");
-		
+		RegisteredUser u=(RegisteredUser) session.getAttribute("user");
 		if(telephone.matches("[0-9]+") && !telephone.equals(u.getMobilePhone())){
+			System.out.println(telephone);
 			RegisteredUserMapper rm = new RegisteredUserMapper();
 			RegisteredUser r = rm.findRegisteredUserByTelephone(telephone);
 			
@@ -82,7 +81,7 @@ public class FeedBackController {
 				model.addAttribute("found", true);
 				
 				FeedbackMapper fm = new FeedbackMapper();
-				List<Feedback> l = fm.findGivenFeedback(u.getId());
+				List<Feedback> l = fm.findGivenFeedback(u);
 				
 				// controllo se utente già votato
 				boolean exist= false;
@@ -231,18 +230,11 @@ public class FeedBackController {
 	@RequestMapping(value="/ReleasedFeedback")
 	public String showGivenFeedback(Model model, HttpSession session){
 		
-		User u = (User) session.getAttribute("user");
+		RegisteredUser u=(RegisteredUser) session.getAttribute("user");
 		
-		if(u!=null){
-			
-			RegisteredUserMapper rm = new RegisteredUserMapper();
-			RegisteredUser r = rm.findRegisteredUserById(u.getId());
-			Long id = r.getId();
-			
-			session.setAttribute("user", r);
-			
+		if(u!=null){			
 			FeedbackMapper fm = new FeedbackMapper();			
-			List<Feedback> l = fm.findGivenFeedback(id);
+			List<Feedback> l = fm.findGivenFeedback(u);
 		
 			System.out.println("size"+l.size());
 			
