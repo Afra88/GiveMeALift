@@ -219,7 +219,10 @@ header {
 	display: block;
 	position: relative;
 	z-index: 999;
-	background: url(../images/header_bg.png) 0 0 repeat;
+	background: url(../images/head_2.png) 0 0 repeat; 
+	
+/* 	background: url(../images/header_bg.png) 0 0 repeat; */
+	
 	padding: 53px 0 0px;
 }
 
@@ -329,7 +332,7 @@ a.next1 {
 }
 
 .bottom_block {
-	background-color: #bcbaba;
+/* 	background-color: #bcbaba; */ background-color:rgb(200, 110, 1);
 	color: #e7e7e7;
 	font-size: 18px;
 	line-height: 30px;
