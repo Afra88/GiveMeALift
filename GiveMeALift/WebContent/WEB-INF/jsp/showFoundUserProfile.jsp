@@ -60,6 +60,7 @@
 			</div>
 		</div>
 	</header>
+	
 	<div class="container_12">
 
 		<div class="grid_4">
@@ -95,7 +96,7 @@
 									<img height="120px" src=" avatars/${receiver.getId()}_car.jpg" />
 								</c:when>
 								<c:otherwise>
-									<img height="120px" src="images/default_car.jpg" />
+									<img height="120px" src="images/default_car.png" />
 								</c:otherwise>
 							</c:choose>
 						
@@ -172,6 +173,7 @@
 										<img src="images/profile/NoMusic.png">
 									</c:if>
 								</c:when>
+								
 								<c:when test="${receiver.getPersonalPreference().getSmoking()!=null}">
 									<c:if test="${receiver.getPersonalPreference().getSmoking()==true}">
 										<img src="images/profile/smoking.png">
@@ -180,6 +182,7 @@
 										<img src="images/profile/NoSmoking.png">
 									</c:if>
 								</c:when>
+								
 								<c:when test="${receiver.getPersonalPreference().getPetsOnBoard()!=null}">
 									<c:if test="${receiver.getPersonalPreference().getPetsOnBoard()==true}">
 										<img src="images/profile/pets.png">
@@ -234,75 +237,97 @@
 							</c:choose>
 							</div>
 								</c:otherwise>
-							</c:choose>							
+							</c:choose>
+									
+									METTERE I SOCIAL
+									
+<%-- 							<c:choose> --%>
+<%-- 							<c:when test="${social != null}"> --%>
+<!-- 									Social Network -->
+								
+<%-- 									<c:forEach var="i"  begin="0" end="${social.size()-1}" step="1" >  --%>
+<%-- 										<c:if test="${list.get(i).getType() == 'FB'}"> --%>
+<!-- 											<img src="images/social/fb.png">  -->
+<%-- 											<input type="text" value="${list.get(i).getLink()" readonly="readonly"> --%>
+<%-- 										</c:if> --%>
+<%-- 										<c:if test="${list.get(i).getType() == 'TWITTER'}"> --%>
+<!-- 											<img src="images/social/tw.png">  -->
+<%-- 											<input type="text" value="${list.get(i).getLink()" readonly="readonly"> --%>
+<%-- 										</c:if> --%>
+<%-- 										<c:if test="${list.get(i).getType() == 'YT'}"> --%>
+<!-- 											<img src="images/social/yt.png">  -->
+<%-- 											<input type="text" value="${list.get(i).getLink()" readonly="readonly"> --%>
+<%-- 										</c:if>				 --%>
+<%-- 									</c:forEach> --%>
+<%-- 							</c:when> --%>
+<%-- 							</c:choose> --%>
+				
 						</td>
 						
-						<td>Valutazione media: 
-						
-							${avg}
-							<c:if test="{$avg==0}">
+						<td>Valutazione media: ${avg} 	
+							<c:if test="${avg==0}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/0t.png" />
+								<br><img height="50px" src="images/feedback/0t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
-							<c:if test="{$avg>0 && $avg<=0.5 }">
+							<c:if test="${avg>0} && ${avg<=0.5}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/0_5t.png" />
+								<br><img height="120px" src="images/feedback/0_5t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="{$avg>0.5 && $avg<=1}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/1t.png" />
+								<br><img height="120px" src="images/feedback/1t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="{$avg>1 && $avg<=1.5}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/1_5t.png" />
+								<br><img height="120px" src="images/feedback/1_5t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="{$avg>1.5 && $avg<=2}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/2t.png" />
+								<br><img height="120px" src="images/feedback/2t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="{$avg>2 && $avg<=2.5}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/2_5t.png" />
+								<br><img height="120px" src="images/feedback/2_5t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="{$avg>2.5 && $avg<=3}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/3t.png" />
+								<br><img height="120px" src="images/feedback/3t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="{$avg>3 && $avg<=3.5}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/3_5t.png" />
+								<br><img height="120px" src="images/feedback/3_5t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="{$avg>3.5 && $avg<=4}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/4t.png" />
+								<br><img height="120px" src="images/feedback/4t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="{$avg>4 && $avg<=4.5}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/4_5t.png" />
+								<br><img height="120px" src="images/feedback/4_5t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="{$avg>4.5 && $avg<=5}">
 <!-- 							<td> -->
-								<img height="120px" src="images/feedback/5t.png" />
+								<br><img height="120px" src="images/feedback/5t.png" style="padding:10px 10px 10px 80;"/>
 <!-- 							</td> -->
 							</c:if>
 					</tr>
@@ -354,11 +379,13 @@
 			</div>
 		</div>
 
+<input type="hidden" id="receiver" name="idReceiver" value="${receiver.getId()}" >
+
 <div>
 		<c:choose>
 			<c:when test="${released == false}">
 
-				<form action="UserInsertFeedback" method="post" id="form">
+				<form action="SubmitFeedback" method="post" id="form">
 					<div class="grid_8" style="margin: 0 auto; ">
 						<div class="greenTable">
 							<table>
@@ -366,20 +393,18 @@
 									<td colspan="2">Lascia un feedback!</td>
 								</tr>
 								<tr>
-									
-								
-									<td>Lascia un commento! Es. Passeggero/Conducente
-										piacevole e prudente,... <br><br>
-										<textarea style="margin: 0 auto;"name="feedComment"cols="30" rows="10" maxlength="500"></textarea>
-									
-									
-									<select>
-											<option value="1">Dai 1 stella :(</option>
-											<option value="2">Dai 2 stelle :|</option>
-											<option value="3">Dai 3 stelle :)</option>
-											<option value="4">Dai 4 stelle ;)</option>
-											<option value="5">Dai 5 stelle ;D</option>
+									<td >
+									<select id="rating" name="rating">
+											<option value="1"> Pessimo :( </option>
+											<option value="2"> Passabile :| </option>
+											<option value="3"> Buono :) </option>
+											<option value="4"> Ottimo ;) </option>
+											<option value="5"> Grande! ;D </option>
 									</select>
+									<td>
+										<input type="radio" name="feed" value="P"> Passeggero
+										<input type="radio" name="feed" value="C"> Conducente
+									</td> 
 									
 <!-- 									<img  src="images/feedback/0t.png"> -->
 <!-- 									<img  src="images/feedback/1t.png"> -->
@@ -387,13 +412,20 @@
 <!-- 									<img  src="images/feedback/3t.png"> -->
 <!-- 									<img  src="images/feedback/4t.png"> -->
 <!-- 									<img  src="images/feedback/5t.png"> -->
-									</td>
+									
 									
 								</tr>
 								<tr>
-									<td>
+									
+								
+									<td colspan="2">Lascia un commento! Es. Passeggero/Conducente
+										piacevole e prudente,... <br><br>
+										<textarea style="margin: 0 auto;"name="feedComment"cols="80" rows="6" maxlength="500"></textarea>
+									</tr>
+								<tr>
+									<td colspan="2">
 									<div align="center">
-										<input type="submit" class="button cyan" value="Vota">
+									<input type="submit" class="button cyan" value="Vota">
 									</div>
 									
 									</td> 

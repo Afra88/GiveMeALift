@@ -121,7 +121,7 @@ public class CopyOfUserParameterController {
 				social.setLink(facebook);
 				social.setType("FB");
 				slist.add(social);
-//				model.addAttribute("fb",social);
+				model.addAttribute("fb",social);
 				System.out.println("link "+social.getLink()+ " type "+social.getType());
 			}
 			if(!twitter.equals("")){
@@ -129,7 +129,7 @@ public class CopyOfUserParameterController {
 				social.setLink(twitter);
 				social.setType("TWITTER");
 				slist.add(social);
-//				model.addAttribute("tw",social);
+				model.addAttribute("tw",social);
 				System.out.println("link "+social.getLink()+ " type "+social.getType());
 			}
 			if(!youtube.equals("")){
@@ -137,7 +137,7 @@ public class CopyOfUserParameterController {
 				social.setLink(youtube);
 				social.setType("YOUTUBE");
 				slist.add(social);
-//				model.addAttribute("yt",social);
+				model.addAttribute("yt",social);
 				System.out.println("link "+social.getLink()+ " type "+social.getType());
 			}
 			

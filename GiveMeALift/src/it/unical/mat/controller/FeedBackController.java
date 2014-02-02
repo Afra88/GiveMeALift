@@ -13,9 +13,11 @@ import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Feedback;
 import it.unical.mat.domain.PersonalPreference;
 import it.unical.mat.domain.RegisteredUser;
+import it.unical.mat.domain.SocialNetworkProfile;
 import it.unical.mat.domain.User;
 import it.unical.mat.domain.UserActivity;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,10 +88,20 @@ public class FeedBackController {
 				boolean exist= false;
 				for (Feedback f : l) {
 					if(f.getReceiver().getId()==r.getId());
-						exist = true;	f.getReceiver().getUserActivity().getLastOnline();
+						exist = true;	
 				} 
 				
 				model.addAttribute("released", exist);
+
+				List<SocialNetworkProfile> social = r.getListSocialNetworkProfiles();
+//				if(social != null){
+//						model.addAttribute("social", social);
+//				}
+				Double avg = fm.computeAvgRating(r.getId());
+				System.out.println("AVG = " + avg);
+				
+				model.addAttribute("avg", avg);
+				
 				
 				//return "userInsertFeedback";
 				return "showFoundUserProfile";
@@ -106,7 +118,9 @@ public class FeedBackController {
 	@RequestMapping(value="/SubmitFeedback",method=RequestMethod.POST)
 	public String submitFeedback(
 			@RequestParam("idReceiver") String idReceiver, 
-			@RequestParam("rating") String rating,
+			@RequestParam(value="rating", required=false) String rating,
+			@RequestParam(value="feed", required=false) String role,
+			@RequestParam(value="feedComment", required=false) String text,
 			Model model, HttpSession session){
 		
 		User u=(User) session.getAttribute("user");
@@ -115,22 +129,36 @@ public class FeedBackController {
 			RegisteredUserMapper rm = new RegisteredUserMapper();
 			
 			RegisteredUser sender = (RegisteredUser)u;
-			//RegisteredUser receiver = rm.findRegisteredUserById(Long.parseLong(idReceiver));
+			RegisteredUser receiver = rm.findRegisteredUserById(Long.parseLong(idReceiver));
 			
-			RegisteredUser newRE = new RegisteredUser();
+			//RegisteredUser newRE = new RegisteredUser();
+			
 			
 			Feedback f = new Feedback();
-			f.setReceiver(newRE);
+			f.setNumAlertSegnalation(0);	
+//			f.setReceiver(newRE);
+			f.setReceiver(receiver);
 			f.setSender(sender);
 			f.setRating(Integer.parseInt(rating));
-			//f.setText(text);
-						
+		
+			if(f.getText() == null || f.getText()=="")	
+				f.setText(text);
+			
+			System.out.println("ruolo:"+role);
+//			if(role == "P")
+//				newRE.setOnlyPassenger(true);
+//			else
+//				newRE.setOnlyPassenger(false);
+			
+			
 			FeedbackMapper fm = new FeedbackMapper();
 //			List<Feedback> l = fm.findReceivedFeedback(newRE.getId());
 			
 			if(fm.insert(f)>0){
-			
+				System.out.println("Rat:"+f.getRating());
+				
 //			if(rm.update(receiver, receiver.getId())){
+				session.setAttribute("receiver", receiver);
 				
 			//	model.addAttribute("updated", true);
 				return "showFoundUserProfile";
@@ -186,9 +214,11 @@ public class FeedBackController {
 			
 			Double avg = fm.computeAvgRating(id);
 			
+			System.out.println("AVG = " + avg);
+			
 			model.addAttribute("avg", avg);
 			
-			System.out.println("avg"+avg);
+		
 			model.addAttribute("noFeed", noFeed);
 			
 			return "showReceivedFeedback";
