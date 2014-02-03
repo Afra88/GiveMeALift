@@ -84,22 +84,27 @@ public abstract class AbstractMapper {
 					for (String key : parameters.keySet()) {
 						String objectType=parameters.get(key).getClass().getSimpleName();
 						String methodeToInvoke="set"+objectType;
-						if(objectType.equals("Integer")){
-							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), int.class);
-							m.invoke(query, key, parameters.get(key));
+						Method m=null;
+						System.out.println(parameters.get(key).getClass().getSuperclass());
+						System.out.println(parameters.get(key).getClass());
+						if(parameters.get(key).getClass().getSuperclass().getSimpleName().equals("User") || parameters.get(key).getClass().getSuperclass().getSimpleName().equals("DomainObject")){
+							System.out.println("ssssssss");
+							methodeToInvoke="setEntity";
+							m=query.getClass().getMethod(methodeToInvoke, key.getClass(), Object.class);
+						}
+						else if(objectType.equals("Integer")){
+							m=query.getClass().getMethod(methodeToInvoke, key.getClass(), int.class);
 						}
 						else if(objectType.equals("Boolean")){
-							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), boolean.class);
-							m.invoke(query, key, parameters.get(key));
+							m=query.getClass().getMethod(methodeToInvoke, key.getClass(), boolean.class);
 						}
 						else if(objectType.equals("Long")){
-							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), long.class);
-							m.invoke(query, key, parameters.get(key));
+							m=query.getClass().getMethod(methodeToInvoke, key.getClass(), long.class);
 						}
 						else{
-							Method m=query.getClass().getMethod(methodeToInvoke, key.getClass(), parameters.get(key).getClass());
-							m.invoke(query, key, parameters.get(key));
+							m=query.getClass().getMethod(methodeToInvoke, key.getClass(), parameters.get(key).getClass());
 						}
+						m.invoke(query, key, parameters.get(key));
 					}
 				}
 				@SuppressWarnings("unchecked")

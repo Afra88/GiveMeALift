@@ -10,6 +10,7 @@ import it.unical.mat.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class FeedbackMapper extends AbstractMapper{
 		List<Feedback> l = new ArrayList<Feedback>();
 		
 		String findStatement = "from Feedback "
-				+ "where receiver=:par2"
+				+ "where receiver=:par1"
 				;
 		
 		Map<String, Object> parameters=new HashMap<String, Object>();
@@ -50,23 +51,14 @@ public class FeedbackMapper extends AbstractMapper{
 				+ "where "
 				+ "sender =:par1"
 				;
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = null;
-		try {
-			transaction = session.beginTransaction();
-				Query query= session.createQuery(findStatement);
-				query.setEntity("par1", u);
-				@SuppressWarnings("unchecked")
-				List<Feedback> objects=query.list();				
-				transaction.commit();
-				return objects;
-		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
-			e.printStackTrace();
-			transaction.rollback();
-		} finally {
-			session.close();
+		Map<String, Object> parameters=new HashMap<String,Object>();
+		parameters.put("par1", u);
+		Collection<DomainObject> l=find(findStatement, parameters, false);
+		List<Feedback> result=new LinkedList<>();
+		for (DomainObject domainObject : l) {
+			result.add((Feedback) domainObject);
 		}
-		return null;
+		return result;
 	}
 	
 	public Double computeAvgRating(Long id){	
