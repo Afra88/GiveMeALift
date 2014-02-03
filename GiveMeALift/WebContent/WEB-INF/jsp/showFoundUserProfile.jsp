@@ -93,10 +93,10 @@
 						<td>
 						<c:choose>
 								<c:when test="${receiver.getCar().getCarPhoto()!=null}">
-									<img height="120px" src=" avatars/${receiver.getId()}_car.jpg" />
+									<img height="120px" src="${receiver.car.carPhoto}" />
 								</c:when>
 								<c:otherwise>
-									<img height="120px" src="images/default_car.png" />
+									<img height="120px" src="avatars/default_car.jpg" />
 								</c:otherwise>
 							</c:choose>
 						
@@ -150,7 +150,7 @@
 						<td>
 							<c:choose>
 								<c:when test="${receiver.profilePhoto!=null}">
-									<img src=" avatars/${receiver.getId()}.jpg" /> <h5>(${receiver.computeAge()} anni) di ${receiver.getAddress().getCity()}</h5> 
+									<img src="${receiver.profilePhoto}" /> <h5>(${receiver.computeAge()} anni) di ${receiver.getAddress().getCity()}</h5> 
 										<div><br><br>Le mie preferenze
 								<c:choose>
 									<c:when test="${receiver.getPersonalPreference().getChatnessLevel()!=null}">
@@ -195,7 +195,7 @@
 							</div>
 								</c:when>
 								<c:otherwise>
-									<img height="120px" src="images/default_user.jpg" /> <h5>(${receiver.computeAge()} anni) di ${receiver.getAddress().getCity()}</h5> 
+									<img height="120px" src="avatars/default_user.jpg" /> <h5>(${receiver.computeAge()} anni) di ${receiver.getAddress().getCity()}</h5> 
 									<div><br><br>Le mie preferenze
 								<c:choose>
 									<c:when test="${receiver.getPersonalPreference().getChatnessLevel()!=null}">

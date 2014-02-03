@@ -106,22 +106,24 @@ public class RegisteredUser extends User {
 			this.onlyPassenger=u.onlyPassenger;
 		if(u.countAlert!=null)
 			this.countAlert=u.countAlert;
-//		if(u.messagesReceived!=null)
-//			this.messagesReceived=u.messagesReceived;
-//		if(u.messagesSent!=null)
-//			this.messagesSent=u.messagesSent;
-		if(u.personalPreference!=null)
-			this.personalPreference=u.personalPreference;
-//		if(u.receivedFeedback.size()>0)
-//			this.receivedFeedback=u.receivedFeedback;
-		if(u.userActivity!=null)
-			this.userActivity=u.userActivity;
 		if(u.description!=null)
 			this.description=u.description;
 		if(u.showContacts!=null)
 			this.showContacts=u.showContacts;
+		if(u.profilePhoto!=null)
+			this.profilePhoto=u.profilePhoto;
 		if(u.car!=null)
-			this.car=u.car;
+			this.car.copy(u.car);
+		if(u.personalPreference!=null)
+			this.personalPreference.copy(u.personalPreference);
+		if(u.userActivity!=null)
+			this.userActivity.copy(u.userActivity);
+//		if(u.messagesReceived!=null)
+//			this.messagesReceived=u.messagesReceived;
+//		if(u.messagesSent!=null)
+//			this.messagesSent=u.messagesSent;
+//		if(u.receivedFeedback.size()>0)
+//			this.receivedFeedback=u.receivedFeedback;
 	}
 	
 	@OneToOne (fetch = FetchType.LAZY,cascade=CascadeType.ALL)

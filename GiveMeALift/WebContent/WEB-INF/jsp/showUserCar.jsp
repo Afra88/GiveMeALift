@@ -59,8 +59,6 @@
 		<div class="container_12">
 			<div class="grid_6">
 				<div class="greenTable">
-
-
 					<table id="personalAuto">
 						<tr>
 							<td colspan="2">La mia auto</td>
@@ -117,22 +115,20 @@
 							
 							<c:choose>
 							<c:when test="${user.getCar().getCarPhoto()!=null}">
-								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" height="120px" onerror="this.style.visibility = 'hidden'"> 
+								<img src="${user.getCar().getCarPhoto()}" height="120px" onerror="this.style.visibility = 'hidden'"> 
 <!-- 								<input name="files[0]" type="file" /> -->
 							</c:when>
 							<c:otherwise>
-								<img height="120px" src="images/default_car.jpg" />
+								<img height="120px" src="avatars/default_car.jpg" />
 								<input name="files[0]" type="file" />
 							</c:otherwise>
 						</c:choose>
 							
 <%-- 													<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%>
-<%-- 								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" width="150" --%>
+<%-- 								<img src="${user.profilePhoto}" width="150" --%>
 <!-- 								onerror="this.style.visibility = 'hidden'"> -->
 								
 							</td>
-						</tr>
-						<tr>
 						</tr>
 					</table>
 				</div>
@@ -144,8 +140,7 @@
 				<div class="orangeTable" style="margin-top: 20px;">
 
 					<!-- 	<form method="get" action="ModifyUserCar"> -->
-					<form:form modelAttribute="uploadForm" method="post"
-						action="SubmitCar" enctype="multipart/form-data">
+					<form:form modelAttribute="uploadForm" method="get" action="SubmitCar" enctype="multipart/form-data">
 
 						<table id="modifyMyCar">
 							<tr>
@@ -303,7 +298,7 @@
 							<tr>
 								<td>Foto</td>
 								<td>
-									<!-- 					<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data">  -->
+									<!-- 					<form name="myWebForm" action="fileupload" method="post" enctype="multipart/form-data">  -->
 									<!-- 						<form name="myWebForm" method="post" enctype="multipart/form-data">  -->
 									<!-- 					<input type="file" name="uploadFile"/><br> --> 
 									

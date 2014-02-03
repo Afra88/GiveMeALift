@@ -102,8 +102,6 @@ public class CopyOfUserParameterController {
 		if(u!=null){
 			
 			RegisteredUser ru = new RegisteredUser();
-			
-//			RegisteredUser user= u;
 			RegisteredUserMapper rm = new RegisteredUserMapper();
 			
 			SocialNetworkProfile social = new SocialNetworkProfile();
@@ -143,6 +141,7 @@ public class CopyOfUserParameterController {
 			
 			ru.setListSocialNetworkProfiles(slist);
 			
+			System.out.println("^^^^^^^^^"+ru.getListSocialNetworkProfiles().size());
 			for (SocialNetworkProfile s : ru.getListSocialNetworkProfiles()) {
 				
 				System.out.println("-------------"+s.getLink());
@@ -151,33 +150,37 @@ public class CopyOfUserParameterController {
 			
 			//PersonalPreference pref = rm.loadPersonalPreference(user.getId());//user.getPersonalPreference(); //new PersonalPreference(); //ru.getPersonalPreference();
 			
-			PersonalPreference pref = new PersonalPreference();
-
-		System.out.println("lev"+pref.getChatnessLevel());
-		System.out.println("lev"+chatnessLevel);
-			
-			if(chatnessLevel.equals("1"))
-				pref.setChatnessLevel(1);
-			else if(chatnessLevel.equals("2"))
-				pref.setChatnessLevel(2);
-			else if(chatnessLevel.equals("3"))
-				pref.setChatnessLevel(3);
-			
-			
-			if(musicOnBoard.equals("noMus"))
-				pref.setMusic(false);
-			else
-				pref.setMusic(true);
-			
-			if(smokingOnBoard.equals("noSmok"))
-				pref.setSmoking(false);
-			else
-				pref.setSmoking(true);
-			
-			if(petsOnBoard.equals("noPets"))
-				pref.setPetsOnBoard(false);
-			else
-				pref.setPetsOnBoard(true);
+			PersonalPreference pref = null;
+			if((chatnessLevel!=null && chatnessLevel!="") ||
+					(musicOnBoard!=null && musicOnBoard!="") ||
+					(smokingOnBoard!=null && smokingOnBoard!="") ||
+					(petsOnBoard!=null && petsOnBoard!="")){				
+				
+				pref = new PersonalPreference();
+				System.out.println(chatnessLevel+" Smok "+smokingOnBoard+ " Pets "+petsOnBoard+" Music "+musicOnBoard);				
+				
+				if(chatnessLevel.equals("1"))
+					pref.setChatnessLevel(1);
+				else if(chatnessLevel.equals("2"))
+					pref.setChatnessLevel(2);
+				else if(chatnessLevel.equals("3"))
+					pref.setChatnessLevel(3);		
+				
+				if(musicOnBoard.equals("noMus"))
+					pref.setMusic(false);
+				else if (musicOnBoard.equals("yesMus"))
+					pref.setMusic(true);
+				
+				if(smokingOnBoard.equals("noSmok"))
+					pref.setSmoking(false);
+				else if(smokingOnBoard.equals("yesSmok"))
+					pref.setSmoking(true);
+				
+				if(petsOnBoard.equals("noPets"))
+					pref.setPetsOnBoard(false);
+				else if(petsOnBoard.equals("yesPets"))
+					pref.setPetsOnBoard(true);
+			}
 			
 			Address a = new Address();
 			a = new Address();
@@ -190,13 +193,10 @@ public class CopyOfUserParameterController {
 			ru.setPhone(phone);
 			ru.setMobilePhone(mobilePhone);
 			ru.setAddress(a);
-			ru.setPersonalPreference(pref);
+			if(pref!=null)
+				ru.setPersonalPreference(pref);
 			
-			System.out.println("lev"+pref.getChatnessLevel());
-			
-			System.out.println("descr"+ description);
-			
-			
+					
 			if(ru.getDescription() == null || ru.getDescription()=="")
 				ru.setDescription(description); 
 			
@@ -204,53 +204,28 @@ public class CopyOfUserParameterController {
 			
 			String filename = u.getId()+".jpg";	
 			
+			ru.setProfilePhoto("avatars/"+filename);
+
 			uploadPhoto(uploadForm, filename); 
 			
 	        //--------------- FOTO ---------------
 			
-			ru.setProfilePhoto(filename);
 			
 									
 			boolean modified = rm.update(ru, u.getId());
-			System.out.println("Userupdate: "+ modified);
-			
-			//System.out.println("foto "+ ru.getProfilePhoto());
-			
-			System.out.println("_ModifyUserProfile_"+pref);
-//			System.out.println(pref.getChatnessLevel());
-//			System.out.println(pref.getMusic());
-//			System.out.println(pref.getPetsOnBoard());
-//			System.out.println(pref.getSmoking());
-//			
+			System.out.println("Userupdate: "+ modified);		
 			
 			if(modified){
 				model.addAttribute("modified", true);
-				
-				System.out.println("foto "+ ru.getProfilePhoto());
-					//model.addAttribute(arg0, arg1)
-				
-				
-				 												
 				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
-				
-				 /* FIXME  QUESTO NUOVO ruNew NON AGGIORNA IL CAMPO FOTO
-				  * 											STAMPA foto null*/
-				
-				System.out.println("foto "+ ruNew.getProfilePhoto());
-				
+							
+//				System.out.println("foto "+ ruNew.getProfilePhoto());
+//				System.out.println(ruNew.getPersonalPreference().getChatnessLevel()+" Smok "+ruNew.getPersonalPreference().getSmoking()+ " Pets "+ruNew.getPersonalPreference().getPetsOnBoard()+" Music "+ruNew.getPersonalPreference().getMusic());
 				
 				
 				for (SocialNetworkProfile s : ruNew.getListSocialNetworkProfiles()) {
-					System.out.println("-------------"+s.getLink());
+					System.out.println("***************"+s.getLink());
 				}
-				
-				PersonalPreference p1 = ruNew.getPersonalPreference();
-
-				System.out.println("_ModifyUserProfile_runew_"+p1);
-				System.out.println(p1.getChatnessLevel());
-				System.out.println(p1.getMusic());
-				System.out.println(p1.getPetsOnBoard());
-				System.out.println(p1.getSmoking());
 				
 				session.setAttribute("user", ruNew);
 			}
@@ -276,11 +251,10 @@ public class CopyOfUserParameterController {
 			RegisteredUser ru = (RegisteredUser) u;
 			
 			if(ru.getCar() == null	)
-			 {			 
 				 return "add";
-			 } 
 			else
-				 return "showUserCar";	
+				System.out.println(ru.getCar().getBrand());
+				return "showUserCar";	
 		}
 		
 		else
@@ -301,7 +275,7 @@ public class CopyOfUserParameterController {
 	}
 	
 	
-	@RequestMapping(value = "/SubmitCar", method = RequestMethod.POST) 
+	@RequestMapping(value = "/SubmitCar", method = RequestMethod.GET) 
 	public String submitCar(	
 			@RequestParam("car-years") String year,
 			@RequestParam("car-makes") String brandAuto,
@@ -312,9 +286,9 @@ public class CopyOfUserParameterController {
 //			@RequestParam("photoCar") String photoCar,
 			Model model, HttpSession session){
 	
-	model.addAttribute("year", year); // <-- da aggiungere in Car
+		model.addAttribute("year", year); // <-- da aggiungere in Car
 		
-		User u = (User)session.getAttribute("user");
+		RegisteredUser u = (RegisteredUser)session.getAttribute("user");
 	
 		if(u!=null){
 			
@@ -340,17 +314,16 @@ public class CopyOfUserParameterController {
 				c=4;
 			 
 			car.setConfort(c);
-		
 			
 			//--------------- FOTO ---------------
 			
-			String filename = u.getId()+"_car.jpg";	
+			String filename =  u.getId()+"_car.jpg";	
 			
 			uploadPhoto(uploadForm, filename);	       
 			 
 		    //--------------- FOTO ---------------
 		         
-			car.setCarPhoto(filename);			
+			car.setCarPhoto("avatars/"+filename);			
 			ru.setCar(car);
 
 			System.out.println("userCar:"+ ru.getCar().getBrand());
@@ -371,7 +344,7 @@ public class CopyOfUserParameterController {
 				
 				/*FIXME problema aggiornamento perchè -->  ruNew car:null  */
 				
-				System.out.println("ruNew car:"+ ruNew.getCar());
+				System.out.println("ruNew car:"+ ruNew.getCar().getBrand());
 				
 			    session.setAttribute("user", ruNew);
 			}
@@ -473,7 +446,7 @@ public class CopyOfUserParameterController {
 				
 		        //--------------- FOTO ---------------
 				
-				car.setCarPhoto(filename);
+				car.setCarPhoto("avatars/"+filename);
 
 
 //			}

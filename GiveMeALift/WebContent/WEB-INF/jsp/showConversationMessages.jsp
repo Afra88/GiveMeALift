@@ -75,7 +75,7 @@
 			          				<img height="70px" alt="${message.sender.computeNickName()}" src="${message.sender.profilePhoto}">
 								</c:when>
 								<c:when test="${message.sender.profilePhoto==null}">
-			          				<img height="70px" src="images/default_user.jpg" />
+			          				<img height="70px" src="avatars/default_user.jpg" />
 								</c:when>
 		          			</c:choose>
 						</div>
@@ -87,7 +87,7 @@
 		          				<img height="70px" alt="${message.receiver.computeNickName()}" src="${message.receiver.profilePhoto}">
 							</c:when>
 							<c:when test="${message.receiver.profilePhoto==null}">
-		          				<img height="70px" src="images/default_user.jpg" />
+		          				<img height="70px" src="avatars/default_user.jpg" />
 							</c:when>
 	          			</c:choose>
 		  				<span class="bubbleLeft">
@@ -113,7 +113,7 @@
 	         				<img height="70px" alt="${message.sender.computeNickName()}" src="${message.sender.profilePhoto}">
 					</c:when>
 					<c:when test="${message.sender.profilePhoto==null}">
-	         				<img height="70px" src="images/default_user.jpg" />
+	         				<img height="70px" src="avatars/default_user.jpg" />
 					</c:when>
        			</c:choose>
 				</form>
