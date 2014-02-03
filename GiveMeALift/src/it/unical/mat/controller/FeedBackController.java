@@ -16,6 +16,7 @@ import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.SocialNetworkProfile;
 import it.unical.mat.domain.User;
 import it.unical.mat.domain.UserActivity;
+import it.unical.mat.service.ParseDate;
 
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Controller;
@@ -86,7 +87,7 @@ public class FeedBackController {
 				// controllo se utente già votato
 				boolean exist= false;
 				for (Feedback f : l) {
-					if(f.getReceiver().getId()==r.getId());
+					if(f.getFeedbackReceiver().getId()==r.getId());
 						exist = true;	
 				} 
 				
@@ -134,10 +135,10 @@ public class FeedBackController {
 			
 			
 			Feedback f = new Feedback();
-			f.setNumAlertSegnalation(0);	
+//			f.setNumAlertSegnalation(0);	
 //			f.setReceiver(newRE);
-			f.setReceiver(receiver);
-			f.setSender(sender);
+			f.setFeedbackReceiver(receiver);
+			f.setFeedbackSender(sender);
 			f.setRating(Integer.parseInt(rating));
 		
 			if(f.getText() == null || f.getText()=="")	
@@ -157,8 +158,9 @@ public class FeedBackController {
 				System.out.println("Rat:"+f.getRating());
 				
 //			if(rm.update(receiver, receiver.getId())){
-				session.setAttribute("receiver", receiver);
-				
+				model.addAttribute("receiver", receiver); //NON USARE LA SESSION QUI AGGIUNGERE I PARAMETRI!
+				model.addAttribute("memberSince",ParseDate.getItalianFormat(receiver.getUserActivity().getMemberSince().toString()));
+				model.addAttribute("lastOnline",ParseDate.getItalianFormat(receiver.getUserActivity().getLastOnline().toString()));
 			//	model.addAttribute("updated", true);
 				return "showFoundUserProfile";
 			}
@@ -198,7 +200,7 @@ public class FeedBackController {
 				
 				for (Feedback f : l) {
 			
-					senders.add((RegisteredUser)f.getSender());
+					senders.add((RegisteredUser)f.getFeedbackSender());
 					ratings.add(f.getRating());
 					
 				}
@@ -230,7 +232,7 @@ public class FeedBackController {
 	@RequestMapping(value="/ReleasedFeedback")
 	public String showGivenFeedback(Model model, HttpSession session){
 		
-		RegisteredUser u=(RegisteredUser) session.getAttribute("user");
+		User u=(User) session.getAttribute("user");
 		
 		if(u!=null){			
 			FeedbackMapper fm = new FeedbackMapper();			
@@ -249,7 +251,7 @@ public class FeedBackController {
 				List<Integer> ratings = new ArrayList<Integer>();
 				
 				for (Feedback f : l) {
-					receivers.add((RegisteredUser)f.getReceiver());
+					receivers.add((RegisteredUser)f.getFeedbackReceiver());
 					ratings.add(f.getRating());
 				}
 				model.addAttribute("feedback", l);

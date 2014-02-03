@@ -31,7 +31,7 @@ public class FeedbackMapper extends AbstractMapper{
 		List<Feedback> l = new ArrayList<Feedback>();
 		
 		String findStatement = "from Feedback "
-				+ "where receiver=:par1"
+				+ "where feedbackReceiver=:par1"
 				;
 		
 		Map<String, Object> parameters=new HashMap<String, Object>();
@@ -46,10 +46,9 @@ public class FeedbackMapper extends AbstractMapper{
 	}
 	
 	
-	public List<Feedback> findGivenFeedback(RegisteredUser u){
+	public List<Feedback> findGivenFeedback(User u){
 		String findStatement = "from Feedback "
-				+ "where "
-				+ "sender =:par1"
+				+ "where feedbackSender =:par1"
 				;
 		Map<String, Object> parameters=new HashMap<String,Object>();
 		parameters.put("par1", u);
@@ -67,7 +66,7 @@ public class FeedbackMapper extends AbstractMapper{
 		try {			
 			String findStatement = "select AVG(rating) as AVERAGE from Feedback "
 					+ "where "
-					+ "receiver =:par1"
+					+ "feedbackReceiver =:par1"
 					;
 			
 			transaction = session.beginTransaction();
