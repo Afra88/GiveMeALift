@@ -1,301 +1,208 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page session="true"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	pageEncoding="ISO-8859-1"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Feedback lasciati</title>
+<title>Feedback ricevuti</title>
+
+<link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/ourAdditions.css">
+<link rel="stylesheet" href="css/greenTable.css">
+<link rel="stylesheet" href="css/pagination.css" type="text/css" />
+<link rel="stylesheet" href="css/blueTable.css">
+<link rel="stylesheet" href="css/orangeTable.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/form.css">
+<link rel="stylesheet" href="css/pictogram-button.css">
+
+<link rel="icon" href="images/favicon.ico">
+<link rel="shortcut icon" href="images/favicon.ico">
+
 </head>
 <body>
-
-</body>
-</html>
-
+	<header>
+		<div class="container_12">
+			<div class="grid_12">
+				<c:choose>
+					<c:when test="${user!=null}">
+						<%@include file="signedUpForm.jsp"%>
+					</c:when>
+					<c:otherwise>
+						<%@include file="logInForm.jsp"%>
+					</c:otherwise>
+				</c:choose>
+				<h1>
+					<a href="/GiveMeALift"><img src="images/logo.png" alt=""></a>
+				</h1>
+				<c:choose>
+					<c:when test="${user!=null}">
+						<%@include file="userMenu.jsp"%>
+					</c:when>
+					<c:otherwise>
+						<%@include file="classicMenu.jsp"%>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</header>
 	<div class="content">
-  	<div class="container_12">
-     <div class="grid_12">
-     <div class="grid_7">
-<!-- 	<div class="greenTable" > -->
-<!-- 		<table id="liftDetails"> -->
-<!-- 			<tr> -->
-<!-- 				<td colspan="2"> -->
-<%-- 					<c:forEach items="${route}" var="i" > --%>
-<%-- 						${i}  --%>
-<%-- 						<c:if test="${i!=lift.get(0).dropOffPoint.city}"> --%>
-<!-- 							- -->
-<%-- 						</c:if> --%>
-<%-- 					</c:forEach> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Partenza</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${lift.get(0).pickUpPoint.region!=null}"> --%>
-<%-- 							${lift.get(0).pickUpPoint.region}					 --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${lift.get(0).pickUpPoint.city!=null}"> --%>
-<%-- 							${lift.get(0).pickUpPoint.city}				 --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${lift.get(0).pickUpPoint.province!=null}"> --%>
-<%-- 							${lift.get(0).pickUpPoint.province}				 --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
-<%-- 					<c:choose> --%>
-<%-- 						<c:when test="${lift.get(0).pickUpPoint.street!=null}"> --%>
-<%-- 							${lift.get(0).pickUpPoint.street}				 --%>
-<%-- 						</c:when> --%>
-<%-- 					</c:choose> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Arrivo</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${lift.get(0).dropOffPoint.region!=null}"> --%>
-<%-- 						${lift.get(0).dropOffPoint.region}					 --%>
-<%-- 					</c:when> --%>
-<%-- 				</c:choose> --%>
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${lift.get(0).dropOffPoint.city!=null}"> --%>
-<%-- 						${lift.get(0).dropOffPoint.city}				 --%>
-<%-- 					</c:when> --%>
-<%-- 				</c:choose> --%>
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${lift.get(0).dropOffPoint.province!=null}"> --%>
-<%-- 						${lift.get(0).dropOffPoint.province}				 --%>
-<%-- 					</c:when> --%>
-<%-- 				</c:choose> --%>
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${lift.get(0).dropOffPoint.street!=null}"> --%>
-<%-- 						${lift.get(0).dropOffPoint.street}				 --%>
-<%-- 					</c:when> --%>
-<%-- 				</c:choose> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Data</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 					${lift.get(1)} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Ora</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 					${lift.get(2)}:${lift.get(3)} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Flessibilità oraria</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 					${lift.get(4)} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Deviazioni</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 					${lift.get(5)} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Viaggio Rosa</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 					${lift.get(6)} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Tipo di strada</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 					${lift.get(7)} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Dimensione del bagaglio</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 					${lift.get(8)} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td class="labelTable"> -->
-<!-- 					<h5>Auto</h5> -->
-<!-- 				</td> -->
-<!-- 				<td> -->
-<%-- 					${$userOffering.driverInfo.car.brand} --%>
-<%-- 					 ${$userOffering.driverInfo.car.model} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 	</table> -->
-<!-- 	</div> -->
-<!-- 	</div> -->
-	<div class="grid_4 prefix_1">
-	<div class="orangeTable" >
-	<table>
-			<tr>
-				<td colspan="2">
-					Dettagli del passaggio
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<h5>Prezzo</h5>
-				</td>
-				<td>
-					<b>${lift.get(0).cost}  &#8364; a persona</b>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<h5>Posti disponibili</h5>
-				</td>
-				<td>
-					<b>${lift.get(0).nSeat}</b>
-				</td>
-			</tr>
-			<tr>
-				<td style="text-align: center;" colspan="2" >
-					<a href="ContactUser?seat=${lift.get(0).nSeat}&lift=${lift.get(0).id}" class="button magenta"> <span class="phone"></span> Contatta il conducente </a>
-				</td>
-		</tr>
-	</table>
+		<div class="container_12">
+			<div class="grid_6">
+				<c:choose>
+					<c:when test="${noFeed==true}">
+						<!-- 						<META http-equiv="refresh" content="5; URL=UserInsertFeedback"> -->
+						<h3 class="center">Non hai ancora lasciato alcun feedback!</h3>
+						<!-- 						<h4 class="center">Redirect in 5 secondi</h4> -->
+					</c:when>
+					<c:otherwise>
+						<div class="grid_12">
+							<div class="greenTable">
+								<table id="givenFeedback">
+									<tr>
+										<td colspan="3">Feedback lasciati</td>
+									</tr>
+									<tr>
+										<td style="text-align: center;"> <h4>Utente</h4> </td>
+										<td style="text-align: center;"> <h4>Valutazione data</h4> </td>
+										<td style="text-align: center;"> <h4>Commento</h4> </td>
+									</tr>
+
+									<c:forEach var="i" begin="0" end="${list.size()-1}" step="1">
+										<tr>
+											<td>
+												<%-- 							 ${receivers.get(i).computeNickname()} - <c:if test="${receivers.get(i).getGender()=='M'}"> Uomo</c:if> <c:if test="${receivers.get(i)=='F'}"> Donna</c:if> --%>
+												<br> <%-- 							<c:choose> --%> <%-- 								<c:when test="${receivers.get(i).profilePhoto!=null}"> --%>
+												<%-- 									<img src=" avatars/${receivers.get(i).getId()}.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>  --%>
+												<%-- 								</c:when> --%> <%-- 								<c:otherwise> --%>
+												<%-- 									<img src=" avatars/${receivers.get(i).getId()}.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>  --%>
+												<%-- 								</c:otherwise> --%> <%-- 								<img height="120px" src="images/default_user.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>   --%>
+												<%-- 							</c:choose> --%> Valutazione media:
+												${avg.get(i)} <c:if test="${avg.get(i)==0}">
+													<!-- 							<td> -->
+													<br>
+													<img height="50px" src="images/feedback/0t.png"
+														style="padding: 10px 10px 10px 80;" />
+													<!-- 							</td> -->
+												</c:if> <c:if test="${avg.get(i)>0} && ${avg.get(i)<=0.5}">
+													<!-- 							<td> -->
+													<br>
+													<img height="50px" src="images/feedback/0_5t.png"
+														style="padding: 10px 10px 10px 80;" />
+													<!-- 							</td> -->
+												</c:if> <c:if test="${avg.get(i)>0.5} && ${avg.get(i)<=1}">
+													<!-- 							<td> -->
+													<br>
+													<img height="50px" src="images/feedback/1t.png"
+														style="padding: 10px 10px 10px 80;" />
+													<!-- 							</td> -->
+												</c:if> <c:if test="${avg.get(i)>1} && ${avg.get(i)<=1.5}">
+													<!-- 							<td> -->
+													<br>
+													<img height="50px" src="images/feedback/1_5t.png"
+														style="padding: 10px 10px 10px 80;" />
+													<!-- 							</td> -->
+												</c:if> <c:if test="${avg.get(i)>1.5} && ${avg.get(i)<=2}">
+													<!-- 							<td> -->
+													<br>
+													<img height="50px" src="images/feedback/2t.png"
+														style="padding: 10px 10px 10px 80;" />
+													<!-- 							</td> -->
+												</c:if> <c:if test="${avg.get(i)>2} && ${avg.get(i)<=2.5}">
+													<!-- 							<td> -->
+													<br>
+													<img height="50px" src="images/feedback/2_5t.png"
+														style="padding: 10px 10px 10px 80;" />
+													<!-- 							</td> -->
+												</c:if> <c:if test="${avg.get(i)>2.5} && ${avg.get(i)<=3}">
+													<!-- 							<td> -->
+													<br>
+													<img height="50px" src="images/feedback/3t.png"
+														style="padding: 10px 10px 10px 80;" />
+													<!-- 							</td> -->
+												</c:if> <c:if test="${avg.get(i)>3} && ${avg.get(i)<=3.5}">
+													<!-- 							<td> -->
+													<br>
+													<img height="50px" src="images/feedback/3_5t.png"
+														style="padding: 10px 10px 10px 80;" />
+													<!-- 							</td> -->
+												</c:if> <c:if test="${avg.get(i)>3.5} && ${avg.get(i)<=4}">
+													<!-- 							<td> -->
+													<br>
+													<img height="50px" src="images/feedback/4t.png"
+														style="padding: 10px 10px 10px 80;" />
+													<!-- 							</td> -->
+												</c:if> 
+
+											</td>
+											<td style="text-align: center;">Rating:
+												<c:if test="${list.get(i).getRating()!=null}">
+														${list.get(i).getRating()}
+													<c:if
+														test="${list.get(i).getRating()==0}">
+														<!-- 							<td> --> - Pessimo :( 
+														<br>
+														<img height="50px" src="images/feedback/0t.png" />
+														<!-- 							</td> -->
+													</c:if> 
+													<c:if test="${list.get(i).getRating()==1}">  
+														<!-- 							<td> --> - Passabile :|
+														<br>
+														<img height="50px" src="images/feedback/1t.png" />
+														<!-- 							</td> -->
+													</c:if> 
+													<c:if test="${list.get(i).getRating()==2}"> 
+														<!-- 							<td> --> - Buono :)
+														<br>
+														<img height="50px" src="images/feedback/2t.png" />
+														<!-- 							</td> -->
+													</c:if> 
+													<c:if test="${list.get(i).getRating()==3}">
+														<!-- 							<td> --> - Ottimo ;)
+														<br>
+														<img height="50px" src="images/feedback/3t.png" />
+														<!-- 							</td> -->
+													</c:if> <c:if test="${list.get(i).getRating()==4}"> 
+														<!-- 							<td> --> - Grande! ;D
+														<br>
+														<img height="50px" src="images/feedback/4t.png" />
+														<!-- 							</td> -->
+													</c:if> 
+												</c:if>
+											</td>
+											<td>
+											<c:choose>
+											<c:when test="${list.get(i).getText()!=null}">
+												${list.get(i).getText()}
+											</c:when>
+											<c:otherwise> Nessun commento lasciato </c:otherwise>
+											</c:choose>
+											</td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+
 	</div>
 
-<div class="blueTable" >
-	<table>
-			<tr>
-				<td colspan="2">
-					Conducente
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<c:choose>
-						<c:when test="${userOffering.profilePhoto!=null}">
-							<img src="${userOffering.profilePhoto}" />
-						</c:when>
-						<c:otherwise>
-		        			<img height="120px" src="images/default_user.jpg" />
-		        		</c:otherwise>
-					</c:choose>
-				</td>
-				<td>
-					<p><b>${userNickName}</b></p>
-					<p>${userAge} anni</p>
-					<div>
-					<c:choose>
-						<c:when test="${userOffering.personalPreference.smoking==true}">
-							<img src="images/profile/smoking.png" >
-						</c:when>
-						<c:when test="${userOffering.personalPreference.smoking==false}">
-							<img src="images/profile/NoSmoking.png" >
-						</c:when>
-					</c:choose>
-					<c:choose>
-						<c:when test="${userOffering.personalPreference.chatnessLevel==1}">
-							<img src="images/profile/chatness1.png" >
-						</c:when>
-						<c:when test="${userOffering.personalPreference.chatnessLevel==2}">
-							<img src="images/profile/chatness2.png" >
-						</c:when>
-						<c:when test="${userOffering.personalPreference.chatnessLevel==3}">
-							<img src="images/profile/chatness3.png" >
-						</c:when>
-					</c:choose>
-					</div>
-					<c:choose>
-						<c:when test="${userOffering.personalPreference.music==true}">
-							<img src="images/profile/music.png" >
-						</c:when>
-						<c:when test="${userOffering.personalPreference.music==false}">
-							<img src="images/profile/NoMusic.png" >
-						</c:when>
-					</c:choose>
-					<div>
-					<c:choose>
-						<c:when test="${userOffering.personalPreference.petsOnBoard==true}">
-							<img src="images/profile/pets.png" >
-						</c:when>
-						<c:when test="${userOffering.personalPreference.petsOnBoard==false}">
-							<img src="images/profile/NoPets.png" >
-						</c:when>
-						</c:choose>
-					<c:choose>
-						<c:when test="${userOffering.personalPreference.childrensOnBoard==true}">
-							<img src="images/profile/children.png" >
-						</c:when>
-						<c:when test="${userOffering.personalPreference.childrensOnBoard==false}">
-							<img src="images/profile/NoChildren.png" >
-						</c:when>
-					</c:choose>
-					</div>
-					
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" style="text-align: center; vertical-align: middle; " >
-					<h4>Attività</h4>
-				</td>
-			</tr>
-			<%-- <tr>
-				<td>
-					Passaggi Offerti
-				</td>
-				<td>
-					${userOffering.userActivity.ridesOffered}
-				</td>
-			</tr> --%>
-			<c:if test="${memberSince!=null}">
-				<tr>
-					<td>
-						<h5>Utente dal</h5>
-					</td>
-					<td>
-						${memberSince}
-					</td>
-				</tr>
-			</c:if>
-			<c:if test="${lastOnline!=null}">
-				<tr>
-					<td>
-						<h5>Online il </h5>
-					</td>
-					<td>
-						${lastOnline}
-					</td>
-				</tr>
-			</c:if>
-			<%-- <tr>
-				<td>
-					Percentuale di risposta
-				</td>
-				<td>
-					${userOffering.userActivity.answersPercentage}
-				</td>
-			</tr> --%>
-	</table>
-</div>
-</div>
-</div>
-</div>
-<%@include file="footer.jsp"%>
+
+	<footer>
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="copy">
+					Give me a lift(C) 2045 | <a href="#">Politica Privacy</a> | Design
+					by: <a href="http://www.templatemonster.com/">TemplateMonster.com</a>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

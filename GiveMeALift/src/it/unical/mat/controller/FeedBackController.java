@@ -65,7 +65,7 @@ public class FeedBackController {
 		return "error";
 	}
 
-	@RequestMapping(value="/UserInsertFeedback",method=RequestMethod.POST)
+	@RequestMapping(value="/UserInsertFeedback")//,method=RequestMethod.POST
 	public String userInsertFeedback(
 			@RequestParam("telephone") String telephone, 
 			Model model, HttpSession session){
@@ -114,12 +114,41 @@ public class FeedBackController {
 		return "showMsgUserNotFound";
 	}
 	
+	@RequestMapping(value="/AlertUser",method=RequestMethod.POST)
+	public String alertUser(Model model, HttpSession session){
+		RegisteredUser u=(RegisteredUser) session.getAttribute("user");
+		if(u!=null){
+			
+			RegisteredUser r =new RegisteredUser();
+			
+			Integer count = 0 ;
+			if(r.getCountAlert()==null)
+				count = 1;
+			else
+				count++;
+			
+			r.setCountAlert(count);
+			
+			RegisteredUserMapper rm = new RegisteredUserMapper();
+			
+			if(rm.update(r,u.getId()))
+				model.addAttribute("alerted", true);
+			else
+				model.addAttribute("alerted", false);
+			
+			return "showAlertSignalation";
+		
+		}
+		
+		return "error";
+	}
+	
 	
 	@RequestMapping(value="/SubmitFeedback",method=RequestMethod.POST)
 	public String submitFeedback(
 			@RequestParam("idReceiver") String idReceiver, 
 			@RequestParam(value="rating", required=false) String rating,
-			@RequestParam(value="feed", required=false) String role,
+//			@RequestParam(value="feed", required=false) String role,
 			@RequestParam(value="feedComment", required=false) String text,
 			Model model, HttpSession session){
 		
@@ -135,34 +164,44 @@ public class FeedBackController {
 			
 			
 			Feedback f = new Feedback();
-//			f.setNumAlertSegnalation(0);	
-//			f.setReceiver(newRE);
 			f.setFeedbackReceiver(receiver);
 			f.setFeedbackSender(sender);
-			f.setRating(Integer.parseInt(rating));
+			//f.setRating(Integer.parseInt(rating));
+			
+			Integer rate = null;
+			if(rating==" Pessimo :( ")
+				rate = 0;
+			if(rating==" Passabile :| ")
+				rate = 1;
+			if(rating==" Buono :) ")
+				rate = 2;
+			if(rating==" Ottimo ;) ")
+				rate = 3;
+			if(rating==" Grande! ;D ")
+				rate = 4;
+			
+			f.setRating(rate);
+				
+			System.out.println("rating: "+ f.getRating());
+			System.out.println("text: "+text);
 		
 			if(f.getText() == null || f.getText()=="")	
 				f.setText(text);
 			
-			System.out.println("ruolo:"+role);
-//			if(role == "P")
-//				newRE.setOnlyPassenger(true);
-//			else
-//				newRE.setOnlyPassenger(false);
-			
+//			System.out.println("ruolo:"+role);
 			
 			FeedbackMapper fm = new FeedbackMapper();
 //			List<Feedback> l = fm.findReceivedFeedback(newRE.getId());
 			
 			if(fm.insert(f)>0){
+			
 				System.out.println("Rat:"+f.getRating());
-				
-//			if(rm.update(receiver, receiver.getId())){
-				model.addAttribute("receiver", receiver); //NON USARE LA SESSION QUI AGGIUNGERE I PARAMETRI!
+			
+				model.addAttribute("receiver", receiver); 
 				model.addAttribute("memberSince",ParseDate.getItalianFormat(receiver.getUserActivity().getMemberSince().toString()));
 				model.addAttribute("lastOnline",ParseDate.getItalianFormat(receiver.getUserActivity().getLastOnline().toString()));
-			//	model.addAttribute("updated", true);
-				return "showFoundUserProfile";
+			
+				return "showReleasedFeedback";
 			}
 			
 			
@@ -204,11 +243,10 @@ public class FeedBackController {
 					ratings.add(f.getRating());
 					
 				}
-				// prendere direttamente i feedback per scorrerli insieme
+				
 				model.addAttribute("senders", senders);
 				model.addAttribute("ratings", ratings);
-				
-	//			model.addAttribute("feedback", l);
+				model.addAttribute("list", l);
 			}
 			else
 				noFeed = true;
@@ -237,7 +275,7 @@ public class FeedBackController {
 		if(u!=null){			
 			FeedbackMapper fm = new FeedbackMapper();			
 			List<Feedback> l = fm.findGivenFeedback(u);
-		
+					
 			System.out.println("size"+l.size());
 			
 			if(l.size()==0){
@@ -248,16 +286,25 @@ public class FeedBackController {
 				
 				model.addAttribute("noFeed", false);
 				List<RegisteredUser> receivers = new ArrayList<RegisteredUser>();
-				List<Integer> ratings = new ArrayList<Integer>();
+				List<Integer> ratings = new ArrayList<Integer>(); 
 				
 				for (Feedback f : l) {
 					receivers.add((RegisteredUser)f.getFeedbackReceiver());
 					ratings.add(f.getRating());
 				}
-				model.addAttribute("feedback", l);
-				model.addAttribute("senders", receivers);
+				model.addAttribute("list", l);
+				model.addAttribute("receivers", receivers);
 				model.addAttribute("ratings", ratings);		
 				
+				Double average = 0.0;
+				List<Double> avgs = new ArrayList<Double>();
+				
+				for (RegisteredUser ru : receivers) {
+					average = fm.computeAvgRating(ru.getId());
+					avgs.add(average);
+					
+				}
+				model.addAttribute("avg", avgs);
 				return "showReleasedFeedback";
 				
 			}

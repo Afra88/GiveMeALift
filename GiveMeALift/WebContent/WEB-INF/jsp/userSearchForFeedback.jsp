@@ -105,7 +105,7 @@
 			<div class="blueTable">
 			<table>
 				<tr>
-					<td><a href="ReleasedFeedback">Feedback lasciati</a></td>
+					<td> <a href="ReleasedFeedback">Feedback lasciati</a></td>
 				</tr>
 			</table>
 		</div>

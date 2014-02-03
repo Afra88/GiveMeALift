@@ -71,14 +71,14 @@
 					</tr>
 					<tr>
 						<td>Ultimo accesso</td>
-							<c:if test="${receiver.getUserActivity().getLastOnline()!=null}">
-	 							<td>${receiver.getUserActivity().getLastOnline()}</td> 
+							<c:if test="${lastOnline!=null}">
+	 							<td>${lastOnline}</td> 
 							</c:if>
 					</tr>
 					<tr>
 						<td>Utente dal</td>
-							<c:if test="${receiver.getUserActivity().getMemberSince()!=null}">
-								<td>${receiver.getUserActivity().getMemberSince()}</td>
+							<c:if test="${memberSince!=null}">
+								<td>${memberSince}</td>
 							</c:if>
 					</tr>
 				</table>
@@ -264,72 +264,62 @@
 				
 						</td>
 						
-						<td>Valutazione media: ${avg} 	
+						<td style="text-align: center;">Valutazione media: ${avg} 	
 							<c:if test="${avg==0}">
 <!-- 							<td> -->
-								<br><img height="50px" src="images/feedback/0t.png" style="padding:10px 10px 10px 80;"/>
+								<br><img height="50px" src="images/feedback/0t.png"/>
 <!-- 							</td> -->
 							</c:if>
 							
 							<c:if test="${avg>0} && ${avg<=0.5}">
 <!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/0_5t.png" style="padding:10px 10px 10px 80;"/>
+								<br><img height="120px" src="images/feedback/0_5t.png"/>
 <!-- 							</td> -->
 							</c:if>
 							
-							<c:if test="{$avg>0.5 && $avg<=1}">
+							<c:if test="${avg>0.5} && ${avg<=1}">
 <!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/1t.png" style="padding:10px 10px 10px 80;"/>
+								<br><img height="50px" src="images/feedback/1t.png" />
 <!-- 							</td> -->
 							</c:if>
 							
-							<c:if test="{$avg>1 && $avg<=1.5}">
+							<c:if test="${avg>1} && ${avg<=1.5}">
 <!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/1_5t.png" style="padding:10px 10px 10px 80;"/>
+								<br><img height="50px" src="images/feedback/1_5t.png" />
 <!-- 							</td> -->
 							</c:if>
 							
-							<c:if test="{$avg>1.5 && $avg<=2}">
+							<c:if test="${avg>1.5} && ${avg<=2}">
 <!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/2t.png" style="padding:10px 10px 10px 80;"/>
+								<br><img height="50px" src="images/feedback/2t.png" />
 <!-- 							</td> -->
 							</c:if>
 							
-							<c:if test="{$avg>2 && $avg<=2.5}">
+							<c:if test="${avg>2} && ${avg<=2.5}">
 <!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/2_5t.png" style="padding:10px 10px 10px 80;"/>
+								<br><img height="50px" src="images/feedback/2_5t.png" />
 <!-- 							</td> -->
 							</c:if>
 							
-							<c:if test="{$avg>2.5 && $avg<=3}">
+							<c:if test="${avg>2.5} && ${avg<=3}">
 <!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/3t.png" style="padding:10px 10px 10px 80;"/>
+								<br><img height="50px" src="images/feedback/3t.png" />
 <!-- 							</td> -->
 							</c:if>
 							
-							<c:if test="{$avg>3 && $avg<=3.5}">
+							<c:if test="${avg>3} && ${avg<=3.5}">
 <!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/3_5t.png" style="padding:10px 10px 10px 80;"/>
+								<br><img height="50px" src="images/feedback/3_5t.png" />
 <!-- 							</td> -->
 							</c:if>
 							
-							<c:if test="{$avg>3.5 && $avg<=4}">
+							<c:if test="${avg>3.5} && ${avg<=4}">
 <!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/4t.png" style="padding:10px 10px 10px 80;"/>
+								<br><img height="50px" src="images/feedback/4t.png" />
 <!-- 							</td> -->
 							</c:if>
-							
-							<c:if test="{$avg>4 && $avg<=4.5}">
-<!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/4_5t.png" style="padding:10px 10px 10px 80;"/>
-<!-- 							</td> -->
-							</c:if>
-							
-							<c:if test="{$avg>4.5 && $avg<=5}">
-<!-- 							<td> -->
-								<br><img height="120px" src="images/feedback/5t.png" style="padding:10px 10px 10px 80;"/>
-<!-- 							</td> -->
-							</c:if>
+						
+						</td>
 					</tr>
 					<tr>
 						<td>Perch&egrave; viaggiare con me?</td>
@@ -382,10 +372,10 @@
 
 <div>
 		<c:choose>
-			<c:when test="${released == false}">
+			<c:when test="${released == true}">
 
 				<form action="SubmitFeedback" method="post" id="form">
-					<div class="grid_8" style="margin: 0 auto; ">
+					<div class="grid_7" style="margin: 0 auto; ">
 <input type="hidden" id="receiver" name="idReceiver" value="${receiver.getId()}" >
 						<div class="greenTable">
 							<table>
@@ -393,18 +383,20 @@
 									<td colspan="2">Lascia un feedback!</td>
 								</tr>
 								<tr>
-									<td >
+									<td style="text-align:center;">
 									<select id="rating" name="rating">
-											<option value="1"> Pessimo :( </option>
-											<option value="2"> Passabile :| </option>
-											<option value="3"> Buono :) </option>
-											<option value="4"> Ottimo ;) </option>
-											<option value="5"> Grande! ;D </option>
+											<option> Pessimo :( </option>
+											<option> Passabile :| </option>
+											<option> Buono :) </option>
+											<option> Ottimo ;) </option>
+											<option> Grande! ;D </option>
 									</select>
-									<td>
-										<input type="radio" name="feed" value="P"> Passeggero
-										<input type="radio" name="feed" value="C"> Conducente
-									</td> 
+									</td>
+									<td style="text-align:center;" >
+<!-- 									<td> -->
+<!-- 										<input type="radio" name="feed" value="P"> Passeggero -->
+<!-- 										<input type="radio" name="feed" value="C"> Conducente -->
+<!-- 									</td>  -->
 									
 <!-- 									<img  src="images/feedback/0t.png"> -->
 <!-- 									<img  src="images/feedback/1t.png"> -->
@@ -414,18 +406,21 @@
 <!-- 									<img  src="images/feedback/5t.png"> -->
 									
 									
+									<a href="AlertUser" class="button red"><span class="flag"></span>Segnala</a>
+<!-- 									<input class="button red" type="submit" value="Segnala"></input> -->
 								</tr>
 								<tr>
 									
 								
 									<td colspan="2">Lascia un commento! Es. Passeggero/Conducente
 										piacevole e prudente,... <br><br>
-										<textarea style="margin: 0 auto;"name="feedComment"cols="80" rows="6" maxlength="500"></textarea>
+										<textarea style="margin: 0 auto;"name="feedComment"cols="75" rows="6" maxlength="500"></textarea>
 									</tr>
 								<tr>
 									<td colspan="2">
 									<div align="center">
 									<input type="submit" class="button cyan" value="Vota">
+<!-- 									<a class="button cyan" ><span class="star"></span>Vota</a> -->
 									</div>
 									
 									</td> 
