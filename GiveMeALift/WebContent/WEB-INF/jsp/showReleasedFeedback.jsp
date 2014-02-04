@@ -79,7 +79,7 @@
 												<%-- 									<img src=" avatars/${receivers.get(i).getId()}.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>  --%>
 												<%-- 								</c:when> --%> <%-- 								<c:otherwise> --%>
 												<%-- 									<img src=" avatars/${receivers.get(i).getId()}.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>  --%>
-												<%-- 								</c:otherwise> --%> <%-- 								<img height="120px" src="images/default_user.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>   --%>
+												<%-- 								</c:otherwise> --%> <%-- 								<img height="120px" src="avatars/default_user.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>   --%>
 												<%-- 							</c:choose> --%> Valutazione media:
 												${avg.get(i)} <c:if test="${avg.get(i)==0}">
 													<!-- 							<td> -->

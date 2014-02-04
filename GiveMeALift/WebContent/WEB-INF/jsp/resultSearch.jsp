@@ -92,7 +92,7 @@
 	        			<img height="120px" src="${user.profilePhoto}" class="img_inner fleft " /> <% //TODO %>
 	         		</c:when>
 	        		<c:otherwise>
-	        			<img height="120px" src="images/default_user.jpg" class="img_inner fleft " />
+	        			<img height="120px" src="avatars/default_user.jpg" class="img_inner fleft " />
 	        		</c:otherwise>
 	        	</c:choose> 
         	<div class="extra_wrapper">

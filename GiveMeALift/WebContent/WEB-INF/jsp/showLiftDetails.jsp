@@ -194,7 +194,7 @@
 							<img src="${userOffering.profilePhoto}" />
 						</c:when>
 						<c:otherwise>
-		        			<img height="120px" src="images/default_user.jpg" />
+		        			<img height="120px" src="avatars/default_user.jpg" />
 		        		</c:otherwise>
 					</c:choose>
 				</td>

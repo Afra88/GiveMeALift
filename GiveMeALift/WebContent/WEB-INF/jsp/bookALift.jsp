@@ -65,7 +65,7 @@
 		         				<img height="70px" alt="${user.computeNickName()}" src="${user.profilePhoto}">
 						</c:when>
 						<c:when test="${user.profilePhoto==null}">
-		         				<img height="70px" src="images/default_user.jpg" />
+		         				<img height="70px" src="avatars/default_user.jpg" />
 						</c:when>
        				</c:choose>
 				</form>

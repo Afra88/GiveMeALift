@@ -85,10 +85,7 @@ public abstract class AbstractMapper {
 						String objectType=parameters.get(key).getClass().getSimpleName();
 						String methodeToInvoke="set"+objectType;
 						Method m=null;
-						System.out.println(parameters.get(key).getClass().getSuperclass());
-						System.out.println(parameters.get(key).getClass());
-						if(parameters.get(key).getClass().getSuperclass().getSimpleName().equals("User") || parameters.get(key).getClass().getSuperclass().getSimpleName().equals("DomainObject")){
-							System.out.println("ssssssss");
+						if(parameters.get(key).getClass().getSuperclass().getSimpleName().equals("User") || parameters.get(key).getClass().getSuperclass().getSimpleName().equals("DomainObject")){					
 							methodeToInvoke="setEntity";
 							m=query.getClass().getMethod(methodeToInvoke, key.getClass(), Object.class);
 						}

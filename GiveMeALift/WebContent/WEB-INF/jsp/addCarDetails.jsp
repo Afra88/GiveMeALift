@@ -121,12 +121,12 @@
 
 					<td>
 						<c:choose>
-							<c:when test="${user.getCar().getPhotoCar()!=null}">
-								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" height="120px" onerror="this.style.visibility = 'hidden'"> 
+							<c:when test="${user.car.carPhoto!=null}">
+								<img src="${user.car.carPhoto}" height="120px" onerror="this.style.visibility = 'hidden'"> 
 								<input name="files[0]" type="file" />
 							</c:when>
 							<c:otherwise>
-								<img height="120px" src="images/default_car.png" />
+								<img height="120px" src="avatars/default_car.jpg" />
 								<input name="files[0]" type="file" />
 							</c:otherwise>
 						</c:choose>
@@ -134,7 +134,7 @@
 
 
 <!-- 					<td> -->
-<%-- 					<img src="/GiveMeALift/avatars/${user.id}_car.jpg"   width="150" onerror="this.style.visibility = 'hidden'"> --%>
+<%-- 					<img src="${user.car.carPhoto}"   width="150" onerror="this.style.visibility = 'hidden'"> --%>
 <!-- 					<form name="myWebForm" action="/GiveMeALift/fileupload" method="post" enctype="multipart/form-data">  -->
 <!-- 							<form name="myWebForm" method="post" enctype="multipart/form-data">  --> 
 <!-- 					<input type="file" name="uploadFile"/><br> -->
