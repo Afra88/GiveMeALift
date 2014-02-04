@@ -52,34 +52,7 @@
 	    </script>
 </head>
 <body onload="initialize()">
-	<header>
-		<div class="container_12">
-			<div class="grid_12">
-				<c:choose>
-					<c:when test="${user!=null}">
-						<%@include file="signedUpForm.jsp"%>
-					</c:when>
-					<c:otherwise>
-						<%@include file="logInForm.jsp"%>
-					</c:otherwise>
-				</c:choose>
-				<h1>
-					<a href="/GiveMeALift"><img src="images/logo.png" alt=""></a>
-				</h1>
-				<c:choose>
-					<c:when test="${user!=null}">
-						<%@include file="userMenu.jsp"%>
-					</c:when>
-					<c:otherwise>
-						<%@include file="classicMenu.jsp"%>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-	</header>
-
-
-
+	<%@include file="chooseMenu.jsp"%>
 	<div class="container_12">
 	<br><br>
 		<div class="grid_4">

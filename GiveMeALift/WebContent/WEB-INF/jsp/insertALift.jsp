@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/pagination.css" type="text/css" />
     <link rel="stylesheet" href="css/blueTable.css">
     <link rel="stylesheet" href="css/orangeTable.css">
+    <link rel="stylesheet" href="css/pictogram-button.css">
     
     <link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
@@ -202,29 +203,7 @@
 	
 </head>
 <body onload="initialize()" >
-<header>
-  <div class="container_12">
-    <div class="grid_12">
-	    <c:choose>
-    		<c:when test="${user!=null}">
-    			<%@include file="signedUpForm.jsp"%>
-    		</c:when>
-    		<c:otherwise>
-		    	<%@include file="logInForm.jsp"%>
-    		</c:otherwise>
-    	</c:choose>
-          <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>   
-          <c:choose>
-          <c:when test="${user!=null}">
-          	<%@include file="userMenu.jsp" %>
-          </c:when>
-          <c:otherwise>
-         	 <%@include file="classicMenu.jsp" %>
-          </c:otherwise>
-          </c:choose>    
-  </div>
-  </div>
-</header>
+<%@include file="chooseMenu.jsp"%>
 
 <div class="container_12" id="contentOpacity" >
 	<div class="grid_12">      
@@ -336,11 +315,11 @@
 					</select>
 				</td>
 			</tr>
-			<c:if test="${user.getCar().getCarPhoto()!=null}">
+			<%-- <c:if test="${user.getCar().getCarPhoto()!=null}">
 				<tr>
 					<td><h2> Automobile </h2></td> 
 					<td>
-						<img src="/GiveMeALift/avatars/default_car.jpg" height="120px" onerror="this.style.visibility = 'hidden'">
+						<img src="avatars/default_car.jpg" height="120px" onerror="this.style.visibility = 'hidden'">
 						${user.getCar().getCarPhoto().getBrand()} ${user.getCar().getCarPhoto().getModel()} 
 						<c:if test="${user.getCar().getCarPhoto().getConfort()==1}">
 							<img height="20px" src="images/carConfort/base.png" />
@@ -359,7 +338,7 @@
 						</c:if>
 					</td>
 				</tr>
-			</c:if>
+			</c:if> --%>
 			<tr>
 				<td><h2> Partirò: </h2></td>
 				<td>
@@ -433,11 +412,11 @@
 			</tr>
 			<tr>
 				<td>
-					<input type="button" id="goBack" value="Indietro" onClick="history.back()"/>
+					<input type="button" class="button cyan" id="goBack" value="Indietro" onClick="history.back()"/>
 				</td>
 				<td>
-					<!-- <input type="button" value="Pubblica" id="submit"  /> -->
-						<input type="submit" value="Pubblica" id="submit"  />
+					<!-- <input type="button"  value="Pubblica" id="submit"  /> -->
+						<input type="submit" class="button cyan" value="Pubblica" id="submit"  />
 				</td>
 			</tr>
 		</table>

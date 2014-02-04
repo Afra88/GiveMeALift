@@ -11,8 +11,6 @@ import javax.persistence.Table;
 @Table(name="PERSONAL_PREFERENCE")
 public class PersonalPreference extends DomainObject {
 
-//	@Column(name="CHILDRENS_ON_BOARD")
-//	private Boolean childrensOnBoard;
 	@Column(name="PETS_ON_BOARD")
 	private Boolean petsOnBoard;
 	@Column(name="SMOKING")
@@ -23,13 +21,6 @@ public class PersonalPreference extends DomainObject {
 	private Integer chatnessLevel;
 	
 	public PersonalPreference(){}
-	
-//	public PersonalPreference(){
-//		this.petsOnBoard = false;
-//		this.chatnessLevel = 1;
-//		this.music = false;
-//		this.smoking = false;
-//	}
 	
 	
 	@Override
@@ -43,8 +34,6 @@ public class PersonalPreference extends DomainObject {
 	@Override
 	public void copy(DomainObject object2) {
 		PersonalPreference pp=(PersonalPreference)object2;
-//		if(pp.childrensOnBoard!=null)
-//			this.childrensOnBoard=pp.childrensOnBoard;
 		if(pp.music!=null)
 			this.music=pp.music;
 		if(pp.music!=null)
@@ -55,19 +44,7 @@ public class PersonalPreference extends DomainObject {
 			this.smoking=pp.smoking;
 		if(pp.chatnessLevel!=null)
 			this.chatnessLevel=pp.chatnessLevel;
-		
-
 	}
-
-
-//	public Boolean getChildrensOnBoard() {
-//		return childrensOnBoard;
-//	}
-//
-//
-//	public void setChildrensOnBoard(Boolean childrensOnBoard) {
-//		this.childrensOnBoard = childrensOnBoard;
-//	}
 
 
 	public Boolean getPetsOnBoard() {
@@ -115,9 +92,6 @@ public class PersonalPreference extends DomainObject {
 		int result = 1;
 		result = prime * result
 				+ ((chatnessLevel == null) ? 0 : chatnessLevel.hashCode());
-//		result = prime
-//				* result
-//				+ ((childrensOnBoard == null) ? 0 : childrensOnBoard.hashCode());
 		result = prime * result + ((music == null) ? 0 : music.hashCode());
 		result = prime * result
 				+ ((petsOnBoard == null) ? 0 : petsOnBoard.hashCode());
@@ -140,11 +114,6 @@ public class PersonalPreference extends DomainObject {
 				return false;
 		} else if (!chatnessLevel.equals(other.chatnessLevel))
 			return false;
-//		if (childrensOnBoard == null) {
-//			if (other.childrensOnBoard != null)
-//				return false;
-//		} else if (!childrensOnBoard.equals(other.childrensOnBoard))
-//			return false;
 		if (music == null) {
 			if (other.music != null)
 				return false;

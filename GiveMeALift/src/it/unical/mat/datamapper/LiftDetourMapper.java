@@ -2,232 +2,124 @@ package it.unical.mat.datamapper;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import it.unical.mat.domain.DomainObject;
-import it.unical.mat.domain.Lift;
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import it.unical.mat.domain.LiftDetour;
+import it.unical.mat.util.HibernateUtil;
 
 public class LiftDetourMapper extends AbstractMapper{
-
-	public List<LiftDetour> findDetourFromPickUpAndDropOffPoints(String pPoint, String dPoint){
-		
-		List<LiftDetour> res = new LinkedList<LiftDetour>();
-		
-		String findStatement = "from LiftDetour"
-								+ " where "
-								+ "(difference(pickUpPoint.city,:par1) >=1 "
-								+ "or difference(pickUpPoint.street,:par1) >=1 "
-								+ "or difference(pickUpPoint.state, :par1) >=1 "
-								+ "or difference(pickUpPoint.province, :par1) >=1 "
-								+ "or difference(pickUpPoint.region, :par1) >=1 )"
-								+ "and (difference(dropOffPoint.city, :par2)>=1 "
-								+ "or difference(dropOffPoint.street, :par2) >=1 "
-								+ "or difference(dropOffPoint.state, :par2) >=1 "
-								+ "or difference(dropOffPoint.province, :par2) >=1 "
-								+ "or difference(dropOffPoint.region, :par2)>=1 )";
-		
-		Map<String, Object> parameters=new HashMap<String, Object>();
-		parameters.put("par1", pPoint);
-		parameters.put("par2", dPoint);
-		
-		Collection<DomainObject> objects=find(findStatement, parameters,false);
-		for (DomainObject object : objects) {
-			res.add((LiftDetour) object);
-		}		
-
-		return res;	
-	}
 	
-//	public List<Lift> findDetourByFromAndToAndCost(String cityFrom, 
-//			String cityTo, String cost){
-//		List<Lift> result=null;
-//		Map<String, Object> parameters=new HashMap<String, Object>();
-//		String findStatement= "select d.* from Lift as l, Lift_Detour as d, LIFT_DETOURS_JOIN as j, Lift_point p1, lift_point p2 "
-//							+ "where "
-//							+ "l.lift_id=j.lift_id "
-//							+ "and j.DETOUR_ID=d.LIFT_DETOUR_ID "
-//							+ "and p1.lift_point_id=d.pick_up and p2.lift_point_id=drop_off "
-//							+ "and( "
-//							+ "p1.city like :par1 "
-//							+ "or p1.street like :par1 "
-//							+ "or p1.state like :par1 "
-//							+ "or p1.province like :par1 "
-//							+ "or p1.region like :par1) "
-//							+ "and (p2.city like :par2 "
-//							+ "or p2.street like :par2 "
-//							+ "or p2.state like :par2 "
-//							+ "or p2.province like :par2 "
-//							+ "or p2.region like :par2)"
-//							;
-//		
-//		parameters.put("par1", cityFrom);
-//		parameters.put("par2", cityTo);
-////		try {
-////			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-////			parameters.put("par3", d);
-////		} catch (ParseException e) {
-////			e.printStackTrace();
-////		}
-//		Collection<DomainObject> objects=find(findStatement, parameters,true);
-//		if(!objects.isEmpty()){		
-//			result = new LinkedList<Lift>();
-//			for (DomainObject object : objects) {
-//				result.add((Lift) object);
-//			}
-//		}
-//		
-//		return result;
-//	
-//}
-//	
-	
-	public List<Lift> findDetourByFromAndToAndCostAndTimeAndDate(String cityFrom, 
-			String cityTo, String date, String cost, Integer timeTo, Integer timeFrom, String flexibleDate, SortOption sort){
-		List<Lift> result=null;
-		Map<String, Object> parameters=new HashMap<String, Object>();
-		String findStatement= "select l from Lift as l "
-						+ "join l.detours as d "
+
+	public List<LiftDetour> findDetourByFromAndToAndCostAndTimeAndDate(String cityFrom, 
+			String cityTo, String date, String cost, Integer timeTo, Integer timeFrom, String flexibleDate, SortOption sort, Boolean music, Boolean smok, Boolean pets, Integer chatnessLevel){
+		List<LiftDetour> result=null;
+		String findStatement= "select d from LiftDetour as d "
 						+ "join d.pickUpPoint as p1 "
 						+ "join d.dropOffPoint as p2 "
+						+ "join d.lift as l "
+						+ "join l.userOffering as u "
+						+ "join u.personalPreference as pref "
 							+ " where "
-							+ "(difference(p1.city,:par1) >=2 "
-							+ "or difference(p1.street,:par1) >=1 "
-							+ "or difference(p1.state, :par1) >=1 "
-							+ "or difference(p1.province, :par1) >=1 "
-							+ "or difference(p1.region, :par1) >=1 )"
-							+ "and (difference(p2.city, :par2)>=2 "
-							+ "or difference(p2.street, :par2) >=1 "
-							+ "or difference(p2.state, :par2) >=1 "
-							+ "or difference(p2.province, :par2) >=1 "
-							+ "or difference(p2.region, :par2)>=1 )"
+							+ "((LOCATE(LOWER(p1.city),LOWER(:par1))) > 0  or (LOCATE(LOWER(:par1),LOWER(p1.city))) > 0  )"
+//							+ "or difference(p1.street,:par1) >=1 "
+//							+ "or difference(p1.state, :par1) >=1 "
+//							+ "or difference(p1.province, :par1) >=1 "
+//							+ "or difference(p1.region, :par1) >=1 )"
+							+ "and ((LOCATE(LOWER(p2.city),LOWER(:par2))) > 0 or (LOCATE(LOWER(:par2),LOWER(p2.city))) > 0 ) "
+//							+ "or difference(p2.street, :par2) >=1 "
+//							+ "or difference(p2.state, :par2) >=1 "
+//							+ "or difference(p2.province, :par2) >=1 "
+//							+ "or difference(p2.region, :par2)>=1 )"
 							;
-//		if(cost!=null){		
-//			if(cost.equals("1")){
-//				findStatement+= "and cost<avg(cost) ";
-//			}
-//			if(cost.equals("2")){
-//				findStatement+= "and cost>=avg(cost) and cost<=max(cost) ";
-//			}
-//			if(cost.equals("3")){
-//				findStatement+= "and cost>=avg(cost) ";
-//			}
-//		}
-//		if(timeTo!=null && timeFrom!=null){
-//			findStatement+= "and departureTime<=:par3 and departureTime>=:par4 ";
-//			parameters.put("par4", timeFrom);
-//			parameters.put("par3", timeTo);
-//		}
-		parameters.put("par1", cityFrom);
-		parameters.put("par2", cityTo);
-//		try {
-//			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-//			if(flexibleDate!=null && flexibleDate!="" && flexibleDate.matches("[0-9]+") && Integer.parseInt(flexibleDate)<=60){
-//				findStatement+= "and DATEDIFF(departureDate, :d) <=:par5 and DATEDIFF(:d, departureDate)<=:par5 "; //and DATEDIFF(:d, departureDate)<=:par5 or DATEDIFF(departureDate, :d)<=:par5 
-//				parameters.put("par5", flexibleDate);
-//				parameters.put("d",d);
-//			}
-//			else{
-//				findStatement+= " and departureDate=:par5 ";
-//				parameters.put("par5", d);
-//			}
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-//		if(sort==SortOption.DATE){
-//			findStatement+=" order by departureDate";
-//		}
-//		if(sort==SortOption.COST){
-//			findStatement+=" order by cost";
-//		}
-		Collection<DomainObject> objects=find(findStatement, parameters,false);
-		if(!objects.isEmpty()){		
-			result = new LinkedList<Lift>();
-			for (DomainObject object : objects) {
-				result.add((Lift) object);
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			Transaction transaction = null;
+			try {
+				transaction = session.beginTransaction();
+			if(cost!=null){		
+				if(cost.equals("1"))
+					findStatement+= "and cost<avg(cost) ";
+				if(cost.equals("2"))
+					findStatement+= "and cost>=avg(cost) and cost<=max(cost) ";
+				if(cost.equals("3"))
+					findStatement+= "and cost>=avg(cost) ";
 			}
+			if(timeTo!=null && timeFrom!=null)
+				findStatement+= "and hour(departureTime)>=:par3 and hour(departureTime)<=:par4 ";
+			if(flexibleDate!=null && !flexibleDate.equals("") && flexibleDate.matches("[0-9]+") && Integer.parseInt(flexibleDate)<=60)
+				findStatement+= "and DATEDIFF(departureDate, :d) <=:par5 and DATEDIFF(:d, departureDate)<=:par5 ";
+			else
+				findStatement+= " and departureDate=:par5 ";
+			if(music!=null){
+				findStatement+= " and pref.music=:music ";
+			}
+			if(pets!=null){
+				findStatement+= " and pref.petsOnBoard=:pets ";
+			}
+			if(chatnessLevel!=null){
+				findStatement+= " and pref.chatnessLevel=:chatness ";
+			}
+			if(smok!=null){
+				findStatement+= " and pref.smoking=:smoking ";
+			}
+			if(sort==SortOption.DATE)
+				findStatement+=" order by departureDate";
+			if(sort==SortOption.COST)
+				findStatement+=" order by cost";
+			Query q=session.createQuery(findStatement);
+			q.setString("par1", cityFrom);
+			q.setString("par2", cityTo);
+			if(timeTo!=null && timeFrom!=null){
+				q.setInteger("par3", timeFrom);
+				q.setInteger("par4", timeTo);
+			}
+			try {
+				Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
+				if(flexibleDate!=null && !flexibleDate.equals("") && flexibleDate.matches("[0-9]+") && Integer.parseInt(flexibleDate)<=60){
+					q.setInteger("par5", Integer.parseInt(flexibleDate));
+					q.setDate("d",d);
+				}
+				else
+					q.setDate("par5", d);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			if(music!=null){
+				q.setBoolean("music", music);
+			}
+			if(pets!=null){
+				q.setBoolean("pets", pets);
+			}
+			if(chatnessLevel!=null){
+				q.setInteger("chatness", chatnessLevel);
+			}
+			if(smok!=null){
+				q.setBoolean("smoking", smok);	
+			}
+			result=q.list();
+			transaction.commit();
+			if(result!=null){		
+				for (LiftDetour l : result) {
+					Hibernate.initialize(l.getLift());
+					Hibernate.initialize(l.getLift().getUserOffering());
+					Hibernate.initialize(l.getPickUpPoint());
+					Hibernate.initialize(l.getDropOffPoint());
+				}
+			}
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
 		}
-		
 		return result;
 	}
 	
-	
-//	public List<Lift> findDetourByFromAndToAndCostAndTimeAndDate(String cityFrom, 
-//			String cityTo, String date, String cost, Integer timeTo, Integer timeFrom, String flexibleDate, SortOption sort){
-//		List<Lift> result=null;
-//		Map<String, Object> parameters=new HashMap<String, Object>();
-//		String findStatement= "from Lift";
-////							+ "left join LIFT_DETOURS_JOIN as j on l.lift_id=j.lift_id "
-////							+ "left join Lift_Detour as d on j.DETOUR_ID=d.LIFT_DETOUR_ID "
-////							+ "left join Lift_point p1 on p1.lift_point_id=d.pick_up "
-////							+ "left join lift_point p2 on p2.lift_point_id=drop_off "
-////							+ "where"
-////							+ "( "
-////							+ "p1.city like :par1 "
-////							+ "or p1.street like :par1 "
-////							+ "or p1.state like :par1 "
-////							+ "or p1.province like :par1 "
-////							+ "or p1.region like :par1) "
-////							+ "and (p2.city like :par2 "
-////							+ "or p2.street like :par2 "
-////							+ "or p2.state like :par2 "
-////							+ "or p2.province like :par2 "
-////							+ "or p2.region like :par2)"
-//							;
-////							+ "departureDate=:par3 ";
-////		if(cost!=null){		
-////			if(cost.equals("1")){
-////				findStatement+= "and cost<avg(cost) ";
-////			}
-////			if(cost.equals("2")){
-////				findStatement+= "and cost>=avg(cost) and cost<=max(cost) ";
-////			}
-////			if(cost.equals("3")){
-////				findStatement+= "and cost>=avg(cost) ";
-////			}
-////		}
-////		if(timeTo!=null && timeFrom!=null){
-////			findStatement+= "and departureTime<=:par4 and departureTime>=:par5 ";
-////			parameters.put("par5", timeFrom);
-////			parameters.put("par4", timeTo);
-////		}
-////		parameters.put("par1", cityFrom);
-////		parameters.put("par2", cityTo);
-////		try {
-////			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-////			if(flexibleDate!=null && flexibleDate!="" && flexibleDate.matches("[0-9]+") && Integer.parseInt(flexibleDate)<=60){
-////				findStatement+= "and DATEDIFF(departureDate, :d) <=:par5 and DATEDIFF(:d, departureDate)<=:par5 "; //and DATEDIFF(:d, departureDate)<=:par5 or DATEDIFF(departureDate, :d)<=:par5 
-////				parameters.put("par5", flexibleDate);
-////				parameters.put("d",d);
-////			}
-////			else{
-////				findStatement+= " and departureDate=:par5 ";
-////				parameters.put("par5", d);
-////			}
-////		} catch (ParseException e) {
-////			e.printStackTrace();
-////		}
-////		if(sort==SortOption.DATE){
-////			findStatement+=" order by departureDate";
-////		}
-////		if(sort==SortOption.COST){
-////			findStatement+=" order by d.cost";
-////		}
-//		result = new LinkedList<Lift>();
-//		Collection<DomainObject> objects=find(findStatement, parameters, false);
-//		if(!objects.isEmpty()){		
-//			for (DomainObject object : objects) {
-//				System.out.println(object.toString());
-//				result.add((Lift) object);
-//			}
-//		}
-//		
-//		return result;
-//	}
 }

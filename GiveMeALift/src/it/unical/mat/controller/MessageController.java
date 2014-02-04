@@ -55,7 +55,7 @@ public class MessageController {
 	@RequestMapping(value="/ShowConversationMessages", method=RequestMethod.POST)
 	public String retriveConversationMessages(@RequestParam String c, Model model,HttpSession session){
 		RegisteredUser user=(RegisteredUser)session.getAttribute("user");
-		if(user!=null && c!=null && c!=""){
+		if(user!=null && c!=null && !c.equals("")){
 			MessageMapper mm=new MessageMapper();
 			Conversation co=mm.findConversationById(Long.parseLong(c));
 			model.addAttribute("messages", co.getMessages());
@@ -69,7 +69,7 @@ public class MessageController {
 	@RequestMapping(value="/SendMessage", method=RequestMethod.POST)
 	public String registerSendMessage(@RequestParam String text, @RequestParam String c, Model model,HttpSession session){
 		RegisteredUser user=(RegisteredUser)session.getAttribute("user");
-		if(user!=null && c!=null && c!=""){
+		if(user!=null && c!=null && !c.equals("")){
 			MessageMapper mm=new MessageMapper();
 			long originalId=Long.parseLong(c);
 			Conversation co=mm.findConversationById(originalId);
@@ -93,7 +93,7 @@ public class MessageController {
 	@RequestMapping(value="/ArchiveConversation", method=RequestMethod.POST)
 	public String registerArchiviationConversation(@RequestParam String c, Model model,HttpSession session){
 		RegisteredUser user=(RegisteredUser)session.getAttribute("user");
-		if(user!=null && c!=null && c!=""){
+		if(user!=null && c!=null && !c.equals("")){
 			MessageMapper mm=new MessageMapper();
 			Conversation cCopy=new Conversation();
 			cCopy.setIsArchiviated(true);

@@ -81,29 +81,7 @@
 	    </script>	
 </head>
 <body onload="initialize()" >
-<header>
-  <div class="container_12">
-    <div class="grid_12">
-	    <c:choose>
-    		<c:when test="${user!=null}">
-    			<%@include file="signedUpForm.jsp"%>
-    		</c:when>
-    		<c:otherwise>
-		    	<%@include file="logInForm.jsp"%>
-    		</c:otherwise>
-    	</c:choose>
-          <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>   
-          <c:choose>
-          <c:when test="${user!=null}">
-          	<%@include file="userMenu.jsp" %>
-          </c:when>
-          <c:otherwise>
-         	 <%@include file="classicMenu.jsp" %>
-          </c:otherwise>
-          </c:choose>    
-  </div>
-  </div>
-</header>
+<%@include file="chooseMenu.jsp"%>
 <div class="content">
 <div class="container_12">
 	<div class="grid_12">
@@ -127,7 +105,7 @@
 					<tr><td colspan="2">Itinerario</td></tr>
 			<tr id="mapTr">
 			<td colspan="2">
-			<p><input class="button" type="button"  id="FromAToB"  value="Percorso" /></p>
+			<p align="center"><button class="button cyan" id="FromAToB">Percorso<span class="map"></span></button></p>
 			<div id="map_canvas" style="float:left;width:100%;height:400px"></div>
 <!-- 				<div style="float:right;width:100px;height:400px;overflow:auto"> -->
 <!-- 			  	<button id="undo" style="display:block;margin:auto" onclick="undo()">Undo -->
@@ -175,10 +153,10 @@
 			</tr>
 			<tr>
 				<td>
-					<input class="button" type="button"  id="add_detour" value="Aggiungi"  />
+					<input class="button cyan " type="button"  id="add_detour" value="Aggiungi"  />
 				</td>
 				<td>
-					<input class="button" type="button"  id="remove_detour" value="Rimuovi"/>
+					<input class="button cyan" type="button"  id="remove_detour" value="Rimuovi"/>
 				</td>
 			</tr>
 		
@@ -261,7 +239,7 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="submit" value="Conferma" class="button" />
+					<input type="submit" value="Conferma" class="button cyan" />
 				</td>
 			</tr>
 		</table>

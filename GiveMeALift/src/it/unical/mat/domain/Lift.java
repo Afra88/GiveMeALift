@@ -25,16 +25,11 @@ import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name="LIFT")
-public class Lift extends DomainObject {
+public class Lift extends LiftComponent {
 
-	@Column(name="COST")
-	private Integer cost;
-//	@Column(name="DETOURS_COST")
-//	private String detoursCost;
+	
 	@Column(name="N_SEAT")
 	private Integer nSeat;
-//	@Column(name="POSSIBLE_DETOUR") 
-//	private Boolean possibleDetour;
 	@Column(name="DEPARTURE_TIME")
 	private Time departureTime;
 	@Column(name="DEPARTURE_DATE")
@@ -47,21 +42,19 @@ public class Lift extends DomainObject {
 	@Version
 	@Column(name="OPT_LOCK")
 	private int version;
-	
-	private LiftPoint pickUpPoint;
-	private LiftPoint dropOffPoint;
 	private List<LiftDetour> detours;
 	private LiftPreference liftPreferences;
 //	private List<User> usersBookingList;
-	private User userOffering;
+	private RegisteredUser userOffering;
 	private Lift returnLift;
 	
 	public Lift(){
+		super();
 //		detours=new LinkedList<LiftDetour>();
 //		usersBookingList=new LinkedList<User>();
 	}	
 	
-	public Lift(Integer cost, Integer nSeat, Boolean possibleDetour,
+	public Lift(Double cost, Integer nSeat, Boolean possibleDetour,
 			Time departureTime, Date departureDate, LiftPoint pickUpPoint,
 			LiftPoint dropOffPoint){
 		this.cost = cost;
@@ -106,13 +99,15 @@ public class Lift extends DomainObject {
 //		this.possibleDetour = possibleDetour;
 //	}
 
-	public void setCost(Integer cost) {
-		this.cost = cost;
-	}
-
 	public void setnSeat(Integer nSeat) {
 		this.nSeat = nSeat;
 	}
+	
+	public Integer getnSeat() {
+		return nSeat;
+	}
+	
+	
 
 //	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="lift",cascade=CascadeType.ALL)
@@ -136,7 +131,7 @@ public class Lift extends DomainObject {
 	@JoinTable(name = "LIFT_USER_OFFERING",
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
-	public User getUserOffering() {
+	public RegisteredUser getUserOffering() {
 		return userOffering;
 	}
 	
@@ -149,43 +144,10 @@ public class Lift extends DomainObject {
 		this.detours = detours;
 	}
 
-
-
-
-	public int getCost() {
-		return cost;
+	@Column(name="COST")
+	public Double getCost() {
+		return super.cost;
 	}
-
-
-
-
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-
-
-
-
-	public int getnSeat() {
-		return nSeat;
-	}
-
-
-
-
-	public void setnSeat(int nSeat) {
-		this.nSeat = nSeat;
-	}
-
-
-
-
-//	public boolean isPossibleDetour() {
-//		if(possibleDetour != null)
-//			return true;
-//		return false;
-//	}
-
 
 	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -193,14 +155,7 @@ public class Lift extends DomainObject {
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_POINT_ID") })
 	public LiftPoint getPickUpPoint() {
-		return pickUpPoint;
-	}
-
-
-
-
-	public void setPickUpPoint(LiftPoint pickUpPoint) {
-		this.pickUpPoint = pickUpPoint;
+		return super.pickUpPoint;
 	}
 
 
@@ -211,7 +166,7 @@ public class Lift extends DomainObject {
 				joinColumns = { @JoinColumn (name = "LIFT_ID") },
 				inverseJoinColumns = { @JoinColumn(name = "LIFT_POINT_ID") })
 	public LiftPoint getDropOffPoint() {
-		return dropOffPoint;
+		return super.dropOffPoint;
 	}
 
 	public void setDropOffPoint(LiftPoint dropOffPoint) {
@@ -242,23 +197,14 @@ public class Lift extends DomainObject {
 	
 	@Override
 	public void copy(DomainObject object2) {
+		super.copy(object2);
 		Lift l=(Lift) object2;
-//		if(l.possibleDetour!=null)
-//			this.possibleDetour=l.possibleDetour;
-		if(l.cost!=null)
-			this.cost=l.cost;
 		if(l.departureDate!=null)
 			this.departureDate=l.departureDate;
 		if(l.departureTime!=null)
 			this.departureTime=l.departureTime;
-//		if(l.detoursCost!=null) //FIXME
-//			this.detoursCost=l.detoursCost;
 		if(l.userOffering!=null)
 			this.userOffering=l.userOffering;
-		if(l.dropOffPoint!=null)
-			this.dropOffPoint=l.dropOffPoint;
-		if(l.pickUpPoint!=null)
-			this.pickUpPoint=l.pickUpPoint;
 		if(l.nSeat!=null)
 			this.nSeat=l.nSeat;
 		if(l.detours!=null)
@@ -291,7 +237,7 @@ public class Lift extends DomainObject {
 		this.departureTime = departureTime;
 	}
 
-	public void setUserOffering(User userOffering) {
+	public void setUserOffering(RegisteredUser userOffering) {
 		this.userOffering = userOffering;
 	}
 	
@@ -345,7 +291,6 @@ public class Lift extends DomainObject {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((cost == null) ? 0 : cost.hashCode());
 		result = prime * result
 				+ ((departureDate == null) ? 0 : departureDate.hashCode());
 		result = prime * result
@@ -354,21 +299,15 @@ public class Lift extends DomainObject {
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((detours == null) ? 0 : detours.hashCode());
 		result = prime * result
-				+ ((dropOffPoint == null) ? 0 : dropOffPoint.hashCode());
-		result = prime * result
 				+ ((isReturn == null) ? 0 : isReturn.hashCode());
 		result = prime * result
 				+ ((liftPreferences == null) ? 0 : liftPreferences.hashCode());
 		result = prime * result + ((nSeat == null) ? 0 : nSeat.hashCode());
 		result = prime * result
-				+ ((pickUpPoint == null) ? 0 : pickUpPoint.hashCode());
-		result = prime * result
 				+ ((returnLift == null) ? 0 : returnLift.hashCode());
 		result = prime * result
 				+ ((userOffering == null) ? 0 : userOffering.hashCode());
-//		result = prime
-//				* result
-//				+ ((usersBookingList == null) ? 0 : usersBookingList.hashCode());
+		result = prime * result + version;
 		return result;
 	}
 
@@ -381,11 +320,6 @@ public class Lift extends DomainObject {
 		if (getClass() != obj.getClass())
 			return false;
 		Lift other = (Lift) obj;
-		if (cost == null) {
-			if (other.cost != null)
-				return false;
-		} else if (!cost.equals(other.cost))
-			return false;
 		if (departureDate == null) {
 			if (other.departureDate != null)
 				return false;
@@ -406,11 +340,6 @@ public class Lift extends DomainObject {
 				return false;
 		} else if (!detours.equals(other.detours))
 			return false;
-		if (dropOffPoint == null) {
-			if (other.dropOffPoint != null)
-				return false;
-		} else if (!dropOffPoint.equals(other.dropOffPoint))
-			return false;
 		if (isReturn == null) {
 			if (other.isReturn != null)
 				return false;
@@ -426,11 +355,6 @@ public class Lift extends DomainObject {
 				return false;
 		} else if (!nSeat.equals(other.nSeat))
 			return false;
-		if (pickUpPoint == null) {
-			if (other.pickUpPoint != null)
-				return false;
-		} else if (!pickUpPoint.equals(other.pickUpPoint))
-			return false;
 		if (returnLift == null) {
 			if (other.returnLift != null)
 				return false;
@@ -441,13 +365,22 @@ public class Lift extends DomainObject {
 				return false;
 		} else if (!userOffering.equals(other.userOffering))
 			return false;
-//		if (usersBookingList == null) {
-//			if (other.usersBookingList != null)
-//				return false;
-//		} else if (!usersBookingList.equals(other.usersBookingList))
-//			return false;
+		if (version != other.version)
+			return false;
 		return true;
 	}
+
+	public String pathToString(){
+		List<String> path=computeRoute();
+		String pathString="";
+		pathString+=path.get(0);
+		for (String string : path) {
+			pathString+=" - "+string;
+		}
+		return pathString;
+		
+	}
+	
 	
 	
 	

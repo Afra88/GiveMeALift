@@ -152,10 +152,10 @@ public class CopyOfUserParameterController {
 			
 			PersonalPreference pref = null;
 
-			if((chatnessLevel!=null && chatnessLevel!="") ||
-					(musicOnBoard!=null && musicOnBoard!="") ||
-					(smokingOnBoard!=null && smokingOnBoard!="") ||
-								(petsOnBoard!=null && petsOnBoard!="")){				
+			if((chatnessLevel!=null && !chatnessLevel.equals("")) ||
+					(musicOnBoard!=null && !musicOnBoard.equals("")) ||
+					(smokingOnBoard!=null && !smokingOnBoard.equals("")) ||
+								(petsOnBoard!=null && !petsOnBoard.equals(""))){				
 
 							pref = new PersonalPreference();
 							System.out.println(chatnessLevel+" Smok "+smokingOnBoard+ " Pets "+petsOnBoard+" Music "+musicOnBoard);				
@@ -200,7 +200,7 @@ public class CopyOfUserParameterController {
 			if(pref!=null)
 				ru.setPersonalPreference(pref);
 		
-			if(ru.getDescription() == null || ru.getDescription()=="")
+			if(ru.getDescription() == null || ru.getDescription().equals(""))
 				ru.setDescription(description); 
 			
 			//--------------- FOTO ---------------

@@ -185,7 +185,7 @@ public class FeedBackController {
 			System.out.println("rating: "+ f.getRating());
 			System.out.println("text: "+text);
 		
-			if(f.getText() == null || f.getText()=="")	
+			if(f.getText() == null || f.getText().equals(""))	
 				f.setText(text);
 			
 //			System.out.println("ruolo:"+role);

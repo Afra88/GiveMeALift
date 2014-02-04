@@ -8,33 +8,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name="LIFT_DETOUR")
-public class LiftDetour extends DomainObject {
+public class LiftDetour extends LiftComponent {
 	
-	private LiftPoint pickUpPoint;
-	
-	private LiftPoint dropOffPoint;
-	
-	@Column(name="DETOUR_COST")
-	private Integer cost;
+//	private LiftPoint pickUpPoint;
+//	
+//	private LiftPoint dropOffPoint;
+//	
+//	@Column(name="DETOUR_COST")
+//	private Integer cost;
 	
 	private Lift lift;
 	
-	public LiftDetour(LiftPoint pickUpPoint, LiftPoint dropOffPoint) {
-		super();
-		this.pickUpPoint = pickUpPoint;
-		this.dropOffPoint = dropOffPoint;
+	public LiftDetour(LiftPoint pickUpPoint, LiftPoint dropOffPoint, Double cost) {
+		super(pickUpPoint, dropOffPoint, cost);
 	}
 
 	public LiftDetour(){
+		super();
 	}
 
 	@Override
@@ -47,12 +44,7 @@ public class LiftDetour extends DomainObject {
 	@ManyToOne(fetch=FetchType.LAZY) //cascade=CascadeType.ALL //cambiato
 	@JoinColumn(name="PICK_UP")
 	public LiftPoint getPickUpPoint() {
-		return pickUpPoint;
-	}
-
-
-	public void setPickUpPoint(LiftPoint pickUpPoint) {
-		this.pickUpPoint = pickUpPoint;
+		return super.pickUpPoint;
 	}
 
 
@@ -60,24 +52,14 @@ public class LiftDetour extends DomainObject {
 	@ManyToOne(fetch=FetchType.LAZY ) //cascade=CascadeType.ALL //cambiato
 	@JoinColumn(name="DROP_OFF")
 	public LiftPoint getDropOffPoint() {
-		return dropOffPoint;
+		return super.dropOffPoint;
 	}
 
-
-
-	public void setDropOffPoint(LiftPoint dropOffPoint) {
-		this.dropOffPoint = dropOffPoint;
-	}
 
 	@Override
 	public void copy(DomainObject object2) {
+		super.copy(object2);
 		LiftDetour ld=(LiftDetour)object2;
-		if(ld.dropOffPoint!=null)
-			this.dropOffPoint=ld.dropOffPoint;
-		if(ld.pickUpPoint!=null)
-			this.pickUpPoint=ld.pickUpPoint;
-		if(ld.cost!=null)
-			this.cost=ld.cost;
 		if(ld.lift!=null)
 			this.lift=ld.lift;
 	}
@@ -96,24 +78,16 @@ public class LiftDetour extends DomainObject {
 		this.lift = lift;
 	}
 	
-	public Integer getCost() {
+	@Column(name="DETOUR_COST")
+	public Double getCost() {
 		return cost;
 	}
-	
-	public void setCost(Integer cost) {
-		this.cost = cost;
-	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((cost == null) ? 0 : cost.hashCode());
-		result = prime * result
-				+ ((dropOffPoint == null) ? 0 : dropOffPoint.hashCode());
-		result = prime * result
-				+ ((pickUpPoint == null) ? 0 : pickUpPoint.hashCode());
+		result = prime * result + ((lift == null) ? 0 : lift.hashCode());
 		return result;
 	}
 
@@ -126,24 +100,15 @@ public class LiftDetour extends DomainObject {
 		if (getClass() != obj.getClass())
 			return false;
 		LiftDetour other = (LiftDetour) obj;
-		if (cost == null) {
-			if (other.cost != null)
+		if (lift == null) {
+			if (other.lift != null)
 				return false;
-		} else if (!cost.equals(other.cost))
-			return false;
-		if (dropOffPoint == null) {
-			if (other.dropOffPoint != null)
-				return false;
-		} else if (!dropOffPoint.equals(other.dropOffPoint))
-			return false;
-		if (pickUpPoint == null) {
-			if (other.pickUpPoint != null)
-				return false;
-		} else if (!pickUpPoint.equals(other.pickUpPoint))
+		} else if (!lift.equals(other.lift))
 			return false;
 		return true;
 	}
-
+	
+	
 	
 
 	

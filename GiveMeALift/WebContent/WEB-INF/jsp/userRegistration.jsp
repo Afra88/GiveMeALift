@@ -12,7 +12,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
    
     <link rel="stylesheet" href="css/ourAdditions.css">
-    
+    <link rel="stylesheet" href="css/pictogram-button.css">
     <link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<link rel="stylesheet" href="css/style.css">
@@ -41,27 +41,7 @@
 	</script>	
 </head>
 <body onload="initialize()" >
-	<header>
-  <div class="container_12">
-    <div class="grid_12">
-          <h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>  
-      <div class="menu_block">
-        <nav>
-          <ul class="sf-menu">
-            <li class="current"><a href="/GiveMeALift">Home</a></li>
-            <li><a href="OfferALift">Offri un passaggio!</a></li>
-            <!-- <li><a href="blog.html">Blog</a></li>
-            <li><a href="recipes.html">Recipes</a></li>
-            <li><a href="contacts.html">Contacts</a></li> -->
-          </ul>
-        </nav>
-        <div class="clear"></div>
-      </div>
-      <div class="clear"></div>
-    </div>
-    
-  </div>
-</header>
+<%@include file="chooseMenu.jsp"%>
 
 <div class="container_12">
 	<div class="grid_12">

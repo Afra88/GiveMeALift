@@ -28,31 +28,7 @@
 <%-- 	<% session.getParameter("user"); %> --%>
 
 <body>
-	<header>
-		<div class="container_12">
-			<div class="grid_12">
-				<c:choose>
-					<c:when test="${user!=null}">
-						<%@include file="signedUpForm.jsp"%>
-					</c:when>
-					<c:otherwise>
-						<%@include file="logInForm.jsp"%>
-					</c:otherwise>
-				</c:choose>
-				<h1>
-					<a href="/GiveMeALift"><img src="images/logo.png" alt=""></a>
-				</h1>
-				<c:choose>
-					<c:when test="${user!=null}">
-						<%@include file="userMenu.jsp"%>
-					</c:when>
-					<c:otherwise>
-						<%@include file="classicMenu.jsp"%>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-	</header>
+	<%@include file="chooseMenu.jsp"%>
 	<!--    <div class="content"> -->
 	<!--     <div class="container_12" id="contentOpacity" > -->
 	<!-- 		<div class="grid_12"> -->
@@ -256,7 +232,7 @@
 						<!-- 					<td> -->
 						<!-- <!-- 							<input value="Salva" type="submit"/> -->
 
-						<!-- 							<p class="center"><input type="submit"  value="Salva" class="button" /></p> -->
+						<!-- 							<p class="center"><input type="submit" class="button cyan" value="Salva" class="button" /></p> -->
 						<!-- 					</td> -->
 						<!-- <!-- 		</form>      		ModifyUserProfile -->
 						<!-- 				</tr> -->
@@ -415,7 +391,7 @@
 		</div>
 		<div class="btns">
 			<p align="center">
-				<input class="button orange" type="submit" value="Salva" />
+				<input class="button cyan" type="submit" value="Salva" />
 			</p>
 		</div>
 	</form:form>

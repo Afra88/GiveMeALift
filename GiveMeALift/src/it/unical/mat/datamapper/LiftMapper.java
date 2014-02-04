@@ -118,7 +118,7 @@ public class LiftMapper extends AbstractMapper {
 		parameters.put("par2", cityTo);
 		try {
 			Date d=DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALIAN).parse(date);
-			if(flexibleDate!=null && flexibleDate!="" && flexibleDate.matches("[0-9]+") && Integer.parseInt(flexibleDate)<=60){
+			if(flexibleDate!=null && !flexibleDate.equals("") && flexibleDate.matches("[0-9]+") && Integer.parseInt(flexibleDate)<=60){
 				findStatement+= "and DATEDIFF(departureDate, :d) <=:par5 and DATEDIFF(:d, departureDate)<=:par5 "; //and DATEDIFF(:d, departureDate)<=:par5 or DATEDIFF(departureDate, :d)<=:par5 
 				parameters.put("par5", flexibleDate);
 				parameters.put("d",d);
@@ -137,8 +137,8 @@ public class LiftMapper extends AbstractMapper {
 			findStatement+=" order by cost";
 		}
 		Collection<DomainObject> objects=find(findStatement, parameters,false);
+		result = new LinkedList<Lift>();
 		if(!objects.isEmpty()){		
-			result = new LinkedList<Lift>();
 			for (DomainObject object : objects) {
 				result.add((Lift) object);
 			}
@@ -146,7 +146,7 @@ public class LiftMapper extends AbstractMapper {
 		
 		return result;
 	}
-
+	
 	public Lift findById(String lift) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;

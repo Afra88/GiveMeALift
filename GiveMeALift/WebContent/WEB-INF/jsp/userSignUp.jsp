@@ -3,7 +3,8 @@
 <html>
 <head>
 <link rel="stylesheet" href="css/mainstyle.css" type="text/css" />
-<script type="text/javascript" src="js/checkSigningUp.js"></script>
+<script type="text/javascript" src="js/checkSigningUp.js">
+</script><link rel="stylesheet" href="css/pictogram-button.css">
 <title>Registrati</title>
 </head>
 <body>

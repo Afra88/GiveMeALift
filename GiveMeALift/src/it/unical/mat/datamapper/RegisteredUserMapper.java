@@ -207,24 +207,6 @@ public class RegisteredUserMapper extends AbstractMapper {
 		return null;
 	}
 	
-	public PersonalPreference loadPersonalPreference(Long id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = null;
-		try {
-			transaction = session.beginTransaction();
-				RegisteredUser u=(RegisteredUser) session.get(RegisteredUser.class, id);
-				Hibernate.initialize(u.getPersonalPreference());
-				transaction.commit();
-				return u.getPersonalPreference();
-		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
-			e.printStackTrace();
-			transaction.rollback();
-		} finally {
-			session.close();
-		}
-		return null;
-	}
-	
 	public boolean deleteUser(RegisteredUser user){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;

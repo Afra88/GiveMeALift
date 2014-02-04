@@ -9,7 +9,7 @@
 		</p> 
 	<form>
 		<p class="center">
-			<input type="button" value="Indietro" onClick="javascript:history.back()" name="button">
+			<input type="button" class="button cyan" value="Indietro" onClick="javascript:history.back()" name="button">
 		</p>
 	</form>
 	</div>

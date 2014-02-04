@@ -40,7 +40,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<input type="submit" value="Accedi" />
+					<input type="submit" class="button cyan" value="Accedi" />
 					oppure
 					<a href="userRegistration">Registrati</a>
 				</td>
@@ -51,7 +51,7 @@
 
 <p>
 	<form method="get" action="OfferALift">
-		<input type="submit" value="Offri un passaggio!" class="button" />
+		<input type="submit" class="button cyan" value="Offri un passaggio!" class="button" />
 	</form>
 </p>
 <p>
@@ -63,7 +63,7 @@
 		<input class="autocomplete" type="text" id=mapTo name=mapTo />
 	<span id=date><script type="text/javascript" src="js/currentDate.js"></script></span>
 	<input class="button"  id="FromAToB" type="button" value="Percorso" />
-	<input type="submit" value="Cerca" class="button" />
+	<input type="submit"  class="button cyan" value="Cerca" class="button" />
 	</p>
 </form>
 </p>

@@ -83,7 +83,7 @@ public class OfferController {
     		@RequestParam(value="returnTimeM",required=false) String returnMins,
     		Model model,HttpSession session){
 		
-			if(session.getAttribute("user")!=null && lift.matches("[0-9]+") && goingDate!=null && goingDate!="" && goingHour!=null && goingHour!=null && goingMins!=null && goingMins!=""){		
+			if(session.getAttribute("user")!=null && lift.matches("[0-9]+") && goingDate!=null && !goingDate.equals("") && goingHour!=null && goingHour!=null && goingMins!=null && !goingMins.equals("")){		
 				Calendar today = Calendar.getInstance();
 				Calendar dG = ParseDate.getUtilDateFormat(goingDate,Integer.parseInt(goingHour), Integer.parseInt(goingMins));
 				ArrayList<String> inputs = new ArrayList<String> ();						
@@ -98,7 +98,7 @@ public class OfferController {
 				inputs.add(goingHour);				    		
 				inputs.add(goingMins);
 
-				if(returnDate!=null && returnDate!="" && thereIsReturn=="true"){
+				if(returnDate!=null && !returnDate.equals("") && thereIsReturn=="true"){
 					Calendar dR = ParseDate.getUtilDateFormat(returnDate, Integer.parseInt(goingHour), Integer.parseInt(goingMins));
 					if(dR!=null && dR.compareTo(today)<=0){
 						model.addAttribute("error", "La data di ritorno non è valida.");
@@ -126,7 +126,7 @@ public class OfferController {
 			LiftMapper lm=new LiftMapper();
 			Lift l=lm.findById(lift);
 			
-			List<Integer> costs=new ArrayList<Integer>();
+			List<Double> costs=new ArrayList<Double>();
 			for (LiftDetour ld : l.getDetours()) 
 				costs.add(ld.getCost());
 			
@@ -156,7 +156,7 @@ public class OfferController {
     		@RequestParam(value="returnTimeM",required=false) String returnMins,
     		Model model,HttpSession session){
 		
-		if(session.getAttribute("user")!=null && goingDate!=null && goingDate!="" && goingHour!=null && goingHour!=null && goingMins!=null && goingMins!=""){		
+		if(session.getAttribute("user")!=null && goingDate!=null && !goingDate.equals("") && goingHour!=null && goingHour!=null && goingMins!=null && !goingMins.equals("")){		
 			Calendar today = Calendar.getInstance();
 			Calendar dG = ParseDate.getUtilDateFormat(goingDate,Integer.parseInt(goingHour), Integer.parseInt(goingMins));
 			ArrayList<String> inputs = new ArrayList<String> ();						
@@ -171,7 +171,7 @@ public class OfferController {
 			inputs.add(goingHour);				    		
 			inputs.add(goingMins);
 
-			if(returnDate!=null && returnDate!="" && thereIsReturn=="true"){
+			if(returnDate!=null && !returnDate.equals("") && thereIsReturn=="true"){
 				Calendar dR = ParseDate.getUtilDateFormat(returnDate, Integer.parseInt(goingHour), Integer.parseInt(goingMins));
 				if(dR!=null && dR.compareTo(today)<=0){
 					model.addAttribute("error", "La data di ritorno non è valida.");
@@ -252,16 +252,16 @@ public class OfferController {
 		LiftMapper lm = new LiftMapper();
 						
 		String[] costs = price.split(",");     //COST
-		Integer totcost = 0;
+		Double totcost = 0.0;
 		for (int i = 0; i < costs.length; i++) {
-			totcost += Integer.parseInt(costs[i]);
+			totcost += Double.parseDouble(costs[i]);
 		}
 		
 		Integer nSeats = Integer.parseInt(seats);    //NSEATS
 		
 		Boolean possibleDetour = false;
 		
-		if(deviation != null && deviation!="")
+		if(deviation != null && !deviation.equals(""))
 			possibleDetour = true;
 		
 		long mstimeG = (1000*60*Integer.parseInt(goingMins)) + (1000*60*60*Integer.parseInt(goingHour));		
@@ -349,16 +349,15 @@ public class OfferController {
 		for (int i = 0; i < path.size()-1; i++) {
 			for (int j = i+1; j < path.size(); j++) {
 				System.out.println("Detour: "+path.get(i).getCity()+" "+path.get(j).getCity());
-				LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
-				int cost = 0;
+				double cost = 0;
 				if(j-i==1)
 					cost=Integer.parseInt(costs[i]);
 				else{
 					for (int k = i; k < j; k++)
 						cost+=Integer.parseInt(costs[k]);						
 				}
+				LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j),cost);
 				tmpDetour.setLift(l);
-				tmpDetour.setCost(cost);
 				detours.add(tmpDetour);
 			}			
 		}
@@ -385,16 +384,15 @@ public class OfferController {
 			for (int i = path.size()-1; i>0 ; i--) {
 				for (int j = i-1; j >=0; j--) {
 					System.out.println("Detour Ritorno: "+path.get(i).getCity()+" "+path.get(j).getCity());
-					LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
-					int cost = 0;
+					double cost = 0;
 					if(i-j==1)
 						cost=Integer.parseInt(costs[j]);
 					else{
 						for (int k = j; k < i; k++)
 							cost+=Integer.parseInt(costs[k]);						
 					}
+					LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j),cost);
 					tmpDetour.setLift(lr);
-					tmpDetour.setCost(cost);
 					detoursReturn.add(tmpDetour);
 				}			
 			}
@@ -443,16 +441,16 @@ public class OfferController {
 		
 				
 		String[] costs = price.split(",");     //COST
-		Integer totcost = 0;
+		double totcost = 0;
 		for (int i = 0; i < costs.length; i++) {
-			totcost += Integer.parseInt(costs[i]);
+			totcost += Double.parseDouble(costs[i]);
 		}
 		
 		Integer nSeats = Integer.parseInt(seats);    //NSEATS
 		
 		Boolean possibleDetour = false;
 		
-		if(deviation != null && deviation!="")
+		if(deviation != null && !deviation.equals(""))
 			possibleDetour = true;
 		
 //		if(goingMins.length()==2 && goingMins.charAt(0)=='0')
@@ -544,16 +542,15 @@ public class OfferController {
 		for (int i = 0; i < path.size()-1; i++) {
 			for (int j = i+1; j < path.size(); j++) {
 				System.out.println("Detour: "+path.get(i).getCity()+" "+path.get(j).getCity());
-				LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
-				int cost = 0;
+				double cost = 0;
 				if(j-i==1)
 					cost=Integer.parseInt(costs[i]);
 				else{
 					for (int k = i; k < j; k++)
 						cost+=Integer.parseInt(costs[k]);						
 				}
+				LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j),cost);
 				tmpDetour.setLift(l);
-				tmpDetour.setCost(cost);
 				detours.add(tmpDetour);
 			}			
 		}
@@ -580,16 +577,15 @@ public class OfferController {
 			for (int i = path.size()-1; i>0 ; i--) {
 				for (int j = i-1; j >=0; j--) {
 					System.out.println("Detour Ritorno: "+path.get(i).getCity()+" "+path.get(j).getCity());
-					LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j));
-					int cost = 0;
+					double cost = 0;
 					if(i-j==1)
 						cost=Integer.parseInt(costs[j]);
 					else{
 						for (int k = j; k < i; k++)
 							cost+=Integer.parseInt(costs[k]);						
 					}
+					LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j),cost);
 					tmpDetour.setLift(lr);
-					tmpDetour.setCost(cost);
 					detoursReturn.add(tmpDetour);
 				}			
 			}

@@ -40,8 +40,8 @@ public class UserController {
 	    		@RequestParam("name") String name, @RequestParam("surname") String surname,
 	    		@RequestParam("gender") String gender, @RequestParam("year") Integer birthYear,
 	    		Model model, HttpSession session) {
-				if(email!="" && email!=null && psw!="" && psw!=null && name!="" && name!=null 
-						 && gender!="" && gender!=null && surname!=null && surname!="" && birthYear!=null){
+				if(email!=null && !email.equals("") && psw!=null  && !psw.equals("") && name!=null && !name.equals("")
+						&& gender!=null && !gender.equals("") && surname!=null && !surname.equals("") && birthYear!=null){
 				 	RegisteredUser u=new RegisteredUser(email, psw, name, surname,gender,birthYear);
 				 	RegisteredUserMapper rm=new RegisteredUserMapper();
 				 	if(rm.insert(u)!=0){
@@ -61,7 +61,7 @@ public class UserController {
 	 public String userLogIn(@RequestParam("email") String email, @RequestParam("psw")String psw,
 			 Model model, HttpSession session){
 		RegisteredUserMapper rm=new RegisteredUserMapper();
-		if(email!="" && email!=null && psw!="" && psw!=null){
+		if(email!=null && !email.equals("") && !psw.equals("") && psw!=null && !psw.equals("")){
 			RegisteredUser u=rm.findUserByEmailAndPassword(email,psw);
 			if(u!=null){
 				session.setAttribute("user",u);
@@ -108,7 +108,7 @@ public class UserController {
 	 private String retriveUserOfferedLift(@RequestParam(value="page",required=false) String nPage, Model model, HttpSession session){
 		 User u=(User) session.getAttribute("user");
 			if(u!=null){
-				if(nPage==null || nPage=="")
+				if(nPage==null || nPage.equals(""))
 					nPage="1";				
 				LiftMapper lm=new LiftMapper();
 				List<Lift> result=lm.findLiftOfferedByUser(u.getId());
@@ -134,7 +134,7 @@ public class UserController {
 	 private String retriveUserBookedLift(@RequestParam(value="page",required=false) String nPage, Model model, HttpSession session){
 		 User u=(User) session.getAttribute("user");
 			if(u!=null){
-				if(nPage==null || nPage=="")
+				if(nPage==null || nPage.equals(""))
 					nPage="1";				
 				LiftMapper lm=new LiftMapper();
 				List<Lift> result=lm.findLiftBookedByUser(u.getId());

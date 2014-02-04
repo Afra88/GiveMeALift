@@ -1,7 +1,6 @@
 package it.unical.mat.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import it.unical.mat.datamapper.LiftDetourMapper;
@@ -9,12 +8,12 @@ import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.datamapper.SortOption;
 import it.unical.mat.domain.Lift;
+import it.unical.mat.domain.LiftDetour;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.service.LiftToViewFacade;
 import it.unical.mat.service.ParseDate;
 
 import org.springframework.beans.support.PagedListHolder;
-import org.springframework.beans.support.PropertyComparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,34 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SearchController {
-
-//	@RequestMapping(value="/ResultSearch", method = RequestMethod.GET)
-//	public String handleSearch(@RequestParam("mapFrom") String input1, 
-//    		@RequestParam("mapTo") String input2,
-//    		@RequestParam("date") String input3,
-//    		@RequestParam(value="page",required=false) String p,
-//    		Model model){
-//		
-//			
-//			LiftMapper lm=new LiftMapper();
-//			
-//			if(p==null || p==""){
-//				p="1";
-//			}
-//			PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(lm.findLiftByFromAndTo(input1, input2, input3));		
-//			pageHolder.setPage(Integer.parseInt(p));
-//			pageHolder.setPageSize(10);
-//			
-//			model.addAttribute("from",input1);
-//			model.addAttribute("to",input2);
-//			
-//			model.addAttribute("pages", pageHolder.getPageCount());
-//			model.addAttribute("page",pageHolder.getPage());
-//			
-//			model.addAttribute("pageHolder",pageHolder);
-//			
-//			return "resultSearch";			
-//	}
 	
 	@RequestMapping(value="/ResultSearch", method = RequestMethod.GET)
 	public String handleAdvancedSearch(@RequestParam("mapFrom") String from, 
@@ -61,37 +32,25 @@ public class SearchController {
     		@RequestParam(value="radio",required=false) String radio,
     		@RequestParam(value="page",required=false) String nPage,
     		@RequestParam(value="flexibleDate",required=false) String flexibleDate,
+    		@RequestParam(value="chatness",required=false) String chatness,
+    		@RequestParam(value="smoking",required=false) String smok,
+    		@RequestParam(value="music",required=false) String music,
+    		@RequestParam(value="pets",required=false) String pets,
     		Model model){
 		
-		LiftMapper lm=new LiftMapper();
 		LiftDetourMapper ldm=new LiftDetourMapper();
-
-//		Lift l=new Lift();
-//		LiftPoint lp=new LiftPoint();
-//		lp.setCity(from);
-//		LiftPoint lp2=new LiftPoint();
-//		lp2.setCity(to);
-//		LiftPointMapper lpm=new LiftPointMapper();
-//		long idLp=lpm.insert(lp);
-//		long idLp2=lpm.insert(lp2);
-//		l.setPickUpPoint(lp);
-//		l.setDropOffPoint(lp2);
-//		l.setCost(2);
-//		l.setnSeat(2);
-//		l.setPossibleDetour(false);
-//		lm.insert(l);
 		
-		if(nPage==null || nPage==""){
+		if(nPage==null || nPage.equals("")){
 			nPage="1";
 		}
 		
-		if(radio=="" || radio==null){
+		if(radio.equals("") || radio==null){
 			radio=null;
 		}
 		Integer timeFrom=null;
 		Integer timeTo=null;
 		
-		if(range!=null && range!=""){
+		if(range!=null && !range.equals("")){
 			String[] rangeValues=range.split(" ");
 			timeFrom=Integer.parseInt(rangeValues[1]);
 			timeTo=Integer.parseInt(rangeValues[3]);
@@ -99,32 +58,59 @@ public class SearchController {
 				timeFrom=timeTo=null;
 		}
 		
-		if(sort==null || sort==""){
+		if(sort==null || sort.equals("")){
 			sort="date";
 		}
 		
-		if(from!=null && from!="" && to!=null && to!="" && date!=null && date!=""){
-			List<Lift> listResults=null;
-			List<Lift> listResultDetours=null;
+		Boolean mus=null;
+		if(music!=null && !music.equals("")){
+			if(music.equals("noMus"))
+				mus=false;
+			if(music.equals("yesMus"))
+				mus=true;
+		}
+		
+		Boolean pets1=null;
+		if(pets!=null && !pets.equals("")){
+			if(pets.equals("noPets"))
+				pets1=false;
+			if(music.equals("yesPets"))
+				pets1=true;
+		}
+		
+		Boolean smoking=null;
+		if(smok!=null && !smok.equals("")){
+			if(smok.equals("noSmok"))
+				smoking=false;
+			if(smok.equals("yesSmok"))
+				smoking=true;
+		}
+		Integer chatnessLevel=null;
+		if(chatness!=null && chatness.equals("")){
+			if(chatness.equals("1"))
+				chatnessLevel=1;
+			if(chatness.equals("2"))
+				chatnessLevel=2;
+			if(chatness.equals("3"))
+				chatnessLevel=3;
+		}
+		
+		if(from!=null && !from.equals("") && to!=null && !to.equals("") && date!=null && !date.equals("")){
+			List<LiftDetour> listResults=null;
 			if(sort.equals("date")){
-				listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom,flexibleDate,SortOption.DATE);				
-				listResultDetours=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, SortOption.DATE);
+				listResults=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, SortOption.DATE, mus, smoking, pets1, chatnessLevel);
 			}
 			if(sort.equals("cost")){				
-				listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom,flexibleDate,SortOption.COST);
-				listResultDetours=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, SortOption.COST);
+				listResults=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, SortOption.COST, mus, smoking, pets1, chatnessLevel);
 			}
 			else{
-				listResults=lm.findLiftByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom,flexibleDate,null);
-				listResultDetours=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, null);
+				listResults=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, null, mus, smoking, pets1, chatnessLevel);
 			}
-			if(listResults!=null && listResultDetours!=null)
-				listResults.addAll(listResultDetours);
-			
+
 			int noResult;
 			
 			if(listResults!=null && !listResults.isEmpty()){				
-				PagedListHolder<Lift> pageHolder=new PagedListHolder<Lift>(listResults);		
+				PagedListHolder<LiftDetour> pageHolder=new PagedListHolder<LiftDetour>(listResults);		
 				pageHolder.setPage(Integer.parseInt(nPage));
 				pageHolder.setPageSize(10);	
 				model.addAttribute("pages", pageHolder.getPageCount());
@@ -132,16 +118,23 @@ public class SearchController {
 				model.addAttribute("pageHolder",pageHolder);
 				noResult=0;
 				model.addAttribute("noResult",noResult);
-				System.out.println("res");
 			
 			}
 			else{
 				noResult=1;
-				System.out.println("noRes");
 				model.addAttribute("noResult",1);
 			}
 			model.addAttribute("from",from);
 			model.addAttribute("to",to);
+			model.addAttribute("date",date);
+			model.addAttribute("flexibleDate", flexibleDate);
+			model.addAttribute("timeFrom",timeFrom);
+			model.addAttribute("timeTo",timeTo);
+			model.addAttribute("radio",radio);
+			model.addAttribute("music", music);
+			model.addAttribute("pets", pets);
+			model.addAttribute("chatness", chatness);
+			model.addAttribute("smoking", smok);
 		}
 		else{
 			model.addAttribute("noResult",1);
@@ -177,14 +170,6 @@ public class SearchController {
 						model.addAttribute("lastOnline",ParseDate.getItalianFormat(u.getUserActivity().getLastOnline().toString()));
 				}
 			}
-//			else{
-//				RegisteredUserMapper rm=new RegisteredUserMapper();
-//				RegisteredUser r=rm.findRegisteredUserById(l.getUserOffering().getId());
-//				model.addAttribute("userOffering",r);
-//				model.addAttribute("userNickName",r.computeNickName());
-//				model.addAttribute("userAge",r.computeAge());
-//			}
-			System.out.println(l.getDetours().size());
 			return "showLiftDetails";
 		}
 		return "error";
@@ -202,7 +187,7 @@ public class SearchController {
 	
 	@RequestMapping(value="BookALift")
 	public String handleBooking(@RequestParam String lift, @RequestParam String seat,Model model, HttpSession session){
-		if(session.getAttribute("user")!=null && lift!=null && lift!=""){
+		if(session.getAttribute("user")!=null && lift!=null && !lift.equals("")){
 			LiftMapper lm=new LiftMapper();
 			Lift l=new Lift();
 			int nSeat=Integer.parseInt(seat)-1;

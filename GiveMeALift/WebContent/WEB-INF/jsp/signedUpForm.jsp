@@ -34,7 +34,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<a href="LogOut" class="button black">  Esci </a>
+				<a href="LogOut" class="button cyan">  Esci </a>
 			</td>
 		</tr>
 	</table>

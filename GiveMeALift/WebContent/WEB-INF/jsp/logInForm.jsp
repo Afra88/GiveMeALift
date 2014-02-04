@@ -10,7 +10,7 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<input type="submit" value="Accedi" />
+				<input type="submit" class="button cyan" value="Accedi" />
 				oppure
 				<a href="userRegistration">Registrati</a>
 			</td>

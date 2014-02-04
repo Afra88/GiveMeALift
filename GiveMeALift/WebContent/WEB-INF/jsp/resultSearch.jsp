@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/ourAdditions.css">
     <link rel="stylesheet" href="css/greenTable.css">
     <link rel="stylesheet" href="css/pagination.css" type="text/css" />
+    <link rel="stylesheet" href="css/pictogram-button.css">
     
     <link rel="icon" href="images/favicon.ico">
 	<link rel="shortcut icon" href="images/favicon.ico">
@@ -83,21 +84,21 @@
 	</c:when>
 	<c:otherwise>    
     <div class="grid_7">
-        <c:forEach items="${pageHolder.pageList}" var="lift" >
+        <c:forEach items="${pageHolder.pageList}" var="detour" >
         	<div class="item">
-        	<input type="hidden" id="liftID" value="${lift.getId()}" />
+        	<input type="hidden" id="liftID" value="${detour.lift.getId()}" />
         	 <div class="rec">
 	        	<c:choose>
-	        		<c:when test="${user.profilePhoto!=null}">
-	        			<img height="120px" src="${user.profilePhoto}" class="img_inner fleft " /> <% //TODO %>
+	        		<c:when test="${detour.lift.userOffering.profilePhoto!=null}">
+	        			<img height="120px" src="${user.profilePhoto}" class="img_inner fleft " />
 	         		</c:when>
 	        		<c:otherwise>
 	        			<img height="120px" src="avatars/default_user.jpg" class="img_inner fleft " />
 	        		</c:otherwise>
 	        	</c:choose> 
         	<div class="extra_wrapper">
-	        	<div class="emphatizeWhen">${lift.departureDate} - ${lift.departureTime}</div>
-		        <div><div class="emphatizeLift">${lift.getPickUpPoint().city} - ${lift.getDropOffPoint().city}  </div>
+	        	<div class="emphatizeWhen">${detour.lift.departureDate} - ${detour.lift.departureTime}</div>
+		        <div><div class="emphatizeLift">${detour.pickUpPoint.city} - ${detour.dropOffPoint.city}</div>
 	       		<%-- <c:choose>
 	       			<c:when test="${lift.detours.size()>0}">
 	       				  ${lift.detours.size()} tappe intermedie
@@ -107,12 +108,12 @@
 	       			</c:otherwise>
 	       		</c:choose>
 	       		</div> --%>
-	        	<div class="emphatizePrice">${lift.cost} &#8364; a persona</div>
-	        	<div class="emphatizeSeat"> ${lift.nSeat} posti disponibili</div>
+	        	<div class="emphatizePrice">${detour.lift.cost} &#8364; a persona</div>
+	        	<div class="emphatizeSeat"> ${detour.lift.nSeat} posti disponibili</div>
 	        	</div>
         	</div>
-        	<form method="get" action="HandleShowLiftDetail" id="detailsForm_${lift.getId()}">
-	        	<input name="lift" type="hidden" value="${lift.getId()}" >
+        	<form method="get" action="HandleShowLiftDetail" id="detailsForm_${detour.lift.getId()}">
+	        	<input name="lift" type="hidden" value="${detour.lift.getId()}" >
         	</form>
         	</div>
         	</div>
@@ -163,22 +164,35 @@
                     </tr>
                     <tr>
                         <td>
-                       		<input type="text" class="tcal" name="date" />
+                       		<input type="text" class="tcal" name="date" value="${date}" />
                           <%--  <div id=date class=center><input type=text name=date value="${date}" /></div> --%>
                         </td>
                     </tr>
                     <tr>
                     	<td>
                     		<h5>Date Flessibili</h5>
-                			Seleziona un intervallo ...
                     	</td>
                     </tr>
                     <tr>
                     	<td >
                           	<select name="flexibleDate">
-                          		<option selected="selected" value="1" >+/- Un giorno</option>
+                          		<c:choose>
+                       				<c:when test="${flexibleDate==1 || flexibleDate==null || flexibleDate==''}">
+                       					<option selected="selected" value="1" >+/- Un giorno</option>
+                       				</c:when>
+                       				<c:otherwise>
+                       					<option value="1" >+/- Un giorno</option>
+                       				</c:otherwise>
+                          		</c:choose>  
                           		<c:forEach var="i" begin="2"  end="60">
-                          			<option value="${i}" >+/- ${i} giorni</option>
+                          			<c:choose>
+                          				<c:when test="${flexibleDate==i}">
+                          					<option value="${i}" selected="selected" >+/- ${i} giorni</option>
+                          				</c:when>
+                          				<c:otherwise>
+                          					<option value="${i}" >+/- ${i} giorni</option>
+                          				</c:otherwise>
+                          			</c:choose>                          			
                           		</c:forEach>
                           	</select>
                         </td>
@@ -195,8 +209,10 @@
                     <tr>
                         <td >
                            <div class=contentSlidebar>
-							<p><label for="range">Range orario:</label>
-						  	<input type="text" id="range" name=range></p>
+							<h5>Range orario</h5>
+							<div hidden="true" id="timeFrom">${timeFrom}</div>
+							<div hidden="true" id="timeTo">${timeTo}</div>
+						  	<p><input type="text" id="range" name=range /></p>
 							<p class=center><p id="slider-range"></p>
 						</div>
                         </td>
@@ -214,9 +230,30 @@
                         <td >
                           <div>
 							<p id="radio" class="center">
-						    <input type="radio" id="radio1" name="radio" value="1" ><label for="radio1">Basso</label>
-						    <input type="radio" id="radio2" name="radio" value="2" ><label for="radio2">Medio</label>
-						    <input type="radio" id="radio3" name="radio" value="3" ><label for="radio3">Alto</label>
+							<c:choose>
+								<c:when test="${radio==1}">
+								    <input type="radio" id="radio1" name="radio" value="1" checked="checked" ><label for="radio1">Basso</label>
+								</c:when>
+								<c:otherwise>
+								    <input type="radio" id="radio1" name="radio" value="1" ><label for="radio1">Basso</label>									
+								</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${radio==2}">
+								    <input type="radio" id="radio2" name="radio" value="2" checked="checked" ><label for="radio2">Medio</label>
+								</c:when>
+								<c:otherwise>
+								    <input type="radio" id="radio2" name="radio" value="2" ><label for="radio2">Medio</label>									
+								</c:otherwise>
+							</c:choose>
+							<c:choose>
+								<c:when test="${radio==3}">
+								    <input type="radio" id="radio3" name="radio" value="3" checked="checked" ><label for="radio3">Alto</label>
+								</c:when>
+								<c:otherwise>
+								    <input type="radio" id="radio3" name="radio" value="3" ><label for="radio3">Alto</label>									
+								</c:otherwise>
+							</c:choose> 
 						  	</p>
 						</div>
                         </td>
@@ -226,13 +263,15 @@
             <div class="greenTable">
 					<table id="personalPref">
 						<tr>
-							<td colspan="2">Le mie preferenze</td>
+							<td>Le mie preferenze</td>
 						</tr>
 						<tr>
-							<td>Conversazione</td>
 							<td>				
 								<img src="images/profile/chatness1.png">
-								<c:choose>		
+								<c:choose>	
+									<c:when test="${chatness=='1'}"> 
+										<input type="radio" name="chatness" value="1" checked="checked"/>
+									</c:when>	
 									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 1}"> 
 										<input type="radio" name="chatness" value="1" checked="checked"/>
 									</c:when>
@@ -244,7 +283,9 @@
 								
 								<img src="images/profile/chatness2.png">
  								<c:choose>
-									
+ 									<c:when test="${chatness=='2'}"> 
+										<input type="radio" name="chatness" value="2" checked="checked"/>
+									</c:when>
 									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 2}"> 
 										<input type="radio" name="chatness" value="2" checked="checked"/>
 									</c:when>
@@ -256,7 +297,9 @@
 								
 								<img src="images/profile/chatness3.png">
 								<c:choose>
-						
+									<c:when test="${chatness=='3'}"> 
+										<input type="radio" name="chatness" value="3" checked="checked"/>
+									</c:when>
 									<c:when test="${user.getPersonalPreference().getChatnessLevel() == 3}"> 
 										<input type="radio" name="chatness" value="3" checked="checked"/>
 									</c:when>
@@ -268,10 +311,12 @@
 						</td>
 						</tr>
 						<tr>
-							<td>Musica</td>
 							<td>				
 								<img src="images/profile/NoMusic.png">
 								<c:choose>
+									<c:when test="${music=='noMus'}"> 
+										<input type="radio" name="music" value="noMus" checked="checked"/>
+									</c:when>
 									<c:when test="${user.getPersonalPreference().getMusic() == false}"> 
 										<input type="radio" name="music" value="noMus" checked="checked"/>
 									</c:when>
@@ -282,6 +327,9 @@
 							
 								<img src="images/profile/music.png">
 								<c:choose>
+									<c:when test="${music=='yesMus'}"> 
+										<input type="radio" name="music" value="yesMus" checked="checked"/>
+									</c:when>
 									<c:when test="${user.getPersonalPreference().getMusic() == true}"> 
 										<input type="radio" name="music" value="yesMus" checked="checked"/>
 									</c:when>
@@ -292,10 +340,12 @@
 							</td>
 						</tr>
 						<tr>
-							<td>Fumo</td>
 							<td>
 								<img src="images/profile/NoSmoking.png">
 								<c:choose>
+									<c:when test="${smoking=='noSmok'}"> 
+										<input type="radio" name="smoking" value="noSmok" checked="checked"/>
+									</c:when>
 									<c:when test="${user.getPersonalPreference().getSmoking() == false}"> 
 										<input type="radio" name="smoking" value="noSmok" checked="checked"/>
 									</c:when>
@@ -306,6 +356,9 @@
 							
 								<img src="images/profile/smoking.png">
 								<c:choose>
+									<c:when test="${smoking=='yesSmok'}"> 
+										<input type="radio" name="smoking" value="yesSmok" checked="checked"/>
+									</c:when>
 									<c:when test="${user.getPersonalPreference().getSmoking() == true}"> 
 										<input type="radio" name="smoking" value="yesSmok" checked="checked"/>
 									</c:when>
@@ -317,10 +370,12 @@
 							</td>
 						</tr>
 						<tr>
-							<td>Animali a bordo</td>
 							<td>
 								<img src="images/profile/NoPets.png">
 								<c:choose>
+									<c:when test="${pets=='noPets'}" > 
+										<input type="radio" name="pets" value="noPets" checked="checked"/>
+									</c:when>
 									<c:when test="${user.getPersonalPreference().getPetsOnBoard() == false}"> 
 										<input type="radio" name="pets" value="noPets" checked="checked"/>
 									</c:when>
@@ -332,6 +387,9 @@
 									
 								<img src="images/profile/pets.png">
 								<c:choose>
+									<c:when test="${pets=='yesPets'}" > 
+										<input type="radio" name="pets" value="yesPets" checked="checked"/>
+									</c:when>
 									<c:when test="${user.getPersonalPreference().getPetsOnBoard() == true}"> 
 										<input type="radio" name="pets" value="yesPets" checked="checked"/>
 									</c:when>
@@ -355,7 +413,7 @@
                            <input type="hidden" id=next_page name=page value="1" />
 							<input type="hidden" id=next_from name=mapFrom value="${from}" />
 							<input type="hidden" id=next_to name=mapTo value="${to}" />
-							<p class="center"><input type="submit"  value="Cerca" class="button" /></p>
+							<p class="center"><input type="submit"  class="button cyan" value="Cerca" class="button cyan" /></p>
                         </td>
                     </tr>
                 </table>
