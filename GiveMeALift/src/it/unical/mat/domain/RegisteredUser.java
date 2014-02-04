@@ -120,12 +120,10 @@ public class RegisteredUser extends User {
 			this.personalPreference.copy(u.personalPreference);
 		if(u.personalPreference!=null && this.personalPreference==null)
 			this.personalPreference=u.personalPreference;
-//		if(u.userActivity!=null)
-//			this.userActivity.copy(u.userActivity);
 		if(u.userActivity!=null && this.userActivity!=null)
-			this.userActivity.copy(u.userActivity);
+		   this.userActivity.copy(u.userActivity);
 		if(u.userActivity!=null && this.userActivity==null)
-			this.userActivity.copy(u.userActivity);
+		   this.userActivity=u.userActivity;
 //		if(u.messagesReceived!=null)
 //			this.messagesReceived=u.messagesReceived;
 //		if(u.messagesSent!=null)
