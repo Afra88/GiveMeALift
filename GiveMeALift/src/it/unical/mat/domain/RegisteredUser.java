@@ -112,11 +112,19 @@ public class RegisteredUser extends User {
 			this.showContacts=u.showContacts;
 		if(u.profilePhoto!=null)
 			this.profilePhoto=u.profilePhoto;
-		if(u.car!=null)
+		if(u.car!=null && this.car!=null)
 			this.car.copy(u.car);
-		if(u.personalPreference!=null)
+		if(u.car!=null  && this.car==null)
+			this.car=u.car;
+		if(u.personalPreference!=null && this.personalPreference!=null)
 			this.personalPreference.copy(u.personalPreference);
+		if(u.personalPreference!=null && this.personalPreference==null)
+			this.personalPreference=u.personalPreference;
 		if(u.userActivity!=null)
+			this.userActivity.copy(u.userActivity);
+		if(u.userActivity!=null && this.userActivity!=null)
+			this.userActivity.copy(u.userActivity);
+		if(u.userActivity!=null && this.userActivity==null)
 			this.userActivity.copy(u.userActivity);
 //		if(u.messagesReceived!=null)
 //			this.messagesReceived=u.messagesReceived;
