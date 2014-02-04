@@ -86,7 +86,7 @@ public class CopyOfUserParameterController {
 			
 			@RequestParam(value="fbUrl", required=false) String facebook,
 			@RequestParam(value="twUrl", required=false) String twitter,
-			@RequestParam(value="ytUrl", required=false) String youtube,
+			@RequestParam(value="gpUrl", required=false) String gplus,
 			
 			@RequestParam(value="chatness", required=false) String chatnessLevel,
 			@RequestParam(value="music", required=false) String musicOnBoard,
@@ -112,7 +112,7 @@ public class CopyOfUserParameterController {
 			
 			
 			System.out.println("obj "+ social +",list "+ slist + " link "+social.getLink() + " type "+social.getType());
-			System.out.println("FB "+facebook +" , TW " +twitter + ",YT "+ youtube);
+			System.out.println("FB "+facebook +" , TW " +twitter + ",GP "+ gplus);
 			
 			
 			if(!facebook.equals("")){
@@ -131,12 +131,12 @@ public class CopyOfUserParameterController {
 				model.addAttribute("tw",social);
 				System.out.println("link "+social.getLink()+ " type "+social.getType());
 			}
-			if(!youtube.equals("")){
+			if(!gplus.equals("")){
 				social = new SocialNetworkProfile();
-				social.setLink(youtube);
-				social.setType("YOUTUBE");
+				social.setLink(gplus);
+				social.setType("GPLUS");
 				slist.add(social);
-				model.addAttribute("yt",social);
+				model.addAttribute("gp",social);
 				System.out.println("link "+social.getLink()+ " type "+social.getType());
 			}
 			

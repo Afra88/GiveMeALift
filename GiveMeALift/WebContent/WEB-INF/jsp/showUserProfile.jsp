@@ -92,7 +92,6 @@
 							
 							
 							<td>
-							--${user.profilePhoto}::
 							<c:choose>
 								<c:when test="${user.profilePhoto!=null}">
 <%-- 								<img src="/GiveMeALift/avatars/${user.id}.jpg" width="150" --%>
@@ -138,8 +137,8 @@
 						</tr>
 						<tr>
 							<td>
-								<img height="25px" src="images/social/yt.png" />
-								<input id="ytUrl" name="ytUrl" type="text" placeholder="www.youtube.com/Nome" value="${yt.getLink()}"	maxlength="50">
+								<img height="25px" src="images/social/gp.png" />
+								<input id="gpUrl" name="gpUrl" type="text" placeholder="plus.google.com/Nome" value="${gp.getLink()}"	maxlength="50">
 							</td>			
 						</table>
 				</div>

@@ -254,8 +254,8 @@
 <!-- 											<img src="images/social/tw.png">  -->
 <%-- 											<input type="text" value="${list.get(i).getLink()" readonly="readonly"> --%>
 <%-- 										</c:if> --%>
-<%-- 										<c:if test="${list.get(i).getType() == 'YT'}"> --%>
-<!-- 											<img src="images/social/yt.png">  -->
+<%-- 										<c:if test="${list.get(i).getType() == 'GP'}"> --%>
+<!-- 											<img src="images/social/gp.png">  -->
 <%-- 											<input type="text" value="${list.get(i).getLink()" readonly="readonly"> --%>
 <%-- 										</c:if>				 --%>
 <%-- 									</c:forEach> --%>
