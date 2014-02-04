@@ -1,5 +1,6 @@
 package it.unical.mat.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,12 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 
-//FIXME quando decisi i costi dei detour
 @Entity
 @Table(name="LIFT_DETOUR")
 public class LiftDetour extends DomainObject {
@@ -24,17 +26,15 @@ public class LiftDetour extends DomainObject {
 	@Column(name="DETOUR_COST")
 	private Integer cost;
 	
-//	private List<Lift> liftList;
+	private Lift lift;
 	
 	public LiftDetour(LiftPoint pickUpPoint, LiftPoint dropOffPoint) {
 		super();
 		this.pickUpPoint = pickUpPoint;
 		this.dropOffPoint = dropOffPoint;
-//		liftList=new LinkedList<Lift>();
 	}
 
 	public LiftDetour(){
-//		liftList=new LinkedList<Lift>();
 	}
 
 	@Override
@@ -78,21 +78,23 @@ public class LiftDetour extends DomainObject {
 			this.pickUpPoint=ld.pickUpPoint;
 		if(ld.cost!=null)
 			this.cost=ld.cost;
-//		if(ld.liftList!=null)
-//			this.liftList=ld.liftList;
+		if(ld.lift!=null)
+			this.lift=ld.lift;
 	}
 	
-//	@ManyToMany(fetch=FetchType.LAZY,cascade=CascadeType.ALL ) //cascade=CascadeType.ALL
+//	@Cascade(value=org.hibernate.annotations.CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL) //cascade=CascadeType.ALL
+	@JoinColumn(name="lift_id")
 //	@JoinTable(name = "LIFT_DETOURS_JOIN",
 //				joinColumns = { @JoinColumn (name = "LIFT_DETOUR_ID") },
 //				inverseJoinColumns = { @JoinColumn(name = "LIFT_ID") })
-//	public List<Lift> getLiftList() {
-//		return liftList;
-//	}
-//
-//	public void setLiftList(List<Lift> liftList) {
-//		this.liftList = liftList;
-//	}
+	public Lift getLift() {
+		return lift;
+	}
+
+	public void setLift(Lift lift) {
+		this.lift = lift;
+	}
 	
 	public Integer getCost() {
 		return cost;

@@ -191,25 +191,13 @@
 				<td>
 					<c:choose>
 						<c:when test="${userOffering.profilePhoto!=null}">
-							<img src="${userOffering.profilePhoto}" />
+							<img height="140px" width="140px" src="${userOffering.profilePhoto}" />
 						</c:when>
 						<c:otherwise>
-		        			<img height="120px" src="avatars/default_user.jpg" />
+		        			<img height="140px" width="140px" src="avatars/default_user.jpg" />
 		        		</c:otherwise>
 					</c:choose>
-				</td>
-				<td>
-					<p><b>${userNickName}</b></p>
-					<p>${userAge} anni</p>
 					<div>
-					<c:choose>
-						<c:when test="${userOffering.personalPreference.smoking==true}">
-							<img src="images/profile/smoking.png" >
-						</c:when>
-						<c:when test="${userOffering.personalPreference.smoking==false}">
-							<img src="images/profile/NoSmoking.png" >
-						</c:when>
-					</c:choose>
 					<c:choose>
 						<c:when test="${userOffering.personalPreference.chatnessLevel==1}">
 							<img src="images/profile/chatness1.png" >
@@ -221,7 +209,14 @@
 							<img src="images/profile/chatness3.png" >
 						</c:when>
 					</c:choose>
-					</div>
+					<c:choose>
+						<c:when test="${userOffering.personalPreference.smoking==true}">
+							<img src="images/profile/smoking.png" >
+						</c:when>
+						<c:when test="${userOffering.personalPreference.smoking==false}">
+							<img src="images/profile/NoSmoking.png" >
+						</c:when>
+					</c:choose>
 					<c:choose>
 						<c:when test="${userOffering.personalPreference.music==true}">
 							<img src="images/profile/music.png" >
@@ -230,7 +225,6 @@
 							<img src="images/profile/NoMusic.png" >
 						</c:when>
 					</c:choose>
-					<div>
 					<c:choose>
 						<c:when test="${userOffering.personalPreference.petsOnBoard==true}">
 							<img src="images/profile/pets.png" >
@@ -239,15 +233,11 @@
 							<img src="images/profile/NoPets.png" >
 						</c:when>
 						</c:choose>
-					<c:choose>
-						<c:when test="${userOffering.personalPreference.childrensOnBoard==true}">
-							<img src="images/profile/children.png" >
-						</c:when>
-						<c:when test="${userOffering.personalPreference.childrensOnBoard==false}">
-							<img src="images/profile/NoChildren.png" >
-						</c:when>
-					</c:choose>
 					</div>
+				</td>
+				<td>
+					<p><b>${userNickName}</b></p>
+					<p>${userAge} anni</p>
 					
 				</td>
 			</tr>

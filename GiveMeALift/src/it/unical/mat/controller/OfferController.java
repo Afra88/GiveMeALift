@@ -343,6 +343,8 @@ public class OfferController {
 				
 		java.sql.Date sd = new java.sql.Date(departureDate.getTime()); // TODO controllare e fare una conversione precisa
 
+		Lift l = new Lift(totcost, nSeats, possibleDetour, departureTime, sd, path.get(0), path.get(path.size()-1));
+
 		List<LiftDetour> detours = new ArrayList<LiftDetour>();
 		for (int i = 0; i < path.size()-1; i++) {
 			for (int j = i+1; j < path.size(); j++) {
@@ -355,6 +357,7 @@ public class OfferController {
 					for (int k = i; k < j; k++)
 						cost+=Integer.parseInt(costs[k]);						
 				}
+				tmpDetour.setLift(l);
 				tmpDetour.setCost(cost);
 				detours.add(tmpDetour);
 			}			
@@ -363,7 +366,6 @@ public class OfferController {
 		System.out.println("Partenza data: "+sd);
 		System.out.println("tempo partenze: "+departureTime);
 		
-		Lift l = new Lift(totcost, nSeats, possibleDetour, departureTime, sd, path.get(0), path.get(path.size()-1));
 		RegisteredUser user = 	(RegisteredUser) session.getAttribute("user");		
 		l.setDetours(detours);
 		l.setLiftPreferences(lp);
@@ -378,6 +380,7 @@ public class OfferController {
 			System.out.println("Partenza data: "+srd);
 			System.out.println("tempo partenze: "+returnTime);
 			
+			Lift lr = new Lift(totcost, nSeats, possibleDetour, returnTime, srd,  path.get(path.size()-1), path.get(0));		
 			List<LiftDetour> detoursReturn = new ArrayList<LiftDetour>();
 			for (int i = path.size()-1; i>0 ; i--) {
 				for (int j = i-1; j >=0; j--) {
@@ -390,12 +393,12 @@ public class OfferController {
 						for (int k = j; k < i; k++)
 							cost+=Integer.parseInt(costs[k]);						
 					}
+					tmpDetour.setLift(lr);
 					tmpDetour.setCost(cost);
 					detoursReturn.add(tmpDetour);
 				}			
 			}
 			
-			Lift lr = new Lift(totcost, nSeats, possibleDetour, returnTime, srd,  path.get(path.size()-1), path.get(0));		
 			lr.setDetours(detoursReturn);
 			lr.setLiftPreferences(lp);
 			lr.setUserOffering(user);
@@ -535,6 +538,8 @@ public class OfferController {
 				
 		java.sql.Date sd = new java.sql.Date(departureDate.getTime()); // TODO controllare e fare una conversione precisa
 
+		Lift l = new Lift(totcost, nSeats, possibleDetour, departureTime, sd, path.get(0), path.get(path.size()-1));
+
 		List<LiftDetour> detours = new ArrayList<LiftDetour>();
 		for (int i = 0; i < path.size()-1; i++) {
 			for (int j = i+1; j < path.size(); j++) {
@@ -547,6 +552,7 @@ public class OfferController {
 					for (int k = i; k < j; k++)
 						cost+=Integer.parseInt(costs[k]);						
 				}
+				tmpDetour.setLift(l);
 				tmpDetour.setCost(cost);
 				detours.add(tmpDetour);
 			}			
@@ -555,7 +561,6 @@ public class OfferController {
 		System.out.println("Partenza data: "+sd);
 		System.out.println("tempo partenze: "+departureTime);
 		
-		Lift l = new Lift(totcost, nSeats, possibleDetour, departureTime, sd, path.get(0), path.get(path.size()-1));
 		RegisteredUser user = 	(RegisteredUser) session.getAttribute("user");		
 		l.setDetours(detours);
 		l.setLiftPreferences(lp);
@@ -570,7 +575,7 @@ public class OfferController {
 			System.out.println("Partenza data: "+srd);
 			System.out.println("tempo partenze: "+returnTime);
 			
-			
+			Lift lr = new Lift(totcost, nSeats, possibleDetour, returnTime, srd,  path.get(path.size()-1), path.get(0));	
 			List<LiftDetour> detoursReturn = new ArrayList<LiftDetour>();
 			for (int i = path.size()-1; i>0 ; i--) {
 				for (int j = i-1; j >=0; j--) {
@@ -583,12 +588,12 @@ public class OfferController {
 						for (int k = j; k < i; k++)
 							cost+=Integer.parseInt(costs[k]);						
 					}
+					tmpDetour.setLift(lr);
 					tmpDetour.setCost(cost);
 					detoursReturn.add(tmpDetour);
 				}			
 			}
 			
-			Lift lr = new Lift(totcost, nSeats, possibleDetour, returnTime, srd,  path.get(path.size()-1), path.get(0));		
 			lr.setDetours(detoursReturn);
 			lr.setLiftPreferences(lp);
 			lr.setIsReturn(true);

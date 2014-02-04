@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -113,10 +114,11 @@ public class Lift extends DomainObject {
 		this.nSeat = nSeat;
 	}
 
-	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL) //FIXME quando è fatto detour cost
-	@JoinTable(name = "LIFT_DETOURS_JOIN",
-				joinColumns = { @JoinColumn (name = "LIFT_ID") },
-				inverseJoinColumns = { @JoinColumn(name = "DETOUR_ID") })
+//	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="lift",cascade=CascadeType.ALL)
+//	@JoinTable(name = "LIFT_DETOURS_JOIN",
+//				joinColumns = { @JoinColumn (name = "LIFT_ID") },
+//				inverseJoinColumns = { @JoinColumn(name = "DETOUR_ID") })
 	public List<LiftDetour> getDetours() {
 		return detours;
 	}

@@ -144,8 +144,7 @@
 				<div class="orangeTable" style="margin-top: 20px;">
 
 					<!-- 	<form method="get" action="ModifyUserCar"> -->
-					<form:form modelAttribute="uploadForm" method="get"
-						action="SubmitCar" enctype="multipart/form-data">
+					<form:form modelAttribute="uploadForm" method="post" action="SubmitCar" enctype="multipart/form-data">
 
 						<table id="modifyMyCar">
 							<tr>
