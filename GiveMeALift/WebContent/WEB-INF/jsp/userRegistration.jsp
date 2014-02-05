@@ -41,6 +41,14 @@
 	</script>	
 </head>
 <body onload="initialize()" >
+<header>
+  <div class="container_12">
+    <div class="grid_12">
+	<h1><a href="/GiveMeALift"><img src="images/logo.png" alt=""></a> </h1>   
+	<%@include file="classicMenu.jsp" %>
+	</div>
+	</div>
+</header>
 <div class="container_12">
 	<div class="grid_12">
 	<form method="post" id="form0" >
@@ -61,7 +69,7 @@
 								</c:forEach>
 								</select><br /><br />
 		
-		<input id="send" type="button" value="invia" onclick="setAction();" /><br /><br />
+		<input id="send" type="button" class="button cyan" value="invia" onclick="setAction();" /><br /><br />
 	</form>
 	</div>
 </div>
