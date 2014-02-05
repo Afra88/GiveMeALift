@@ -72,13 +72,13 @@ public class UserController {
 //				Administrator user=new Administrator();
 //				user.setName("Admin");
 //				user.setSurname("Admin");
-//				user.setEmail("admin@admin.aa");
+//				user.setEmail("admin@a.aa");
 //				user.setGender("M");
 //				user.setBirthYear(1975); 
 //				user.setPhone("0984000001");
 //				user.setPassword("aa");
-//				Address ad = new Address("Viale Mancini", "Cosenza", "Italia");
-//				user.setAddress(ad);
+////				Address ad = new Address("Viale Mancini", "Cosenza", "Italia");
+////				user.setAddress(ad);
 //				am.insert(user);
 				System.out.println("Admin");
 				Administrator a=(Administrator) am.findAdministratorByEmailAndPassword(email, psw);

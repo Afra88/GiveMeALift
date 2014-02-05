@@ -186,9 +186,19 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value="BookALift")
-	public String handleBooking(@RequestParam String lift, @RequestParam String seat,Model model, HttpSession session){
-		if(session.getAttribute("user")!=null && lift!=null && !lift.equals("")){
+	public String handleBooking(@RequestParam String lift, @RequestParam String seat, Model model, HttpSession session){
+		RegisteredUser user=(RegisteredUser) session.getAttribute("user");
+		if(user!=null && lift!=null && !lift.equals("")){
 			LiftMapper lm=new LiftMapper();
+			Lift originalLift=lm.findById(lift);
+			if(originalLift.getLiftPreferences().getPinkTrip()==true && !user.getGender().equals("F")){
+				model.addAttribute("out", "La prenotazione non è avvenuta, è un viaggio rosa, per sole donne.");
+				return "bookALift";
+			}
+			if(originalLift.getnSeat()>0){
+				model.addAttribute("out", "La prenotazione non è avvenuta, i posti sono esauriti.");
+				return "bookALift";
+			}
 			Lift l=new Lift();
 			int nSeat=Integer.parseInt(seat)-1;
 			l.setnSeat(nSeat);

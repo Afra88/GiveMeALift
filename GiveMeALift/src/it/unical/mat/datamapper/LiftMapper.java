@@ -1,8 +1,10 @@
 package it.unical.mat.datamapper;
 
+import it.unical.mat.controller.Compare;
 import it.unical.mat.domain.DomainObject;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
+import it.unical.mat.service.ParseDate;
 import it.unical.mat.util.HibernateUtil;
 
 import java.util.Date;
@@ -14,12 +16,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.StringType;
 
 public class LiftMapper extends AbstractMapper {
 	
@@ -237,5 +244,112 @@ public class LiftMapper extends AbstractMapper {
 		}
 	}
 	
+	public HashMap<String,Integer> findLiftStatsByYear(int year) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {			
+			String findStatement = "select month(Lift.departureDate) as M, count(Lift_id) as C from Lift "
+					+ " where year(Lift.departureDate)=:par1"
+					+ " group by month(Lift.departureDate) ";
+			
+			transaction = session.beginTransaction();
+			Query query = session.createSQLQuery(findStatement).addScalar("M", StringType.INSTANCE).addScalar("C", StringType.INSTANCE);
+			query.setInteger("par1", year);
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			@SuppressWarnings("unchecked")
+			List<Map<String,String>> aliasToValueMapList=query.list();
+			HashMap<String, Integer> result=new HashMap<String, Integer>();
+			for (Map<String, String> map : aliasToValueMapList) {
+				Set<String> keys=map.keySet();
+				String month = null;
+				for (String string : keys) {
+					if(string.equals("M"))
+						month=map.get(string);
+					if(string.equals("C"))
+						result.put(ParseDate.months[Integer.parseInt(month)-1], Integer.parseInt(map.get(string)));
+				}
+			}
+			for (Entry<String, Integer> res : result.entrySet()) {
+				System.out.println(res.getKey()+" "+res.getValue());
+			}
+			transaction.commit();
+			return result;
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return null;
+	}
+	
+	
+	public HashMap<String,Integer> findLiftStatsByMonthAndYear(int year,int month) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {		
+			String findStatement = "select DAYOFMONTH(Lift.departureDate) as M, count(Lift_id) as C from Lift "
+					+ " where year(Lift.departureDate)=:par1 and month(Lift.departureDate)=:par2 " 
+					+ " group by DAYOFMONTH(Lift.departureDate) ";			
+			transaction = session.beginTransaction();
+			Query query = session.createSQLQuery(findStatement).addScalar("M", StringType.INSTANCE).addScalar("C", StringType.INSTANCE);
+			query.setInteger("par1", year);
+			query.setInteger("par2", month);
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			@SuppressWarnings("unchecked")
+			List<Map<String,String>> aliasToValueMapList=query.list();
+			HashMap<String, Integer> result=new HashMap<String, Integer>();
+			for (Map<String, String> map : aliasToValueMapList) {
+				Set<String> keys=map.keySet();
+				String day = null;
+				for (String string : keys) {
+					if(string.equals("M"))
+						day=map.get(string);
+					if(string.equals("C"))
+						result.put(day, Integer.parseInt(map.get(string)));
+				}
+			}
+			for (Entry<String, Integer> res : result.entrySet()) {
+				System.out.println(res.getKey()+" "+res.getValue());
+			}
+			transaction.commit();
+			return result;
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return null;
+	}
+
+
+	public int findCountSeatOldLift(int i, Compare c) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {		
+			String findStatement="";
+			if(c==Compare.EQ)
+				findStatement= "select count(Lift_id) as C from Lift "
+					+ " where nSeat=:par1 and departureDate<=CURRENT_DATE ";			
+			else if(c==Compare.GQ)
+				findStatement = "select count(Lift_id) as C from Lift "
+						+ " where nSeat>=:par1 and departureDate<=CURRENT_DATE ";
+			else 
+				return 0;
+			transaction = session.beginTransaction();
+			Query query = session.createSQLQuery(findStatement).addScalar("C", IntegerType.INSTANCE);
+			query.setInteger("par1", i);
+			int result=(Integer) query.uniqueResult();
+			transaction.commit();
+			return result;
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return 0;
+	}
 }
 

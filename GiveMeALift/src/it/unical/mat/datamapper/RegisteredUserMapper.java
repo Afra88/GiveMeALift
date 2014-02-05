@@ -169,16 +169,17 @@ public class RegisteredUserMapper extends AbstractMapper {
 				return null;
 	}
 	
-	public HashMap<String,Integer> findMemberByMonth() {
+	public HashMap<String,Integer> findMemberByYear(int year) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {			
 			String findStatement = "select month(User_Activity.MEMBERSINCE) as M, count(User_id) as C from User,User_Activity "
-					+ " where User.User_ID=User_Activity.MEMBER_ACTIVITY_ID"
+					+ " where User.User_ID=User_Activity.MEMBER_ACTIVITY_ID and year(User_Activity.MEMBERSINCE)=:par1"
 					+ " group by month(User_Activity.MEMBERSINCE) ";
 			
 			transaction = session.beginTransaction();
 			Query query = session.createSQLQuery(findStatement).addScalar("M", StringType.INSTANCE).addScalar("C", StringType.INSTANCE);
+			query.setInteger("par1", year);
 			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
 			@SuppressWarnings("unchecked")
 			List<Map<String,String>> aliasToValueMapList=query.list();
@@ -191,6 +192,48 @@ public class RegisteredUserMapper extends AbstractMapper {
 						month=map.get(string);
 					if(string.equals("C"))
 						result.put(ParseDate.months[Integer.parseInt(month)-1], Integer.parseInt(map.get(string)));
+				}
+			}
+			for (Entry<String, Integer> res : result.entrySet()) {
+				System.out.println(res.getKey()+" "+res.getValue());
+			}
+			transaction.commit();
+			return result;
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return null;
+	}
+	
+	
+	public HashMap<String,Integer> findMemberByMonthAndYear(int year,int month) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {			
+			String findStatement = "select DAYOFMONTH(User_Activity.MEMBERSINCE) as M, count(User_id) as C from User,User_Activity "
+					+ " where User.User_ID=User_Activity.MEMBER_ACTIVITY_ID and year(User_Activity.MEMBERSINCE)=:par1"
+					+ " and month(User_Activity.MEMBERSINCE)=:par2 "
+					+ " group by DAYOFMONTH(User_Activity.MEMBERSINCE) ";
+			
+			transaction = session.beginTransaction();
+			Query query = session.createSQLQuery(findStatement).addScalar("M", StringType.INSTANCE).addScalar("C", StringType.INSTANCE);
+			query.setInteger("par1", year);
+			query.setInteger("par2", month);
+			query.setResultTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+			@SuppressWarnings("unchecked")
+			List<Map<String,String>> aliasToValueMapList=query.list();
+			HashMap<String, Integer> result=new HashMap<String, Integer>();
+			for (Map<String, String> map : aliasToValueMapList) {
+				Set<String> keys=map.keySet();
+				String day = null;
+				for (String string : keys) {
+					if(string.equals("M"))
+						day=map.get(string);
+					if(string.equals("C"))
+						result.put(day, Integer.parseInt(map.get(string)));
 				}
 			}
 			for (Entry<String, Integer> res : result.entrySet()) {
