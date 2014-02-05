@@ -41,8 +41,6 @@
 	</script>	
 </head>
 <body onload="initialize()" >
-<%@include file="chooseMenu.jsp"%>
-
 <div class="container_12">
 	<div class="grid_12">
 	<form method="post" id="form0" >
