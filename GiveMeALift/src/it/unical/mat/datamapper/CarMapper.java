@@ -10,22 +10,22 @@ import org.hibernate.Transaction;
 
 public class CarMapper extends AbstractMapper {
 
-	public boolean deleteCar(Car car, RegisteredUser user){
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Transaction transaction = null;
-		try {
-			transaction = session.beginTransaction();
-			user.setCar(null);
-			session.update(user);
-			session.delete(car);		
-			transaction.commit();
-			return true;
-		} catch (HibernateException e) {
-			e.printStackTrace();
-			transaction.rollback();
-			return false;
-		} finally {
-			session.close();
-		}
-	}
+//	public boolean deleteCar(Car car, RegisteredUser user){
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		Transaction transaction = null;
+//		try {
+//			transaction = session.beginTransaction();
+//			user.setCar(null);
+//			session.update(user);
+//			session.delete(car);		
+//			transaction.commit();
+//			return true;
+//		} catch (HibernateException e) {
+//			e.printStackTrace();
+//			transaction.rollback();
+//			return false;
+//		} finally {
+//			session.close();
+//		}
+//	}
 }

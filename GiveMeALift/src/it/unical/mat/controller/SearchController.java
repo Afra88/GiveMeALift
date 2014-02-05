@@ -202,8 +202,8 @@ public class SearchController {
 			Lift l=new Lift();
 			int nSeat=Integer.parseInt(seat)-1;
 			l.setnSeat(nSeat);
-			boolean updated=lm.update(l, Long.parseLong(lift));
-			if(updated)
+			Lift updated=(Lift) lm.update(l, Long.parseLong(lift));
+			if(updated!=null)
 				model.addAttribute("out", "La prenotazione è avvenuta con successo.");
 			else
 				model.addAttribute("out", "La prenotazione non è avvenuta. Riprovare in seguito.");

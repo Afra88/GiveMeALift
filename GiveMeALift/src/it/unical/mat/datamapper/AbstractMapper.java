@@ -10,7 +10,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import it.unical.mat.domain.Car;
 import it.unical.mat.domain.DomainObject;
+import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.util.HibernateUtil;
 
 public abstract class AbstractMapper {
@@ -50,23 +52,22 @@ public abstract class AbstractMapper {
 		}
 	}
 	
-	public final boolean update(DomainObject object2, long id){
+	public final DomainObject update(DomainObject object2, long id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
 			DomainObject object= (DomainObject) session.get(object2.getClass(), id);
 			object.copy(object2);
-//			session.update(object);
 			transaction.commit();
-			return true;
+			return object;
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			transaction.rollback();
 		} finally {
 			session.close();		
 		}
-		return false;	
+		return null;	
 	}
 
 	protected final List<DomainObject> find(String findStatement,Map<String,Object> parameters, boolean isSql){
@@ -85,7 +86,8 @@ public abstract class AbstractMapper {
 						String objectType=parameters.get(key).getClass().getSimpleName();
 						String methodeToInvoke="set"+objectType;
 						Method m=null;
-						if(parameters.get(key).getClass().getSuperclass().getSimpleName().equals("User") || parameters.get(key).getClass().getSuperclass().getSimpleName().equals("DomainObject")){					
+						if(parameters.get(key).getClass().getPackage().equals("it.unical.mat.domain")){
+							//getSuperclass().getSimpleName().equals("User") || parameters.get(key).getClass().getSuperclass().getSimpleName().equals("DomainObject")){						
 							methodeToInvoke="setEntity";
 							m=query.getClass().getMethod(methodeToInvoke, key.getClass(), Object.class);
 						}

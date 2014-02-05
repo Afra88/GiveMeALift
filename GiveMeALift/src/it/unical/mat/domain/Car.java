@@ -19,8 +19,6 @@ public class Car extends DomainObject {
 	private String color;
 	@Column(name="CONFORT")
 	private Integer confort;
-	@Column(name="COMFORT")
-	private Integer comfort;
 	@Column(name="CAR_PHOTO")
 	private String carPhoto;
 	
@@ -59,28 +57,21 @@ public class Car extends DomainObject {
 		this.color = color;
 	}
 
-	public Integer getConfort() {
-		return confort;
-	}
-
-	public void setConfort(Integer confort) {
-		this.confort = confort;
-	}
 	
 	public String getCarPhoto() {
 		return carPhoto;
 	}
 	
-	public Integer getComfort() {
-		return comfort;
+	public Integer getConfort() {
+		return confort;
 	}
 	
 	public void setCarPhoto(String carPhoto) {
 		this.carPhoto = carPhoto;
 	}
 	
-	public void setComfort(Integer comfort) {
-		this.comfort = comfort;
+	public void setConfort(Integer confort) {
+		this.confort = confort;
 	}
 
 	@Override
@@ -90,12 +81,10 @@ public class Car extends DomainObject {
 			this.color=c.color;
 		if(c.brand!=null)
 			this.brand=c.brand;
-		if(c.confort!=null)
-			this.confort=c.confort;
 		if(c.model!=null)
 			this.model=c.model;
-		if(c.comfort!=null)
-			this.comfort=c.comfort;
+		if(c.confort!=null)
+			this.confort=c.confort;
 		if(c.carPhoto!=null)
 			this.carPhoto=c.carPhoto;
 	}
@@ -108,7 +97,6 @@ public class Car extends DomainObject {
 		result = prime * result
 				+ ((carPhoto == null) ? 0 : carPhoto.hashCode());
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
-		result = prime * result + ((comfort == null) ? 0 : comfort.hashCode());
 		result = prime * result + ((confort == null) ? 0 : confort.hashCode());
 		result = prime * result + ((model == null) ? 0 : model.hashCode());
 		return result;
@@ -137,11 +125,6 @@ public class Car extends DomainObject {
 			if (other.color != null)
 				return false;
 		} else if (!color.equals(other.color))
-			return false;
-		if (comfort == null) {
-			if (other.comfort != null)
-				return false;
-		} else if (!comfort.equals(other.comfort))
 			return false;
 		if (confort == null) {
 			if (other.confort != null)

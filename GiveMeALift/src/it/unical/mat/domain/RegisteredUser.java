@@ -112,10 +112,13 @@ public class RegisteredUser extends User {
 			this.showContacts=u.showContacts;
 		if(u.profilePhoto!=null)
 			this.profilePhoto=u.profilePhoto;
-		if(u.car!=null && this.car!=null)
+		if(u.car!=null && this.car!=null){
 			this.car.copy(u.car);
-		if(u.car!=null  && this.car==null)
+		}
+		if(u.car!=null  && this.car==null){
 			this.car=u.car;
+			this.car.copy(u.car);
+		}
 		if(u.personalPreference!=null && this.personalPreference!=null)
 			this.personalPreference.copy(u.personalPreference);
 		if(u.personalPreference!=null && this.personalPreference==null)
@@ -189,7 +192,8 @@ public class RegisteredUser extends User {
 		this.profilePhoto = profilePhoto;
 	}
 	
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@OneToOne(fetch=FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	public Car getCar() {
 		return car;

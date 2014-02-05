@@ -214,16 +214,15 @@ public class CopyOfUserParameterController {
 //			ru.setProfilePhoto(filename);
 			
 									
-			boolean modified = rm.update(ru, u.getId());
-			System.out.println("Userupdate: "+ modified);
+			RegisteredUser uNew= (RegisteredUser) rm.update(ru, u.getId());
 			
-			if(modified){
+			if(uNew!=null){
 				model.addAttribute("modified", true);
 				
 				System.out.println("foto "+ ru.getProfilePhoto());
 
 				 												
-				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
+//				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
 				
 //				 /* FIXME  QUESTO NUOVO ruNew NON AGGIORNA IL CAMPO FOTO
 //				  * 											STAMPA foto null*/
@@ -232,12 +231,12 @@ public class CopyOfUserParameterController {
 				
 				
 				
-				for (SocialNetworkProfile s : ruNew.getListSocialNetworkProfiles()) {
-					System.out.println("*************"+s.getLink());
-				}
-				
-		
-				session.setAttribute("user", ruNew);
+//				for (SocialNetworkProfile s : ruNew.getListSocialNetworkProfiles()) {
+//					System.out.println("*************"+s.getLink());
+//				}
+//				
+//		
+				session.setAttribute("user", uNew);
 			}
 			else
 				model.addAttribute("modified", false);
@@ -296,7 +295,7 @@ public class CopyOfUserParameterController {
 //			@RequestParam("photoCar") String photoCar,
 			Model model, HttpSession session){
 	
-	model.addAttribute("year", year); // <-- da aggiungere in Car
+		model.addAttribute("year", year); // <-- da aggiungere in Car
 		
 		RegisteredUser u = (RegisteredUser) session.getAttribute("user");
 	
@@ -324,40 +323,26 @@ public class CopyOfUserParameterController {
 				c=4;
 			 
 			car.setConfort(c);
-		
-			
-			//--------------- FOTO ---------------
 			
 			String filename = u.getId()+"_car.jpg";	
-			
 			uploadPhoto(uploadForm, filename);	       
-			 
-		    //--------------- FOTO ---------------
-		         
-//			car.setCarPhoto(filename);
 			car.setCarPhoto("avatars/"+filename);
+			u.setCar(null);
 			ru.setCar(car);
-
 			System.out.println("userCar:"+ ru.getCar().getBrand());
-
-			boolean modified = rm.update(ru, u.getId());
+			RegisteredUser ruNew=  (RegisteredUser)rm.update(ru, u.getId());
 			
-			
-			System.out.println("In submitCar:"+
-								"---update user per new car: "+ modified);
-			
-
-			if(modified){
+			if(ruNew!=null){
 				
-				System.out.println(modified + "Utente modif");
+//				System.out.println(modified + "Utente modif");
 				
 				model.addAttribute("modified", true);
-				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
-				
-				/*FIXME problema aggiornamento perchè -->  ruNew car:null  */
-				
-				System.out.println("ruNew car:"+ ruNew.getCar().getBrand());
-				
+//				RegisteredUser ruNew= rm.findRegisteredUserById(u.getId());
+//				
+//				/*FIXME problema aggiornamento perchè -->  ruNew car:null  */
+//				
+//				System.out.println("ruNew car:"+ ruNew.getCar());
+//				
 			    session.setAttribute("user", ruNew);
 			}
 			else
@@ -473,7 +458,7 @@ public class CopyOfUserParameterController {
 //			if(carUpdated){
 //				m.addAttribute("carUpdated", true);
 				ru.setCar(car);
-				modified = rm.update(ru, u.getId());
+//				modified = rm.update(ru, u.getId());
 //			}
 //			else
 //				m.addAttribute("carUpdated", true);		//è false -- metto true solo per prova
@@ -517,7 +502,7 @@ public class CopyOfUserParameterController {
 				f.delete();
 			//--------------- FOTO ---------------
 			
-			boolean deleted = cm.deleteCar(car, ru);
+			boolean deleted = cm.delete(car.getId(), Car.class);
 			if(deleted)
 				model.addAttribute("error",false);
 			else
