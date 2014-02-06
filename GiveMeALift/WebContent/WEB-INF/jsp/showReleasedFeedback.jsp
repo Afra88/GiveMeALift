@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Feedback ricevuti</title>
+<title>Feedback lasciati</title>
 
 <link rel="stylesheet" href="css/login.css">
 <link rel="stylesheet" href="css/ourAdditions.css">
@@ -50,13 +50,18 @@
 									<c:forEach var="i" begin="0" end="${list.size()-1}" step="1">
 										<tr>
 											<td>
-												<%-- 							 ${receivers.get(i).computeNickname()} - <c:if test="${receivers.get(i).getGender()=='M'}"> Uomo</c:if> <c:if test="${receivers.get(i)=='F'}"> Donna</c:if> --%>
-												<br> <%-- 							<c:choose> --%> <%-- 								<c:when test="${receivers.get(i).profilePhoto!=null}"> --%>
-												<%-- 									<img src=" avatars/${receivers.get(i).getId()}.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>  --%>
-												<%-- 								</c:when> --%> <%-- 								<c:otherwise> --%>
-												<%-- 									<img src=" avatars/${receivers.get(i).getId()}.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>  --%>
-												<%-- 								</c:otherwise> --%> <%-- 								<img height="120px" src="avatars/default_user.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>   --%>
-												<%-- 							</c:choose> --%> Valutazione media:
+											 ${receivers.get(i).computeNickname()} - <c:if test="${receivers.get(i).getGender()=='M'}"> Uomo</c:if> <c:if test="${receivers.get(i)=='F'}"> Donna</c:if>
+ 												<br>
+ 												<c:choose>
+ 													<c:when test="${receivers.profilePhoto!=null}"> 
+														<img src=" ${receivers.profilePhoto}" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5> 
+													</c:when>
+													<c:otherwise>
+														<img src=" ${receivers.profilePhoto}" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5> 
+													</c:otherwise>
+														<img height="120px" src="avatars/default_user.jpg" /> <h5>(${receivers.get(i).computeAge()} anni) di ${receivers.get(i).getAddress().getCity()}</h5>  
+													</c:choose> 
+													Valutazione media:
 												${avg.get(i)} <c:if test="${avg.get(i)==0}">
 													<!-- 							<td> -->
 													<br>

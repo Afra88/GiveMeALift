@@ -7,6 +7,7 @@ import java.util.List;
 
 import it.unical.mat.datamapper.CarMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
+import it.unical.mat.datamapper.SocialNetworkProfileMapper;
 import it.unical.mat.domain.Address;
 import it.unical.mat.domain.Car;
 import it.unical.mat.domain.PersonalPreference;
@@ -41,30 +42,6 @@ public class CopyOfUserParameterController {
 		RegisteredUser u = (RegisteredUser)session.getAttribute("user");
 		
 		if(u!=null){
-//			PersonalPreference pref = u.getPersonalPreference();
-//			
-//			System.out.println("__"+pref);
-//			
-//			if (pref == null) {
-//				pref = new PersonalPreference();
-//				pref.setChatnessLevel(1);
-//				pref.setMusic(false);
-//				pref.setSmoking(false);
-//				pref.setPetsOnBoard(false);
-//				
-//
-//				u.setPersonalPreference(pref);				
-//				session.setAttribute("user", u);	
-//			}
-//			
-//			
-//			System.out.println(pref.getChatnessLevel());
-//			System.out.println(pref.getMusic());
-//			System.out.println(pref.getPetsOnBoard());
-//			System.out.println(pref.getSmoking());
-			
-			
-			
 			
 			return "showUserProfile";
 		}
@@ -115,6 +92,20 @@ public class CopyOfUserParameterController {
 			System.out.println("FB "+facebook +" , TW " +twitter + ",GP "+ gplus);
 			
 			
+//			
+//			if(u.getListSocialNetworkProfiles()!=null)
+//			{
+//				SocialNetworkProfileMapper sm = new SocialNetworkProfileMapper();
+//				List<SocialNetworkProfile> profiles = sm.findSocialNetwork(u);
+//				
+//				for (SocialNetworkProfile s: profiles) {
+//					profiles.add(s);
+//				}
+//				
+//				model.addAttribute("list", social);
+//			}
+			
+			
 			if(!facebook.equals("")){
 				social = new SocialNetworkProfile();
 				social.setLink(facebook);
@@ -151,38 +142,44 @@ public class CopyOfUserParameterController {
 			//PersonalPreference pref = rm.loadPersonalPreference(user.getId());
 			
 			PersonalPreference pref = null;
+			pref = new PersonalPreference();
 
-			if((chatnessLevel!=null && !chatnessLevel.equals("")) ||
-					(musicOnBoard!=null && !musicOnBoard.equals("")) ||
-					(smokingOnBoard!=null && !smokingOnBoard.equals("")) ||
-								(petsOnBoard!=null && !petsOnBoard.equals(""))){				
-
-							pref = new PersonalPreference();
-							System.out.println(chatnessLevel+" Smok "+smokingOnBoard+ " Pets "+petsOnBoard+" Music "+musicOnBoard);				
-
-							if(chatnessLevel.equals("1"))
-								pref.setChatnessLevel(1);
-							else if(chatnessLevel.equals("2"))
-								pref.setChatnessLevel(2);
-							else if(chatnessLevel.equals("3"))
-								pref.setChatnessLevel(3);		
-
-							if(musicOnBoard.equals("noMus"))
-								pref.setMusic(false);
-							else if (musicOnBoard.equals("yesMus"))
-								pref.setMusic(true);
-
-							if(smokingOnBoard.equals("noSmok"))
-								pref.setSmoking(false);
-							else if(smokingOnBoard.equals("yesSmok"))
-								pref.setSmoking(true);
-
-							if(petsOnBoard.equals("noPets"))
-								pref.setPetsOnBoard(false);
-							else if(petsOnBoard.equals("yesPets"))
-								pref.setPetsOnBoard(true);
-
+			if(chatnessLevel!=null && !chatnessLevel.equals("")) {
+//				pref = new PersonalPreference();
+				if(chatnessLevel.equals("1"))
+					pref.setChatnessLevel(1);
+				else if(chatnessLevel.equals("2"))
+					pref.setChatnessLevel(2);
+				else if(chatnessLevel.equals("3"))
+					pref.setChatnessLevel(3);	
 			}
+		
+			if(musicOnBoard!=null && !musicOnBoard.equals("")) {
+//				pref = new PersonalPreference();
+				if(musicOnBoard.equals("noMus"))
+					pref.setMusic(false);
+				else if (musicOnBoard.equals("yesMus"))
+					pref.setMusic(true);
+			}
+						
+			if(smokingOnBoard!=null && !smokingOnBoard.equals("")) {
+//				pref = new PersonalPreference();
+				if(smokingOnBoard.equals("noSmok"))
+					pref.setSmoking(false);
+				else if(smokingOnBoard.equals("yesSmok"))
+					pref.setSmoking(true);
+			}
+						
+			if(petsOnBoard!=null && !petsOnBoard.equals("")){				
+//				pref = new PersonalPreference();
+				if(petsOnBoard.equals("noPets"))
+					pref.setPetsOnBoard(false);
+				else if(petsOnBoard.equals("yesPets"))
+					pref.setPetsOnBoard(true);				
+			}
+			
+			System.out.println(chatnessLevel+" Smok "+smokingOnBoard+ " Pets "+petsOnBoard+" Music "+musicOnBoard);				
+
 			
 			Address a = new Address();
 			a = new Address();
@@ -535,12 +532,14 @@ public class CopyOfUserParameterController {
 			//--------------- FOTO ---------------
 			
 			boolean deleted = rm.deleteUser(ru);
-			if(deleted)
+			if(deleted){
 				model.addAttribute("error",false);
+				session.setAttribute("user", null);
+			}
 			else
 				model.addAttribute("error",true);
 			
-			return "showDeleteMsg";
+			return "showDeleteAccount";
 			
 		}
 		

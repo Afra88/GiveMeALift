@@ -397,6 +397,15 @@
 	</form:form>
 
 	<!--   </div> -->
+	
+	<form method=get action="DeleteRegUser">
+		<div class="btns">
+			<p align="center">
+				<input class="button red" value="Elimina Account" type="submit" />
+			</p>
+		</div>
+	</form>
+	
 
 	<footer>
 		<div class="container_12">

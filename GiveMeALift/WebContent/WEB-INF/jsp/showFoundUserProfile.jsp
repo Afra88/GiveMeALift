@@ -217,6 +217,15 @@
 									
 									METTERE I SOCIAL
 									
+									<c:choose> 
+									<c:when test="${list.size() != 0}">
+							
+								
+								
+									</c:when>
+									</c:choose>
+									
+									
 <%-- 							<c:choose> --%>
 <%-- 							<c:when test="${social != null}"> --%>
 <!-- 									Social Network -->

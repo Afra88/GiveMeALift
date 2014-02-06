@@ -33,90 +33,90 @@
 	<%@include file="chooseMenu.jsp"%>
 	<div class="content">
 		<div class="container_12">
-			<div class="grid_6">
-				<div class="greenTable">
+<!-- 			<div class="grid_6"> -->
+<!-- 				<div class="greenTable"> -->
 
 
-					<table id="personalAuto">
-						<tr>
-							<td colspan="2">La mia auto</td>
-						</tr>
+<!-- 					<table id="personalAuto"> -->
 <!-- 						<tr> -->
-<!-- 							<td>Anno</td> -->
-<!-- 							<td><input id="yearCar" name="yearCar" type="text" -->
-<%-- 								value="${year}"></input></td> --%>
+<!-- 							<td colspan="2">La mia auto</td> -->
 <!-- 						</tr> -->
-						<tr>
-							<td>Marca</td>
-							<td><input id="brandCar" name="brandCar" type="text"
-								value="${user.getCar().getBrand()}"></input></td>
-						</tr>
-						<tr>
-							<td>Modello</td>
-							<td><input id="modelCar" name="modelCar" type="text"
-								value="${user.getCar().getModel()}"></input></td>
-						</tr>
-						<tr>
-							<td>Colore</td>
-							<td><input id="colorCar" name="colorCar" type="text"
-								value="${user.getCar().getColor()}"></input></td>
-						</tr>
-						<tr>
-							<td>Confort</td>
-							<td><c:choose>
-									<c:when test="${user.getCar().getConfort() == 1}">
-										<input id="confortCar" name="confortCar" type="text"
-											value="base"></input>
-										<img height="20px" src="images/carConfort/base.png" />
-									</c:when>
-									<c:when test="${user.getCar().getConfort() == 2}">
-										<input id="confortCar" name="confortCar" type="text"
-											value="normale"></input>
-										<img height="20px" src="images/carConfort/normale.png" />
-									</c:when>
-									<c:when test="${user.getCar().getConfort() == 3}">
-										<input id="confortCar" name="confortCar" type="text"
-											value="confortevole"></input>
-										<img height="20px" src="images/carConfort/confortevole.png" />
-									</c:when>
-									<c:when test="${user.getCar().getConfort() == 4}">
-										<input id="confortCar" name="confortCar" type="text"
-											value="lusso"></input>
-										<img height="20px" src="images/carConfort/lusso.png" />
-									</c:when>
-								</c:choose>
-							</td>
-						</tr>
-						<tr>
-							<td>Foto</td>
-							<td>
+<!-- <!-- 						<tr> --> -->
+<!-- <!-- 							<td>Anno</td> --> -->
+<!-- <!-- 							<td><input id="yearCar" name="yearCar" type="text" --> -->
+<%-- <%-- 								value="${year}"></input></td> --%> --%>
+<!-- <!-- 						</tr> --> -->
+<!-- 						<tr> -->
+<!-- 							<td>Marca</td> -->
+<!-- 							<td><input id="brandCar" name="brandCar" type="text" -->
+<%-- 								value="${user.getCar().getBrand()}"></input></td> --%>
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<td>Modello</td> -->
+<!-- 							<td><input id="modelCar" name="modelCar" type="text" -->
+<%-- 								value="${user.getCar().getModel()}"></input></td> --%>
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<td>Colore</td> -->
+<!-- 							<td><input id="colorCar" name="colorCar" type="text" -->
+<%-- 								value="${user.getCar().getColor()}"></input></td> --%>
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<td>Confort</td> -->
+<%-- 							<td><c:choose> --%>
+<%-- 									<c:when test="${user.getCar().getConfort() == 1}"> --%>
+<!-- 										<input id="confortCar" name="confortCar" type="text" -->
+<!-- 											value="base"></input> -->
+<!-- 										<img height="20px" src="images/carConfort/base.png" /> -->
+<%-- 									</c:when> --%>
+<%-- 									<c:when test="${user.getCar().getConfort() == 2}"> --%>
+<!-- 										<input id="confortCar" name="confortCar" type="text" -->
+<!-- 											value="normale"></input> -->
+<!-- 										<img height="20px" src="images/carConfort/normale.png" /> -->
+<%-- 									</c:when> --%>
+<%-- 									<c:when test="${user.getCar().getConfort() == 3}"> --%>
+<!-- 										<input id="confortCar" name="confortCar" type="text" -->
+<!-- 											value="confortevole"></input> -->
+<!-- 										<img height="20px" src="images/carConfort/confortevole.png" /> -->
+<%-- 									</c:when> --%>
+<%-- 									<c:when test="${user.getCar().getConfort() == 4}"> --%>
+<!-- 										<input id="confortCar" name="confortCar" type="text" -->
+<!-- 											value="lusso"></input> -->
+<!-- 										<img height="20px" src="images/carConfort/lusso.png" /> -->
+<%-- 									</c:when> --%>
+<%-- 								</c:choose> --%>
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 							<td>Foto</td> -->
+<!-- 							<td> -->
 							
-							<c:choose>
-							<c:when test="${user.getCar().getCarPhoto()!=null}">
-								<img src="${user.getCar().getCarPhoto()}" height="120px" onerror="this.style.visibility = 'hidden'"> 
+<%-- 							<c:choose> --%>
+<%-- 							<c:when test="${user.getCar().getCarPhoto()!=null}"> --%>
+<%-- 								<img src="${user.getCar().getCarPhoto()}" height="120px" onerror="this.style.visibility = 'hidden'">  --%>
+<!-- <!-- 								<input name="files[0]" type="file" /> --> -->
+<%-- 							</c:when> --%>
+<%-- 							<c:otherwise> --%>
+<!-- 								<img height="120px" src="avatars/default_car.jpg" /> -->
 <!-- 								<input name="files[0]" type="file" /> -->
-							</c:when>
-							<c:otherwise>
-								<img height="120px" src="avatars/default_car.jpg" />
-								<input name="files[0]" type="file" />
-							</c:otherwise>
-						</c:choose>
+<%-- 							</c:otherwise> --%>
+<%-- 						</c:choose> --%>
 							
-<%-- 													<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%>
-<%-- 								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" width="150" --%>
-<!-- 								onerror="this.style.visibility = 'hidden'"> -->
+<%-- <%-- 													<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%> --%>
+<%-- <%-- 								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" width="150" --%> --%>
+<!-- <!-- 								onerror="this.style.visibility = 'hidden'"> --> -->
 								
-							</td>
-						</tr>
-						<tr>
-						</tr>
-					</table>
-				</div>
-			</div>
+<!-- 							</td> -->
+<!-- 						</tr> -->
+<!-- 						<tr> -->
+<!-- 						</tr> -->
+<!-- 					</table> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 
 
 			<!-- 	<div class="grid_4 prefix_1"> troppo piccola? -->
-			<div class="grid_6">
+<!-- 			<div class="grid_6" style="text-align: center;"> -->
 				<div class="orangeTable" style="margin-top: 20px;">
 
 					<!-- 	<form method="get" action="ModifyUserCar"> -->
@@ -124,7 +124,7 @@
 
 						<table id="modifyMyCar">
 							<tr>
-								<td colspan="2">Modifica Auto</td>
+								<td colspan="2">La mia Auto</td>
 							</tr>
 							<tr>
 								<td>Anno</td>
@@ -278,15 +278,27 @@
 							<tr>
 								<td>Foto</td>
 								<td>
-									<!-- 					<form name="myWebForm" action="fileupload" method="post" enctype="multipart/form-data">  -->
-									<!-- 						<form name="myWebForm" method="post" enctype="multipart/form-data">  -->
-									<!-- 					<input type="file" name="uploadFile"/><br> --> 
+								<c:choose>
+							<c:when test="${user.getCar().getCarPhoto()!=null}">
+								<img src="${user.getCar().getCarPhoto()}" height="120px" onerror="this.style.visibility = 'hidden'"> 
+								<input name="files[0]" type="file" />
+							</c:when>
+							<c:otherwise>
+								<img height="120px" src="avatars/default_car.jpg" />
+								<input name="files[0]" type="file" />
+							</c:otherwise>
+						</c:choose>
+						</td>
+<!-- 								<td> -->
+<!-- 														<form name="myWebForm" action="fileupload" method="post" enctype="multipart/form-data">  -->
+<!-- 															<form name="myWebForm" method="post" enctype="multipart/form-data">  -->
+<!-- 														<input type="file" name="uploadFile"/><br>  -->
 									
-									<input name="files[0]" type="file" /> 
+<!-- 									<input name="files[0]" type="file" />  -->
 									
-									<!-- 					<input value="Carica" type="submit"/>							 -->
-									<!-- 					</form> -->
-								</td>
+<!-- 														<input value="Carica" type="submit"/>							 -->
+<!-- 														</form> -->
+<!-- 								</td> -->
 							</tr>
 							<tr>
 							</tr>
@@ -300,7 +312,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+<!-- 	</div> -->
 	<form method=get action="DeleteUserCar">
 		<div class="btns">
 			<p align="center">

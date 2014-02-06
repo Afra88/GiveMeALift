@@ -9,7 +9,9 @@ import javax.swing.text.DateFormatter;
 
 import it.unical.mat.datamapper.FeedbackMapper;
 import it.unical.mat.datamapper.RegisteredUserMapper;
+import it.unical.mat.datamapper.SocialNetworkProfileMapper;
 import it.unical.mat.domain.Address;
+import it.unical.mat.domain.DomainObject;
 import it.unical.mat.domain.Feedback;
 import it.unical.mat.domain.PersonalPreference;
 import it.unical.mat.domain.RegisteredUser;
@@ -31,35 +33,7 @@ public class FeedBackController {
 
 	@RequestMapping(value="/UserSearchForFeedback")
 	public String userSearchForFeedback(Model model, HttpSession session){
-		if(session.getAttribute("user")!=null){
-			
-			
-//			//TODO DELETE
-//			RegisteredUser u = new RegisteredUser();
-//			RegisteredUserMapper rm = new RegisteredUserMapper();
-//			u.setName("Aaaa");
-//			u.setSurname("B");
-//			u.setBirthYear(1985);
-//			Address a = new Address();
-//			a.setCity("Torino");
-//			a.setStreet("Via Nazionale");
-//			a.setState("Italia");
-//			u.setAddress(a);
-//			u.setEmail("ab@mail.it");
-//			u.setPassword("aaaaaaaa");
-//			u.setGender("M");
-//			u.setDescription("ciaociao ciao");
-//			u.setMobilePhone("3");
-//			u.setPhone("0");
-//			PersonalPreference pref = new PersonalPreference();
-//			pref.setChatnessLevel(1);
-//			pref.setMusic(true);
-//			pref.setPetsOnBoard(true);
-//			pref.setSmoking(false);
-//			u.setPersonalPreference(pref);
-//			rm.insert(u);
-			
-			
+		if(session.getAttribute("user")!=null){	
 			return "userSearchForFeedback";
 		}
 		return "error";
@@ -77,9 +51,29 @@ public class FeedBackController {
 			RegisteredUser r = rm.findRegisteredUserByTelephone(telephone);
 			
 			if(r!=null){
-				System.out.println("cerca: " + r);
+				
 				model.addAttribute("receiver",r);
 				model.addAttribute("found", true);
+								
+				if(r.getUserActivity()!=null){
+					if(r.getUserActivity().getMemberSince()!=null)
+						model.addAttribute("memberSince",ParseDate.getItalianFormat(r.getUserActivity().getMemberSince().toString()));
+					if(r.getUserActivity().getLastOnline()!=null)
+						model.addAttribute("lastOnline",ParseDate.getItalianFormat(r.getUserActivity().getLastOnline().toString()));
+				}
+				
+//				if(r.getListSocialNetworkProfiles()!=null)
+//				{
+//					SocialNetworkProfileMapper sm = new SocialNetworkProfileMapper();
+//					List<SocialNetworkProfile> social = sm.findSocialNetwork(r);
+//					
+//					for (SocialNetworkProfile s: social) {
+//						social.add(s);
+//					}
+//					
+//					model.addAttribute("list", social);
+//				}
+				
 				
 				FeedbackMapper fm = new FeedbackMapper();
 				List<Feedback> l = fm.findGivenFeedback(u);
@@ -92,8 +86,8 @@ public class FeedBackController {
 				} 
 				
 				model.addAttribute("released", exist);
-
-				List<SocialNetworkProfile> social = r.getListSocialNetworkProfiles();
+				
+//				List<SocialNetworkProfile> social = r.getListSocialNetworkProfiles();
 //				if(social != null){
 //						model.addAttribute("social", social);
 //				}
@@ -122,7 +116,8 @@ public class FeedBackController {
 			RegisteredUser r =new RegisteredUser();
 			
 			Integer count = 0 ;
-			if(r.getCountAlert()==null)
+			Integer currentAlert = r.getCountAlert();
+			if(currentAlert==null)
 				count = 1;
 			else
 				count++;
@@ -131,10 +126,17 @@ public class FeedBackController {
 			
 			RegisteredUserMapper rm = new RegisteredUserMapper();
 			
-			if(rm.update(r,u.getId()))
+			rm.update(r, u.getId());
+			
+			if(!r.getCountAlert().equals(currentAlert))
 				model.addAttribute("alerted", true);
 			else
 				model.addAttribute("alerted", false);
+//			
+//			if(rm.update(r,u.getId()))
+//				model.addAttribute("alerted", true);
+//			else
+//				model.addAttribute("alerted", false);
 			
 			return "showAlertSignalation";
 		

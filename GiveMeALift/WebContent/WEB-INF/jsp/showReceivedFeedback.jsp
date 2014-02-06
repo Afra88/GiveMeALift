@@ -102,7 +102,7 @@
 				<c:choose>
 					<c:when test="${noFeed==true}">
 <!-- 						<META http-equiv="refresh" content="5; URL=UserInsertFeedback"> -->
-						<h3 class="center">Non hai ancora alcun feedback!</h3>
+						<h3 class="center">Non hai ancora ricevuto alcun feedback!</h3>
 <!-- 						<h4 class="center">Redirect in 5 secondi</h4> -->
 					</c:when>
 					<c:otherwise>
@@ -121,17 +121,17 @@
 						<c:forEach var="i"  begin="0" end="${list.size()-1}" step="1" >
 						<tr>
 							<td> 
-<%-- 							 ${senders.get(i).computeNickname()} - <c:if test="${senders.get(i).getGender()=='M'}"> Uomo</c:if> <c:if test="${senders.get(i)=='F'}"> Donna</c:if> --%>
+							 ${senders.get(i).computeNickname()} - <c:if test="${senders.get(i).getGender()=='M'}"> Uomo</c:if> <c:if test="${senders.get(i)=='F'}"> Donna</c:if>
 							<br>
-<%-- 							<c:choose> --%>
-<%-- 								<c:when test="${senders.get(i).profilePhoto!=null}"> --%>
-<%-- 									<img src=" avatars/${senders.get(i).getId()}.jpg" /> <h5>(${senders.get(i).computeAge()} anni) di ${senders.get(i).getAddress().getCity()}</h5>  --%>
-<%-- 								</c:when> --%>
-<%-- 								<c:otherwise> --%>
-<%-- 									<img src=" avatars/${senders.get(i).getId()}.jpg" /> <h5>(${senders.get(i).computeAge()} anni) di ${senders.get(i).getAddress().getCity()}</h5>  --%>
-<%-- 								</c:otherwise> --%>
-<%-- 								<img height="120px" src="images/default_user.jpg" /> <h5>(${senders.get(i).computeAge()} anni) di ${senders.get(i).getAddress().getCity()}</h5>   --%>
-<%-- 							</c:choose> --%>
+							<c:choose>
+								<c:when test="${senders.profilePhoto!=null}">
+									<img src=" ${senders.profilePhoto}" /> <h5>(${senders.get(i).computeAge()} anni) di ${senders.get(i).getAddress().getCity()}</h5> 
+								</c:when>
+								<c:otherwise>
+									<img src=" ${senders.profilePhoto}" /> <h5>(${senders.get(i).computeAge()} anni) di ${senders.get(i).getAddress().getCity()}</h5> 
+								</c:otherwise>
+								<img height="120px" src="avatars/default_user.jpg" /> <h5>(${senders.get(i).computeAge()} anni) di ${senders.get(i).getAddress().getCity()}</h5>  
+							</c:choose>
 							
 							
 							<td style="text-align: center;">
