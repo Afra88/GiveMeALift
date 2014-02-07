@@ -298,7 +298,8 @@
 			</tr>
 			<tr>
 				<td>
-					<textarea  cols="40" rows="6" maxlength="700" name="description" >Fornisci informazioni aggiuntive sul tuo viaggio. Cerca di invogliare più passeggeri a contattarti!</textarea>
+					<div>Fornisci informazioni aggiuntive sul tuo viaggio. Cerca di invogliare più passeggeri a contattarti!</div>
+					<div><textarea  cols="40" rows="6" maxlength="700" name="description" ></textarea></div>
 				</td>
 			
 				<td>

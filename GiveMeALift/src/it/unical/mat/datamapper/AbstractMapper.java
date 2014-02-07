@@ -10,7 +10,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import it.unical.mat.domain.Car;
 import it.unical.mat.domain.DomainObject;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.util.HibernateUtil;
@@ -55,17 +54,29 @@ public abstract class AbstractMapper {
 	public final DomainObject update(DomainObject object2, long id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
+		RegisteredUser ob=null;
 		try {
 			transaction = session.beginTransaction();
 			DomainObject object= (DomainObject) session.get(object2.getClass(), id);
 			object.copy(object2);
+			if(object instanceof RegisteredUser){
+				ob=(RegisteredUser) object;
+				System.out.println(((RegisteredUser) object).getCar().getBrand());
+				System.out.println(((RegisteredUser) object2).getCar().getBrand());
+			}
+			session.saveOrUpdate(object);
 			transaction.commit();
 			return object;
 		} catch (HibernateException e) {
 			e.printStackTrace();
 			transaction.rollback();
 		} finally {
-			session.close();		
+			session.flush();
+			session.close();
+			if(object2 instanceof RegisteredUser){
+				System.out.println(((RegisteredUser) ob).getCar().getBrand());
+				System.out.println(((RegisteredUser) object2).getCar().getBrand());
+			}
 		}
 		return null;	
 	}

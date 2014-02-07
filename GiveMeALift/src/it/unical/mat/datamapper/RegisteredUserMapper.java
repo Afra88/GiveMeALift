@@ -14,12 +14,10 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
+import org.hibernate.type.IntegerType;
 import org.hibernate.type.StringType;
 
-import it.unical.mat.domain.Car;
 import it.unical.mat.domain.DomainObject;
-import it.unical.mat.domain.Feedback;
-import it.unical.mat.domain.PersonalPreference;
 import it.unical.mat.domain.RegisteredUser;
 import it.unical.mat.domain.User;
 import it.unical.mat.service.ParseDate;
@@ -265,6 +263,47 @@ public class RegisteredUserMapper extends AbstractMapper {
 		} finally {
 			session.close();
 		}
+	}
+
+	public int findCountOfferingUsers() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {		
+			String findStatement="";
+				findStatement= "select count(User.User_id) as C from User "
+						+ "join LIFT_USER_OFFERING as l on User.User_id=l.User_id";	
+			transaction = session.beginTransaction();
+			Query query = session.createSQLQuery(findStatement).addScalar("C", IntegerType.INSTANCE);
+			int result=(Integer) query.uniqueResult();
+			transaction.commit();
+			return result;
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return 0;
+	}
+
+	public int findCountUsers() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {		
+			String findStatement="";
+				findStatement= "select count(User_id) as C from User";	
+			transaction = session.beginTransaction();
+			Query query = session.createSQLQuery(findStatement).addScalar("C", IntegerType.INSTANCE);
+			int result=(Integer) query.uniqueResult();
+			transaction.commit();
+			return result;
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return 0;
 	}
 	
 }

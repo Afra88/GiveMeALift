@@ -49,11 +49,11 @@ public class UserController {
 				 		return "home";	
 				 	}
 				 	else{
-				 		return "errorRegistration";
+				 		return "error";
 				 	}
 				 }
 				 else{
-				 		return "errorRegistration";
+				 		return "error";
 				 	}
 	}
 	 
@@ -89,7 +89,8 @@ public class UserController {
 				}
 		 	}
 	 	}
-	 	return "errorRegistration";
+		model.addAttribute("error", true);
+	 	return "signUp";
 	 }
 	 
 	 @RequestMapping(value = "/LogOut")
@@ -97,11 +98,14 @@ public class UserController {
 		User u=(User) session.getAttribute("user");
 		if(u!=null){
 			session.removeAttribute("user");
-			return "home";	
+			return "home";
 		}
-		else{
-	 		return "errorRegistration";
-	 	}
+		User a=(User) session.getAttribute("admin");
+		if(a!=null){
+			session.removeAttribute("admin");
+			return "home";
+		}
+	 	return "error";
 	 }
 	 
 	 @RequestMapping(value="/ShowUserOfferedLift")
@@ -126,7 +130,7 @@ public class UserController {
 				return "userOfferedLift";	
 			}
 			else{
-		 		return "errorRegistration";
+		 		return "error";
 		 	}
 	 }
 	
@@ -152,7 +156,7 @@ public class UserController {
 				return "userBookedLift";	
 			}
 			else{
-		 		return "errorRegistration";
+		 		return "error";
 		 	}
 	 }
 	 
@@ -171,7 +175,7 @@ public class UserController {
 				return "userOfferedLiftDetails";	
 			}
 			else{
-		 		return "errorRegistration";
+		 		return "error";
 		 	}
 	 }
 	 
@@ -183,14 +187,6 @@ public class UserController {
 				Lift l=lm.findById(lift);
 				if(l.getIsReturn()){
 					Lift lgoing=lm.findLiftByLiftReturn(Long.parseLong(lift));
-//					Lift ll=new Lift();
-//	TODO				System.out.println(lgoing.getReturnLift());
-//	riprovare così-->			ll.setReturnLift(null); 
-//					lm.update(ll, lgoing.getId());
-//					if(ll.getReturnLift()!=null)
-//						System.out.println(lgoing.getReturnLift());
-//					else
-//						System.out.println("è nullo");
 					boolean deleted=lm.deleteReturnLift(lgoing, l); 
 					if(deleted){
 						model.addAttribute("error",false);
@@ -209,7 +205,6 @@ public class UserController {
 				}
 			}
 			return "userDeleteLiftOffered";	
-//	 		return "errorRegistration";
 	 }
 
 }

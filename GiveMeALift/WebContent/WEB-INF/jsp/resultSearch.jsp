@@ -82,7 +82,7 @@
 	</div>
 	 <p class="grid_7" ></p>
 	</c:when>
-	<c:otherwise>    
+	<c:otherwise>
     <div class="grid_7">
         <c:forEach items="${pageHolder.pageList}" var="detour" >
         	<div class="item">
@@ -157,9 +157,28 @@
 	<form method="get" action="ResultSearch" id=advancedSearchForm >
       <div class="greenTable" >
                 <table >
+                <tr>
+                	<td>
+                		Criteri di ricerca
+                	</td>
+                </tr>
+                <tr>
+                        <td>
+							<h5>Ordina per</h5>
+						</td>
+						</tr>
+						<tr>
+						<td>
+							<select name="sort">
+								<option value="date">Data</option>
+								<option value="cost">Prezzo</option>
+							</select> 
+					
+                        </td>
+                    </tr>
                     <tr>
                         <td>
-                            Data
+                            <h5>Data</h5>
                         </td>
                     </tr>
                     <tr>
@@ -169,12 +188,12 @@
                         </td>
                     </tr>
                     <tr>
-                    	<td>
-                    		<h5>Date Flessibili</h5>
-                    	</td>
+                        <td>
+                            <h5>Date flessibili</h5>
+                        </td>
                     </tr>
                     <tr>
-                    	<td >
+                    	<td>
                           	<select name="flexibleDate">
                           		<c:choose>
                        				<c:when test="${flexibleDate==1 || flexibleDate==null || flexibleDate==''}">
@@ -197,16 +216,7 @@
                           	</select>
                         </td>
                     </tr>
-                </table>
-            </div>
-       <div class="greenTable" >
-                <table >
-                    <tr>
-                        <td>
-                            Ora
-                        </td>
-                    </tr>
-                    <tr>
+				 <tr>
                         <td >
                            <div class=contentSlidebar>
 							<h5>Range orario</h5>
@@ -217,13 +227,9 @@
 						</div>
                         </td>
                     </tr>
-                </table>
-            </div>  
-              <div class="greenTable" >
-                <table >
                     <tr>
                         <td>
-                            Prezzo
+                            <h5>Prezzo</h5>
                         </td>
                     </tr>
                     <tr>

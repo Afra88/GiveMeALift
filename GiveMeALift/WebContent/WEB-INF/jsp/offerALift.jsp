@@ -128,7 +128,7 @@
 			<tr>
 				<td colspan="2"><h5>Tappe intermedie</h5>				
 					<ol>
-						<li id="li0" hidden="true" >
+						<!-- <li id="li0" hidden="true" >
 							<input id="detour0" class="autocomplete" type="text" name="detour0"></input>
 							<button class="button red" id="0" ><span class="trash" ></span></button>
 						</li>
@@ -143,11 +143,11 @@
 						<li id="li3" hidden="true" >
 							<input id="detour3" class="autocomplete" type="text" name="detour3"></input>
 							<button class="button red" id="3" ><span class="trash" ></span></button>
-						</li>
-						<li id="li4" hidden="true" >
+						</li> -->
+						<!-- <li id="li4" hidden="true" >
 							<input id="detour4" class="autocomplete" type="text" name="detour4"></input>
-							<button class="button red" id="4" ><span class="trash" ></span></button>
-						</li>
+							<button type="button" class="button red" id="4" ><span class="trash" ></span></button>
+						</li> -->
 					</ol>
 				</td>
 			</tr>

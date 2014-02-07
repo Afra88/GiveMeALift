@@ -69,11 +69,11 @@ public class OfferController {
 			@RequestParam("liftReturn") String liftReturnId,
 			@RequestParam("mapFrom") String mapFrom, 
     		@RequestParam("mapTo") String mapTo,
-    		@RequestParam(value="detour0",required=false) String detour0,
-    		@RequestParam(value="detour1",required=false) String detour1,
-    		@RequestParam(value="detour2",required=false) String detour2,
-    		@RequestParam(value="detour3",required=false) String detour3,
-    		@RequestParam(value="detour4",required=false) String detour4,
+    		@RequestParam(value="detour",required=false) String[] detour,
+//    		@RequestParam(value="detour1",required=false) String detour1,
+//    		@RequestParam(value="detour2",required=false) String detour2,
+//    		@RequestParam(value="detour3",required=false) String detour3,
+//    		@RequestParam(value="detour4",required=false) String detour4,
     		@RequestParam(value="checkReturn",required=false) String thereIsReturn,
     		@RequestParam("goingDate") String goingDate,
     		@RequestParam(value="returnDate",required=false) String returnDate,
@@ -118,7 +118,7 @@ public class OfferController {
 				return "step1_updateLift_offerALift";
 			}
 			
-			List<String> path=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3, detour4);
+			List<String> path=composePath(mapFrom, mapTo, detour);
 			
 			model.addAttribute("inputs", inputs);
 			model.addAttribute("path", path);
@@ -142,11 +142,11 @@ public class OfferController {
 	public String insertAnOffer(
 			@RequestParam("mapFrom") String mapFrom, 
     		@RequestParam("mapTo") String mapTo,
-    		@RequestParam(value="detour0",required=false) String detour0,
-    		@RequestParam(value="detour1",required=false) String detour1,
-    		@RequestParam(value="detour2",required=false) String detour2,
-    		@RequestParam(value="detour3",required=false) String detour3,
-    		@RequestParam(value="detour4",required=false) String detour4,
+    		@RequestParam(value="detour",required=false) String[] detour,
+//    		@RequestParam(value="detour1",required=false) String detour1,
+//    		@RequestParam(value="detour2",required=false) String detour2,
+//    		@RequestParam(value="detour3",required=false) String detour3,
+//    		@RequestParam(value="detour4",required=false) String detour4,
     		@RequestParam(value="checkReturn",required=false) String thereIsReturn,
     		@RequestParam("goingDate") String goingDate,
     		@RequestParam(value="returnDate",required=false) String returnDate,
@@ -191,7 +191,7 @@ public class OfferController {
 			return "step1_updateLift_offerALift";
 		}
 		
-		List<String> path=composePath(mapFrom, mapTo, detour0, detour1, detour2, detour3, detour4);
+		List<String> path=composePath(mapFrom, mapTo, detour);
 		
 		model.addAttribute("inputs", inputs);
 		model.addAttribute("path", path);	
@@ -219,6 +219,26 @@ public class OfferController {
 		return path;
 	}
 	
+	private List<String> composePath(String mapFrom, String mapTo, String[] detour) {
+		List<String> path=new ArrayList<String>();
+		path.add(mapFrom);
+		for (String string : detour) {
+			if(string != "" && string!=null && !string.equals(",,,"))
+				path.add(string);
+		}
+//		if(detour0 != "" && detour0!=(null))
+//			path.add(detour0);
+//		if(detour1 != "" && detour1!=(null))
+//			path.add(detour1);
+//		if(detour2 != "" && detour2!=(null))
+//			path.add(detour2);
+//		if(detour3 != "" && detour3!=(null))
+//			path.add(detour3);
+//		if(detour4 != "" && detour4!=(null))
+//			path.add(detour4);
+		path.add(mapTo);
+		return path;
+	}
 	
 	
 	@RequestMapping(value="/Step3UpdateLiftSubmitALift")

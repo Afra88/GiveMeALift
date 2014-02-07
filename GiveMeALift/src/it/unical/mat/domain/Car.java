@@ -2,10 +2,15 @@ package it.unical.mat.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name="Car")
@@ -22,7 +27,11 @@ public class Car extends DomainObject {
 	@Column(name="CAR_PHOTO")
 	private String carPhoto;
 	
+	private RegisteredUser registeredUser;
+	
 	public Car(){}
+	
+	
 	
 	@Override
 	@Id
@@ -30,8 +39,17 @@ public class Car extends DomainObject {
 	@Column(name="CAR_ID")
 	public long getId() {return super.getId();};
 	
+	@Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+	@OneToOne(fetch=FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public RegisteredUser getRegisteredUser() {
+		return registeredUser;
+	}
 	
 	
+	public void setRegisteredUser(RegisteredUser registeredUser) {
+		this.registeredUser = registeredUser;
+	}
 	
 	public String getBrand() {
 		return brand;

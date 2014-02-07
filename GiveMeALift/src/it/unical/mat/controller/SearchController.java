@@ -1,6 +1,7 @@
 package it.unical.mat.controller;
 
 import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import it.unical.mat.datamapper.LiftDetourMapper;
@@ -44,7 +45,7 @@ public class SearchController {
 			nPage="1";
 		}
 		
-		if(radio.equals("") || radio==null){
+		if(radio==null|| radio.equals("")){
 			radio=null;
 		}
 		Integer timeFrom=null;
@@ -58,9 +59,9 @@ public class SearchController {
 				timeFrom=timeTo=null;
 		}
 		
-		if(sort==null || sort.equals("")){
-			sort="date";
-		}
+//		if(sort==null || sort.equals("")){
+//			sort="date";
+//		}
 		
 		Boolean mus=null;
 		if(music!=null && !music.equals("")){
@@ -97,14 +98,14 @@ public class SearchController {
 		
 		if(from!=null && !from.equals("") && to!=null && !to.equals("") && date!=null && !date.equals("")){
 			List<LiftDetour> listResults=null;
-			if(sort.equals("date")){
+			if(sort==null || sort.equals("")){
+				listResults=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, null, mus, smoking, pets1, chatnessLevel);
+			}
+			else if(sort.equals("date")){
 				listResults=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, SortOption.DATE, mus, smoking, pets1, chatnessLevel);
 			}
-			if(sort.equals("cost")){				
+			else if(sort.equals("cost")){				
 				listResults=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, SortOption.COST, mus, smoking, pets1, chatnessLevel);
-			}
-			else{
-				listResults=ldm.findDetourByFromAndToAndCostAndTimeAndDate(from, to, date, range, timeTo, timeFrom, flexibleDate, null, mus, smoking, pets1, chatnessLevel);
 			}
 
 			int noResult;
@@ -176,10 +177,11 @@ public class SearchController {
 	}
 	
 	@RequestMapping(value="ContactUser")
-	public String contactAnOtherUser(@RequestParam String lift, @RequestParam String seat, Model m, HttpSession session){
+	public String contactAnOtherUser(@RequestParam String lift, @RequestParam String seat, Model m, @RequestParam(required=false) String offer, HttpSession session){
 		if(session.getAttribute("user")!=null){
 			m.addAttribute("lift",lift);
 			m.addAttribute("seat", seat);
+			m.addAttribute("offer", offer);
 			return "bookALift";
 		}
 		return "userLogIn"; //TODO
@@ -191,6 +193,10 @@ public class SearchController {
 		if(user!=null && lift!=null && !lift.equals("")){
 			LiftMapper lm=new LiftMapper();
 			Lift originalLift=lm.findById(lift);
+			if(originalLift.getUserOffering().getId()==user.getId()){
+				model.addAttribute("out", "Non puoi prenotare un posto nel tuo stesso passaggio!");
+				return "bookALift";
+			}
 			if(originalLift.getLiftPreferences().getPinkTrip()==true && !user.getGender().equals("F")){
 				model.addAttribute("out", "La prenotazione non è avvenuta, è un viaggio rosa, per sole donne.");
 				return "bookALift";

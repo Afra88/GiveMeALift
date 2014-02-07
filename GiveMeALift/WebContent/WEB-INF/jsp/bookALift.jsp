@@ -5,7 +5,7 @@
 <html>	 
     <head>
     
-	<title>I miei messaggi</title>
+	<title>Prenota un posto</title>
     
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -54,6 +54,7 @@
 			<h4>Scrivi un messaggio al conducente.</h4>
 		     <div>
 				<form action="SendMessage" method="post" > <%//TODO se è null Conversation perchè è una nuova  %>
+				<input type="hidden" value="${offer}" name="offer" />
 					<span class="bubbleRight">
 		 				<span class="message">
 	 						<textarea rows="4" cols="92" maxlength="255" autofocus="autofocus" name="text" ></textarea>
@@ -62,24 +63,24 @@
 					</span> 
  					<c:choose>
 						<c:when test="${user.profilePhoto!=null}">
-		         				<img height="70px" alt="${user.computeNickName()}" src="${user.profilePhoto}">
+		         				<img height="70px" width="70px" alt="${user.computeNickName()}" src="${user.profilePhoto}">
 						</c:when>
 						<c:when test="${user.profilePhoto==null}">
-		         				<img height="70px" src="avatars/default_user.jpg" />
+		         				<img height="70px" width="70px" src="avatars/default_user.jpg" />
 						</c:when>
        				</c:choose>
 				</form>
 			</div>
 			<form action="BookALift" method="post" >
-				<h4>Oppure prenota direttamente un posto in questo passaggio.
+				<h4>Oppure prenota direttamente un posto in questo passaggio.</h4>
 					<input type="hidden" value="${seat}" name="seat" />
 					<input type="hidden" value="${lift}" name="lift" />
 					<button class="button cyan">Prenota </button> 
-				</h4>
+				
 			</form>
 		</c:when>
 		<c:otherwise>
-			<h4>${out}</h4>
+			<h3>${out}</h3>
 		</c:otherwise>
 		</c:choose>
 	  	</div>

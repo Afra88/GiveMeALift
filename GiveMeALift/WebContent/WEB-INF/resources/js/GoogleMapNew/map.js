@@ -33,20 +33,20 @@ var componentForm = {
 			componentRestrictions: {country: 'it'}
 	};
 
-//	var from=document.getElementById("mapFrom");
-//	var to=document.getElementById("mapTo");
-//	autocomplete = new google.maps.places.Autocomplete(from,options);
-//	autocomplete = new google.maps.places.Autocomplete(to,options);
+	var from=document.getElementById("mapFrom");
+	var to=document.getElementById("mapTo");
+	autocomplete = new google.maps.places.Autocomplete(from,options);
+	autocomplete = new google.maps.places.Autocomplete(to,options);
 	
-	    var elems = document.getElementsByTagName('*');
-	    for (var i in elems) {
-	        if((' ' + elems[i].className + ' ').indexOf(' ' + 'autocomplete' + ' ')
-	                > -1) {
-	            elems[i].innerHTML = content;
-	            var input = elems[i];
-	            autocomplete = new google.maps.places.Autocomplete(input,options);
-	        }
-	    }
+//	    var elems = document.getElementsByTagName('*');
+//	    for (var i in elems) {
+//	        if((' ' + elems[i].className + ' ').indexOf(' ' + 'autocomplete' + ' ')
+//	                > -1) {
+//	            elems[i].innerHTML = content;
+//	            var input = elems[i];
+//	            autocomplete = new google.maps.places.Autocomplete(input,options);
+//	        }
+//	    }
 //    directionsDisplay.setPanel(document.getElementById("directions_panel"));
 
 //    google.maps.event.addListener(directionsDisplay, 'directions_changed',

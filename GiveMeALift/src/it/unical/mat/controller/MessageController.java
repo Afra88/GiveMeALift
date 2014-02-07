@@ -2,12 +2,16 @@ package it.unical.mat.controller;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.LinkedList;
 import java.util.List;
 
 import it.unical.mat.datamapper.MessageMapper;
+import it.unical.mat.datamapper.RegisteredUserMapper;
 import it.unical.mat.domain.Conversation;
 import it.unical.mat.domain.Message;
 import it.unical.mat.domain.RegisteredUser;
+import it.unical.mat.service.ParseDate;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -67,23 +71,45 @@ public class MessageController {
 	
 	
 	@RequestMapping(value="/SendMessage", method=RequestMethod.POST)
-	public String registerSendMessage(@RequestParam String text, @RequestParam String c, Model model,HttpSession session){
+	public String registerSendMessage(@RequestParam String text, @RequestParam(required=false) String c, @RequestParam(required=false) String offer, Model model,HttpSession session){
 		RegisteredUser user=(RegisteredUser)session.getAttribute("user");
-		if(user!=null && c!=null && !c.equals("")){
+		if(user!=null){
 			MessageMapper mm=new MessageMapper();
-			long originalId=Long.parseLong(c);
-			Conversation co=mm.findConversationById(originalId);
 			java.util.Date today=new java.util.Date();
 			Date d=new Date(today.getTime());
 			Time t=new Time(today.getTime());
-			Message m=new Message(user,co.computeOtherUser(user.getId()),text,d,t,false,null);
-			Conversation coCopy=new Conversation();
-			List<Message> lm=co.getMessages();
-			lm.add(m);
-			coCopy.setMessages(lm);
-			mm.update(coCopy, originalId);
-			model.addAttribute("messages", co.getMessages());
-			model.addAttribute("conversation",co.getId());
+			if(c==null || c.equals("")){
+				if(offer!=null){
+					RegisteredUserMapper rm=new RegisteredUserMapper();
+					RegisteredUser uOff=rm.findRegisteredUserById(Long.parseLong(offer));
+					System.out.println(uOff.getId());
+					if(uOff!=null){				
+						Message m=new Message(user,uOff,text,d,t,false,null);
+						List<Message> lm=new LinkedList<>();
+						lm.add(m);
+						Conversation coCopy=new Conversation("viaggio", false, lm);
+						mm.insert(coCopy);
+						System.out.println(coCopy.getCaption());
+						List<Conversation> conversations=mm.findUserConversations(user.getId());
+//						ParseDate.getItalianFormat(conversations.get(0).computeLastMessageDate().toString());
+						model.addAttribute("conversations", conversations);
+						model.addAttribute("messages", coCopy.getMessages());
+						model.addAttribute("conversation",coCopy.getId());
+					}
+				}
+			}
+			else{		
+				long originalId=Long.parseLong(c);
+				Conversation co=mm.findConversationById(originalId);
+				Message m=new Message(user,co.computeOtherUser(user.getId()),text,d,t,false,null);
+				Conversation coCopy=new Conversation();
+				List<Message> lm=co.getMessages();
+				lm.add(m);
+				coCopy.setMessages(lm);
+				mm.update(coCopy, originalId);
+				model.addAttribute("messages", co.getMessages());
+				model.addAttribute("conversation",co.getId());
+			}
 			return "showConversationMessages";
 		}
 		return "error";

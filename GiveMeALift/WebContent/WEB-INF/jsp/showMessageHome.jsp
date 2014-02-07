@@ -76,10 +76,10 @@
 	          			<td>
 	          				<c:choose>
 								<c:when test="${conversation.computeOtherUser(user.id).profilePhoto!=null}">
-			          				<img height="70px" alt="${conversation.computeOtherUser(user.id).computeNickName()}" src="${conversation.computeOtherUser(user.id).profilePhoto}">
+			          				<img height="70px" width="70px" alt="${conversation.computeOtherUser(user.id).computeNickName()}" src="${conversation.computeOtherUser(user.id).profilePhoto}">
 								</c:when>
 								<c:when test="${conversation.computeOtherUser(user.id).profilePhoto==null}">
-			          				<img height="70px" src="avatars/default_user.jpg" />
+			          				<img height="70px" width="70px" src="avatars/default_user.jpg" />
 								</c:when>
 	          				</c:choose>
           					<span class="text">${conversation.computeOtherUser(user.id).computeNickName()}</span>

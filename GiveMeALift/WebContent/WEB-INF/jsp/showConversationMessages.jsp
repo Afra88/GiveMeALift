@@ -72,10 +72,10 @@
 			  				</span> 
 			  				<c:choose>
 								<c:when test="${message.sender.profilePhoto!=null}">
-			          				<img height="70px" alt="${message.sender.computeNickName()}" src="${message.sender.profilePhoto}">
+			          				<img height="70px" width="70px" alt="${message.sender.computeNickName()}" src="${message.sender.profilePhoto}">
 								</c:when>
 								<c:when test="${message.sender.profilePhoto==null}">
-			          				<img height="70px" src="avatars/default_user.jpg" />
+			          				<img height="70px" width="70px" src="avatars/default_user.jpg" />
 								</c:when>
 		          			</c:choose>
 						</div>

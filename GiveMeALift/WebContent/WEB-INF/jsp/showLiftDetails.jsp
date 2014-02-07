@@ -174,7 +174,7 @@
 			</tr>
 			<tr>
 				<td style="text-align: center;" colspan="2" >
-					<a href="ContactUser?seat=${lift.get(0).nSeat}&lift=${lift.get(0).id}" class="button magenta"> <span class="phone"></span> Contatta il conducente </a>
+					<a href="ContactUser?seat=${lift.get(0).nSeat}&lift=${lift.get(0).id}&offer=${userOffering.id}" class="button magenta"> <span class="phone"></span> Contatta il conducente </a>
 				</td>
 		</tr>
 	</table>

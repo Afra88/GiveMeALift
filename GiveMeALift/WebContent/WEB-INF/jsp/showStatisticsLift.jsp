@@ -1,11 +1,11 @@
 <%@include file="header.jsp"%>
 <div class="container_12">
 	<div class="grid_2" >
-		<br><br><a href="ShowStatisticsPassengerDriver" class="button cyan" >Passeggeri e conducenti</a>
-		<br><br><a href="ShowStatisticsRegistration" class="button cyan" >Registrazioni</a>
+		<br><br><a href="ShowStatisticsLiftSeat" class="button cyan" >Posti prenotati</a>
+		<br><br><a href="ShowStatisticsLift?year=2014" class="button cyan" >Passaggi offerti</a>
 	</div>
 	<div class="grid_8">
-	<form action="ShowStatisticsRegistration" method="get">
+	<form action="ShowStatisticsLift" method="get">
 		<br><br><p style="vertical-align: middle; text-align: center;"> Anno
 		<select name=year >
 			<c:forEach var="i" begin="2010"  end="2014" step="1" >
@@ -28,7 +28,7 @@
 			<option value="10" >Novembre</option>
 			<option value="11" >Dicembre</option>
 		</select>
-			<button type="submit" class="button cyan" >Visualizza  
+		<button type="submit" class="button cyan" >Visualizza  
 			</button>
 		</p><br>
 	</form>

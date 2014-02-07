@@ -1,14 +1,4 @@
 
- var contId=0;
- var nDetour=5;
-
-$(document).ready( function() {
- $("#add_detour").click( function() {
-	if (contId<nDetour) {		
-		$("#li"+contId).show();
-		contId++;
-	}
-});
  
   $("#0").click( function() {
 	  if(contId>0){		  
