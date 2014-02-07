@@ -70,17 +70,45 @@ var componentForm = {
   function calcRoute() {
 	var start= document.getElementById("mapFrom").value;
 	var end = document.getElementById("mapTo").value;
-    var request = {
-        origin:start,
-        destination:end,
-        travelMode: google.maps.DirectionsTravelMode.DRIVING
-    };
-    directionsService.route(request, function(response, status) {
-        if (status == google.maps.DirectionsStatus.OK) {
-          directionsDisplay.setDirections(response);
-        }
-      });
+	alert(start+end);
+	  var waypts = [];
+	    var elems = document.getElementsByName("detour");
+	    for (var int = 0; int < elems.length; int++) {
+	    	if(elems[int].value!=",,,"){	    		
+	    	waypts.push({
+	    		location:elems[int].value,
+	    		stopover:true});
+	    	}			
+	    }
+
+	  var request = {
+	      origin: start,
+	      destination: end,
+	      waypoints: waypts,
+	      optimizeWaypoints: true,
+	      travelMode: google.maps.TravelMode.DRIVING
+	  };
+	  directionsService.route(request, function(response, status) {
+	    if (status == google.maps.DirectionsStatus.OK) {
+	      directionsDisplay.setDirections(response);
+	    }
+	  });
   }
+	  
+	  
+//	var start= document.getElementById("mapFrom").value;
+//	var end = document.getElementById("mapTo").value;
+//    var request = {
+//        origin:start,
+//        destination:end,
+//        travelMode: google.maps.DirectionsTravelMode.DRIVING
+//    };
+//    directionsService.route(request, function(response, status) {
+//        if (status == google.maps.DirectionsStatus.OK) {
+//          directionsDisplay.setDirections(response);
+//        }
+//      });
+//  }
 
 //  function undo() {
 //    currentDirections = null;
