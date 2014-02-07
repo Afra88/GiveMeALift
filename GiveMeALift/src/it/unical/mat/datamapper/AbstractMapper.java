@@ -59,11 +59,11 @@ public abstract class AbstractMapper {
 			transaction = session.beginTransaction();
 			DomainObject object= (DomainObject) session.get(object2.getClass(), id);
 			object.copy(object2);
-			if(object instanceof RegisteredUser){
-				ob=(RegisteredUser) object;
-				System.out.println(((RegisteredUser) object).getCar().getBrand());
-				System.out.println(((RegisteredUser) object2).getCar().getBrand());
-			}
+//			if(object instanceof RegisteredUser){
+//				ob=(RegisteredUser) object;
+//				System.out.println(((RegisteredUser) object).getCar().getBrand());
+//				System.out.println(((RegisteredUser) object2).getCar().getBrand());
+//			}
 			session.saveOrUpdate(object);
 			transaction.commit();
 			return object;
@@ -73,10 +73,10 @@ public abstract class AbstractMapper {
 		} finally {
 			session.flush();
 			session.close();
-			if(object2 instanceof RegisteredUser){
-				System.out.println(((RegisteredUser) ob).getCar().getBrand());
-				System.out.println(((RegisteredUser) object2).getCar().getBrand());
-			}
+//			if(object2 instanceof RegisteredUser){
+//				System.out.println(((RegisteredUser) ob).getCar().getBrand());
+//				System.out.println(((RegisteredUser) object2).getCar().getBrand());
+//			}
 		}
 		return null;	
 	}

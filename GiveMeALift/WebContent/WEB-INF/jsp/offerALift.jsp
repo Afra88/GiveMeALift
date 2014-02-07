@@ -105,7 +105,7 @@
 					<tr><td colspan="2">Itinerario</td></tr>
 			<tr id="mapTr">
 			<td colspan="2">
-			<p align="center"><button class="button cyan" id="FromAToB">Percorso<span class="map"></span></button></p>
+			<p align="center"><button class="button cyan" type="button" id="FromAToB">Percorso<span class="map"></span></button></p>
 			<div id="map_canvas" style="float:left;width:100%;height:400px"></div>
 <!-- 				<div style="float:right;width:100px;height:400px;overflow:auto"> -->
 <!-- 			  	<button id="undo" style="display:block;margin:auto" onclick="undo()">Undo -->

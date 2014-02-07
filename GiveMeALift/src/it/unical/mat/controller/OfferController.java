@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import it.unical.mat.datamapper.LiftDetourMapper;
 import it.unical.mat.datamapper.LiftMapper;
 import it.unical.mat.domain.Lift;
 import it.unical.mat.domain.LiftDetour;
@@ -58,6 +59,7 @@ public class OfferController {
 				model.addAttribute("goingTimeM",Integer.parseInt((String) lConverted.get(3)));
 
 				model.addAttribute("path",l.computeRouteOnlyDetours());
+				System.out.println(l.computeRouteOnlyDetours());
 				return "step1_updateLift_offerALift";
 		}
 		return "error";
@@ -458,7 +460,7 @@ public class OfferController {
 			Model m, HttpSession session){
 
 		LiftMapper lm = new LiftMapper();
-		
+		LiftDetourMapper ldm = new LiftDetourMapper();
 				
 		String[] costs = price.split(",");     //COST
 		double totcost = 0;
@@ -571,6 +573,7 @@ public class OfferController {
 				}
 				LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j),cost);
 				tmpDetour.setLift(l);
+				ldm.insert(tmpDetour);
 				detours.add(tmpDetour);
 			}			
 		}
@@ -606,6 +609,7 @@ public class OfferController {
 					}
 					LiftDetour tmpDetour=new LiftDetour(path.get(i), path.get(j),cost);
 					tmpDetour.setLift(lr);
+					ldm.insert(tmpDetour);
 					detoursReturn.add(tmpDetour);
 				}			
 			}

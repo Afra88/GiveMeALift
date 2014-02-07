@@ -499,7 +499,7 @@ public class CopyOfUserParameterController {
 				f.delete();
 			//--------------- FOTO ---------------
 			
-			boolean deleted = cm.delete(car.getId(), Car.class);
+			boolean deleted = cm.deleteCar(ru.getCar(),ru);
 			if(deleted)
 				model.addAttribute("error",false);
 			else

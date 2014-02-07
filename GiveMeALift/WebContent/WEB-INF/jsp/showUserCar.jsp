@@ -41,11 +41,11 @@
 <!-- 						<tr> -->
 <!-- 							<td colspan="2">La mia auto</td> -->
 <!-- 						</tr> -->
-<!-- <!-- 						<tr> --> -->
-<!-- <!-- 							<td>Anno</td> --> -->
-<!-- <!-- 							<td><input id="yearCar" name="yearCar" type="text" --> -->
-<%-- <%-- 								value="${year}"></input></td> --%> --%>
-<!-- <!-- 						</tr> --> -->
+<!-- <!-- 						<tr> --> 
+<!-- <!-- 							<td>Anno</td> --> 
+<!-- <!-- 							<td><input id="yearCar" name="yearCar" type="text" -->
+<%-- <%-- 								value="${year}"></input></td> --%> 
+<!-- <!-- 						</tr> --> 
 <!-- 						<tr> -->
 <!-- 							<td>Marca</td> -->
 <!-- 							<td><input id="brandCar" name="brandCar" type="text" -->
@@ -94,7 +94,7 @@
 <%-- 							<c:choose> --%>
 <%-- 							<c:when test="${user.getCar().getCarPhoto()!=null}"> --%>
 <%-- 								<img src="${user.getCar().getCarPhoto()}" height="120px" onerror="this.style.visibility = 'hidden'">  --%>
-<!-- <!-- 								<input name="files[0]" type="file" /> --> -->
+<!-- <!-- 								<input name="files[0]" type="file" /> --> 
 <%-- 							</c:when> --%>
 <%-- 							<c:otherwise> --%>
 <!-- 								<img height="120px" src="avatars/default_car.jpg" /> -->
@@ -102,9 +102,9 @@
 <%-- 							</c:otherwise> --%>
 <%-- 						</c:choose> --%>
 							
-<%-- <%-- 													<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%> --%>
-<%-- <%-- 								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" width="150" --%> --%>
-<!-- <!-- 								onerror="this.style.visibility = 'hidden'"> --> -->
+<%-- <%-- 													<img id="photoCar" name="photoCar" src="${user.getDriverInfo().getCar().getPhoto()}"></img> --%>
+<%-- <%-- 								<img src="/GiveMeALift/avatars/${user.id}_car.jpg" width="150" --%> 
+<!-- <!-- 								onerror="this.style.visibility = 'hidden'"> --> 
 								
 <!-- 							</td> -->
 <!-- 						</tr> -->
@@ -117,7 +117,7 @@
 
 			<!-- 	<div class="grid_4 prefix_1"> troppo piccola? -->
 <!-- 			<div class="grid_6" style="text-align: center;"> -->
-				<div class="orangeTable" style="margin-top: 20px;">
+				<div class="greenTable" style="margin-top: 20px;">
 
 					<!-- 	<form method="get" action="ModifyUserCar"> -->
 					<form:form modelAttribute="uploadForm" method="post" action="SubmitCar" enctype="multipart/form-data">

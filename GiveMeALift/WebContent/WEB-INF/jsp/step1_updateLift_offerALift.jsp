@@ -110,12 +110,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2"><p class="label"> Aggiungi Tappe intermedie:
+				<td colspan="2"><p > Aggiungi Tappe intermedie
 				</p>				
 					<ol>
 						<c:choose>
-							<c:when test="${lift!=null && path!=null && path.size()>0}" >
-								<c:forEach var="i" begin="1" end="${path.size()-1}" step="1" >
+							<c:when test="${path.size()>0}" >
+								<c:forEach var="i" begin="0" end="${path.size()-1}" step="1" >
 									<li><input id="detour${i}" class="autocomplete" type="text" name="detour${i}" value="${path.get(i)}" ></li>
 								</c:forEach>
 							</c:when>
