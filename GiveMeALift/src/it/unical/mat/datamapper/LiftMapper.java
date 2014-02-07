@@ -10,6 +10,7 @@ import it.unical.mat.util.HibernateUtil;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -350,6 +351,38 @@ public class LiftMapper extends AbstractMapper {
 			session.close();
 		}
 		return 0;
+	}
+	
+	
+	public List<Lift> findNextLifts(){
+				
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+				transaction = session.beginTransaction();
+				Query query= session.createQuery("from Lift where departureDate > CURDATE()");				
+				query.setFirstResult(0);
+				query.setMaxResults(10);
+				@SuppressWarnings("unchecked")
+				List<Lift> objects=query.list();
+				List<Lift> lifts = (List<Lift>) objects;
+//				Hibernate.initialize(l.getLiftPreferences());
+//				Hibernate.initialize(l.getUserOffering());
+//				Hibernate.initialize(l.getDetours());
+//				for (LiftDetour ld : l.getDetours()) {					
+//					Hibernate.initialize(ld.getPickUpPoint());
+//				}
+//				if(l.getReturnLift()!=null)
+//					Hibernate.initialize(l.getReturnLift());
+				transaction.commit();
+				return lifts;
+		} catch (HibernateException | SecurityException | IllegalArgumentException e) {
+			e.printStackTrace();
+			transaction.rollback();
+		} finally {
+			session.close();
+		}
+		return null;
 	}
 }
 
